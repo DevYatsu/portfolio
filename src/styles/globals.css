@@ -1,10 +1,5 @@
 @import "tailwindcss";
 
-/* ═══════════════════════════════════════════════
-   YANIS AMANI — PORTFOLIO
-   Design System: Dark Editorial / Brutalist
-   ═══════════════════════════════════════════════ */
-
 @theme {
   /* Typography */
   --font-sans:    'Inter Variable', ui-sans-serif, system-ui, sans-serif;
