@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://yanis-amani.netlify.app/sitemap-index.xml
+
+# Crawl delay (optional, respected by some bots)
+Crawl-delay: 5
