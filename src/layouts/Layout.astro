@@ -230,10 +230,10 @@ const breadcrumbSchema = {
 								aria-label="LinkedIn — Yanis Amani" class="nav-item hover:text-white transition-colors">
 								LinkedIn
 							</a>
-							<a href="mailto:yanis.amani@icloud.com"
-								title="Email Yanis Amani"
-								aria-label="Email Yanis Amani" class="nav-item hover:text-orange-400 transition-colors">
-								Email
+							<a href={isFr ? '/fr/#contact' : '/#contact'}
+								title="Contact Yanis Amani"
+								aria-label="Contact Yanis Amani" class="nav-item hover:text-orange-400 transition-colors">
+								Contact
 							</a>
 							<span class="w-px h-4 bg-border" aria-hidden="true"></span>
 						<a href={langSwitchUrl}
