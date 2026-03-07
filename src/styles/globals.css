@@ -21,6 +21,7 @@
   --color-muted:    hsl(0, 0%, 40%);
   --color-subtle:   hsl(0, 0%, 62%);
   --color-white:    hsl(0, 0%, 97%);
+  --color-gray-dark: hsl(0, 0%, 7%);
 }
 
 /* ── Base ─────────────────────────────────────── */
@@ -29,22 +30,29 @@
 
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 4rem; /* account for fixed nav */
     cursor: none;
   }
 
   body {
     @apply bg-[hsl(0,0%,5%)] text-[hsl(0,0%,97%)] min-h-screen overflow-x-hidden;
     -webkit-font-smoothing: antialiased;
-    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "ss01" 1;
   }
 
   h1,h2,h3,h4,h5,h6 {
     line-height: 1.0;
     letter-spacing: -0.03em;
     font-weight: 900;
+    text-wrap: balance;
   }
 
   p { line-height: 1.7; }
+
+  /* Prevent orphaned words in paragraphs */
+  p, li { text-wrap: pretty; }
 
   ::selection {
     background: hsl(24, 100%, 60%);
@@ -60,36 +68,39 @@
   ::-webkit-scrollbar       { width: 4px; }
   ::-webkit-scrollbar-track { background: hsl(0,0%,8%); }
   ::-webkit-scrollbar-thumb { background: hsl(24,80%,50%); border-radius: 99px; }
+
 }
 
 /* ── Custom Cursor ─────────────────────────────── */
-#cursor-dot {
+#cursor-dot, #cursor-ring {
   position: fixed;
   top: 0; left: 0;
-  width: 8px; height: 8px;
-  background: hsl(24, 100%, 60%);
-  border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: transform 0.05s linear;
+  will-change: transform;
+  transform: translate3d(-100%, -100%, 0);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+#cursor-dot {
+  width: 8px; height: 8px;
+  background: var(--color-orange);
+  border-radius: 50%;
 }
 #cursor-ring {
-  position: fixed;
-  top: 0; left: 0;
   width: 36px; height: 36px;
-  border: 1.5px solid hsl(24, 100%, 60%);
+  border: 1.5px solid var(--color-orange);
   border-radius: 50%;
-  pointer-events: none;
   z-index: 9998;
-  transform: translate(-50%, -50%);
-  transition: transform 0.18s ease-out, width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
-  opacity: 0.5;
+  transition: opacity 0.5s ease, width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
 }
 #cursor-ring.hovering {
   width: 56px; height: 56px;
-  opacity: 0.3;
-  border-color: hsl(24, 100%, 70%);
+  background: hsla(24, 100%, 60%, 0.1);
+  border-color: hsl(24, 100%, 75%);
+}
+.cursor-active #cursor-dot, .cursor-active #cursor-ring {
+  opacity: 1;
 }
 @media (hover: none) {
   #cursor-dot, #cursor-ring { display: none; }
@@ -98,19 +109,19 @@
 
 /* ── Typography ────────────────────────────────── */
 .display-xl {
-  font-size: clamp(4.5rem, 12vw, 11rem);
+  font-size: clamp(2.8rem, 12vw, 11rem);
   line-height: 0.92;
   letter-spacing: -0.04em;
   font-weight: 900;
 }
 .display-lg {
-  font-size: clamp(3rem, 7vw, 6.5rem);
+  font-size: clamp(2.5rem, 7vw, 6.5rem);
   line-height: 0.95;
   letter-spacing: -0.03em;
   font-weight: 900;
 }
 .display-md {
-  font-size: clamp(2rem, 4.5vw, 4rem);
+  font-size: clamp(1.8rem, 4.5vw, 4rem);
   line-height: 1.0;
   letter-spacing: -0.025em;
   font-weight: 800;
@@ -203,11 +214,10 @@
 
   /* Bento project card */
   .bento {
-    @apply relative overflow-hidden;
+    @apply relative overflow-hidden p-6 md:p-8;
     border-radius: 12px;
     border: 1px solid hsl(0,0%,15%);
     background: hsl(0,0%,8%);
-    padding: 2rem;
     display: flex;
     flex-direction: column;
     transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
@@ -301,19 +311,32 @@
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(32px); }
-  to   { opacity: 1; transform: translateY(0); }
+.marquee-container {
+  will-change: transform;
 }
+
 [data-animate] {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transform: translateY(24px);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
 }
 [data-animate].visible {
   opacity: 1;
   transform: translateY(0);
+}
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  [data-animate] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .scanline, .glow-pulse, .floating, .blink, .marquee-container {
+    animation: none !important;
+  }
+  .bento, .btn-orange, .skill-row {
+    transition: none !important;
+  }
 }
 
 @keyframes glow-pulse {

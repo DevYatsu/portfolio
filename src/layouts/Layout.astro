@@ -22,6 +22,18 @@ const {
 const siteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://yanis-amani.netlify.app';
 const canonicalStr = typeof canonicalUrl === 'string' ? canonicalUrl : canonicalUrl.toString();
 const ogImageUrl = new URL(image, siteUrl).toString();
+const isFr = lang === 'fr';
+
+// ── Context-aware language switch URL ────────────────────────────
+// Keeps the user on the equivalent page in the other language
+// (e.g. /impressum ↔ /mentions-legales, /fr ↔ /)
+const pathname = Astro.url.pathname;
+const langSwitchUrl = (() => {
+  if (pathname === '/impressum' || pathname === '/impressum/')    return '/mentions-legales';
+  if (pathname === '/mentions-legales' || pathname === '/mentions-legales/') return '/impressum';
+  if (isFr) return '/';
+  return '/fr';
+})();
 
 // ── Structured Data ──────────────────────────────────────────────
 const personSchema = {
@@ -85,23 +97,10 @@ const breadcrumbSchema = {
 	"@context": "https://schema.org",
 	"@type": "BreadcrumbList",
 	"itemListElement": [
-		{ "@type": "ListItem", "position": 1, "name": "Home",     "item": siteUrl },
-		{ "@type": "ListItem", "position": 2, "name": "Projects", "item": siteUrl + "/#projects" },
-		{ "@type": "ListItem", "position": 3, "name": "Skills",   "item": siteUrl + "/#skills" },
-		{ "@type": "ListItem", "position": 4, "name": "Contact",  "item": siteUrl + "/#contact" }
-	]
-};
-
-const sitelinksSchema = {
-	"@context": "https://schema.org",
-	"@type": "SiteNavigationElement",
-	"name": ["Projects", "Skills", "Contact", "GitHub", "LinkedIn"],
-	"url": [
-		siteUrl + "/#projects",
-		siteUrl + "/#skills",
-		siteUrl + "/#contact",
-		"https://github.com/DevYatsu",
-		"https://linkedin.com/in/yanis-amani"
+		{ "@type": "ListItem", "position": 1, "name": isFr ? "Accueil" : "Home",     "item": isFr ? siteUrl + "/fr" : siteUrl },
+		{ "@type": "ListItem", "position": 2, "name": isFr ? "Projets" : "Projects", "item": (isFr ? siteUrl + "/fr" : siteUrl) + "/#projects" },
+		{ "@type": "ListItem", "position": 3, "name": isFr ? "Outils" : "Skills",    "item": (isFr ? siteUrl + "/fr" : siteUrl) + "/#skills" },
+		{ "@type": "ListItem", "position": 4, "name": "Contact",                      "item": (isFr ? siteUrl + "/fr" : siteUrl) + "/#contact" }
 	]
 };
 ---
@@ -113,6 +112,10 @@ const sitelinksSchema = {
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
+		<!-- Preload critical font subset for LCP -->
+		<link rel="preload" as="font" type="font/woff2"
+			href="/fonts/inter-variable.woff2" crossorigin="anonymous" />
+
 		<!-- Primary Meta -->
 		<title>{title}</title>
 		<meta name="description" content={description} />
@@ -121,6 +124,7 @@ const sitelinksSchema = {
 		<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 		<meta name="theme-color" content="#0d0d0d" />
 		<meta name="color-scheme" content="dark" />
+		<meta name="application-name" content="Yanis Amani — Portfolio" />
 		<meta name="generator" content={Astro.generator} />
 
 		<!-- Author & copyright -->
@@ -145,11 +149,12 @@ const sitelinksSchema = {
 		<!-- Sitemap -->
 		<link rel="sitemap" href="/sitemap-index.xml" />
 
-		<!-- Resource Hints -->
+		<!-- Resource Hints — only preconnect to actually loaded origins -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link rel="dns-prefetch" href="//github.com" />
 		<link rel="dns-prefetch" href="//linkedin.com" />
+		<link rel="dns-prefetch" href="//gc.zgo.at" />
 
 		<!-- Open Graph -->
 		<meta property="og:type" content="website" />
@@ -162,7 +167,8 @@ const sitelinksSchema = {
 		<meta property="og:image:alt" content="Yanis Amani — Software Developer & CS Student at HE-Arc Neuchâtel" />
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
-		<meta property="og:locale" content="en_US" />
+		<meta property="og:locale" content={isFr ? "fr_FR" : "en_US"} />
+		<meta property="og:locale:alternate" content={isFr ? "en_US" : "fr_FR"} />
 		<meta property="og:see_also" content="https://github.com/DevYatsu" />
 		<meta property="og:see_also" content="https://linkedin.com/in/yanis-amani" />
 
@@ -188,68 +194,71 @@ const sitelinksSchema = {
 		<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
 		<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 		<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-		<script type="application/ld+json" set:html={JSON.stringify(sitelinksSchema)} />
 
-		<!-- Privacy-First Analytics (Free, GDPR compliant, Cookieless) -->
+		<!-- Privacy-First Analytics (cookieless, GDPR compliant) -->
 		<script data-goatcounter="https://yatsu.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 	</head>
 	<body class={lang}>
-		<!-- Cursor -->
+		<!-- Custom cursor (desktop only, hidden on touch) -->
 		<div id="cursor-dot" aria-hidden="true"></div>
 		<div id="cursor-ring" aria-hidden="true"></div>
 
 		<!-- CRT scanline effect -->
 		<div class="scanline" aria-hidden="true"></div>
 
-		<!-- Skip to content -->
-		<a href="#main-content"
-			class="fixed top-4 left-4 z-[9999] -translate-y-20 focus:translate-y-0 transition-transform btn btn-orange text-sm">
-			Skip to content
-		</a>
-
 		<div class="relative flex flex-col min-h-screen">
-			<Header />
-			<main id="main-content" class="flex-grow" tabindex="-1">
+			<Header lang={lang} langSwitchUrl={langSwitchUrl} />
+			<main id="main-content" class="grow" tabindex="-1">
 				<slot />
 			</main>
 
 			<!-- Footer -->
-			<footer class="border-t border-[hsl(0,0%,14%)] mt-8">
+			<footer class="border-t border-border mt-8">
 				<div class="max-w-7xl mx-auto px-6 md:px-12 py-10">
-					<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+					<div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+						<!-- Left: education info -->
 						<div>
-							<p class="mono-label mb-1">Currently studying at</p>
+							<p class="mono-label mb-1">{isFr ? 'Étudie actuellement à' : 'Currently studying at'}</p>
 							<p class="text-white/70 text-sm font-medium">HE-Arc — Neuchâtel, Switzerland</p>
-							<p class="text-[hsl(0,0%,30%)] text-xs font-mono mt-0.5">BSc Computer Science</p>
+							<p class="text-[hsl(0,0%,30%)] text-xs font-mono mt-0.5">{isFr ? 'BSc Informatique' : 'BSc Computer Science'}</p>
 						</div>
-						<nav aria-label="Footer socials" class="flex items-center gap-6">
+
+						<!-- Center: social links -->
+						<nav aria-label={isFr ? 'Liens sociaux' : 'Social links'} class="flex items-center gap-6 flex-wrap">
 							<a href="https://github.com/DevYatsu" target="_blank" rel="noopener noreferrer"
+								title="GitHub — DevYatsu"
 								aria-label="GitHub — DevYatsu" class="nav-item hover:text-white transition-colors">
 								GitHub
 							</a>
 							<a href="https://linkedin.com/in/yanis-amani" target="_blank" rel="noopener noreferrer"
+								title="LinkedIn — Yanis Amani"
 								aria-label="LinkedIn — Yanis Amani" class="nav-item hover:text-white transition-colors">
 								LinkedIn
 							</a>
 							<a href="mailto:yanis.amani@icloud.com"
+								title="Email Yanis Amani"
 								aria-label="Email Yanis Amani" class="nav-item hover:text-orange-400 transition-colors">
 								Email
 							</a>
-							<span class="w-px h-4 bg-[hsl(0,0%,20%)] mx-1" aria-hidden="true"></span>
-							<a href={lang === 'fr' ? '/' : '/fr'}
-								aria-label={lang === 'fr' ? 'Switch to English' : 'Changer en Français'}
-								class="nav-item text-white hover:text-orange-400 transition-colors flex items-center gap-1.5 font-bold">
-								<svg class="w-4 h-4 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
-								</svg>
-								{lang === 'fr' ? 'EN' : 'FR'}
-							</a>
+							<span class="w-px h-4 bg-border" aria-hidden="true"></span>
+						<a href={langSwitchUrl}
+							data-lang-toggle
+							title={isFr ? 'View English version' : 'Voir la version française'}
+							aria-label={isFr ? 'Switch to English' : 'Changer en Français'}
+							class="nav-item text-white hover:text-orange-400 transition-colors flex items-center gap-1.5 font-bold">
+							<svg class="w-4 h-4 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+							</svg>
+							{isFr ? 'EN' : 'FR'}
+						</a>
 						</nav>
+
+						<!-- Right: copyright + legal -->
 						<div class="flex items-center gap-4 text-[hsl(0,0%,28%)] text-xs font-mono">
 							<span>© {new Date().getFullYear()} Yanis Amani</span>
-							<span class="text-border">|</span>
-							<a href={lang === 'fr' ? '/mentions-legales' : '/impressum'} class="hover:text-orange-500 transition-colors">
-								{lang === 'fr' ? 'Mentions Légales & RGPD' : 'Impressum & Privacy'}
+							<span class="text-border" aria-hidden="true">|</span>
+							<a href={isFr ? '/mentions-legales' : '/impressum'} class="hover:text-orange-500 transition-colors">
+								{isFr ? 'Mentions Légales & RGPD' : 'Impressum & Privacy'}
 							</a>
 						</div>
 					</div>
@@ -258,7 +267,7 @@ const sitelinksSchema = {
 		</div>
 
 		<!-- Scroll-to-top -->
-		<button id="scroll-top" aria-label="Back to top" title="Back to top"
+		<button id="scroll-top" aria-label={isFr ? 'Retour en haut' : 'Back to top'} title={isFr ? 'Retour en haut' : 'Back to top'}
 			class="fixed bottom-6 right-6 z-50 w-10 h-10 rounded-md border border-[hsl(0,0%,20%)] bg-[hsl(0,0%,8%)]
 					text-[hsl(0,0%,50%)] hover:border-orange-500/50 hover:text-orange-400
 					flex items-center justify-center opacity-0 pointer-events-none
@@ -267,35 +276,79 @@ const sitelinksSchema = {
 		</button>
 
 		<script>
-			// Custom cursor
-			const dot  = document.getElementById('cursor-dot');
-			const ring = document.getElementById('cursor-ring');
-			let mx = 0, my = 0;
+			// ── Custom Cursor (desktop only) ──────────────────────────────
+			const dot  = document.getElementById('cursor-dot')  as HTMLElement | null;
+			const ring = document.getElementById('cursor-ring') as HTMLElement | null;
 
-			document.addEventListener('mousemove', e => {
-				mx = e.clientX; my = e.clientY;
-				if (dot)  { dot.style.left  = mx + 'px'; dot.style.top  = my + 'px'; }
-				if (ring) { ring.style.left = mx + 'px'; ring.style.top = my + 'px'; }
-			});
+			if (dot && ring && window.matchMedia('(hover: hover)').matches) {
+				let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+				let cx = mx, cy = my;
+				let rafId: number;
+				let moved = false;
 
-			const hoverTargets = document.querySelectorAll('a, button, [data-hover]');
-			hoverTargets.forEach(el => {
-				el.addEventListener('mouseenter', () => ring?.classList.add('hovering'));
-				el.addEventListener('mouseleave', () => ring?.classList.remove('hovering'));
-			});
+				const tick = () => {
+					cx += (mx - cx) * 0.15;
+					cy += (my - cy) * 0.15;
+					dot.style.transform  = `translate3d(${mx}px,${my}px,0) translate(-50%,-50%)`;
+					ring.style.transform = `translate3d(${cx}px,${cy}px,0) translate(-50%,-50%)`;
+					rafId = requestAnimationFrame(tick);
+				};
 
-			// Scroll-to-top
-			const scrollBtn = document.getElementById('scroll-top');
+				document.addEventListener('mousemove', (e) => {
+					mx = e.clientX;
+					my = e.clientY;
+					if (!moved) {
+						moved = true;
+						document.body.classList.add('cursor-active');
+						rafId = requestAnimationFrame(tick);
+					}
+				}, { passive: true });
+
+				// Hover delegation
+				document.body.addEventListener('mouseover', (e) => {
+					const t = (e.target as HTMLElement).closest('a, button, [data-hover]');
+					if (t) ring.classList.add('hovering');
+				});
+				document.body.addEventListener('mouseout', (e) => {
+					const t = (e.target as HTMLElement).closest('a, button, [data-hover]');
+					if (t) ring.classList.remove('hovering');
+				});
+			}
+
+			// ── Scroll-to-top ────────────────────────────────────────────
+			const scrollBtn = document.getElementById('scroll-top') as HTMLButtonElement | null;
 			if (scrollBtn) {
+				let ticking = false;
 				window.addEventListener('scroll', () => {
-					const show = window.scrollY > 500;
-					scrollBtn.classList.toggle('opacity-0', !show);
-					scrollBtn.classList.toggle('pointer-events-none', !show);
+					if (!ticking) {
+						requestAnimationFrame(() => {
+							const show = window.scrollY > 500;
+							scrollBtn.classList.toggle('opacity-0', !show);
+							scrollBtn.classList.toggle('pointer-events-none', !show);
+							ticking = false;
+						});
+						ticking = true;
+					}
 				}, { passive: true });
 				scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 			}
 
-			// IntersectionObserver for data-animate
+			// ── Scroll-aware nav border ──────────────────────────────────
+			const nav = document.querySelector('nav[aria-label="Main Navigation"]') as HTMLElement | null;
+			if (nav) {
+				let ntick = false;
+				window.addEventListener('scroll', () => {
+					if (!ntick) {
+						requestAnimationFrame(() => {
+							nav.style.borderBottomColor = window.scrollY > 40 ? 'hsl(0,0%,16%)' : 'transparent';
+							ntick = false;
+						});
+						ntick = true;
+					}
+				}, { passive: true });
+			}
+
+			// ── Intersection Observer for scroll-reveal ──────────────────
 			const observer = new IntersectionObserver(entries => {
 				entries.forEach(e => {
 					if (e.isIntersecting) {
@@ -303,18 +356,34 @@ const sitelinksSchema = {
 						observer.unobserve(e.target);
 					}
 				});
-			}, { threshold: 0.08 });
+			}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
 			document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
 
-			// Sticky header
-			const nav = document.querySelector('nav[aria-label="Main Navigation"]') as HTMLElement | null;
-			if (nav) {
-				window.addEventListener('scroll', () => {
-					nav.style.borderBottomColor = window.scrollY > 40
-						? 'hsl(0,0%,16%)'
-						: 'transparent';
-				}, { passive: true });
-			}
+			// ── Language toggle: preserve scroll position via hash ────────
+			// On home pages (/ and /fr), find which section is most visible
+			// and append its #id so the browser scrolls there on the new page.
+			const sections = Array.from(document.querySelectorAll('section[id], header[id]')) as HTMLElement[];
+
+			document.querySelectorAll<HTMLAnchorElement>('[data-lang-toggle]').forEach(link => {
+				link.addEventListener('click', (e) => {
+					if (sections.length === 0) return; // not a page with sections (e.g. impressum)
+					e.preventDefault();
+					const mid = window.innerHeight / 2;
+					// Find the section whose rect is closest to the viewport center
+					let best = sections[0];
+					let bestDist = Infinity;
+					for (const s of sections) {
+						const r = s.getBoundingClientRect();
+						const center = r.top + r.height / 2;
+						const dist = Math.abs(center - mid);
+						if (dist < bestDist) { bestDist = dist; best = s; }
+					}
+					const base = link.getAttribute('href') || '/';
+					const hash = best.id && best.id !== 'hero' ? '#' + best.id : '';
+					window.location.href = base + hash;
+				});
+			});
 		</script>
 	</body>
 </html>

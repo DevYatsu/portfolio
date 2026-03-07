@@ -1,5 +1,7 @@
-# Netlify Edge Redirects
-# Redirect users whose browser language is French to the French version
-/  /fr  302!  Language=fr
+# Netlify Redirects
 
-# Fallback for explicit countries if needed, but Language=fr handles Swiss-French perfectly.
+# No forced root redirect. 
+# Static language pages are served at / (English) and /fr (French).
+
+# Fallback for explicit files
+/404.html  /404.html  404

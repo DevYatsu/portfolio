@@ -1,325 +1,355 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
 import { projects, skills, levelColors, marqueeItems } from '../data/portfolio';
+
+const lang = 'fr';
+
+const content = {
+  title: "Yanis Amani — Développeur & Étudiant CS",
+  description: "Étudiant en Informatique à la HE-Arc Neuchâtel. Je conçois des applications web et systèmes ultra-performantes en Rust, TypeScript, Python & C++.",
+  status: "disponible / freelance & stages",
+  location: "neuchâtel · suisse",
+  heroHeading1: "YANIS",
+  heroHeading2: "AMANI",
+  role: "Développeur Logiciel",
+  edu: "Étudiant BSc CS @ HE-Arc",
+  stack: "Rust · TypeScript · C++",
+  heroPara: "Je conçois des applications intrinsèquement rapides : des interfaces temps réel sans aucune latence jusqu'aux outils basés sur un contrôle total de la mémoire.",
+  ctaWork: "voir les projets",
+  ctaResume: "↓ cv.pdf",
+  ctaHello: "contact →",
+  stat1: "Projets",
+  stat2: "Langages",
+  stat3: "Ans de code",
+  projectsSub: "§ 01 / projets",
+  projectsTitle: "Sélection",
+  projectsTitleAccent: "de projets",
+  allGithub: "tout sur github ↗",
+  visit: "visiter ↗",
+  src: "code ↗",
+  skillsSub: "§ 02 / outils",
+  skillsTitle: "Outils au",
+  skillsTitleAccent: "Quotidien",
+  skillsPara: "Pas de graphique exagéré. Seulement les technologies réelles que j'utilise pour développer des logiciels performants, précis, et adaptés.",
+  whoami: "whoami",
+  whoamiVal: "étudiant @ HE-Arc, Neuchâtel",
+  whoamiVal2: "BSc Computer Science — en cours",
+  catInterests: "cat interets.txt",
+  echoStatus: "echo $STATUT",
+  statusVal: "disponible pour opportunités",
+  aboutSub: "§ 03 / sur moi",
+  aboutTitle: "Je crois que tout logiciel doit être",
+  aboutPara: "Je m'appelle Yanis — étudiant en informatique à la HE-Arc de Neuchâtel, fasciné par tous les pans du développement : autant par le design d'interfaces pixel-perfect sans latence que par l'écriture directe de compilateurs JIT de code machine.",
+  aboutPara2: "Je ne m'arrête pas à \"ça marche\".",
+  fast: "rapide",
+  correct: "précis",
+  pleasure: "simple à utiliser.",
+  currently: "actuellement",
+  spoken: "langues parlées",
+  spokenVal: "Français · Anglais",
+  interests: "intérêts",
+  contactSub: "§ 04 / contact",
+  contactTitle: "Un projet en tête ?",
+  contactPara: "Que ce soit pour le développement d'une application ultra-performante, de la programmation système, ou simplement pour parler technique — ma messagerie est ouverte.",
+  contactLinkedIn: "LinkedIn ↗",
+  bgTalk: "CONTACT"
+};
 ---
 
 <Layout
-  title="Yanis Amani — Développeur & Étudiant CS"
-  description="Yanis Amani — Étudiant en Informatique à la HE-Arc (Neuchâtel) et développeur logiciel. Je conçois des applications web et systèmes ultra-performantes en Rust, TypeScript, Python et C++."
-  lang="fr"
+  title={content.title}
+  description={content.description}
+  lang={lang}
 >
-
-<!-- ═══════════════════════ HERO ═══════════════════════ -->
-<header id="hero" class="relative min-h-screen flex flex-col justify-end pb-20 pt-28 md:pt-0 overflow-hidden">
-
-  <!-- Huge background number -->
-  <div aria-hidden="true"
-    class="absolute -right-8 bottom-0 select-none pointer-events-none leading-none font-black text-[hsl(0,0%,7%)] z-0"
-    style="font-size: clamp(14rem, 35vw, 32rem); letter-spacing: -0.06em; line-height: 0.8;">
-    01
-  </div>
-
-  <div aria-hidden="true"
-    class="absolute top-24 right-[12%] w-64 h-64 md:w-96 md:h-96 rounded-full pointer-events-none z-0"
-    style="background: radial-gradient(circle, hsl(24,100%,60%) 0%, transparent 70%); opacity: 0.06; filter: blur(1px);">
-  </div>
-
-  <div aria-hidden="true" class="absolute inset-0 pointer-events-none z-0" style="background-image: linear-gradient(hsl(0,0%,12%) 1px, transparent 1px), linear-gradient(90deg, hsl(0,0%,12%) 1px, transparent 1px); background-size: 80px 80px; opacity: 0.25;"></div>
-
-  <div class="max-w-7xl mx-auto w-full px-6 md:px-12 relative z-10">
-
-    <!-- Status pill -->
-    <div class="mb-10 flex items-center gap-4" data-animate>
-      <div class="flex items-center gap-2 border border-[hsl(0,0%,18%)] rounded-sm px-3 py-1.5">
-        <span class="w-1.5 h-1.5 rounded-full bg-[hsl(142,70%,55%)] animate-pulse" aria-hidden="true"></span>
-        <span class="mono-label">disponible / freelance & stages</span>
-      </div>
-      <span class="rule flex-1 hidden sm:block"></span>
-      <span class="mono-label hidden sm:block">neuchâtel · suisse</span>
+  <header id="hero" class="relative min-h-screen flex flex-col justify-end pb-20 pt-28 md:pt-0 overflow-hidden">
+    <div aria-hidden="true"
+      class="absolute -right-8 bottom-0 select-none pointer-events-none leading-none font-black text-gray-dark"
+      style="font-size: clamp(10rem, 35vw, 32rem); letter-spacing: -0.06em; line-height: 0.8;">
+      01
     </div>
-
-    <!-- Main heading -->
-    <div data-animate data-delay="1">
-      <h1>
-        <span class="display-xl block text-[hsl(0,0%,97%)] leading-none">
-          YANIS
-        </span>
-        <div class="flex flex-col sm:flex-row sm:items-end gap-4 sm:gap-8 mt-2">
-          <span class="display-xl block text-[hsl(0,0%,97%)] leading-none">
-            AMANI<span class="text-[hsl(24,100%,60%)]">.</span>
-          </span>
-          <div class="sm:mb-3 flex flex-col gap-1.5 sm:pb-2">
-            <span class="mono-label">Développeur Logiciel</span>
-            <span class="mono-label">Étudiant BSc CS @ HE-Arc</span>
-            <span class="mono-label">Rust · TypeScript · C++</span>
-          </div>
+    <div aria-hidden="true"
+      class="absolute top-24 right-[12%] w-64 h-64 md:w-96 md:h-96 rounded-full pointer-events-none"
+      style="background: radial-gradient(circle, hsl(24,100%,60%) 0%, transparent 70%); opacity: 0.06; filter: blur(1px);">
+    </div>
+    <div aria-hidden="true" class="absolute inset-0 pointer-events-none" style="background-image: linear-gradient(hsl(0,0%,12%) 1px, transparent 1px), linear-gradient(90deg, hsl(0,0%,12%) 1px, transparent 1px); background-size: 80px 80px; opacity: 0.25;"></div>
+    <div class="max-w-7xl mx-auto w-full px-6 md:px-12 relative z-10 pb-12 md:pb-0">
+      <div class="mb-10 flex items-center gap-4" data-animate>
+        <div class="flex items-center gap-2 border border-border rounded-sm px-3 py-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-[hsl(142,70%,55%)] animate-pulse" aria-hidden="true"></span>
+          <span class="mono-label">{content.status}</span>
         </div>
-      </h1>
-    </div>
-
-    <div class="mt-12 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-8" data-animate data-delay="2">
-      <p class="text-[hsl(0,0%,45%)] max-w-md leading-relaxed text-base">
-        Je conçois des applications intrinsèquement rapides : des interfaces temps réel sans aucune latence jusqu'aux outils basés sur un contrôle total de la mémoire.
-      </p>
-      <div class="flex flex-wrap gap-3 flex-shrink-0">
-        <a href="#projects" class="btn btn-orange text-sm" title="Voir les projets">
-          voir les projets
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
-          </svg>
-        </a>
-        <a href="/yanis_amani_cv.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-ghost text-sm text-[hsl(0,0%,75%)] hover:text-white" title="Télécharger le CV">
-          ↓ cv.pdf
-        </a>
-        <a href="mailto:yanis.amani@icloud.com" class="btn btn-ghost text-sm">
-          contact →
-        </a>
+        <span class="rule flex-1 hidden sm:block"></span>
+        <span class="mono-label hidden sm:block">{content.location}</span>
       </div>
-    </div>
-
-    <div class="mt-16 pt-8 border-t border-[hsl(0,0%,14%)] grid grid-cols-3 gap-4" data-animate data-delay="3">
-      {[
-        { n: '5+', l: 'Projets' },
-        { n: '3',  l: 'Langages Core' },
-        { n: '2+', l: 'Années d\'XP' },
-      ].map(s => (
-        <div>
-          <div class="text-3xl md:text-4xl font-black text-white mb-1 tabular-nums">{s.n}</div>
-          <div class="mono-label">{s.l}</div>
-        </div>
-      ))}
-    </div>
-  </div>
-</header>
-
-<!-- ═══════════════════════ MARQUEE ═══════════════════════ -->
-<div aria-label="Technologies" class="overflow-hidden border-y border-[hsl(0,0%,12%)] py-4 bg-[hsl(0,0%,7%)]">
-  <div class="flex gap-10 whitespace-nowrap" style="animation: marquee 30s linear infinite;">
-    {[...marqueeItems, ...marqueeItems].map(item => (
-      <span class="inline-flex items-center gap-4 font-mono text-[hsl(0,0%,30%)] text-xs font-bold uppercase tracking-widest">
-        {item} <span class="text-[hsl(24,100%,50%)] text-xs" aria-hidden="true">◆</span>
-      </span>
-    ))}
-  </div>
-</div>
-
-<!-- ═══════════════════════ PROJECTS ═══════════════════════ -->
-<section id="projects" aria-labelledby="projects-heading" class="py-24 md:py-32">
-  <div class="max-w-7xl mx-auto px-6 md:px-12">
-    <div class="flex items-end justify-between mb-16" data-animate>
-      <div>
-        <span class="section-num">§ 01 / projets</span>
-        <h2 id="projects-heading" class="display-md text-white">
-          Sélection<br/><span class="text-[hsl(0,0%,35%)]">de projets</span>
-        </h2>
-      </div>
-      <a href="https://github.com/DevYatsu" target="_blank" rel="noopener noreferrer"
-        class="hidden sm:flex btn btn-ghost text-xs" aria-label="Voir le GitHub">
-        tout sur github ↗
-      </a>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {projects.map((p, i) => (
-        <article id={`project-${p.id}`}
-          class={`bento group ${p.span}`}
-          style={p.accentVar}
-          data-animate
-          data-delay={String(i % 3 + 1)}>
-          
-          <div class="absolute inset-0 rounded-[inherit] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-            style={`background: radial-gradient(ellipse 60% 50% at 30% 50%, hsla(${p.accentHsl}, 0.06) 0%, transparent 100%);`}
-            aria-hidden="true">
-          </div>
-
-          <div class="flex items-start justify-between mb-8 relative z-10">
-            <span class="counter">{p.num}</span>
-            <span class={`chip ${p.statusColor}`}>{p.locales.fr.status}</span>
-          </div>
-
-          <h3 class="text-xl md:text-2xl font-black text-white mb-2 leading-tight relative z-10 group-hover:text-[var(--accent)] transition-colors duration-300">
-            {p.name}
-          </h3>
-          <p class="text-xs font-mono text-[hsl(0,0%,38%)] mb-4 relative z-10">{p.locales.fr.tagline}</p>
-          <p class="text-sm text-[hsl(0,0%,48%)] leading-relaxed flex-grow mb-6 relative z-10">{p.locales.fr.description}</p>
-
-          <div class="flex flex-wrap items-center justify-between gap-3 mt-auto relative z-10">
-            <div class="flex flex-wrap gap-1.5">
-              {p.tags.map(t => <span class="chip">{t}</span>)}
-            </div>
-            {p.url
-              ? <a href={p.url} target="_blank" rel="noopener noreferrer"
-                  class="text-xs font-mono text-[hsl(0,0%,40%)] hover:text-[var(--accent)] transition-colors flex items-center gap-1">
-                  visiter ↗
-                </a>
-              : <a href="https://github.com/DevYatsu" target="_blank" rel="noopener noreferrer"
-                  class="text-xs font-mono text-[hsl(0,0%,40%)] hover:text-white transition-colors flex items-center gap-1">
-                  code ↗
-                </a>
-            }
-          </div>
-        </article>
-      ))}
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════ SKILLS ═══════════════════════ -->
-<section id="skills" aria-labelledby="skills-heading" class="py-24 md:py-32 border-t border-[hsl(0,0%,12%)]">
-  <div class="max-w-7xl mx-auto px-6 md:px-12">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
-      
-      <div>
-        <div data-animate>
-          <span class="section-num">§ 02 / outils</span>
-          <h2 id="skills-heading" class="display-md text-white mb-6">
-            Outils au<br/><span class="text-[hsl(0,0%,35%)]">Quotidien</span>
-          </h2>
-          <p class="text-[hsl(0,0%,42%)] text-sm leading-relaxed max-w-sm mb-10">
-            Pas de graphique exagéré. Seulement les technologies réelles que j'utilise pour développer des logiciels performants, précis, et adaptés.
-          </p>
-        </div>
-
-        <div class="terminal" data-animate data-delay="2">
-          <div class="flex items-center gap-1.5 mb-4 pb-3 border-b border-[hsl(0,0%,14%)]">
-            <span class="w-2.5 h-2.5 rounded-full bg-[hsl(0,80%,55%)]" aria-hidden="true"></span>
-            <span class="w-2.5 h-2.5 rounded-full bg-[hsl(40,90%,55%)]" aria-hidden="true"></span>
-            <span class="w-2.5 h-2.5 rounded-full bg-[hsl(142,60%,50%)]" aria-hidden="true"></span>
-            <span class="ml-3 t-gray">~/yanis-amani</span>
-          </div>
-          <div>
-            <p><span class="t-green">❯</span> <span class="t-white">whoami</span></p>
-            <p class="t-gray ml-4">étudiant @ HE-Arc, Neuchâtel</p>
-            <p class="t-gray ml-4">BSc Computer Science — en cours</p>
-            <br/>
-            <p><span class="t-green">❯</span> <span class="t-white">cat interets.txt</span></p>
-            <p class="ml-4"><span class="t-orange">programmation système</span>, <span class="t-blue">perf web</span>,</p>
-            <p class="ml-4"><span class="t-orange">compilateurs</span>, <span class="t-blue">u.x. temps réel</span></p>
-            <br/>
-            <p><span class="t-green">❯</span> <span class="t-white">echo $STATUT</span></p>
-            <p class="ml-4 t-orange">disponible pour opportunités<span class="t-white blink">_</span></p>
-          </div>
-        </div>
-      </div>
-
       <div data-animate data-delay="1">
-        <div class="space-y-0">
-          {skills.map((s, i) => (
-            <div class="skill-row" role="listitem" aria-label={`${s.frName || s.name}: ${s.level.fr}`}>
-              <div class="flex items-center gap-3">
-                <span class="mono-label w-4 text-center">{String(i + 1).padStart(2, '0')}</span>
-                <span class="text-[hsl(0,0%,80%)] font-semibold text-sm">{s.frName || s.name}</span>
+        <h1>
+          <span class="display-xl block text-white leading-none">
+            YANIS
+          </span>
+          <div class="flex flex-col sm:flex-row sm:items-end gap-4 sm:gap-8 mt-2">
+            <span class="display-xl block text-white leading-none">
+              AMANI<span class="text-orange">.</span>
+            </span>
+            <div class="sm:mb-3 flex flex-col gap-1.5 sm:pb-2">
+              <span class="mono-label">{content.role}</span>
+              <span class="mono-label">{content.edu}</span>
+              <span class="mono-label">{content.stack}</span>
+            </div>
+          </div>
+        </h1>
+      </div>
+      <div class="mt-12 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-8" data-animate data-delay="2">
+        <p class="text-[hsl(0,0%,45%)] max-w-md leading-relaxed text-base">
+          {content.heroPara}
+        </p>
+        <div class="flex flex-wrap gap-3 shrink-0">
+          <a href="#projects" class="btn btn-orange text-sm" title={content.ctaWork}>
+            {content.ctaWork}
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </a>
+          <a href="/yanis_amani_cv.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-ghost text-sm text-[hsl(0,0%,75%)] hover:text-white" title={content.ctaResume}>
+            {content.ctaResume}
+          </a>
+          <a href="mailto:yanis.amani@icloud.com" class="btn btn-ghost text-sm">
+            {content.ctaHello}
+          </a>
+        </div>
+      </div>
+      <div class="mt-16 pt-8 border-t border-border grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-4" data-animate data-delay="3">
+        {[
+          { n: '5+', l: content.stat1 },
+          { n: '5+', l: content.stat2 },
+          { n: '4+', l: content.stat3 },
+        ].map(s => (
+          <div>
+            <div class="text-3xl md:text-4xl font-black text-white mb-1 tabular-nums">{s.n}</div>
+            <div class="mono-label">{s.l}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </header>
+
+  <div aria-label="Technologies" class="overflow-hidden border-y border-[hsl(0,0%,12%)] py-4 bg-gray-dark">
+    <div class="flex gap-10 whitespace-nowrap marquee-container" style="animation: marquee 30s linear infinite;">
+      {[...marqueeItems, ...marqueeItems].map(item => (
+        <span class="inline-flex items-center gap-4 font-mono text-[hsl(0,0%,30%)] text-xs font-bold uppercase tracking-widest">
+          {item} <span class="text-orange text-xs" aria-hidden="true">◆</span>
+        </span>
+      ))}
+    </div>
+  </div>
+
+  <section id="projects" aria-labelledby="projects-heading" class="py-24 md:py-32">
+    <div class="max-w-7xl mx-auto px-6 md:px-12">
+      <div class="flex items-end justify-between mb-16" data-animate>
+        <div>
+          <span class="section-num">{content.projectsSub}</span>
+          <h2 id="projects-heading" class="display-md text-white">
+            {content.projectsTitle}<br/><span class="text-muted">{content.projectsTitleAccent}</span>
+          </h2>
+        </div>
+        <a href="https://github.com/DevYatsu" target="_blank" rel="noopener noreferrer"
+          class="hidden sm:flex btn btn-ghost text-xs" aria-label={content.allGithub}>
+          {content.allGithub}
+        </a>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {projects.map((p, i) => (
+          <article id={`project-${p.id}`}
+            class={`bento group ${p.span}`}
+            style={p.accentVar}
+            data-animate
+            data-delay={String(i % 3 + 1)}
+            aria-label={`Project: ${p.name}`}>
+            <div class="absolute inset-0 rounded-[inherit] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+              style={`background: radial-gradient(ellipse 60% 50% at 30% 50%, hsla(${p.accentHsl}, 0.06) 0%, transparent 100%);`}
+              aria-hidden="true">
+            </div>
+            <div class="flex items-start justify-between mb-8 relative z-10">
+              <span class="counter">{p.num}</span>
+              <span class={`chip ${p.statusColor}`}>{p.locales[lang].status}</span>
+            </div>
+            <h3 class="text-xl md:text-2xl font-black text-white mb-2 leading-tight relative z-10
+                        group-hover:text-(--accent) transition-colors duration-300">
+              {p.name}
+            </h3>
+            <p class="text-xs font-mono text-[hsl(0,0%,38%)] mb-3 relative z-10">{p.locales[lang].tagline}</p>
+            <p class="text-sm text-[hsl(0,0%,48%)] leading-relaxed grow mb-5 relative z-10">{p.locales[lang].description}</p>
+            <div class="flex flex-wrap items-center justify-between gap-3 mt-auto relative z-10">
+              <div class="flex flex-wrap gap-1.5">
+                {p.tags.map(t => <span class="chip">{t}</span>)}
               </div>
-              <div class="flex items-center gap-3">
-                <span class="font-mono text-xs" style={`color: ${levelColors[s.level.fr]}`}>{s.level.fr}</span>
-                <!-- Level bar -->
-                <div class="w-16 h-px bg-[hsl(0,0%,18%)] relative hidden sm:block" aria-hidden="true">
-                  <div class="absolute top-0 left-0 h-full rounded-full transition-all duration-500"
-                    style={`width: ${s.level.fr === 'Avancé' ? '100%' : s.level.fr === 'Compétent' ? '65%' : '40%'}; background: ${levelColors[s.level.fr]};`}>
+              {p.url
+                ? <a href={p.url} target="_blank" rel="noopener noreferrer"
+                    aria-label={`Visit ${p.name} live`}
+                    class="text-xs font-mono text-muted hover:text-(--accent) transition-colors flex items-center gap-1">
+                    {content.visit}
+                  </a>
+                : <a href="https://github.com/DevYatsu" target="_blank" rel="noopener noreferrer"
+                    aria-label={`View source of ${p.name}`}
+                    class="text-xs font-mono text-muted hover:text-white transition-colors flex items-center gap-1">
+                    {content.src}
+                  </a>
+              }
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" aria-labelledby="skills-heading" class="py-24 md:py-32 border-t border-[hsl(0,0%,12%)]">
+    <div class="max-w-7xl mx-auto px-6 md:px-12">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+        <div>
+          <div data-animate>
+            <span class="section-num">{content.skillsSub}</span>
+            <h2 id="skills-heading" class="display-md text-white mb-6">
+              {content.skillsTitle}<br/><span class="text-muted">{content.skillsTitleAccent}</span>
+            </h2>
+            <p class="text-[hsl(0,0%,42%)] text-sm leading-relaxed max-w-sm mb-10">
+              {content.skillsPara}
+            </p>
+          </div>
+          <div class="terminal" data-animate data-delay="2">
+            <div class="flex items-center gap-1.5 mb-4 pb-3 border-b border-[hsl(0,0%,14%)]">
+              <span class="w-2.5 h-2.5 rounded-full bg-[hsl(0,80%,55%)]" aria-hidden="true"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-[hsl(40,90%,55%)]" aria-hidden="true"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-[hsl(142,60%,50%)]" aria-hidden="true"></span>
+              <span class="ml-3 t-gray">~/yanis-amani</span>
+            </div>
+            <div>
+              <p><span class="t-green">❯</span> <span class="t-white">{content.whoami}</span></p>
+              <p class="t-gray ml-4">{content.whoamiVal}</p>
+              <p class="t-gray ml-4">{content.whoamiVal2}</p>
+              <br/>
+              <p><span class="t-green">❯</span> <span class="t-white">{content.catInterests}</span></p>
+              <div class="ml-4 flex flex-col gap-0.5">
+                <p><span class="t-orange">programmation système</span>, <span class="t-blue">web perf</span>,</p>
+                <p><span class="t-orange">compilateurs</span>, <span class="t-blue">u.x. temps réel</span></p>
+              </div>
+              <br/>
+              <p><span class="t-green">❯</span> <span class="t-white">{content.echoStatus}</span></p>
+              <p class="ml-4 t-orange">{content.statusVal}<span class="t-white blink">_</span></p>
+            </div>
+          </div>
+        </div>
+        <div data-animate data-delay="1">
+          <div class="space-y-0">
+            {skills.map((s, i) => (
+              <div class="skill-row" role="listitem" aria-label={`${s.frName || s.name}: ${s.level[lang]}`}>
+                <div class="flex items-center gap-3">
+                  <span class="mono-label w-4 text-center">{String(i + 1).padStart(2, '0')}</span>
+                  <span class="text-[hsl(0,0%,80%)] font-semibold text-sm">{s.frName || s.name}</span>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="font-mono text-xs" style={`color: ${levelColors[s.level[lang]]}`}>{s.level[lang]}</span>
+                  <div class="w-16 h-px bg-border relative hidden sm:block" aria-hidden="true">
+                    <div class="absolute top-0 left-0 h-full rounded-full transition-all duration-500"
+                      style={`width: ${s.level[lang] === 'Advanced' || s.level[lang] === 'Avancé' ? '100%' : (s.level[lang] === 'Proficient' || s.level[lang] === 'Compétent') ? '65%' : '40%'}; background: ${levelColors[s.level[lang]]};`}>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════ ABOUT ═══════════════════════ -->
-<section id="about" aria-labelledby="about-heading" class="py-24 md:py-32 border-t border-[hsl(0,0%,12%)] overflow-hidden">
-  <div class="max-w-7xl mx-auto px-6 md:px-12">
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-0">
-      
-      <div class="lg:col-span-2 lg:pr-16 border-r-0 lg:border-r border-[hsl(0,0%,12%)]" data-animate>
-        <span class="section-num">§ 03 / sur moi</span>
-        <h2 id="about-heading" class="display-md text-white mb-8">
-          Je crois que tout logiciel <br/>
-          doit être <span class="text-[hsl(24,100%,60%)]">rapide</span>,<br/>
-          <span class="text-[hsl(0,0%,35%)]">précis</span>, et<br/>
-          <span class="text-[hsl(0,0%,35%)]">simple à utiliser.</span>
-        </h2>
-        <p class="text-[hsl(0,0%,42%)] text-sm leading-relaxed max-w-lg">
-          Je m'appelle Yanis — étudiant en informatique à la HE-Arc de Neuchâtel, fasciné par tous les pans du développement : autant par le design d'interfaces pixel-perfect sans latence que par l'écriture directe de compilateurs JIT de code machine. Je ne m'arrête pas à "ça marche".
-        </p>
-      </div>
-
-      <div class="lg:pl-12 flex flex-col gap-4">
-        <div class="bento !py-5 !px-6" data-animate data-delay="1">
-          <p class="mono-label mb-2">actuellement</p>
-          <p class="text-white font-semibold text-sm">BSc Computer Science</p>
-          <p class="text-[hsl(0,0%,38%)] text-xs mt-0.5">HE-Arc · Neuchâtel · Suisse</p>
-        </div>
-        <div class="bento !py-5 !px-6" data-animate data-delay="2">
-          <p class="mono-label mb-2">GitHub</p>
-          <a href="https://github.com/DevYatsu" target="_blank" rel="noopener noreferrer"
-            class="text-white font-semibold text-sm hover:text-[hsl(24,100%,60%)] transition-colors">
-            @DevYatsu ↗
-          </a>
-        </div>
-        <div class="bento !py-5 !px-6" data-animate data-delay="3">
-          <p class="mono-label mb-2">langues partlées</p>
-          <p class="text-white font-semibold text-sm">Français · Anglais</p>
-        </div>
-        <div class="bento !py-5 !px-6" data-animate data-delay="4">
-          <p class="mono-label mb-2">intérêts</p>
-          <div class="flex flex-wrap gap-1.5 mt-1">
-            {['Compilateurs', 'Web Perf', 'Systèmes', 'Open Source', 'UI/UX'].map(t => (
-              <span class="chip">{t}</span>
             ))}
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ═══════════════════════ CONTACT ═══════════════════════ -->
-<section id="contact" aria-labelledby="contact-heading" class="py-24 md:py-32 border-t border-[hsl(0,0%,12%)] relative overflow-hidden">
-  <div aria-hidden="true"
-    class="absolute inset-0 flex items-center justify-center select-none pointer-events-none z-0 overflow-hidden">
-    <span class="font-black text-[hsl(0,0%,7%)] whitespace-nowrap"
-      style="font-size: clamp(6rem, 18vw, 16rem); letter-spacing: -0.05em; line-height: 1;">
-      CONTACT
-    </span>
-  </div>
-
-  <div class="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-    <div class="max-w-2xl" data-animate>
-      <span class="section-num">§ 04 / contact</span>
-      <h2 id="contact-heading" class="display-md text-white mb-6">
-        Un projet<br/>en tête ?
-      </h2>
-      <p class="text-[hsl(0,0%,42%)] text-sm leading-relaxed mb-10 max-w-md">
-        Que ce soit pour le développement d'une application ultra-performante, de la programmation système, ou simplement pour parler technique — ma messagerie est ouverte.
-      </p>
-      <div class="flex flex-col sm:flex-row gap-4">
-        <a href="mailto:yanis.amani@icloud.com"
-          class="btn btn-orange text-sm glow-pulse"
-          title="Envoyer un email à Yanis Amani">
-          yanis.amani@icloud.com
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-          </svg>
-        </a>
-        <a href="https://linkedin.com/in/yanis-amani" target="_blank" rel="noopener noreferrer"
-          class="btn btn-ghost text-sm">
-          LinkedIn ↗
-        </a>
-      </div>
-
-      <div class="mt-16 pt-8 border-t border-[hsl(0,0%,12%)] flex items-center gap-8 flex-wrap">
-        <a href="https://github.com/DevYatsu" target="_blank" rel="noopener noreferrer"
-          class="mono-label hover:text-[hsl(0,0%,70%)] transition-colors">
-          github.com/DevYatsu
-        </a>
-        <span class="rule flex-1 hidden sm:block"></span>
-        <span class="mono-label">Neuchâtel, CH</span>
+  <section id="about" aria-labelledby="about-heading" class="py-24 md:py-32 border-t border-[hsl(0,0%,12%)] overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 md:px-12">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-0">
+        <div class="lg:col-span-2 lg:pr-16 border-r-0 lg:border-r border-[hsl(0,0%,12%)]" data-animate>
+          <span class="section-num">{content.aboutSub}</span>
+          <h2 id="about-heading" class="display-md text-white mb-8">
+            {content.aboutTitle}<br/>
+            <span class="text-orange">{content.fast}</span>,<br/>
+            <span class="text-muted">{content.correct}</span>, et<br/>
+            <span class="text-muted">{content.pleasure}</span>
+          </h2>
+          <p class="text-[hsl(0,0%,42%)] text-sm leading-relaxed max-w-lg">
+            {content.aboutPara}
+          </p>
+          <p class="text-[hsl(0,0%,42%)] text-sm leading-relaxed max-w-lg mt-4 italic">
+            {content.aboutPara2}
+          </p>
+        </div>
+        <div class="lg:pl-12 flex flex-col gap-4">
+          <div class="bento py-5! px-6!" data-animate data-delay="1">
+            <p class="mono-label mb-2">{content.currently}</p>
+            <p class="text-white font-semibold text-sm">BSc Computer Science</p>
+            <p class="text-[hsl(0,0%,38%)] text-xs mt-0.5">HE-Arc · Neuchâtel · Suisse</p>
+          </div>
+          <div class="bento py-5! px-6!" data-animate data-delay="2">
+            <p class="mono-label mb-2">GitHub</p>
+            <a href="https://github.com/DevYatsu" target="_blank" rel="noopener noreferrer"
+              class="text-white font-semibold text-sm hover:text-orange transition-colors">
+              @DevYatsu ↗
+            </a>
+          </div>
+          <div class="bento py-5! px-6!" data-animate data-delay="3">
+            <p class="mono-label mb-2">{content.spoken}</p>
+            <p class="text-white font-semibold text-sm">{content.spokenVal}</p>
+          </div>
+          <div class="bento py-5! px-6!" data-animate data-delay="4">
+            <p class="mono-label mb-2">{content.interests}</p>
+            <div class="flex flex-wrap gap-1.5 mt-1">
+              {['Compilateurs', 'Perf Web', 'Systèmes', 'Open Source', 'UI/UX'].map(t => (
+                <span class="chip">{t}</span>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
+  <section id="contact" aria-labelledby="contact-heading" class="py-24 md:py-32 border-t border-[hsl(0,0%,12%)] relative overflow-hidden">
+    <div aria-hidden="true"
+      class="absolute inset-0 flex items-center justify-center select-none pointer-events-none overflow-hidden">
+      <span class="font-black text-gray-dark whitespace-nowrap"
+        style="font-size: clamp(4rem, 16vw, 16rem); letter-spacing: -0.05em; line-height: 1;">
+        {content.bgTalk}
+      </span>
+    </div>
+    <div class="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+      <div class="max-w-2xl" data-animate>
+        <span class="section-num">{content.contactSub}</span>
+        <h2 id="contact-heading" class="display-md text-white mb-6">
+          {content.contactTitle}
+        </h2>
+        <p class="text-muted text-sm leading-relaxed mb-10 max-w-md">
+          {content.contactPara}
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="mailto:yanis.amani@icloud.com" id="contact-email-cta"
+            class="btn btn-orange text-sm glow-pulse"
+            title="Envoyer un email" aria-label="Email Yanis Amani">
+            yanis.amani@icloud.com
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+            </svg>
+          </a>
+          <a href="https://linkedin.com/in/yanis-amani" target="_blank" rel="noopener noreferrer"
+            class="btn btn-ghost text-sm"
+            title="Connect on LinkedIn" aria-label="Yanis Amani on LinkedIn">
+            {content.contactLinkedIn}
+          </a>
+        </div>
+        <div class="mt-16 pt-8 border-t border-[hsl(0,0%,12%)] flex items-center gap-8 flex-wrap">
+          <a href="https://github.com/DevYatsu" target="_blank" rel="noopener noreferrer"
+            class="mono-label hover:text-[hsl(0,0%,70%)] transition-colors">
+            github.com/DevYatsu
+          </a>
+          <span class="rule flex-1 hidden sm:block"></span>
+          <span class="mono-label">Neuchâtel, CH</span>
+        </div>
+      </div>
+    </div>
+  </section>
 </Layout>

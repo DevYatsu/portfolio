@@ -7,55 +7,305 @@ import Layout from '../layouts/Layout.astro';
   description="Mentions légales et politique de confidentialité (conformité RGPD) du portfolio de Yanis Amani."
   lang="fr"
 >
-  <section class="py-32 md:py-40">
-    <div class="max-w-3xl mx-auto px-6 md:px-12">
+  <!-- Decorative background elements -->
+  <div class="fixed inset-0 pointer-events-none z-0" aria-hidden="true">
+    <div class="absolute inset-0" style="background-image: linear-gradient(hsl(0,0%,10%) 1px, transparent 1px), linear-gradient(90deg, hsl(0,0%,10%) 1px, transparent 1px); background-size: 80px 80px; opacity: 0.2;"></div>
+    <div class="absolute top-20 right-[15%] w-72 h-72 md:w-[500px] md:h-[500px] rounded-full" style="background: radial-gradient(circle, hsl(24,100%,60%) 0%, transparent 70%); opacity: 0.04; filter: blur(2px);"></div>
+    <div class="absolute bottom-40 left-[10%] w-48 h-48 md:w-80 md:h-80 rounded-full" style="background: radial-gradient(circle, hsl(24,100%,45%) 0%, transparent 70%); opacity: 0.03; filter: blur(2px);"></div>
+  </div>
+
+  <section class="relative z-10 pt-32 md:pt-40 pb-20 md:pb-28">
+    <div class="max-w-4xl mx-auto px-6 md:px-12">
+      <!-- Back link -->
+      <a href="/fr" class="inline-flex items-center gap-2 text-[hsl(0,0%,35%)] hover:text-orange-400 transition-colors duration-300 mb-12 group" data-animate>
+        <svg class="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m0 0l7 7m-7-7l7-7"/>
+        </svg>
+        <span class="font-mono text-xs tracking-wider uppercase">Retour au portfolio</span>
+      </a>
+
+      <!-- Page header -->
       <div data-animate>
         <span class="section-num mb-6">§ Légal</span>
-        <h1 class="display-md text-white mb-12">
+        <h1 class="display-md text-white mb-4">
           Mentions Légales &<br/>
           <span class="text-[hsl(0,0%,35%)]">Confidentialité</span>
         </h1>
+        <p class="text-[hsl(0,0%,40%)] text-sm font-mono tracking-wide">
+          Dernière mise à jour — Mars 2026
+        </p>
       </div>
 
-      <div class="space-y-12 text-[hsl(0,0%,70%)] text-sm leading-relaxed" data-animate data-delay="1">
-        
-        <!-- Mentions légales -->
-        <div>
-          <h2 class="text-xl font-bold text-white mb-4">1. Éditeur du site</h2>
-          <p class="mb-2"><strong>Responsable de la publication :</strong><br/>
-          Yanis Amani<br/>
-          Étudiant en Informatique à la HE-Arc de Neuchâtel<br/>
-          Espace de l'Europe 11, 2000 Neuchâtel, Suisse<br/>
-          Email: <a href="mailto:yanis.amani@icloud.com" class="text-orange-400 hover:underline">yanis.amani@icloud.com</a></p>
+      <div class="rule my-12" data-animate data-delay="1"></div>
 
-          <p class="mt-6 mb-2"><strong>Hébergeur :</strong><br/>
-          Netlify, Inc.<br/>
-          44 Montgomery Street, Suite 300<br/>
-          San Francisco, California 94104<br/>
-          États-Unis<br/>
-          Site web: <a href="https://www.netlify.com" target="_blank" rel="noopener noreferrer" class="text-orange-400 hover:underline">netlify.com</a></p>
+      <!-- ═══ Section 1: Éditeur du site ═══ -->
+      <div class="legal-card" data-animate data-delay="1">
+        <div class="legal-card-header">
+          <div class="legal-icon" aria-hidden="true">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            </svg>
+          </div>
+          <div>
+            <span class="counter">01</span>
+            <h2 class="text-xl font-bold text-white mt-1">Éditeur du site</h2>
+          </div>
         </div>
 
-        <!-- Politique de confidentialité -->
-        <div>
-          <h2 class="text-xl font-bold text-white mb-4">2. Politique de confidentialité (RGPD)</h2>
-          
-          <h3 class="text-white font-semibold mb-2 mt-6">Collecte de données et cookies</h3>
-          <p class="mb-4">Ce site est conçu pour respecter votre vie privée. Il ne dépose <strong>aucun cookie de ciblage ou publicitaire</strong>, et n'exploite aucun script d'analyse tiers (type Google Analytics, Facebook Pixel, etc.). Votre navigation reste strictement confidentielle.</p>
-          <p class="mb-4">Lors de votre visite, l'hébergeur du site (Netlify) enregistre des journaux de connexion (logs) standard nécessaires à des raisons de sécurité et de maintenance. Cela peut comprendre de manière éphémère votre adresse IP, votre type de navigateur et l'heure d'accès. Ces données techniques sont inhérentes au fonctionnement du web et ne m'identifient pas directement.</p>
+        <div class="legal-card-body">
+          <div class="legal-info-block">
+            <p class="legal-label">Responsable de la publication</p>
+            <p class="legal-value">Yanis Amani</p>
+            <p class="legal-detail">Étudiant en Informatique à la HE-Arc de Neuchâtel</p>
+            <p class="legal-detail">Espace de l'Europe 11, 2000 Neuchâtel, Suisse</p>
+            <a href="mailto:yanis.amani@icloud.com" class="legal-link mt-2">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+              yanis.amani@icloud.com
+            </a>
+          </div>
 
-          <h3 class="text-white font-semibold mb-2 mt-6">Formulaire de contact et e-mails</h3>
-          <p class="mb-4">Si vous me sollicitez via l'adresse e-mail précisée sur le site, vos informations de contact et éventuelles données incluses dans vos messages ne seront conservées que pour donner suite à votre prise de contact. Elles ne seront en aucun cas revendues, ou partagées à des tiers sans votre autorisation formelle.</p>
+          <div class="legal-divider"></div>
 
-          <h3 class="text-white font-semibold mb-2 mt-6">Droits sur vos données</h3>
-          <p class="mb-4">En vertu du Règlement Général sur la Protection des Données (RGPD) et de la loi fédérale Suisse sur la protection des données (nLPD), vous bénéficiez d'un droit d'accès, de rectification et d'effacement de toute potentielle information personnelle transmise.</p>
-          <p>Dans la mesure où le site ne stocke aucune base de données de visiteurs, ce droit s'applique majoritairement à nos échanges e-mails. Vous pouvez l'exercer en m'écrivant à cette adresse : <a href="mailto:yanis.amani@icloud.com" class="text-orange-400 hover:underline">yanis.amani@icloud.com</a>.</p>
+          <div class="legal-info-block">
+            <p class="legal-label">Hébergeur</p>
+            <p class="legal-value">Netlify, Inc.</p>
+            <p class="legal-detail">44 Montgomery Street, Suite 300</p>
+            <p class="legal-detail">San Francisco, California 94104, États-Unis</p>
+            <a href="https://www.netlify.com" target="_blank" rel="noopener noreferrer" class="legal-link mt-2">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+              </svg>
+              netlify.com
+            </a>
+          </div>
+        </div>
+      </div>
 
-          <h3 class="text-white font-semibold mb-2 mt-6">Liens externes</h3>
-          <p class="mb-4">Le site redirige vers des espaces externes contrôlés par des tiers (GitHub, LinkedIn). Ces entreprises imposent leurs propres politiques RGPD quant à la collecte de données sur leurs plateformes — je vous invite à les lire si vous êtes redirigés vers celles-ci.</p>
+      <!-- ═══ Section 2: Politique de confidentialité ═══ -->
+      <div class="legal-card" data-animate data-delay="2">
+        <div class="legal-card-header">
+          <div class="legal-icon" aria-hidden="true">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+          </div>
+          <div>
+            <span class="counter">02</span>
+            <h2 class="text-xl font-bold text-white mt-1">Politique de confidentialité <span class="text-[hsl(0,0%,30%)] text-sm font-normal">(RGPD)</span></h2>
+          </div>
         </div>
 
+        <div class="legal-card-body space-y-8">
+          <!-- Collecte de données -->
+          <div>
+            <h3 class="legal-section-title">
+              <span class="legal-section-dot" aria-hidden="true"></span>
+              Collecte de données et cookies
+            </h3>
+            <p class="legal-text">
+              Ce site est conçu pour respecter votre vie privée. Il ne dépose <strong class="text-white/80">aucun cookie de ciblage ou publicitaire</strong>, et n'exploite aucun script d'analyse tiers (type Google Analytics, Facebook Pixel, etc.). Votre navigation reste strictement confidentielle.
+            </p>
+            <p class="legal-text mt-3">
+              Lors de votre visite, l'hébergeur du site (Netlify) enregistre des journaux de connexion (logs) standard nécessaires à des raisons de sécurité et de maintenance. Cela peut comprendre de manière éphémère votre adresse IP, votre type de navigateur et l'heure d'accès. Ces données techniques sont inhérentes au fonctionnement du web et ne m'identifient pas directement.
+            </p>
+          </div>
+
+          <!-- Contact -->
+          <div>
+            <h3 class="legal-section-title">
+              <span class="legal-section-dot" aria-hidden="true"></span>
+              Formulaire de contact et e-mails
+            </h3>
+            <p class="legal-text">
+              Si vous me sollicitez via l'adresse e-mail précisée sur le site, vos informations de contact et éventuelles données incluses dans vos messages ne seront conservées que pour donner suite à votre prise de contact. Elles ne seront en aucun cas revendues, ou partagées à des tiers sans votre autorisation formelle.
+            </p>
+          </div>
+
+          <!-- Droits -->
+          <div>
+            <h3 class="legal-section-title">
+              <span class="legal-section-dot" aria-hidden="true"></span>
+              Droits sur vos données
+            </h3>
+            <p class="legal-text">
+              En vertu du Règlement Général sur la Protection des Données (RGPD) et de la loi fédérale Suisse sur la protection des données (nLPD), vous bénéficiez d'un droit d'accès, de rectification et d'effacement de toute potentielle information personnelle transmise.
+            </p>
+            <div class="legal-highlight mt-4">
+              <svg class="w-4 h-4 text-orange-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              <p class="text-sm text-[hsl(0,0%,55%)] leading-relaxed">
+                Dans la mesure où le site ne stocke aucune base de données de visiteurs, ce droit s'applique majoritairement à nos échanges e-mails. Vous pouvez l'exercer en m'écrivant à :
+                <a href="mailto:yanis.amani@icloud.com" class="text-orange-400 hover:text-orange-300 hover:underline transition-colors">yanis.amani@icloud.com</a>
+              </p>
+            </div>
+          </div>
+
+          <!-- Liens externes -->
+          <div>
+            <h3 class="legal-section-title">
+              <span class="legal-section-dot" aria-hidden="true"></span>
+              Liens externes
+            </h3>
+            <p class="legal-text">
+              Le site redirige vers des espaces externes contrôlés par des tiers (GitHub, LinkedIn). Ces entreprises imposent leurs propres politiques RGPD quant à la collecte de données sur leurs plateformes — je vous invite à les lire si vous êtes redirigés vers celles-ci.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer note -->
+      <div class="mt-16 pt-8 border-t border-[hsl(0,0%,12%)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4" data-animate data-delay="3">
+        <p class="mono-label">© {new Date().getFullYear()} Yanis Amani — Tous droits réservés</p>
+        <a href="/impressum" class="text-xs font-mono text-[hsl(0,0%,35%)] hover:text-orange-400 transition-colors flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
+          </svg>
+          View in English
+        </a>
       </div>
     </div>
   </section>
 </Layout>
+
+<style>
+  .legal-card {
+    position: relative;
+    margin-top: 2rem;
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid hsl(0, 0%, 13%);
+    background: hsl(0, 0%, 7%);
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
+  }
+  .legal-card:hover {
+    border-color: hsl(0, 0%, 20%);
+    box-shadow: 0 0 60px -20px hsla(24, 100%, 50%, 0.06);
+  }
+
+  .legal-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid hsl(0, 0%, 12%);
+  }
+
+  .legal-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 8px;
+    border: 1px solid hsl(24, 80%, 25%);
+    background: hsl(24, 100%, 8%);
+    color: hsl(24, 100%, 60%);
+    flex-shrink: 0;
+  }
+
+  .legal-card-body {
+    padding-left: 0.5rem;
+  }
+
+  .legal-info-block {
+    padding: 1rem 0;
+  }
+
+  .legal-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: hsl(24, 100%, 55%);
+    margin-bottom: 0.5rem;
+  }
+
+  .legal-value {
+    color: hsl(0, 0%, 90%);
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .legal-detail {
+    color: hsl(0, 0%, 50%);
+    font-size: 0.875rem;
+    line-height: 1.7;
+  }
+
+  .legal-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    font-family: var(--font-mono);
+    color: hsl(24, 100%, 60%);
+    transition: all 0.25s ease;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    background: hsl(24, 100%, 5%);
+    border: 1px solid hsl(24, 80%, 20%);
+  }
+  .legal-link:hover {
+    color: hsl(24, 100%, 75%);
+    background: hsl(24, 100%, 8%);
+    border-color: hsl(24, 80%, 35%);
+    transform: translateX(4px);
+  }
+
+  .legal-divider {
+    height: 1px;
+    background: linear-gradient(to right, hsl(0, 0%, 15%), transparent);
+    margin: 0.5rem 0;
+  }
+
+  .legal-section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: hsl(0, 0%, 92%);
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  .legal-section-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: hsl(24, 100%, 55%);
+    flex-shrink: 0;
+  }
+
+  .legal-text {
+    color: hsl(0, 0%, 55%);
+    font-size: 0.875rem;
+    line-height: 1.8;
+  }
+  .legal-text strong {
+    font-weight: 600;
+  }
+
+  .legal-highlight {
+    display: flex;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    border-radius: 8px;
+    border: 1px solid hsl(24, 80%, 18%);
+    background: hsl(24, 100%, 4%);
+  }
+
+  @media (min-width: 768px) {
+    .legal-card {
+      padding: 2.5rem;
+    }
+    .legal-card-body {
+      padding-left: 1rem;
+    }
+  }
+</style>

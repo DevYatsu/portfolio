@@ -60,7 +60,7 @@ export const projects = [
     id: 'express-rs',
     num: '02',
     name: 'express_rs',
-    url: null,
+    url: 'https://github.com/DevYatsu/express_rs',
     tags: ['Rust', 'HTTP', 'TCP', 'Multithreading'],
     statusColor: '',
     span: '',
@@ -92,7 +92,7 @@ export const projects = [
     locales: {
       en: {
         tagline: 'Machine code from scratch',
-        description: 'A JIT compiler written in C++. Direct x86-64 codegen, register allocation, memory mapping — no external libs, pure low-level craft.',
+        description: 'A JIT compiler written in C++. Direct x86-64 codegen, register allocation, memory mapping with no external libs, pure low-level craft.',
         status: 'Systems',
       },
       fr: {
