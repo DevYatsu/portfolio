@@ -1,0 +1,5 @@
+# Netlify Edge Redirects
+# Redirect users whose browser language is French to the French version
+/  /fr  302!  Language=fr
+
+# Fallback for explicit countries if needed, but Language=fr handles Swiss-French perfectly.

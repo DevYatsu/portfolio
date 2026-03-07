@@ -1,0 +1,42 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="404 — Not Found"
+  description="File not found on Yanis Amani's portfolio."
+  lang="en"
+>
+  <section class="min-h-[80vh] flex flex-col justify-center py-32 md:py-40">
+    <div class="max-w-2xl mx-auto px-6 w-full">
+      <div data-animate>
+        <span class="section-num mb-6">§ error_404</span>
+        <h1 class="display-md text-white mb-10">
+          Segmentation <br/>
+          <span class="text-[hsl(0,80%,62%)]">Fault</span>
+        </h1>
+
+        <div class="terminal mb-12">
+          <div class="flex items-center gap-1.5 mb-4 pb-3 border-b border-[hsl(0,0%,14%)]">
+            <span class="w-2.5 h-2.5 rounded-full bg-[hsl(0,80%,55%)]" aria-hidden="true"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-[hsl(40,90%,55%)]" aria-hidden="true"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-[hsl(142,60%,50%)]" aria-hidden="true"></span>
+            <span class="ml-3 t-gray">yatsu@server</span>
+          </div>
+          <div class="font-mono text-sm leading-relaxed">
+            <p><span class="text-[hsl(0,80%,62%)]">FATAL ERROR</span>: Unhandled exception at 0x00000404</p>
+            <p>Page fault linking to <span class="text-white">requested URL</span></p>
+            <p class="t-gray ml-4">Reason: Resource not found or deleted from memory.</p>
+            <br/>
+            <p><span class="t-green">❯</span> <span class="t-white">reboot --target /</span></p>
+            <p class="ml-4 t-orange">Initiating safe mode sequence<span class="text-white blink">_</span></p>
+          </div>
+        </div>
+
+        <a href="/" class="btn btn-ghost text-sm">
+          ← Return to Root
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

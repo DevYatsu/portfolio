@@ -189,6 +189,9 @@ const sitelinksSchema = {
 		<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 		<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 		<script type="application/ld+json" set:html={JSON.stringify(sitelinksSchema)} />
+
+		<!-- Privacy-First Analytics (Free, GDPR compliant, Cookieless) -->
+		<script data-goatcounter="https://yatsu.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 	</head>
 	<body class={lang}>
 		<!-- Cursor -->
@@ -232,10 +235,23 @@ const sitelinksSchema = {
 								aria-label="Email Yanis Amani" class="nav-item hover:text-orange-400 transition-colors">
 								Email
 							</a>
+							<span class="w-px h-4 bg-[hsl(0,0%,20%)] mx-1" aria-hidden="true"></span>
+							<a href={lang === 'fr' ? '/' : '/fr'}
+								aria-label={lang === 'fr' ? 'Switch to English' : 'Changer en Français'}
+								class="nav-item text-white hover:text-orange-400 transition-colors flex items-center gap-1.5 font-bold">
+								<svg class="w-4 h-4 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+								</svg>
+								{lang === 'fr' ? 'EN' : 'FR'}
+							</a>
 						</nav>
-						<p class="text-[hsl(0,0%,28%)] text-xs font-mono">
-							© {new Date().getFullYear()} Yanis Amani
-						</p>
+						<div class="flex items-center gap-4 text-[hsl(0,0%,28%)] text-xs font-mono">
+							<span>© {new Date().getFullYear()} Yanis Amani</span>
+							<span class="text-border">|</span>
+							<a href={lang === 'fr' ? '/mentions-legales' : '/impressum'} class="hover:text-orange-500 transition-colors">
+								{lang === 'fr' ? 'Mentions Légales & RGPD' : 'Impressum & Privacy'}
+							</a>
+						</div>
 					</div>
 				</div>
 			</footer>
