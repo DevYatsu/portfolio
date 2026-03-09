@@ -80,11 +80,11 @@ export const projects = [
     }
   },
   {
-    id: 'small-jit',
+    id: 'yatsuscript',
     num: '03',
-    name: 'SmallJIT',
-    url: 'https://github.com/DevYatsu/small_jit',
-    tags: ['C++', 'x86-64', 'Assembly'],
+    name: 'YatsuScript',
+    url: 'https://github.com/DevYatsu/YatsuScript',
+    tags: ['Rust', 'Interpreter', 'Bytecode'],
     statusColor: '',
     span: '',
     accentVar: '--accent: hsl(0,80%,62%)',
@@ -92,12 +92,12 @@ export const projects = [
     locales: {
       en: {
         tagline: 'Machine code from scratch',
-        description: 'A JIT compiler written in C++. Direct x86-64 codegen, register allocation, memory mapping with no external libs, pure low-level craft.',
+        description: 'A Bytecode interpreter written in Rust. Direct register allocation, memory mapping with no external libs, pure low-level craft.',
         status: 'Systems',
       },
       fr: {
         tagline: 'Du code machine depuis zéro',
-        description: 'Un compilateur JIT (Just-In-Time) directement en C++. Génération de code x86-64, allocation de registres, mapping mémoire — aucune librairie, du pur bas niveau.',
+        description: 'Un interpréteur de bytecode écrit en Rust. Génération de code x86-64, allocation de registres, mapping mémoire — aucune librairie, du pur bas niveau.',
         status: 'Système',
       }
     }
