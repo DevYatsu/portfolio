@@ -40,7 +40,7 @@ export const projects = [
     url: 'https://yatsu-kora.netlify.app',
     tags: ['React', 'TypeScript', 'Supabase'],
     statusColor: 'chip-orange',
-    span: 'lg:col-span-2',
+    span: '',
     accentVar: '--accent: hsl(230,80%,65%)',
     accentHsl: '230,80%,65%',
     locales: {
@@ -63,7 +63,7 @@ export const projects = [
     url: 'https://yatsu-avocat.netlify.app',
     tags: ['Astro', 'Tailwind CSS', 'Performance'],
     statusColor: 'chip-orange',
-    span: '',
+    span: 'lg:col-span-2',
     accentVar: '--accent: hsl(28,95%,45%)',
     accentHsl: '28,95%,45%',
     locales: {
@@ -148,7 +148,7 @@ export const projects = [
       }
     }
   },
-  {
+/*   {
     id: 'axto',
     num: '06',
     name: 'Axto',
@@ -170,5 +170,5 @@ export const projects = [
         status: 'Demo',
       }
     }
-  },
+  }, */
 ];

@@ -14,7 +14,7 @@ const t = {
 		projects: 'projets',
 		skills: 'outils',
 		contact: 'contact',
-		hireMe: 'disponible',
+		hireMe: "m'engager",
 		github: 'github'
 	}
 }[lang as 'en' | 'fr'] || {
@@ -27,11 +27,11 @@ const t = {
 ---
 
 <nav aria-label="Main Navigation"
-	class="fixed top-0 inset-x-0 z-50 border-b border-transparent transition-colors duration-300">
+	class="fixed top-0 inset-x-0 z-50 border-b border-transparent bg-[hsla(0,0%,5%,0.72)] backdrop-blur-lg supports-[backdrop-filter]:bg-[hsla(0,0%,5%,0.58)] transition-colors duration-300">
 	<div class="max-w-7xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
 
 		<!-- Logo -->
-		<a href={lang === 'fr' ? '/fr' : '/'} title="Yanis Amani — Home" aria-label="Go to homepage"
+		<a href="#" title="Yanis Amani — Home" aria-label="Go to homepage"
 			class="flex items-center gap-3 group">
 			<span class="w-8 h-8 rounded-md bg-orange flex items-center justify-center text-ink font-mono font-black text-xs tracking-wide shadow-lg group-hover:shadow-orange-500/30 transition-shadow duration-300">
 				YA
@@ -64,7 +64,7 @@ const t = {
 				data-lang-toggle
 				class="nav-item flex items-center gap-1 font-bold text-white hover:text-orange-400 h-8 px-2 rounded-md transition-all"
 				aria-label={lang === 'fr' ? 'Switch to English' : 'Changer en Français'}>
-				{lang === 'fr' ? 'EN' : 'FR'}
+				{lang === 'fr' ? 'FR' : 'EN'}
 			</a>
 
 			<a href="#contact"
