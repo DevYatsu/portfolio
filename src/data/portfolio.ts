@@ -47,12 +47,12 @@ export const projects = [
       en: {
         tagline: 'Legal excellence, rigor and dedication',
         description: 'A premium showcase website for a law firm specialized in business and intellectual property law. Built for absolute clarity and professional trust.',
-        status: 'Live ↗',
+        status: 'Live',
       },
       fr: {
         tagline: 'Excellence juridique, rigueur et dévouement',
         description: 'Un site vitrine premium pour un cabinet d\'avocats spécialisé en droit des affaires et propriété intellectuelle. Conçu pour allier confiance et performance.',
-        status: 'Live ↗',
+        status: 'Live',
       }
     }
   },
@@ -70,12 +70,12 @@ export const projects = [
       en: {
         tagline: 'Premium Industrial Barber Experience',
         description: 'Luxury barber shop platform with a custom reservation engine, real-time availability management, and a full artisan dashboard. Built for high-end craft.',
-        status: 'Live ↗',
+        status: 'Live',
       },
       fr: {
         tagline: 'L\'expérience Barbier Industrial Modern',
         description: 'Plateforme de salon de coiffure premium avec moteur de réservation sur mesure, gestion des disponibilités en temps réel et dashboard artisan complet. Conçu pour l\'artisanat de luxe.',
-        status: 'Live ↗',
+        status: 'Live',
       }
     }
   },
@@ -93,12 +93,12 @@ export const projects = [
       en: {
         tagline: 'Real-time messaging, zero flicker',
         description: 'Production-ready chat app with fully optimistic UI, Supabase real-time subscriptions, and zero visible latency. Built to handle edge cases most devs never think about.',
-        status: 'Live ↗',
+        status: 'Live',
       },
       fr: {
         tagline: 'Messagerie en temps réel, aucune latence',
         description: 'Une application de chat prête pour la production. UI totalement optimiste, abonnements temps réel Supabase, et aucune latence visuelle. Pensée pour les cas extrêmes.',
-        status: 'Live ↗',
+        status: 'Live',
       }
     }
   },
