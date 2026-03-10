@@ -34,31 +34,8 @@ export const skills = [
 
 export const projects = [
   {
-    id: 'kora',
-    num: '01',
-    name: 'Kora',
-    url: 'https://yatsu-kora.netlify.app',
-    tags: ['React', 'TypeScript', 'Supabase'],
-    statusColor: 'chip-orange',
-    span: '',
-    accentVar: '--accent: hsl(230,80%,65%)',
-    accentHsl: '230,80%,65%',
-    locales: {
-      en: {
-        tagline: 'Real-time messaging, zero flicker',
-        description: 'Production-ready chat app with fully optimistic UI, Supabase real-time subscriptions, and zero visible latency. Built to handle edge cases most devs never think about.',
-        status: 'Live ↗',
-      },
-      fr: {
-        tagline: 'Messagerie en temps réel, aucune latence',
-        description: 'Une application de chat prête pour la production. UI totalement optimiste, abonnements temps réel Supabase, et aucune latence visuelle. Pensée pour les cas extrêmes.',
-        status: 'Live ↗',
-      }
-    }
-  },
-  {
     id: 'avocat',
-    num: '02',
+    num: '01',
     name: 'De Vigny Avocat',
     url: 'https://yatsu-avocat.netlify.app',
     tags: ['Astro', 'Tailwind CSS', 'Performance'],
@@ -80,8 +57,54 @@ export const projects = [
     }
   },
   {
-    id: 'express-rs',
+    id: 'barbier',
+    num: '02',
+    name: 'Yatsu Coiffeur',
+    url: 'https://yatsu-coiffeur.netlify.app',
+    tags: ['Astro', 'React', 'Netlify Blobs'],
+    statusColor: 'chip-orange',
+    span: '',
+    accentVar: '--accent: hsl(35,85%,35%)',
+    accentHsl: '35,85%,35%',
+    locales: {
+      en: {
+        tagline: 'Premium Industrial Barber Experience',
+        description: 'Luxury barber shop platform with a custom reservation engine, real-time availability management, and a full artisan dashboard. Built for high-end craft.',
+        status: 'Live ↗',
+      },
+      fr: {
+        tagline: 'L\'expérience Barbier Industrial Modern',
+        description: 'Plateforme de salon de coiffure premium avec moteur de réservation sur mesure, gestion des disponibilités en temps réel et dashboard artisan complet. Conçu pour l\'artisanat de luxe.',
+        status: 'Live ↗',
+      }
+    }
+  },
+  {
+    id: 'kora',
     num: '03',
+    name: 'Kora',
+    url: 'https://yatsu-kora.netlify.app',
+    tags: ['React', 'TypeScript', 'Supabase'],
+    statusColor: 'chip-orange',
+    span: '',
+    accentVar: '--accent: hsl(230,80%,65%)',
+    accentHsl: '230,80%,65%',
+    locales: {
+      en: {
+        tagline: 'Real-time messaging, zero flicker',
+        description: 'Production-ready chat app with fully optimistic UI, Supabase real-time subscriptions, and zero visible latency. Built to handle edge cases most devs never think about.',
+        status: 'Live ↗',
+      },
+      fr: {
+        tagline: 'Messagerie en temps réel, aucune latence',
+        description: 'Une application de chat prête pour la production. UI totalement optimiste, abonnements temps réel Supabase, et aucune latence visuelle. Pensée pour les cas extrêmes.',
+        status: 'Live ↗',
+      }
+    }
+  },
+  {
+    id: 'express-rs',
+    num: '04',
     name: 'express_rs',
     url: 'https://github.com/DevYatsu/express_rs',
     tags: ['Rust', 'HTTP', 'TCP', 'Multithreading'],
@@ -104,7 +127,7 @@ export const projects = [
   },
   {
     id: 'yatsuscript',
-    num: '04',
+    num: '05',
     name: 'YatsuScript',
     url: 'https://github.com/DevYatsu/YatsuScript',
     tags: ['Rust', 'Interpreter', 'Bytecode'],
@@ -148,9 +171,9 @@ export const projects = [
       }
     }
   },
-/*   {
+  {
     id: 'axto',
-    num: '06',
+    num: '07',
     name: 'Axto',
     url: null,
     tags: ['Web App', 'Architecture'],
