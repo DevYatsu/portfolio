@@ -1,7 +1,7 @@
 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="64" height="64" rx="16" fill="#FF801F"/>
+  <rect width="64" height="64" rx="16" fill="/#FF801F"/>
   <!-- Minimal geometric 'Y' and 'A' fusion -->
-  <path d="M20 18L32 32M44 18L32 32M32 32V48" stroke="#0D0D0D" stroke-width="8" stroke-linecap="round"/>
+  <path d="M20 18L32 32M44 18L32 32M32 32V48" stroke="/#0D0D0D" stroke-width="8" stroke-linecap="round"/>
   <!-- The crossbar of the 'A' built into the 'Y' -->
-  <path d="M26 38H38" stroke="#0D0D0D" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+  <path d="M26 38H38" stroke="/#0D0D0D" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
 </svg>
