@@ -57,8 +57,31 @@ export const projects = [
     }
   },
   {
-    id: 'express-rs',
+    id: 'avocat',
     num: '02',
+    name: 'De Vigny Avocat',
+    url: 'https://yatsu-avocat.netlify.app',
+    tags: ['Astro', 'Tailwind CSS', 'Performance'],
+    statusColor: 'chip-orange',
+    span: '',
+    accentVar: '--accent: hsl(28,95%,45%)',
+    accentHsl: '28,95%,45%',
+    locales: {
+      en: {
+        tagline: 'Legal excellence, rigor and dedication',
+        description: 'A premium showcase website for a law firm specialized in business and intellectual property law. Built for absolute clarity and professional trust.',
+        status: 'Live ↗',
+      },
+      fr: {
+        tagline: 'Excellence juridique, rigueur et dévouement',
+        description: 'Un site vitrine premium pour un cabinet d\'avocats spécialisé en droit des affaires et propriété intellectuelle. Conçu pour allier confiance et performance.',
+        status: 'Live ↗',
+      }
+    }
+  },
+  {
+    id: 'express-rs',
+    num: '03',
     name: 'express_rs',
     url: 'https://github.com/DevYatsu/express_rs',
     tags: ['Rust', 'HTTP', 'TCP', 'Multithreading'],
@@ -81,7 +104,7 @@ export const projects = [
   },
   {
     id: 'yatsuscript',
-    num: '03',
+    num: '04',
     name: 'YatsuScript',
     url: 'https://github.com/DevYatsu/YatsuScript',
     tags: ['Rust', 'Interpreter', 'Bytecode'],
@@ -104,7 +127,7 @@ export const projects = [
   },
   {
     id: 'car-rental',
-    num: '04',
+    num: '05',
     name: 'CarFlow',
     url: null,
     tags: ['Full Stack', 'API Design', 'Auth'],
@@ -127,7 +150,7 @@ export const projects = [
   },
   {
     id: 'axto',
-    num: '05',
+    num: '06',
     name: 'Axto',
     url: null,
     tags: ['Web App', 'Architecture'],
