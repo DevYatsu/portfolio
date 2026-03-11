@@ -196,7 +196,6 @@ const breadcrumbSchema = {
 	<body class={lang}>
 		<!-- Custom cursor (desktop only, hidden on touch) -->
 		<div id="cursor-dot" aria-hidden="true"></div>
-		<div id="cursor-ring" aria-hidden="true"></div>
 
 		<!-- CRT scanline effect -->
 		<div class="scanline" aria-hidden="true"></div>
@@ -273,19 +272,14 @@ const breadcrumbSchema = {
 		<script>
 			// ── Custom Cursor (desktop only) ──────────────────────────────
 			const dot  = document.getElementById('cursor-dot')  as HTMLElement | null;
-			const ring = document.getElementById('cursor-ring') as HTMLElement | null;
 
-			if (dot && ring && window.matchMedia('(hover: hover)').matches) {
+			if (dot && window.matchMedia('(hover: hover)').matches) {
 				let mx = window.innerWidth / 2, my = window.innerHeight / 2;
-				let cx = mx, cy = my;
 				let rafId: number;
 				let moved = false;
 
 				const tick = () => {
-					cx += (mx - cx) * 0.15;
-					cy += (my - cy) * 0.15;
 					dot.style.transform  = `translate3d(${mx}px,${my}px,0) translate(-50%,-50%)`;
-					ring.style.transform = `translate3d(${cx}px,${cy}px,0) translate(-50%,-50%)`;
 					rafId = requestAnimationFrame(tick);
 				};
 
@@ -302,11 +296,11 @@ const breadcrumbSchema = {
 				// Hover delegation
 				document.body.addEventListener('mouseover', (e) => {
 					const t = (e.target as HTMLElement).closest('a, button, [data-hover]');
-					if (t) ring.classList.add('hovering');
+					if (t) dot.classList.add('hovering');
 				});
 				document.body.addEventListener('mouseout', (e) => {
 					const t = (e.target as HTMLElement).closest('a, button, [data-hover]');
-					if (t) ring.classList.remove('hovering');
+					if (t) dot.classList.remove('hovering');
 				});
 			}
 
