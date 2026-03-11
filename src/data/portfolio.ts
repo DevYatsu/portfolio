@@ -57,24 +57,24 @@ export const projects = [
     }
   },
   {
-    id: 'barbier',
+    id: 'cisaille',
     num: '02',
-    name: 'Yatsu Coiffeur',
-    url: 'https://yatsu-coiffeur.netlify.app',
-    tags: ['Astro', 'React', 'Netlify Blobs'],
+    name: 'Cisaille Paris',
+    url: 'https://cisaille.netlify.app',
+    tags: ['Astro', 'React', 'Premium'],
     statusColor: 'chip-orange',
     span: '',
-    accentVar: '--accent: hsl(35,85%,35%)',
-    accentHsl: '35,85%,35%',
+    accentVar: '--accent: hsl(0,0%,15%)',
+    accentHsl: '0,0%,15%',
     locales: {
       en: {
-        tagline: 'Premium Industrial Barber Experience',
-        description: 'Luxury barber shop platform with a custom reservation engine, real-time availability management, and a full artisan dashboard. Built for high-end craft.',
+        tagline: 'High-Precision Editorial Barber Shop',
+        description: 'High-precision workshop specializing in editorial men\'s haircut and beard sculpting in the heart of Le Marais, Paris. The excellence of the edge by CISAILLE.',
         status: 'Live',
       },
       fr: {
-        tagline: 'L\'expérience Barbier Industrial Modern',
-        description: 'Plateforme de salon de coiffure premium avec moteur de réservation sur mesure, gestion des disponibilités en temps réel et dashboard artisan complet. Conçu pour l\'artisanat de luxe.',
+        tagline: 'Atelier de Haute Précision & Barber Shop',
+        description: 'Atelier de haute précision spécialisé dans la coupe homme éditoriale et la sculpture de barbe au cœur du Marais, Paris. L\'excellence du tranchant par CISAILLE.',
         status: 'Live',
       }
     }
@@ -103,6 +103,29 @@ export const projects = [
     }
   },
   {
+    id: 'le-studio',
+    num: '04',
+    name: 'Le Studio',
+    url: 'https://le-bowling.netlify.app',
+    tags: ['Astro', 'Tailwind CSS', 'Social'],
+    statusColor: 'chip-orange',
+    span: 'lg:col-span-2',
+    accentVar: '--accent: hsl(35,25%,35%)',
+    accentHsl: '35,25%,35%',
+    locales: {
+      en: {
+        tagline: 'The Art of Minimalist Bowling',
+        description: 'A sanctuary dedicated to traditional bowling and social elegance in Paris. Eight solid oak lanes, seasonal cuisine, and timeless design for a refined experience.',
+        status: 'Live',
+      },
+      fr: {
+        tagline: 'Le Bowling.',
+        description: 'Un sanctuaire dédié au bowling traditionnel et à l\'élégance sociale à Paris. Huit pistes en chêne massif, une cuisine de saison et un design intemporel.',
+        status: 'Live',
+      }
+    }
+  },
+/*     {
     id: 'express-rs',
     num: '04',
     name: 'express_rs',
@@ -148,4 +171,4 @@ export const projects = [
       }
     }
   },
-];
+ */];
