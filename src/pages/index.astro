@@ -332,8 +332,12 @@ const content = {
           {content.contactPara}
         </p>
         <div class="mt-4">
-           <form name="contact" action="https://formies.netlify.app/api/v1/submit?project_name=Portfolio&redirect=/#contact" method="POST" class="w-full max-w-md flex flex-col gap-4">
+           <form name="contact" class="w-full max-w-md flex flex-col gap-4">
             <input type="hidden" name="form-name" value="contact" />
+            <p class="hidden">
+              <label>Don’t fill this out if you’re human: <input type="text" name="bot-field" /></label>
+            </p>
+
             <div class="flex flex-col gap-1.5">
               <label for="name" class="mono-label text-[hsl(0,0%,70%)]">{content.formName}</label>
               <input type="text" id="name" name="name" required class="bg-[hsl(0,0%,8%)] border border-border rounded-sm px-3 py-2 text-white text-sm focus:outline-none focus:border-orange transition-colors" />
@@ -347,11 +351,14 @@ const content = {
               <textarea id="message" name="message" rows="4" required class="bg-[hsl(0,0%,8%)] border border-border rounded-sm px-3 py-2 text-white text-sm focus:outline-none focus:border-orange transition-colors"></textarea>
             </div>
             <div class="flex items-center gap-4 mt-2">
-              <button type="submit" class="btn btn-orange text-sm">
-                {content.formSubmit}
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                </svg>
+              <button id="submit-button" type="submit" class="btn btn-orange text-sm">
+                <span class="submit-text flex items-center gap-2">
+                  {content.formSubmit}
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                  </svg>
+                </span>
+                <span class="loading-text hidden">Sending...</span>
               </button>
               <a href="https://linkedin.com/in/yanis-amani" target="_blank" rel="noopener noreferrer"
                 class="btn btn-ghost text-sm"
@@ -360,6 +367,55 @@ const content = {
               </a>
             </div>
           </form>
+
+          <script>
+            const form = document.querySelector('form[name="contact"]') as HTMLFormElement;
+            const button = document.getElementById('submit-button') as HTMLButtonElement;
+            const submitText = button?.querySelector('.submit-text');
+            const loadingText = button?.querySelector('.loading-text');
+
+            form?.addEventListener('submit', async (e) => {
+              e.preventDefault();
+              
+              if (button) {
+                button.disabled = true;
+                submitText?.classList.add('hidden');
+                loadingText?.classList.remove('hidden');
+              }
+
+              const formData = new FormData(form);
+              const action = "https://formies.netlify.app/api/v1/submit?project_name=Portfolio";
+
+              try {
+                const response = await fetch(action, {
+                  method: 'POST',
+                  body: formData,
+                });
+
+                if (response.status === 201) {
+                  window.location.href = '/thanks';
+                } else {
+                  console.error('Submission failed with status:', response.status);
+                  alert('An error occurred. Please try again.');
+                  
+                  if (button) {
+                    button.disabled = false;
+                    submitText?.classList.remove('hidden');
+                    loadingText?.classList.add('hidden');
+                  }
+                }
+              } catch (error) {
+                console.error('Submission error:', error);
+                alert('A network error occurred. Please check your connection.');
+                
+                if (button) {
+                  button.disabled = false;
+                  submitText?.classList.remove('hidden');
+                  loadingText?.classList.add('hidden');
+                }
+              }
+            });
+          </script>
         </div>
         <div class="mt-16 pt-8 border-t border-[hsl(0,0%,12%)] flex items-center gap-8 flex-wrap">
           <a href="https://github.com/DevYatsu" target="_blank" rel="noopener noreferrer"
