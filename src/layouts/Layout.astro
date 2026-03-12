@@ -13,7 +13,7 @@ interface Props {
 
 const {
 	title,
-	description = "Yanis Amani, Computer Science student at HE-Arc Neuchâtel & software developer. I build blazing-fast web applications and systems software in Rust, TypeScript, Python & C++.",
+	description = "Yanis Amani — Systems Developer and BSc Computer Science student at HE-Arc Neuchâtel. Specialising in Rust, C++, and high-performance backend infrastructure in Switzerland.",
 	image = "/og-image.png",
 	canonicalUrl = Astro.url.href,
 	lang = "en"
@@ -75,7 +75,49 @@ const personSchema = {
 	"knowsLanguage": [
 		{ "@type": "Language", "name": "French", "alternateName": "fr" },
 		{ "@type": "Language", "name": "English", "alternateName": "en" }
-	]
+	],
+	"alumniOf": {
+		"@type": "EducationalOrganization",
+		"name": "HE-Arc — Haute École Arc Ingénierie"
+	},
+	"hasOfferCatalog": {
+		"@type": "OfferCatalog",
+		"name": "Software Development Services",
+		"itemListElement": [
+			{
+				"@type": "Offer",
+				"itemOffered": {
+					"@type": "Service",
+					"name": "Systems Engineering",
+					"description": "High-performance systems software development in Rust and C++."
+				}
+			},
+			{
+				"@type": "Offer",
+				"itemOffered": {
+					"@type": "Service",
+					"name": "Full-Stack Development",
+					"description": "Responsive, low-latency web applications using TypeScript and React."
+				}
+			}
+		]
+	}
+};
+
+const serviceSchema = {
+	"@context": "https://schema.org",
+	"@type": "Service",
+	"serviceType": "Software Development",
+	"provider": {
+		"@type": "Person",
+		"name": "Yanis Amani"
+	},
+	"areaServed": "Worldwide",
+	"offers": {
+		"@type": "Offer",
+		"availability": "https://schema.org/InStock",
+		"description": "Available for systems engineering, backend infrastructure, and high-performance web development."
+	}
 };
 
 const websiteSchema = {
@@ -115,11 +157,14 @@ const breadcrumbSchema = {
 		<title>{title}</title>
 		<meta name="description" content={description} />
 		<meta name="author" content="Yanis Amani" />
-		<meta name="keywords" content="Yanis Amani, Software Developer, CS Student HE-Arc, Haute École Arc Neuchâtel, Rust Developer, TypeScript Developer, Python Developer, React Developer, Systems Programmer, C++ Developer, Full Stack Developer, Web Performance, JIT Compiler, Portfolio, DevYatsu, Switzerland, Neuchâtel" />
+		<meta name="keywords" content="Yanis Amani, Software Developer Switzerland, Systems Engineer Rust, Rust Developer, TypeScript Developer, C++ Systems Programming, Low-Latency Web, HE-Arc Neuchâtel, Software Architecture, Memory Safety, Computer Science Portfolio Switzerland" />
 		<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-		<meta name="theme-color" content="/#0d0d0d" />
+		<meta name="theme-color" content="#0d0d0d" />
 		<meta name="color-scheme" content="dark" />
-		<meta name="application-name" content="Yanis Amani — Portfolio" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="apple-mobile-web-app-title" content="Yanis Amani" />
+		<meta name="application-name" content="Yanis Amani — Systems Development" />
 		<meta name="generator" content={Astro.generator} />
 
 		<!-- Author & copyright -->
@@ -189,6 +234,7 @@ const breadcrumbSchema = {
 		<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
 		<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 		<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+		<script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
 
 		<!-- Privacy-First Analytics (cookieless, GDPR compliant) -->
 		<script data-goatcounter="https://yatsu.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
@@ -197,8 +243,8 @@ const breadcrumbSchema = {
 		<!-- Custom cursor (desktop only, hidden on touch) -->
 		<div id="cursor-dot" aria-hidden="true"></div>
 
-		<!-- CRT scanline effect -->
-		<div class="scanline" aria-hidden="true"></div>
+		<!-- Noise background -->
+		<div class="fixed inset-0 bg-noise z-9998" aria-hidden="true"></div>
 
 		<div class="relative flex flex-col min-h-screen">
 			<Header lang={lang} langSwitchUrl={langSwitchUrl} />
@@ -207,53 +253,52 @@ const breadcrumbSchema = {
 			</main>
 
 			<!-- Footer -->
-			<footer class="border-t border-border mt-8">
-				<div class="max-w-7xl mx-auto px-6 md:px-12 py-10">
-					<div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+			<footer class="border-t border-border-subtle mt-24 bg-bg-surface/30">
+				<div class="max-w-7xl mx-auto px-6 md:px-12 py-20">
+					<div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 items-start">
 						<!-- Left: education info -->
-						<div>
-							<p class="mono-label mb-1">{isFr ? 'Étudie actuellement à' : 'Currently studying at'}</p>
-							<p class="text-white/70 text-sm font-medium">HE-Arc — Neuchâtel, Switzerland</p>
-							<p class="text-[hsl(0,0%,30%)] text-xs font-mono mt-0.5">{isFr ? 'BSc Informatique' : 'BSc Computer Science'}</p>
+						<div class="space-y-4">
+							<div class="flex items-center gap-3">
+								<span class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-bg-base font-black text-sm">YA</span>
+								<div>
+									<p class="text-white font-bold leading-none">Yanis Amani</p>
+									<p class="text-text-muted text-xs font-mono mt-1">Software Developer</p>
+								</div>
+							</div>
+							<p class="text-text-muted text-sm max-w-xs">
+								{isFr ? 'Étudiant en BSc Informatique à la HE-Arc, spécialisé dans l\'optimisation système et les infrastructures bas niveau.' : 'BSc Computer Science student at HE-Arc, focusing on systems runtime and low-level infrastructure.'}
+							</p>
 						</div>
 
 						<!-- Center: social links -->
-						<nav aria-label={isFr ? 'Liens sociaux' : 'Social links'} class="flex items-center gap-6 flex-wrap">
-							<a href="https://github.com/DevYatsu" target="_blank" rel="noopener noreferrer"
-								title="GitHub — DevYatsu"
-								aria-label="GitHub — DevYatsu" class="nav-item hover:text-white transition-colors">
-								GitHub
-							</a>
-							<a href="https://linkedin.com/in/yanis-amani" target="_blank" rel="noopener noreferrer"
-								title="LinkedIn — Yanis Amani"
-								aria-label="LinkedIn — Yanis Amani" class="nav-item hover:text-white transition-colors">
-								LinkedIn
-							</a>
-							<a href={isFr ? '/fr/#contact' : '/#contact'}
-								title="Contact Yanis Amani"
-								aria-label="Contact Yanis Amani" class="nav-item hover:text-orange-400 transition-colors">
-								Contact
-							</a>
-							<span class="w-px h-4 bg-border" aria-hidden="true"></span>
-						<a href={langSwitchUrl}
-							data-lang-toggle
-							title={isFr ? 'View English version' : 'Voir la version française'}
-							aria-label={isFr ? 'Switch to English' : 'Changer en Français'}
-							class="nav-item text-white hover:text-orange-400 transition-colors flex items-center gap-1.5 font-bold">
-							<svg class="w-4 h-4 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
-							</svg>
-							{isFr ? 'FR' : 'EN'}
-						</a>
-						</nav>
+						<div class="flex flex-col gap-4">
+							<p class="mono-label">{isFr ? 'Connexion' : 'Connect'}</p>
+							<nav aria-label={isFr ? 'Liens sociaux' : 'Social links'} class="flex flex-col gap-3">
+								<a href="https://github.com/DevYatsu" target="_blank" rel="noopener noreferrer"
+									class="text-text-muted hover:text-primary transition-colors flex items-center gap-2 text-sm w-fit">
+									GitHub <span class="text-xs opacity-50">↗</span>
+								</a>
+								<a href="https://linkedin.com/in/yanis-amani" target="_blank" rel="noopener noreferrer"
+									class="text-text-muted hover:text-primary transition-colors flex items-center gap-2 text-sm w-fit">
+									LinkedIn <span class="text-xs opacity-50">↗</span>
+								</a>
+								<a href={isFr ? '/fr/#contact' : '/#contact'} 
+									class="text-text-muted hover:text-primary transition-colors flex items-center gap-2 text-sm w-fit">
+									Contact <span class="text-xs opacity-50">→</span>
+								</a>
+							</nav>
+						</div>
 
 						<!-- Right: copyright + legal -->
-						<div class="flex items-center gap-4 text-[hsl(0,0%,28%)] text-xs font-mono">
-							<span>© {new Date().getFullYear()} Yanis Amani</span>
-							<span class="text-border" aria-hidden="true">|</span>
-							<a href={isFr ? '/mentions-legales' : '/impressum'} class="hover:text-orange-500 transition-colors">
-								{isFr ? 'Mentions Légales & RGPD' : 'Impressum & Privacy'}
-							</a>
+						<div class="flex flex-col gap-4 md:items-end">
+							<p class="mono-label">{isFr ? 'Localisation' : 'Location'}</p>
+							<p class="text-text-muted text-sm md:text-right">Neuchâtel, Switzerland</p>
+							<div class="flex flex-col md:items-end gap-2 mt-4">
+								<p class="text-[hsl(0,0%,28%)] text-xs font-mono">© {new Date().getFullYear()} Yanis Amani</p>
+								<a href={isFr ? '/mentions-legales' : '/impressum'} class="text-[hsl(0,0%,28%)] text-xs font-mono hover:text-primary transition-colors">
+									{isFr ? 'Mentions Légales & RGPD' : 'Impressum & Privacy'}
+								</a>
+							</div>
 						</div>
 					</div>
 				</div>

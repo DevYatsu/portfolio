@@ -45,8 +45,8 @@ export const projects = [
     accentHsl: '28,95%,45%',
     locales: {
       en: {
-        tagline: 'Legal excellence, rigor and dedication',
-        description: 'A premium showcase website for a law firm specialized in business and intellectual property law. Built for absolute clarity and professional trust.',
+        tagline: 'Strategic legal protection for digital business',
+        description: 'A focused digital showcase for a law firm specialising in intellectual property and corporate law. Designed for high clarity and institutional trust.',
         status: 'Live',
       },
       fr: {
@@ -91,13 +91,13 @@ export const projects = [
     accentHsl: '230,80%,65%',
     locales: {
       en: {
-        tagline: 'Real-time messaging, zero flicker',
-        description: 'Production-ready chat app with fully optimistic UI, Supabase real-time subscriptions, and zero visible latency. Built to handle edge cases most devs never think about.',
+        tagline: 'Optimistic persistence, real-time sync',
+        description: 'An event-driven chat server with optimistic UI updates and Supabase real-time subscriptions. Architected for low-jitter state synchronization and reliable message delivery.',
         status: 'Live',
       },
       fr: {
-        tagline: 'Messagerie en temps réel, aucune latence',
-        description: 'Une application de chat prête pour la production. UI totalement optimiste, abonnements temps réel Supabase, et aucune latence visuelle. Pensée pour les cas extrêmes.',
+        tagline: 'Synchronisation temps réel et persistence optimiste',
+        description: 'Serveur de chat événementiel avec mises à jour d\'interface optimistes. Architecturé pour une synchronisation d\'état à faible gigue et une livraison fiable des messages.',
         status: 'Live',
       }
     }
