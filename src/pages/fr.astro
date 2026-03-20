@@ -6,8 +6,8 @@ const lang = 'fr' as "en" | "fr";
 const isFr = lang === 'fr';
 
 const content = {
-  title: "Yanis Amani — Portfolio Développeur Logiciel & Architecture Système",
-  description: "Yanis Amani — Étudiant en BSc Informatique à la HE-Arc. Développement d'infrastructures système et web haute performance en Rust, TypeScript et C++.",
+  title: "Yanis Amani , Portfolio Développeur Logiciel & Architecture Système",
+  description: "Yanis Amani , Étudiant en BSc Informatique à la HE-Arc. Développement d'infrastructures système et web haute performance en Rust, TypeScript et C++.",
   status: "disponible pour rôles techniques & freelance",
   location: "neuchâtel · suisse",
   heroHeading1: "YANIS",
@@ -15,7 +15,7 @@ const content = {
   role: "Développeur Logiciel",
   edu: "BSc CS @ HE-Arc",
   stack: "Rust · TypeScript · C++",
-  heroPara: "Je développe des systèmes déterministes où la performance est une priorité absolue — des interfaces web à faible latence aux infrastructures système sécurisées.",
+  heroPara: "Je développe des systèmes déterministes où la performance est une priorité absolue , des interfaces web à faible latence aux infrastructures système sécurisées.",
   ctaWork: "déploiements",
   ctaResume: "↓ cv.pdf",
   ctaHello: "me contacter →",
@@ -40,7 +40,7 @@ const content = {
   statusVal: "recherche de stage 2026",
   aboutSub: "§ 03 / perspective",
   aboutTitle: "Le code doit être prévisible,",
-  aboutPara: "Développeur système, je m'intéresse à la frontière entre abstractions de haut niveau et exécution machine. Je me concentre sur l'écriture de code respectant les contraintes matérielles — qu'il s'agisse de pipelines de rendu ou de compilateurs sur mesure.",
+  aboutPara: "Développeur système, je m'intéresse à la frontière entre abstractions de haut niveau et exécution machine. Je me concentre sur l'écriture de code respectant les contraintes matérielles , qu'il s'agisse de pipelines de rendu ou de compilateurs sur mesure.",
   aboutPara2: "La correction n'est pas négociable.",
   fast: "performant",
   correct: "maintenable",
@@ -83,7 +83,7 @@ const content = {
 
         <div data-animate data-delay="1">
           <h1 class="relative">
-            <span class="sr-only">Yanis Amani — Développeur Système et Étudiant en Informatique à la HE-Arc Neuchâtel. Spécialiste Rust, C++ et TypeScript haute performance.</span>
+            <span class="sr-only">Yanis Amani , Développeur Système et Étudiant en Informatique à la HE-Arc Neuchâtel. Spécialiste Rust, C++ et TypeScript haute performance.</span>
             <span class="display-xl block text-white tracking-tighter leading-[0.8]" aria-hidden="true">
               YANIS
             </span>
@@ -336,24 +336,24 @@ const content = {
           </div>
         </div>
 
-        <div class="card-premium p-10! rounded-[3rem]! glass" data-animate data-delay="1">
+        <div class="relative z-20" data-animate data-delay="1">
           <form name="contact" class="flex flex-col gap-8">
             <input type="hidden" name="form-name" value="contact" />
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
               <div class="flex flex-col gap-3">
                 <label for="name" class="mono-label">{content.formName}</label>
-                <input type="text" id="name" name="name" required class="bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-primary transition-colors" placeholder="Yanis Amani" />
+                <input type="text" id="name" name="name" required class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-primary focus:bg-bg-surface focus:backdrop-blur-2xl relative z-10 transition-all font-sans" placeholder="Jean Dupont" />
               </div>
               <div class="flex flex-col gap-3">
                 <label for="email" class="mono-label">{content.formEmail}</label>
-                <input type="email" id="email" name="email" required class="bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-primary transition-colors" placeholder="yanis@example.com" />
+                <input type="email" id="email" name="email" required class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-primary focus:bg-bg-surface focus:backdrop-blur-2xl relative z-10 transition-all font-sans" placeholder="jean@exemple.com" />
               </div>
             </div>
             <div class="flex flex-col gap-3">
               <label for="message" class="mono-label">{content.formMessage}</label>
-              <textarea id="message" name="message" rows="5" required class="bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-primary transition-colors" placeholder="Message..."></textarea>
+              <textarea id="message" name="message" rows="5" required class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-primary focus:bg-bg-surface focus:backdrop-blur-2xl relative z-10 transition-all shadow-xl font-sans" placeholder="Parlez-moi de votre projet..."></textarea>
             </div>
-            <button id="submit-button" type="submit" class="btn btn-primary w-full py-5 text-lg group">
+            <button id="submit-button" type="submit" class="btn btn-primary w-full py-5 text-lg group relative z-10">
               <span class="submit-text flex items-center gap-2">
                 {content.formSubmit}
                 <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -16,7 +16,7 @@ interface Props {
 
 const {
 	title,
-	description = "Yanis Amani — Systems Developer and BSc Computer Science student at HE-Arc Neuchâtel. Specialising in Rust, C++, and high-performance backend infrastructure in Switzerland.",
+	description = "Yanis Amani , Systems Developer and BSc Computer Science student at HE-Arc Neuchâtel. Specialising in Rust, C++, and high-performance backend infrastructure in Switzerland.",
 	image = "/og-image.png",
 	canonicalUrl = Astro.url.href,
 	lang = "en"
@@ -56,7 +56,7 @@ const personSchema = {
 	],
 	"alumniOf": {
 		"@type": "EducationalOrganization",
-		"name": "HE-Arc — Haute École Arc Ingénierie"
+		"name": "HE-Arc , Haute École Arc Ingénierie"
 	},
 	"worksFor": {
 		"@type": "Organization",
@@ -84,7 +84,7 @@ const projectSchemas = projects.map(p => ({
 const websiteSchema = {
 	"@context": "https://schema.org",
 	"@type": "WebSite",
-	"name": "Yanis Amani — Portfolio",
+	"name": "Yanis Amani , Portfolio",
 	"url": siteUrl,
 	"description": description,
 	"inLanguage": lang,
@@ -121,7 +121,7 @@ const breadcrumbSchema = {
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 		<meta name="apple-mobile-web-app-title" content="Yanis Amani" />
-		<meta name="application-name" content="Yanis Amani — Systems Development" />
+		<meta name="application-name" content="Yanis Amani , Systems Development" />
 		<meta name="generator" content={Astro.generator} />
 
 		<!-- Author & copyright -->
@@ -146,7 +146,7 @@ const breadcrumbSchema = {
 		<!-- Sitemap -->
 		<link rel="sitemap" href="/sitemap-index.xml" />
 
-		<!-- Resource Hints — only preconnect to actually loaded origins -->
+		<!-- Resource Hints , only preconnect to actually loaded origins -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link rel="dns-prefetch" href="//github.com" />
@@ -155,7 +155,7 @@ const breadcrumbSchema = {
 
 		<!-- Open Graph -->
 		<meta property="og:type" content="website" />
-		<meta property="og:site_name" content="Yanis Amani — Portfolio" />
+		<meta property="og:site_name" content="Yanis Amani , Portfolio" />
 		<meta property="og:url" content={canonicalStr} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />

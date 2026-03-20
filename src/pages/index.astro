@@ -6,8 +6,8 @@ const lang = 'en' as "en" | "fr";
 const isFr = lang === 'fr';
 
 const content = {
-  title: "Yanis Amani — Software Developer Portfolio & Systems Engineering",
-  description: "Yanis Amani — BSc Computer Science student at HE-Arc. Building high-performance systems and low-latency web infrastructure in Rust, TypeScript, and C++.",
+  title: "Yanis Amani , Software Developer Portfolio & Systems Engineering",
+  description: "Yanis Amani , BSc Computer Science student at HE-Arc. Building high-performance systems and low-latency web infrastructure in Rust, TypeScript, and C++.",
   status: "available for technical roles & freelance",
   location: "neuchâtel · switzerland",
   heroHeading1: "YANIS",
@@ -15,7 +15,7 @@ const content = {
   role: "Software Developer",
   edu: "BSc CS @ HE-Arc",
   stack: "Rust · TypeScript · C++",
-  heroPara: "I develop deterministic systems where performance is a first-class citizen—spanning from low-latency web interfaces to memory-safe infrastructure.",
+  heroPara: "I develop deterministic systems where performance is a first-class citizen,spanning from low-latency web interfaces to memory-safe infrastructure.",
   ctaWork: "view implementations",
   ctaResume: "↓ resume.pdf",
   ctaHello: "get in touch →",
@@ -26,7 +26,7 @@ const content = {
   projectsTitle: "Recent",
   projectsTitleAccent: "Release",
   allGithub: "source archives ↗",
-  visit: "live instance ↗",
+  visit: "live instance",
   src: "repository ↗",
   skillsSub: "§ 02 / methodology",
   skillsTitle: "Core",
@@ -40,7 +40,7 @@ const content = {
   statusVal: "seeking internships 2026",
   aboutSub: "§ 03 / perspective",
   aboutTitle: "Code should be predictable,",
-  aboutPara: "I'm a systems developer interested in the boundary between high-level abstractions and machine execution. My focus is on writing code that respects hardware constraints—whether that's refining rendering pipelines or implementing custom compilers.",
+  aboutPara: "I'm a systems developer interested in the boundary between high-level abstractions and machine execution. My focus is on writing code that respects hardware constraints,whether that's refining rendering pipelines or implementing custom compilers.",
   aboutPara2: "Correctness is non-negotiable.",
   fast: "performant",
   correct: "maintainable",
@@ -83,7 +83,7 @@ const content = {
 
         <div data-animate data-delay="1">
           <h1 class="relative">
-            <span class="sr-only">Yanis Amani — Systems Developer and Computer Science Student at HE-Arc Neuchâtel. Specialist in Rust, C++, and high-performance TypeScript.</span>
+            <span class="sr-only">Yanis Amani , Systems Developer and Computer Science Student at HE-Arc Neuchâtel. Specialist in Rust, C++, and high-performance TypeScript.</span>
             <span class="display-xl block text-white tracking-tighter leading-[0.8]" aria-hidden="true">
               YANIS
             </span>
@@ -332,24 +332,24 @@ const content = {
           </div>
         </div>
 
-        <div data-animate data-delay="1">
+        <div class="relative z-20" data-animate data-delay="1">
           <form name="contact" class="flex flex-col gap-8">
             <input type="hidden" name="form-name" value="contact" />
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
               <div class="flex flex-col gap-3">
                 <label for="name" class="mono-label">{content.formName}</label>
-                <input type="text" id="name" name="name" required class="bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-primary transition-colors" placeholder="John Doe" />
+                <input type="text" id="name" name="name" required class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-primary focus:bg-bg-surface focus:backdrop-blur-2xl relative z-10 transition-all font-sans" placeholder="John Doe" />
               </div>
               <div class="flex flex-col gap-3">
                 <label for="email" class="mono-label">{content.formEmail}</label>
-                <input type="email" id="email" name="email" required class="bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-primary transition-colors" placeholder="john@example.com" />
+                <input type="email" id="email" name="email" required class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-primary focus:bg-bg-surface focus:backdrop-blur-2xl relative z-10 transition-all font-sans" placeholder="john@example.com" />
               </div>
             </div>
             <div class="flex flex-col gap-3">
               <label for="message" class="mono-label">{content.formMessage}</label>
-              <textarea id="message" name="message" rows="5" required class="bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-primary transition-colors" placeholder="Tell me about your project..."></textarea>
+              <textarea id="message" name="message" rows="5" required class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-primary focus:bg-bg-surface focus:backdrop-blur-2xl relative z-10 transition-all shadow-xl font-sans" placeholder="Tell me about your project..."></textarea>
             </div>
-            <button id="submit-button" type="submit" class="btn btn-primary w-full py-5 text-lg group">
+            <button id="submit-button" type="submit" class="btn btn-primary w-full py-5 text-lg group relative z-10">
               <span class="submit-text flex items-center gap-2">
                 {content.formSubmit}
                 <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
