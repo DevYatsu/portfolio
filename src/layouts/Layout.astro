@@ -2,6 +2,9 @@
 import '../styles/globals.css';
 import '@fontsource-variable/inter/wght.css';
 import Header from '../components/Header.astro';
+import { ClientRouter } from 'astro:transitions';
+
+import { projects } from '../data/portfolio';
 
 interface Props {
 	title: string;
@@ -25,8 +28,6 @@ const ogImageUrl = new URL(image, siteUrl).toString();
 const isFr = lang === 'fr';
 
 // ── Context-aware language switch URL ────────────────────────────
-// Keeps the user on the equivalent page in the other language
-// (e.g. /impressum ↔ /mentions-legales, /fr ↔ /)
 const pathname = Astro.url.pathname;
 const langSwitchUrl = (() => {
   if (pathname === '/impressum' || pathname === '/impressum/')    return '/mentions-legales';
@@ -35,90 +36,50 @@ const langSwitchUrl = (() => {
   return '/fr';
 })();
 
-// ── Structured Data ──────────────────────────────────────────────
+// ── Structured Data (JSON-LD) ───────────────────────────────────
 const personSchema = {
 	"@context": "https://schema.org",
 	"@type": "Person",
+	"@id": `${siteUrl}/#person`,
 	"name": "Yanis Amani",
 	"givenName": "Yanis",
 	"familyName": "Amani",
 	"url": siteUrl,
-	"jobTitle": "Software Developer",
-	"description": "BSc Computer Science student at HE-Arc Neuchâtel and software developer specialising in Rust, TypeScript, Python, React & C++.",
+	"jobTitle": "Full-Stack Software Developer",
+	"description": "BSc Computer Science student at HE-Arc Neuchâtel. Versatile software engineer specialising in Full-Stack Web Development, Systems Programming (Rust/C++), and Computer Science fundamentals.",
 	"email": "yanis.amani@icloud.com",
 	"image": ogImageUrl,
 	"sameAs": [
 		"https://github.com/DevYatsu",
-		"https://linkedin.com/in/yanis-amani"
-	],
-	"memberOf": {
-		"@type": "EducationalOrganization",
-		"name": "HE-Arc — Haute École Arc Ingénierie",
-		"url": "https://www.he-arc.ch",
-		"address": {
-			"@type": "PostalAddress",
-			"streetAddress": "Espace de l'Europe 11",
-			"addressLocality": "Neuchâtel",
-			"postalCode": "2000",
-			"addressRegion": "Neuchâtel",
-			"addressCountry": "CH"
-		}
-	},
-	"knowsAbout": [
-		"Rust", "TypeScript", "Python", "JavaScript", "C", "C++",
-		"React", "Next.js", "Astro", "Node.js",
-		"Systems Programming", "Compiler Design", "JIT Compilation",
-		"Web Performance", "Real-time Applications",
-		"Supabase", "PostgreSQL", "Full Stack Development",
-		"Concurrency", "Memory Management"
-	],
-	"knowsLanguage": [
-		{ "@type": "Language", "name": "French", "alternateName": "fr" },
-		{ "@type": "Language", "name": "English", "alternateName": "en" }
+		"https://linkedin.com/in/yanis-amani",
+		"https://x.com/DevYatsu"
 	],
 	"alumniOf": {
 		"@type": "EducationalOrganization",
 		"name": "HE-Arc — Haute École Arc Ingénierie"
 	},
-	"hasOfferCatalog": {
-		"@type": "OfferCatalog",
-		"name": "Software Development Services",
-		"itemListElement": [
-			{
-				"@type": "Offer",
-				"itemOffered": {
-					"@type": "Service",
-					"name": "Systems Engineering",
-					"description": "High-performance systems software development in Rust and C++."
-				}
-			},
-			{
-				"@type": "Offer",
-				"itemOffered": {
-					"@type": "Service",
-					"name": "Full-Stack Development",
-					"description": "Responsive, low-latency web applications using TypeScript and React."
-				}
-			}
-		]
-	}
+	"worksFor": {
+		"@type": "Organization",
+		"name": "Freelance Software Engineer"
+	},
+	"knowsAbout": [
+		"Full-Stack Web Development", "Computer Science", "Systems Programming",
+		"Rust", "TypeScript", "Python", "JavaScript", "C", "C++",
+		"React", "Next.js", "Astro", "Node.js", "PostgreSQL",
+		"Algorithms", "Data Structures", "Software Architecture"
+	]
 };
 
-const serviceSchema = {
+const projectSchemas = projects.map(p => ({
 	"@context": "https://schema.org",
-	"@type": "Service",
-	"serviceType": "Software Development",
-	"provider": {
-		"@type": "Person",
-		"name": "Yanis Amani"
-	},
-	"areaServed": "Worldwide",
-	"offers": {
-		"@type": "Offer",
-		"availability": "https://schema.org/InStock",
-		"description": "Available for systems engineering, backend infrastructure, and high-performance web development."
-	}
-};
+	"@type": "CreativeWork",
+	"name": p.name,
+	"description": p.locales[lang as 'en'|'fr'].description,
+	"url": p.url,
+	"author": { "@type": "Person", "@id": `${siteUrl}/#person` },
+	"keywords": p.tags.join(", "),
+	"genre": "Software Development"
+}));
 
 const websiteSchema = {
 	"@context": "https://schema.org",
@@ -127,12 +88,7 @@ const websiteSchema = {
 	"url": siteUrl,
 	"description": description,
 	"inLanguage": lang,
-	"author": { "@type": "Person", "name": "Yanis Amani", "url": siteUrl },
-	"potentialAction": {
-		"@type": "ContactAction",
-		"target": "mailto:yanis.amani@icloud.com",
-		"name": "Contact Yanis Amani"
-	}
+	"publisher": { "@id": `${siteUrl}/#person` }
 };
 
 const breadcrumbSchema = {
@@ -141,8 +97,7 @@ const breadcrumbSchema = {
 	"itemListElement": [
 		{ "@type": "ListItem", "position": 1, "name": isFr ? "Accueil" : "Home",     "item": isFr ? siteUrl + "/fr" : siteUrl },
 		{ "@type": "ListItem", "position": 2, "name": isFr ? "Projets" : "Projects", "item": (isFr ? siteUrl + "/fr" : siteUrl) + "/#projects" },
-		{ "@type": "ListItem", "position": 3, "name": isFr ? "Outils" : "Skills",    "item": (isFr ? siteUrl + "/fr" : siteUrl) + "/#skills" },
-		{ "@type": "ListItem", "position": 4, "name": "Contact",                      "item": (isFr ? siteUrl + "/fr" : siteUrl) + "/#contact" }
+		{ "@type": "ListItem", "position": 3, "name": "Contact",                      "item": (isFr ? siteUrl + "/fr" : siteUrl) + "/#contact" }
 	]
 };
 ---
@@ -152,12 +107,14 @@ const breadcrumbSchema = {
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<ClientRouter />
 
 		<!-- Primary Meta -->
 		<title>{title}</title>
 		<meta name="description" content={description} />
 		<meta name="author" content="Yanis Amani" />
-		<meta name="keywords" content="Yanis Amani, Software Developer Switzerland, Systems Engineer Rust, Rust Developer, TypeScript Developer, C++ Systems Programming, Low-Latency Web, HE-Arc Neuchâtel, Software Architecture, Memory Safety, Computer Science Portfolio Switzerland" />
+		<meta name="keywords" content="Yanis Amani, Yanis Amani Portfolio, Web Developer Switzerland, Full-Stack Engineer, Computer Science Student, BSc CS HE-Arc, Software Engineer Neuchâtel, Rust Developer, TypeScript Specialist, React Astro Portfolio, Systems Programming, Computer Science Projects" />
+		<meta name="google-site-verification" content="vZgK7guRQlO8SdjzBed1ZqkrZUQ9pE0dnChE08mfGIQ" />
 		<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 		<meta name="theme-color" content="#0d0d0d" />
 		<meta name="color-scheme" content="dark" />
@@ -211,6 +168,11 @@ const breadcrumbSchema = {
 		<meta property="og:locale:alternate" content={isFr ? "en_US" : "fr_FR"} />
 		<meta property="og:see_also" content="https://github.com/DevYatsu" />
 		<meta property="og:see_also" content="https://linkedin.com/in/yanis-amani" />
+		<meta property="og:see_also" content="https://x.com/DevYatsu" />
+		<meta property="profile:first_name" content="Yanis" />
+		<meta property="profile:last_name" content="Amani" />
+		<meta property="profile:username" content="DevYatsu" />
+		<meta property="profile:gender" content="male" />
 
 		<!-- Twitter / X Card -->
 		<meta name="twitter:card" content="summary_large_image" />
@@ -234,14 +196,41 @@ const breadcrumbSchema = {
 		<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
 		<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 		<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-		<script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+		{projectSchemas.map(schema => (
+			<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+		))}
 
 		<!-- Privacy-First Analytics (cookieless, GDPR compliant) -->
 		<script data-goatcounter="https://yatsu.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 	</head>
 	<body class={lang}>
-		<!-- Custom cursor (desktop only, hidden on touch) -->
-		<div id="cursor-dot" aria-hidden="true"></div>
+		<a href="#main-content" class="skip-link">{isFr ? 'Aller au contenu' : 'Skip to content'}</a>
+
+		<!-- Command Palette Overlay (Easter Egg) -->
+		<div id="cmd-palette" 
+			role="dialog" 
+			aria-modal="true" 
+			aria-labelledby="cmd-title"
+			class="fixed inset-0 z-10000 bg-bg-base/95 backdrop-blur-2xl flex items-center justify-center p-6 opacity-0 pointer-events-none transition-all duration-300">
+			<div class="w-full max-w-2xl">
+				<div class="terminal-modern shadow-2xl border-primary/30">
+					<h2 id="cmd-title" class="sr-only">Command Palette</h2>
+					<div class="flex items-center gap-3 mb-6">
+						<span class="text-primary font-bold" aria-hidden="true">❯</span>
+						<input type="text" id="cmd-input" 
+							placeholder="Execute system command..." 
+							aria-label="Enter a command"
+							class="bg-transparent border-none outline-none text-white w-full text-xl font-mono placeholder:text-text-dim/50" />
+					</div>
+					<div id="cmd-results" 
+						aria-live="polite"
+						class="space-y-2 text-text-muted font-mono text-sm pl-6 max-h-[40vh] overflow-y-auto">
+						<p>TYPE 'HELP' FOR AVAILABLE PROTOCOLS</p>
+					</div>
+				</div>
+				<p class="text-center mt-6 text-text-dim text-xs font-mono uppercase tracking-[0.2em]">Press ESC to abort mission</p>
+			</div>
+		</div>
 
 		<!-- Noise background -->
 		<div class="fixed inset-0 bg-noise z-9998" aria-hidden="true"></div>
@@ -253,7 +242,7 @@ const breadcrumbSchema = {
 			</main>
 
 			<!-- Footer -->
-			<footer class="border-t border-border-subtle mt-24 bg-bg-surface/30">
+			<footer class="border-t border-white/5 mt-24 bg-bg-surface/30">
 				<div class="max-w-7xl mx-auto px-6 md:px-12 py-20">
 					<div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 items-start">
 						<!-- Left: education info -->
@@ -315,107 +304,174 @@ const breadcrumbSchema = {
 		</button>
 
 		<script>
-			// ── Custom Cursor (desktop only) ──────────────────────────────
-			const dot  = document.getElementById('cursor-dot')  as HTMLElement | null;
-
-			if (dot && window.matchMedia('(hover: hover)').matches) {
-				let mx = window.innerWidth / 2, my = window.innerHeight / 2;
-				let rafId: number;
-				let moved = false;
-
-				const tick = () => {
-					dot.style.transform  = `translate3d(${mx}px,${my}px,0) translate(-50%,-50%)`;
-					rafId = requestAnimationFrame(tick);
+			document.addEventListener('astro:page-load', () => {
+				// ── Terminal / Palette ────────────────────────────────────
+				const cmdInput = document.getElementById('cmd-input') as HTMLInputElement | null;
+				const cmdPalette = document.getElementById('cmd-palette');
+				const cmdResults = document.getElementById('cmd-results');
+				
+				const cmdMap = {
+					'help': () => 'AVAILABLE: WHOAMI, PROJECTS, SOCIALS, SUDO REBOOT, CLEAR, EXIT',
+					'whoami': () => 'Yanis Amani // Systems Developer // CS Student at HE-Arc Neuchâtel.',
+					'projects': () => 'Filing system data... [Done] [express-rs, YatsuScript, portfolio-modern]',
+					'socials': () => 'GitHub: DevYatsu // LinkedIn: yanis-amani',
+					'clear': () => { if (cmdResults) cmdResults.innerHTML = ''; return ''; },
+					'exit': () => { cmdPalette?.classList.add('hidden'); return ''; },
+					'sudo reboot': () => {
+						document.body.style.filter = 'invert(1) contrast(5)';
+						setTimeout(() => window.location.reload(), 1000);
+						return 'KERNEL PANIC: REBOOTING...';
+					}
 				};
 
-				document.addEventListener('mousemove', (e) => {
-					mx = e.clientX;
-					my = e.clientY;
-					if (!moved) {
-						moved = true;
-						document.body.classList.add('cursor-active');
-						rafId = requestAnimationFrame(tick);
+				document.addEventListener('keydown', (e) => {
+					// Keyboard shortcut (Cmd+K)
+					if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+						e.preventDefault();
+						const isOpen = cmdPalette?.classList.contains('opacity-100');
+						if (isOpen) {
+							cmdPalette?.classList.remove('opacity-100', 'pointer-events-auto');
+							cmdPalette?.classList.add('opacity-0', 'pointer-events-none');
+						} else {
+							cmdPalette?.classList.add('opacity-100', 'pointer-events-auto');
+							cmdPalette?.classList.remove('opacity-0', 'pointer-events-none');
+							cmdInput?.focus();
+						}
 					}
-				}, { passive: true });
+					
+					if (e.key === 'Escape' && cmdPalette?.classList.contains('opacity-100')) {
+						cmdPalette?.classList.remove('opacity-100', 'pointer-events-auto');
+						cmdPalette?.classList.add('opacity-0', 'pointer-events-none');
+					}
 
-				// Hover delegation
-				document.body.addEventListener('mouseover', (e) => {
-					const t = (e.target as HTMLElement).closest('a, button, [data-hover]');
-					if (t) dot.classList.add('hovering');
+					// Focus trap inside palette
+					if (cmdPalette?.classList.contains('opacity-100') && e.key === 'Tab') {
+						if (e.shiftKey) {
+							if (document.activeElement === cmdInput) {
+								e.preventDefault();
+								cmdInput?.focus(); 
+							}
+						} else {
+							if (document.activeElement === cmdInput) {
+								e.preventDefault();
+								cmdInput?.focus();
+							}
+						}
+					}
 				});
-				document.body.addEventListener('mouseout', (e) => {
-					const t = (e.target as HTMLElement).closest('a, button, [data-hover]');
-					if (t) dot.classList.remove('hovering');
-				});
-			}
 
-			// ── Scroll-to-top ────────────────────────────────────────────
-			const scrollBtn = document.getElementById('scroll-top') as HTMLButtonElement | null;
-			if (scrollBtn) {
-				let ticking = false;
+				cmdInput?.addEventListener('keydown', (e) => {
+					if (e.key === 'Enter') {
+						const val = cmdInput.value.toLowerCase().trim();
+						if (val === 'exit') {
+							cmdPalette?.classList.remove('opacity-100', 'pointer-events-auto');
+							cmdPalette?.classList.add('opacity-0', 'pointer-events-none');
+							cmdInput.value = '';
+							return;
+						}
+						
+						const out = cmdMap[val as keyof typeof cmdMap] ? cmdMap[val as keyof typeof cmdMap]() : `PROTOCOL_ERROR: ${val} unrecognized.`;
+						
+						if (cmdResults && out) {
+							const d = document.createElement('p');
+							d.className = 'mt-2 text-primary/80';
+							d.textContent = `> ${out}`;
+							cmdResults.appendChild(d);
+							cmdResults.scrollTop = cmdResults.scrollHeight;
+						}
+						cmdInput.value = '';
+					}
+				});
+
+				// ── Konami Code ──────────────────────────────────────────
+				let kIdx = 0;
+				const kCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+				document.addEventListener('keydown', (e) => {
+					if (e.key === kCode[kIdx]) {
+						kIdx++;
+						if (kIdx === kCode.length) {
+							document.body.classList.toggle('system-override');
+							kIdx = 0;
+							console.log("%c[OVERRIDE] System remapped.", "color: #00ff41; background: black;");
+						}
+					} else { kIdx = 0; }
+				});
+
+				// ── Engagement Tracker (Growth) ───────────────────────────
+				let logPoints = [0.25, 0.5, 0.75, 0.9];
 				window.addEventListener('scroll', () => {
-					if (!ticking) {
-						requestAnimationFrame(() => {
-							const show = window.scrollY > 500;
-							scrollBtn.classList.toggle('opacity-0', !show);
-							scrollBtn.classList.toggle('pointer-events-none', !show);
-							ticking = false;
-						});
-						ticking = true;
-					}
-				}, { passive: true });
-				scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-			}
-
-			// ── Scroll-aware nav border ──────────────────────────────────
-			const nav = document.querySelector('nav[aria-label="Main Navigation"]') as HTMLElement | null;
-			if (nav) {
-				let ntick = false;
-				window.addEventListener('scroll', () => {
-					if (!ntick) {
-						requestAnimationFrame(() => {
-							nav.style.borderBottomColor = window.scrollY > 40 ? 'hsl(0,0%,16%)' : 'transparent';
-							ntick = false;
-						});
-						ntick = true;
-					}
-				}, { passive: true });
-			}
-
-			// ── Intersection Observer for scroll-reveal ──────────────────
-			const observer = new IntersectionObserver(entries => {
-				entries.forEach(e => {
-					if (e.isIntersecting) {
-						(e.target as HTMLElement).classList.add('visible');
-						observer.unobserve(e.target);
-					}
+					const p = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+					logPoints = logPoints.filter(m => {
+						if (p > m) {
+							console.log(`%c[ENGAGEMENT] User depth reached: ${m * 100}%`, "color: #888; border-left: 2px solid #ff6600; padding: 0 4px;");
+							return false;
+						}
+						return true;
+					});
 				});
-			}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
-			document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+				// ── CV Download Feedback ──────────────────────────────────
+				document.querySelectorAll('a[download]').forEach(a => {
+					a.addEventListener('click', (e) => {
+						const b = e.currentTarget as HTMLElement;
+						b.classList.add('cv-loading', 'active');
+						const txt = b.textContent;
+						b.textContent = 'TRANSMITTING...';
+						setTimeout(() => {
+							b.classList.remove('active');
+							b.textContent = txt;
+						}, 2000);
+					});
+				});
 
-			// ── Language toggle: preserve scroll position via hash ────────
-			// On home pages (/ and /fr), find which section is most visible
-			// and append its #id so the browser scrolls there on the new page.
-			const sections = Array.from(document.querySelectorAll('section[id], header[id]')) as HTMLElement[];
+				// ── Ticker Clock ──────────────────────────────────────────
+				setInterval(() => {
+					const el = document.getElementById('sys-time');
+					if (el) el.textContent = new Date().toLocaleTimeString('en-GB');
+				}, 1000);
 
-			document.querySelectorAll<HTMLAnchorElement>('[data-lang-toggle]').forEach(link => {
-				link.addEventListener('click', (e) => {
-					if (sections.length === 0) return; // not a page with sections (e.g. impressum)
-					e.preventDefault();
-					const mid = window.innerHeight / 2;
-					// Find the section whose rect is closest to the viewport center
-					let best = sections[0];
-					let bestDist = Infinity;
-					for (const s of sections) {
-						const r = s.getBoundingClientRect();
-						const center = r.top + r.height / 2;
-						const dist = Math.abs(center - mid);
-						if (dist < bestDist) { bestDist = dist; best = s; }
+				// ── Scroll Behaviors ──────────────────────────────────────
+				const scrollBtn = document.getElementById('scroll-top') as HTMLButtonElement | null;
+				const nav = document.querySelector('nav[aria-label="Main Navigation"]') as HTMLElement | null;
+				
+				window.addEventListener('scroll', () => {
+					const s = window.scrollY;
+					if (scrollBtn) {
+						scrollBtn.style.opacity = s > 800 ? '1' : '0';
+						scrollBtn.style.pointerEvents = s > 800 ? 'all' : 'none';
+						scrollBtn.style.transform = s > 800 ? 'translateY(0)' : 'translateY(16px)';
 					}
-					const base = link.getAttribute('href') || '/';
-					const hash = best.id && best.id !== 'hero' ? '#' + best.id : '';
-					window.location.href = base + hash;
+					if (nav) nav.style.borderBottomColor = s > 40 ? 'hsl(0,0%,16%)' : 'transparent';
+				}, { passive: true });
+
+				scrollBtn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+				// ── Intersection Observer ─────────────────────────────────
+				const observer = new IntersectionObserver(ents => {
+					ents.forEach(e => {
+						if (e.isIntersecting) {
+							(e.target as HTMLElement).classList.add('visible');
+							observer.unobserve(e.target);
+						}
+					});
+				}, { threshold: 0.08 });
+				document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+
+				// ── Language Swap Helper ──────────────────────────────────
+				const sects = Array.from(document.querySelectorAll('section[id], header[id]')) as HTMLElement[];
+				document.querySelectorAll<HTMLAnchorElement>('[data-lang-toggle]').forEach(l => {
+					l.addEventListener('click', (e) => {
+						if (!sects.length) return;
+						e.preventDefault();
+						const mid = window.innerHeight / 2;
+						let best = sects[0];
+						let bestDist = Infinity;
+						for (const s of sects) {
+							const dist = Math.abs((s.getBoundingClientRect().top + s.getBoundingClientRect().height/2) - mid);
+							if (dist < bestDist) { bestDist = dist; best = s; }
+						}
+						window.location.href = l.getAttribute('href')! + (best.id !== 'hero' ? '#' + best.id : '');
+					});
 				});
 			});
 		</script>

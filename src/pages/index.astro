@@ -2,12 +2,12 @@
 import Layout from '../layouts/Layout.astro';
 import { projects, skills, levelColors, marqueeItems } from '../data/portfolio';
 
-const lang: "en" | "fr" = 'en';
+const lang = 'en' as "en" | "fr";
 const isFr = lang === 'fr';
 
 const content = {
-  title: "Yanis Amani — Systems & Systems-Adjacent Development",
-  description: "BSc Computer Science student at HE-Arc. Building low-latency web infrastructure and memory-safe systems software in Rust, TypeScript, and C++.",
+  title: "Yanis Amani — Software Developer Portfolio & Systems Engineering",
+  description: "Yanis Amani — BSc Computer Science student at HE-Arc. Building high-performance systems and low-latency web infrastructure in Rust, TypeScript, and C++.",
   status: "available for technical roles & freelance",
   location: "neuchâtel · switzerland",
   heroHeading1: "YANIS",
@@ -88,14 +88,14 @@ const content = {
               YANIS
             </span>
             <div class="flex flex-col md:flex-row md:items-end gap-4 md:gap-12 mt-4 md:mt-0">
-              <span class="display-xl block text-white tracking-tighter leading-[0.8]" aria-hidden="true">
+              <span class="display-xl block text-white tracking-tighter leading-[0.8] text-gradient glitch-hover" aria-hidden="true">
                 AMANI<span class="text-primary">.</span>
               </span>
               <div class="md:mb-6 flex flex-col gap-2">
                 <p class="text-xl md:text-2xl font-medium text-text-muted max-w-sm leading-tight">
-                  {content.role} <span class="text-primary/40">&</span> CS Student
+                  {content.role} <span class="text-primary/40">&</span> <span class="marker-highlight">CS Student</span>
                 </p>
-                <p class="mono-label tracking-widest!">{content.stack}</p>
+                <p class="mono-label tracking-widest! text-primary/80">{content.stack}</p>
               </div>
             </div>
           </h1>
@@ -158,11 +158,12 @@ const content = {
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
         {projects.map((p, i) => (
           <article id={`project-${p.id}`}
-            class={`card-premium group ${p.span} rounded-[2.5rem]!`}
+            class={`card-premium group ${p.span} rounded-[2.5rem]! h-full`}
             data-animate
             data-delay={String(i % 3 + 1)}
             aria-label={`Project: ${p.name}`}>
             
+            <div class="card-premium-glow"></div>
             <div class="flex items-start justify-between mb-12">
               <span class="font-mono text-xs text-primary/60 font-black tracking-widest">{p.num}</span>
               <span class="chip chip-primary">{p.locales[lang].status}</span>
@@ -217,7 +218,8 @@ const content = {
             </p>
           </div>
           
-          <div class="terminal-modern" data-animate data-delay="2">
+          <div class="terminal-modern group relative overflow-hidden" data-animate data-delay="2">
+            <div class="terminal-scanlines absolute inset-0 opacity-10 pointer-events-none group-hover:opacity-20 transition-opacity"></div>
             <div class="flex items-center gap-2 mb-8">
               <div class="flex gap-1.5">
                 <div class="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50"></div>
@@ -226,21 +228,17 @@ const content = {
               </div>
               <span class="ml-4 text-text-dim text-xs font-mono">portfolio@yanis: ~</span>
             </div>
-            <div class="space-y-4">
+            <div class="space-y-4 font-mono text-xs md:text-sm">
+              <p class="flex gap-3 text-white/40 italic">
+                <span class="text-primary font-bold">❯</span>
+                <span>// Try Cmd+K for global search</span>
+              </p>
               <p class="flex gap-3"><span class="text-primary font-bold">❯</span> <span>{content.whoami}</span></p>
               <p class="text-text-muted ml-6">{content.whoamiVal}</p>
-              <p class="text-text-dim ml-6 text-xs">{content.whoamiVal2}</p>
               
-              <p class="flex gap-3 pt-4"><span class="text-primary font-bold">❯</span> <span>ls stack/</span></p>
-              <div class="ml-6 flex flex-wrap gap-x-4 gap-y-2">
-                <span class="text-primary">rust</span>
-                <span class="text-blue-400">typescript</span>
-                <span class="text-orange-400">cpp</span>
-                <span class="text-emerald-400">python</span>
-              </div>
-              
-              <p class="flex gap-3 pt-4"><span class="text-primary font-bold">❯</span> <span>echo $STATUS</span></p>
-              <p class="ml-6 text-primary font-bold underline decoration-primary/30 underline-offset-4">{content.statusVal}<span class="animate-pulse">_</span></p>
+              <p class="flex gap-3 pt-2"><span class="text-primary font-bold animate-pulse">❯</span> 
+                <span class="text-white/30 italic">tail -f development.log</span>
+              </p>
             </div>
           </div>
         </div>
@@ -334,7 +332,7 @@ const content = {
           </div>
         </div>
 
-        <div class="card-premium p-10! rounded-[3rem]! glass" data-animate data-delay="1">
+        <div data-animate data-delay="1">
           <form name="contact" class="flex flex-col gap-8">
             <input type="hidden" name="form-name" value="contact" />
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
@@ -391,51 +389,70 @@ const content = {
   </section>
 
   <script>
-    const form = document.querySelector('form[name="contact"]') as HTMLFormElement;
-    const button = document.getElementById('submit-button') as HTMLButtonElement;
-    const submitText = button?.querySelector('.submit-text');
-    const loadingText = button?.querySelector('.loading-text');
+    document.addEventListener('astro:page-load', () => {
+      const form = document.querySelector('form[name="contact"]') as HTMLFormElement;
+      const button = document.getElementById('submit-button') as HTMLButtonElement;
+      const submitText = button?.querySelector('.submit-text');
+      const loadingText = button?.querySelector('.loading-text');
 
-    form?.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if (button) {
-        button.disabled = true;
-        submitText?.classList.add('hidden');
-        loadingText?.classList.remove('hidden');
-      }
-      const formData = new FormData(form);
-      const action = "https://formies.netlify.app/api/v1/submit?project_name=Portfolio";
-      try {
-        const response = await fetch(action, { method: 'POST', body: formData });
-        if (response.status === 201) {
-          window.location.href = '/thanks';
-        } else {
-          alert('An error occurred. Please try again.');
+      form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (button) {
+          button.disabled = true;
+          submitText?.classList.add('hidden');
+          loadingText?.classList.remove('hidden');
+        }
+        const formData = new FormData(form);
+        const action = "https://formies.netlify.app/api/v1/submit?project_name=Portfolio";
+        try {
+          const response = await fetch(action, { method: 'POST', body: formData });
+          if (response.status === 201) {
+            window.location.href = '/thanks';
+          } else {
+            alert('An error occurred. Please try again.');
+            if (button) {
+              button.disabled = false;
+              submitText?.classList.remove('hidden');
+              loadingText?.classList.add('hidden');
+            }
+          }
+        } catch (error) {
+          alert('A network error occurred.');
           if (button) {
             button.disabled = false;
             submitText?.classList.remove('hidden');
             loadingText?.classList.add('hidden');
           }
         }
-      } catch (error) {
-        alert('A network error occurred.');
-        if (button) {
-          button.disabled = false;
-          submitText?.classList.remove('hidden');
-          loadingText?.classList.add('hidden');
-        }
-      }
-    });
-
-    // Cursor interaction for cards
-    document.querySelectorAll('.card-premium').forEach(card => {
-      card.addEventListener('mousemove', (e: any) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        (card as HTMLElement).style.setProperty('--mouse-x', `${x}px`);
-        (card as HTMLElement).style.setProperty('--mouse-y', `${y}px`);
       });
+
+      // Cursor interaction for cards
+      const updateSpotlight = (e: MouseEvent) => {
+        const cards = document.querySelectorAll('.card-premium');
+        cards.forEach(card => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          (card as HTMLElement).style.setProperty('--mouse-x', `${x}px`);
+          (card as HTMLElement).style.setProperty('--mouse-y', `${y}px`);
+        });
+      };
+      window.addEventListener('mousemove', updateSpotlight);
+
+      // Terminal interactivity
+      const terminal = document.querySelector('.terminal-modern');
+      if (terminal) {
+        terminal.addEventListener('click', () => {
+          const status = (terminal.querySelector('.status-val') as HTMLElement);
+          if (status) {
+            const original = status.textContent;
+            status.textContent = "initializing...";
+            setTimeout(() => {
+              status.textContent = original;
+            }, 1500);
+          }
+        });
+      }
     });
   </script>
 </Layout>
