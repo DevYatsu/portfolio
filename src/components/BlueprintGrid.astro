@@ -1,0 +1,40 @@
+---
+interface Props {
+	showCoordinates?: boolean;
+	opacity?: number;
+}
+
+const { showCoordinates = false, opacity = 0.5 } = Astro.props;
+---
+
+<div class="absolute inset-0 pointer-events-none overflow-hidden" style={`opacity: ${opacity}`}>
+  <!-- Main Grid -->
+  <div class="absolute inset-0 grid-structure"></div>
+  
+  <!-- Subtle Large Grid -->
+  <div class="absolute inset-0" style="background-image: linear-gradient(var(--color-border-strong) 1px, transparent 1px), linear-gradient(90deg, var(--color-border-strong) 1px, transparent 1px); background-size: 200px 200px;"></div>
+
+  {showCoordinates && (
+    <div class="absolute inset-0 select-none">
+      <span class="annotation top-4 left-4">REF_SYSTEM_V2.0</span>
+      <span class="annotation bottom-4 right-4">COORD_MAPPING_ACTIVE</span>
+      
+      <!-- Coordinate Markers -->
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 h-full w-px bg-primary/10"></div>
+      <div class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-px bg-primary/10"></div>
+      
+      <div class="absolute top-[10%] left-[5%] tech-label text-[0.5rem] opacity-30">X: 124.5 / Y: 882.1</div>
+      <div class="absolute bottom-[10%] right-[5%] tech-label text-[0.5rem] opacity-30">SEC_ALPHA_9</div>
+    </div>
+  )}
+</div>
+
+<style>
+  .grid-structure {
+    background-image: 
+      linear-gradient(var(--color-border-subtle) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-border-subtle) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-position: center center;
+  }
+</style>

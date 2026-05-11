@@ -1,462 +1,251 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { projects, skills, marqueeItems } from '../data/portfolio';
+import Layout from "../layouts/Layout.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import { projects, skills } from "../data/portfolio";
 
-const lang = 'fr' as "en" | "fr";
-const isFr = lang === 'fr';
+const lang = "fr" as "en" | "fr";
+const isFr = lang === "fr";
 
 const content = {
-  title: "Yanis Amani , Portfolio Développeur Logiciel & Architecture Système",
-  description: "Yanis Amani , Étudiant en BSc Informatique à la HE-Arc. Développement d'infrastructures système et web haute performance en Rust, TypeScript et C++.",
-  status: "disponible pour rôles techniques & freelance",
-  location: "neuchâtel · suisse",
-  heroHeading1: "YANIS",
-  heroHeading2: "AMANI",
-  role: "Développeur Logiciel",
-  edu: "BSc CS @ HE-Arc",
-  stack: "Rust · TypeScript · C++",
-  heroPara: "Je développe des systèmes déterministes où la performance est une priorité absolue , des interfaces web à faible latence aux infrastructures système sécurisées.",
-  ctaWork: "déploiements",
-  ctaResume: "↓ cv.pdf",
-  ctaHello: "me contacter →",
-  stat1: "Implémentations",
-  stat2: "Langages Core",
-  stat3: "Années d'Ingénierie",
-  projectsSub: "§ 01 / selected_work",
-  projectsTitle: "Dernières",
-  projectsTitleAccent: "Releases",
-  allGithub: "archives source ↗",
-  visit: "instance live ↗",
-  src: "dépôt ↗",
-  skillsSub: "§ 02 / méthodologie",
-  skillsTitle: "Core",
-  skillsTitleAccent: "Stack",
-  skillsPara: "Outils pragmatiques sélectionnés pour leur fiabilité et performance. Je privilégie les technologies offrant une forte sécurité de typage et un comportement prévisible à l'exécution.",
-  whoami: "whoami",
-  whoamiVal: "Étudiant en Informatique @ HE-Arc",
-  whoamiVal2: "Spécialisé en systèmes & architecture backend",
-  catInterests: "interests.json",
-  echoStatus: "echo $DISPONIBILITÉ",
-  statusVal: "recherche de stage 2026",
-  aboutSub: "§ 03 / perspective",
-  aboutTitle: "Le code doit être prévisible,",
-  aboutPara: "Développeur système, je m'intéresse à la frontière entre abstractions de haut niveau et exécution machine. Je me concentre sur l'écriture de code respectant les contraintes matérielles , qu'il s'agisse de pipelines de rendu ou de compilateurs sur mesure.",
-  aboutPara2: "La correction n'est pas négociable.",
-  fast: "performant",
-  correct: "maintenable",
-  pleasure: "efficient.",
-  currently: "focus actuel",
-  spoken: "langues parlées",
-  spokenVal: "Français (Maternel) · Anglais (C1)",
-  interests: "focus technique",
-  contactSub: "§ 04 / connectivité",
-  contactTitle: "Démarrer une conversation",
-  contactPara: "Disponible pour des projets d'ingénierie système, d'infrastructure web performante ou d'audit de performance bas niveau.",
-  contactLinkedIn: "LinkedIn ↗",
-  bgTalk: "PROTOCOL: HELLO",
-  formName: "Identifiant",
-  formEmail: "Adresse de retour",
-  formMessage: "Payload",
-  formSubmit: "Transmettre"
+	title: "Yanis Amani // Étudiant en Informatique",
+	description:
+		"Étudiant en Informatique. Je me concentre sur la création de solutions logicielles fiables, rapides et de haute qualité.",
+	heroTitle: "CONSTRUIRE LA",
+	heroTitle2: "FIABILITÉ",
+	heroSubtitle: "Étudiant en Informatique",
+	heroPara:
+		"Je suis un étudiant en informatique créant des logiciels rapides, sécurisés et conçus pour durer. Je privilégie la qualité et la stabilité dans chaque projet.",
+	projectsTitle: "PROJETS SÉLECTIONNÉS",
+	skillsTitle: "MES OUTILS",
+	perspectiveTitle: "MON APPROCHE",
+	perspectivePara:
+		"Je crois qu'un bon logiciel doit être invisible : il doit simplement fonctionner. Je me concentre sur les détails qui rendent les applications fiables et faciles à maintenir, pour que chaque projet soit solide dès sa conception.",
+	contactTitle: "ME CONTACTER",
+	contactPara:
+		"Je suis toujours ouvert à discuter de nouveaux projets, de développement logiciel de qualité ou d'opportunités de stage.",
 };
 ---
 
-<Layout
-  title={content.title}
-  description={content.description}
-  lang={lang}
->
-  <header id="hero" class="relative min-h-screen flex flex-col justify-center overflow-hidden pt-20">
-    <!-- Background Elements -->
-    <div aria-hidden="true" class="absolute inset-0 pointer-events-none">
-      <div class="absolute top-[10%] right-[5%] w-160 h-160 bg-primary/10 blur-[120px] rounded-full animate-pulse"></div>
-      <div class="absolute bottom-[10%] left-[-5%] w-120 h-120 bg-primary/5 blur-[100px] rounded-full"></div>
-    </div>
-    
-    <div class="max-w-7xl mx-auto w-full px-6 md:px-12 relative z-10">
-      <div class="flex flex-col gap-6 md:gap-10">
-        <div data-animate class="flex items-center gap-4">
-          <span class="section-tag mb-0">Portfolio 2026</span>
+<Layout title={content.title} description={content.description} lang={lang}>
+  <!-- Hero Section -->
+  <section id="hero" class="min-h-[90vh] flex flex-col justify-center relative px-6 md:px-12 max-w-7xl mx-auto py-24">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
+      <div class="lg:col-span-8" data-animate>
+        <div class="flex items-center gap-4 mb-8">
+          <span class="tech-label">PORTFOLIO</span>
           <div class="h-px w-12 bg-primary/30"></div>
-          <span class="mono-label text-primary/60">{content.location}</span>
+          <span class="font-mono text-[0.6rem] text-text-dim uppercase tracking-widest">NEUCHÂTEL, SUISSE</span>
         </div>
+        
+        <h1 class="display-title mb-8">
+          {content.heroTitle}<br/>
+          <span class="text-primary">{content.heroTitle2}</span>
+        </h1>
 
-        <div data-animate data-delay="1">
-          <h1 class="relative">
-            <span class="sr-only">Yanis Amani , Développeur Système et Étudiant en Informatique à la HE-Arc Neuchâtel. Spécialiste Rust, C++ et TypeScript haute performance.</span>
-            <span class="display-xl block text-white tracking-tighter leading-[0.8]" aria-hidden="true">
-              YANIS
-            </span>
-            <div class="flex flex-col md:flex-row md:items-end gap-4 md:gap-12 mt-4 md:mt-0">
-              <span class="display-xl block text-white tracking-tighter leading-[0.8] text-gradient glitch-hover" aria-hidden="true">
-                AMANI<span class="text-primary">.</span>
-              </span>
-              <div class="md:mb-6 flex flex-col gap-2">
-                <p class="text-xl md:text-2xl font-medium text-text-muted max-w-sm leading-tight">
-                  {content.role} <span class="text-primary/40">&</span> <span class="marker-highlight">CS Student</span>
-                </p>
-                <p class="mono-label tracking-widest! text-primary/80">{content.stack}</p>
-              </div>
-            </div>
-          </h1>
-        </div>
+        <p class="text-xl md:text-2xl font-medium text-text-muted max-w-2xl leading-tight">
+          {content.heroPara}
+        </p>
+      </div>
 
-        <div class="mt-8 md:mt-12 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-12" data-animate data-delay="2">
-          <p class="text-text-muted max-w-xl text-lg md:text-xl leading-relaxed font-medium">
-            {content.heroPara}
-          </p>
-          <div class="flex flex-wrap gap-4">
-            <a href="/fr/#projects" class="btn btn-primary text-sm shadow-2xl group" title={content.ctaWork}>
-              {content.ctaWork}
-              <svg class="w-4 h-4 transition-transform group-hover:translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
-              </svg>
-            </a>
-            <a href="/fr/#contact" class="btn btn-ghost text-sm border-white/10 hover:border-white/30">
-              {content.ctaHello}
-            </a>
+      <div class="lg:col-span-4" data-animate data-delay="1">
+        <div class="structural-border p-8 bg-bg-surface/50 backdrop-blur-sm space-y-6">
+          <div class="flex justify-between items-start">
+            <span class="tech-label">INFOS CLÉS</span>
+            <div class="w-2 h-2 bg-primary animate-pulse"></div>
           </div>
+          <ul class="font-mono text-[0.7rem] space-y-4 text-text-muted">
+            <li class="flex justify-between border-b border-border-subtle pb-2">
+              <span>RÔLE</span>
+              <span class="text-text-main font-bold">ÉTUDIANT</span>
+            </li>
+            <li class="flex justify-between border-b border-border-subtle pb-2">
+              <span>FOCUS</span>
+              <span class="text-text-main font-bold">CODE QUALITÉ</span>
+            </li>
+            <li class="flex justify-between border-b border-border-subtle pb-2">
+              <span>FORMATION</span>
+              <span class="text-text-main font-bold">BSc INFORMATIQUE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>STATUT</span>
+              <span class="text-primary font-bold">DISPONIBLE 2026</span>
+            </li>
+          </ul>
+          <a href="#projects" class="btn-arch w-full justify-center mt-4 uppercase">
+            Voir mes projets
+          </a>
         </div>
       </div>
     </div>
+  </section>
 
-    <!-- Scroll Indicator -->
-    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-4 text-text-dim" data-animate data-delay="4">
-      <span class="mono-label text-[0.6rem]">{isFr ? 'DÉFILER' : 'SCROLL'}</span>
-      <div class="w-px h-12 bg-linear-to-b from-primary/50 to-transparent"></div>
+  <!-- Projects Section -->
+  <section id="projects" class="py-32 px-6 md:px-12 max-w-7xl mx-auto border-t border-border-subtle">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20" data-animate>
+      <div>
+        <span class="tech-label mb-6 inline-block">SECTION 01</span>
+        <h2 class="display-md uppercase font-black">{content.projectsTitle}</h2>
+      </div>
+      <p class="text-text-muted font-mono text-[0.7rem] uppercase tracking-widest md:text-right max-w-xs">
+        Une sélection de projets récents axés sur la stabilité et le design épuré.
+      </p>
     </div>
-  </header>
 
-  <section class="py-12 border-y border-white/5 bg-bg-surface/30 relative overflow-hidden">
-    <div class="flex gap-16 whitespace-nowrap marquee-container" style="animation: marquee 40s linear infinite;">
-      {[...marqueeItems, ...marqueeItems].map(item => (
-        <span class="inline-flex items-center gap-6 font-mono text-text-dim/40 text-sm font-black uppercase tracking-[0.3em]">
-          {item} <span class="text-primary/20" aria-hidden="true">/</span>
-        </span>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1">
+      {projects.map((p, i) => (
+        <div data-animate data-delay={String((i % 3) + 1)}>
+          <ProjectCard project={p} lang={lang} />
+        </div>
       ))}
     </div>
   </section>
 
-  <section id="projects" aria-labelledby="projects-heading" class="py-32 md:py-48 relative">
-    <div class="max-w-7xl mx-auto px-6 md:px-12">
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-24" data-animate>
-        <div class="max-w-xl">
-          <span class="section-tag">{content.projectsSub}</span>
-          <h2 id="projects-heading" class="display-lg text-white mb-6">
-            {content.projectsTitle} <span class="text-text-muted">{content.projectsTitleAccent}</span>
-          </h2>
-          <p class="text-text-muted text-lg">
-            {isFr ? "Une revue technique de projets axés sur la stabilité, la gestion de la mémoire et l'optimisation des ressources." : "Technical overview of implementations focused on stability, memory safety, and resource optimization."}
-          </p>
-        </div>
-        <a href="https://github.com/DevYatsu" target="_blank" rel="noopener noreferrer"
-          class="btn btn-ghost text-xs py-3 px-6 rounded-full border-white/5 hover:border-primary/50 transition-all font-mono" aria-label={content.allGithub}>
-          {content.allGithub}
-        </a>
+  <!-- Skills Section -->
+  <section id="skills" class="py-32 px-6 md:px-12 max-w-7xl mx-auto border-t border-border-subtle bg-bg-accent/30">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-24">
+      <div class="lg:col-span-4" data-animate>
+        <span class="tech-label mb-6 inline-block">SECTION 02</span>
+        <h2 class="display-md uppercase font-black mb-8">{content.skillsTitle}</h2>
+        <p class="text-text-muted leading-relaxed">
+          J'utilise des outils modernes pour construire des logiciels fiables. Je privilégie les technologies qui assurent une sécurité et une stabilité à long terme.
+        </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-        {projects.map((p, i) => (
-          <article id={`project-${p.id}`}
-            class={`card-premium group ${p.span} rounded-[2.5rem]! h-full`}
-            data-animate
-            data-delay={String(i % 3 + 1)}
-            aria-label={`Projet : ${p.name}`}>
-            
-            <div class="card-premium-glow"></div>
-            <div class="flex items-start justify-between mb-12">
-              <span class="font-mono text-xs text-primary/60 font-black tracking-widest">{p.num}</span>
-              <span class="chip chip-primary">{p.locales[lang].status}</span>
+      <div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-px bg-border-subtle border border-border-subtle">
+        {skills.map((s, i) => (
+          <div class="bg-bg-base p-8 hover:bg-primary/5 transition-colors group" data-animate data-delay={String((i % 4) + 1)}>
+            <div class="flex justify-between items-center mb-6">
+              <span class="font-mono text-[0.6rem] text-text-dim">0{i + 1}</span>
+              <span class="tech-label group-hover:bg-primary group-hover:text-white transition-colors">{s.level[lang]}</span>
             </div>
-
-            <div class="mt-auto">
-              <h3 class="display-md text-white mb-4 group-hover:text-primary transition-colors duration-500">
-                {p.name}
-              </h3>
-              <p class="text-text-muted text-lg leading-relaxed mb-8 line-clamp-3">
-                {p.locales[lang].description}
-              </p>
-              
-              <div class="flex flex-wrap items-center justify-between gap-6 pt-8 border-t border-white/5">
-                <div class="flex flex-wrap gap-2">
-                  {p.tags.map(t => <span class="chip bg-white/5! border-transparent!">{t}</span>)}
-                </div>
-                {p.url
-                  ? <a href={p.url} target="_blank" rel="noopener noreferrer"
-                      aria-label={`Visiter ${p.name} live`}
-                      class="flex items-center gap-2 text-sm font-bold text-white hover:text-primary transition-colors group/link">
-                      {content.visit}
-                      <svg class="w-4 h-4 transition-transform group-hover/link:translate-x-1 group-hover/link:-translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                    </a>
-                  : <a href="https://github.com/DevYatsu" target="_blank" rel="noopener noreferrer"
-                      aria-label={`Voir le code source de ${p.name}`}
-                      class="flex items-center gap-2 text-sm font-bold text-text-muted hover:text-white transition-colors">
-                      {content.src}
-                    </a>
-                }
-              </div>
+            <h3 class="text-xl font-black uppercase mb-4">{s.name}</h3>
+            <div class="h-1 bg-border-subtle w-full relative overflow-hidden">
+              <div 
+                class="absolute inset-y-0 left-0 bg-primary transition-all duration-1000 ease-out delay-300"
+                style={`width: ${s.level[lang] === 'Advanced' || s.level[lang] === 'Avancé' ? '100%' : (s.level[lang] === 'Proficient' || s.level[lang] === 'Compétent') ? '70%' : '40%'}`}
+              ></div>
             </div>
-          </article>
+          </div>
         ))}
       </div>
     </div>
   </section>
 
-  <section id="skills" aria-labelledby="skills-heading" class="py-32 md:py-48 bg-bg-surface/20 border-y border-white/5 relative overflow-hidden">
-    <div class="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 lg:gap-32 items-center">
-        <div>
-          <div data-animate>
-            <span class="section-tag">{content.skillsSub}</span>
-            <h2 id="skills-heading" class="display-lg text-white mb-8">
-              {content.skillsTitle} <span class="text-text-muted">{content.skillsTitleAccent}</span>
-            </h2>
-            <p class="text-text-muted text-lg leading-relaxed max-w-md mb-12">
-              {content.skillsPara}
-            </p>
+  <!-- About Section -->
+  <section id="about" class="py-32 px-6 md:px-12 max-w-7xl mx-auto border-t border-border-subtle">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-24 items-center">
+      <div class="lg:col-span-7" data-animate>
+        <span class="tech-label mb-6 inline-block">SECTION 03</span>
+        <h2 class="display-md uppercase font-black mb-10 leading-[0.85]">
+          {content.perspectiveTitle}
+        </h2>
+        <div class="space-y-6 text-xl text-text-muted leading-relaxed">
+          <p>{content.perspectivePara}</p>
+          <p class="text-primary font-black uppercase italic">
+            La qualité n'est pas une option.
+          </p>
+        </div>
+      </div>
+      
+      <div class="lg:col-span-5 grid grid-cols-2 gap-4" data-animate data-delay="1">
+        <div class="structural-border p-6 bg-bg-surface">
+          <span class="tech-label block mb-4 text-primary">01</span>
+          <span class="font-black text-2xl uppercase">Fiable</span>
+        </div>
+        <div class="structural-border p-6 bg-primary text-white">
+          <span class="tech-label block mb-4 border-white/30 text-white bg-white/10">02</span>
+          <span class="font-black text-2xl uppercase">Sécurisé</span>
+        </div>
+        <div class="structural-border p-6 bg-bg-surface">
+          <span class="tech-label block mb-4 text-primary">03</span>
+          <span class="font-black text-2xl uppercase">Rapide</span>
+        </div>
+        <div class="structural-border p-6 bg-bg-surface">
+          <span class="tech-label block mb-4 text-primary">04</span>
+          <span class="font-black text-xl uppercase leading-none">HE-ARC</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-32 px-6 md:px-12 max-w-7xl mx-auto border-t border-border-subtle mb-32">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-24 items-start">
+      <div class="lg:col-span-5" data-animate>
+        <span class="tech-label mb-6 inline-block">SECTION 04</span>
+        <h2 class="display-md uppercase font-black mb-8">{content.contactTitle}</h2>
+        <p class="text-text-muted text-lg leading-relaxed mb-12">
+          {content.contactPara}
+        </p>
+        
+        <div class="space-y-4">
+          <a href="mailto:yanis.amani@icloud.com" class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-primary hover:text-primary-dark transition-colors block tracking-tighter">
+            <span class="block text-text-main">YANIS.AMANI</span>
+            <span class="block">@ICLOUD.COM</span>
+          </a>
+          <div class="flex gap-8 mt-12">
+            <a href="https://linkedin.com/in/yanis-amani" target="_blank" class="nav-link">LINKEDIN ↗</a>
+            <a href="https://github.com/DevYatsu" target="_blank" class="nav-link">GITHUB ↗</a>
           </div>
-          
-          <div class="terminal-modern group relative overflow-hidden" data-animate data-delay="2">
-            <div class="terminal-scanlines absolute inset-0 opacity-10 pointer-events-none group-hover:opacity-20 transition-opacity"></div>
-            <div class="flex items-center gap-2 mb-8">
-              <div class="flex gap-1.5">
-                <div class="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50"></div>
-                <div class="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
-                <div class="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50"></div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-7" data-animate data-delay="1">
+        <div class="structural-border p-1 md:p-12 bg-bg-surface/50 backdrop-blur-sm">
+          <form id="contact-form" action="https://formspree.io/f/mdabyqvb" method="POST" class="space-y-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+              <div class="space-y-4">
+                <label class="tech-label">VOTRE NOM</label>
+                <input type="text" name="name" required placeholder="NOM" class="w-full bg-transparent border-b border-border-subtle py-4 font-mono text-sm focus:outline-none focus:border-primary transition-colors" />
               </div>
-              <span class="ml-4 text-text-dim text-xs font-mono">portfolio@yanis: ~</span>
+              <div class="space-y-4">
+                <label class="tech-label">VOTRE EMAIL</label>
+                <input type="email" name="email" required placeholder="EMAIL" class="w-full bg-transparent border-b border-border-subtle py-4 font-mono text-sm focus:outline-none focus:border-primary transition-colors" />
+              </div>
             </div>
             <div class="space-y-4">
-              <p class="flex gap-3"><span class="text-primary font-bold">❯</span> <span>{content.whoami}</span></p>
-              <p class="text-text-muted ml-6">{content.whoamiVal}</p>
-              <p class="text-text-dim ml-6 text-xs">{content.whoamiVal2}</p>
-              
-              <p class="flex gap-3 pt-4"><span class="text-primary font-bold">❯</span> <span>ls stack/</span></p>
-              <div class="ml-6 flex flex-wrap gap-x-4 gap-y-2">
-                <span class="text-primary">rust</span>
-                <span class="text-blue-400">typescript</span>
-                <span class="text-orange-400">cpp</span>
-                <span class="text-emerald-400">python</span>
-              </div>
-              
-              <p class="flex gap-3 pt-4"><span class="text-primary font-bold">❯</span> <span>echo $DISPONIBILITÉ</span></p>
-              <p class="ml-6 text-primary font-bold underline decoration-primary/30 underline-offset-4 status-val">{content.statusVal}<span class="animate-pulse">_</span></p>
+              <label class="tech-label">VOTRE MESSAGE</label>
+              <textarea name="message" required rows="4" placeholder="COMMENT PUIS-JE VOUS AIDER ?" class="w-full bg-transparent border-b border-border-subtle py-4 font-mono text-sm focus:outline-none focus:border-primary transition-colors resize-none"></textarea>
             </div>
-          </div>
-        </div>
-
-        <div class="space-y-4" data-animate data-delay="1">
-          <p class="mono-label mb-8">{isFr ? 'COMPÉTENCES TECHNIQUES' : 'TECHNICAL EXPERTISE'}</p>
-          {skills.map((s, i) => (
-            <div class="group flex flex-col gap-3 p-6 rounded-3xl border border-white/5 hover:border-primary/20 hover:bg-primary/2 transition-all duration-500">
-              <div class="flex items-center justify-between">
-                <div class="flex items-center gap-4">
-                  <span class="text-text-dim font-mono text-xs">{(i + 1).toString().padStart(2, '0')}</span>
-                  <p class="text-white font-bold text-lg">{s.frName || s.name}</p>
-                </div>
-                <span class="text-xs font-mono uppercase tracking-widest text-primary/60 font-black">{s.level[lang]}</span>
-              </div>
-              <div class="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                <div class="h-full bg-linear-to-r from-primary/20 via-primary to-primary/20 w-0 group-hover:w-full transition-all duration-1000 ease-out"
-                     style={`width: ${s.level[lang] === 'Advanced' || s.level[lang] === 'Avancé' ? '100%' : (s.level[lang] === 'Proficient' || s.level[lang] === 'Compétent') ? '65%' : '40%'}`}>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="about" aria-labelledby="about-heading" class="py-32 md:py-48 relative overflow-hidden">
-    <div class="max-w-7xl mx-auto px-6 md:px-12">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
-        <div data-animate>
-          <span class="section-tag">{content.aboutSub}</span>
-          <h2 id="about-heading" class="display-lg text-white mb-10 leading-[0.9]">
-            {content.aboutTitle}<br/>
-            <span class="text-primary italic">{content.fast}</span>, 
-            <span class="text-text-muted">{content.correct}</span>, {content.pleasure}
-          </h2>
-          <div class="space-y-6 text-text-muted text-xl leading-relaxed max-w-xl">
-            <p>{content.aboutPara}</p>
-            <p class="text-primary font-bold italic">{content.aboutPara2}</p>
-          </div>
-        </div>
-        
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" data-animate data-delay="1">
-          <div class="card-premium p-8! rounded-[2.5rem]!">
-            <p class="mono-label mb-4">{content.currently}</p>
-            <p class="text-xl font-bold text-white leading-tight">BSc Computer Science</p>
-            <p class="text-text-muted text-sm mt-2">HE-Arc · Suisse</p>
-          </div>
-          <div class="card-premium p-8! rounded-[2.5rem]! bg-primary/5 border-primary/20">
-            <p class="mono-label mb-4 text-primary">GitHub</p>
-            <a href="https://github.com/DevYatsu" target="_blank" rel="noopener noreferrer" class="text-2xl font-black text-white hover:text-primary transition-colors">
-              @DevYatsu <span class="text-sm">↗</span>
-            </a>
-          </div>
-          <div class="card-premium p-8! rounded-[2.5rem]!">
-            <p class="mono-label mb-4">{content.spoken}</p>
-            <p class="text-xl font-bold text-white">{content.spokenVal}</p>
-          </div>
-          <div class="card-premium p-8! rounded-[2.5rem]!">
-            <p class="mono-label mb-4">{content.interests}</p>
-            <div class="flex flex-wrap gap-2">
-              {['Compilateurs', 'Systèmes', 'Perf Web'].map(t => <span class="chip bg-white/5!">{t}</span>)}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact" aria-labelledby="contact-heading" class="py-32 md:py-48 border-t border-white/5 relative overflow-hidden bg-bg-surface/10">
-    <div class="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-start">
-        <div data-animate>
-          <span class="section-tag">{content.contactSub}</span>
-          <h2 id="contact-heading" class="display-lg text-white mb-8">
-            {content.contactTitle}
-          </h2>
-          <p class="text-text-muted text-lg leading-relaxed mb-12 max-w-md">
-            {content.contactPara}
-          </p>
-          
-          <div class="flex flex-col gap-6">
-            <a href="mailto:yanis.amani@icloud.com" class="text-2xl md:text-3xl font-bold text-white hover:text-primary transition-colors underline decoration-white/10 underline-offset-8">
-              yanis.amani@icloud.com
-            </a>
-            <div class="flex gap-8 items-center mt-4">
-              <a href="https://linkedin.com/in/yanis-amani" target="_blank" class="nav-item text-lg!">{content.contactLinkedIn}</a>
-              <a href="https://github.com/DevYatsu" target="_blank" class="nav-item text-lg!">GitHub</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="relative z-20" data-animate data-delay="1">
-          <form name="contact" class="flex flex-col gap-8">
-            <input type="hidden" name="form-name" value="contact" />
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-              <div class="flex flex-col gap-3">
-                <label for="name" class="mono-label">{content.formName}</label>
-                <input type="text" id="name" name="name" required class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-primary focus:bg-bg-surface focus:backdrop-blur-2xl relative z-10 transition-all font-sans" placeholder="Jean Dupont" />
-              </div>
-              <div class="flex flex-col gap-3">
-                <label for="email" class="mono-label">{content.formEmail}</label>
-                <input type="email" id="email" name="email" required class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-primary focus:bg-bg-surface focus:backdrop-blur-2xl relative z-10 transition-all font-sans" placeholder="jean@exemple.com" />
-              </div>
-            </div>
-            <div class="flex flex-col gap-3">
-              <label for="message" class="mono-label">{content.formMessage}</label>
-              <textarea id="message" name="message" rows="5" required class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-primary focus:bg-bg-surface focus:backdrop-blur-2xl relative z-10 transition-all shadow-xl font-sans" placeholder="Parlez-moi de votre projet..."></textarea>
-            </div>
-            <button id="submit-button" type="submit" class="btn btn-primary w-full py-5 text-lg group relative z-10">
-              <span class="submit-text flex items-center gap-2">
-                {content.formSubmit}
-                <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                </svg>
-              </span>
-              <span class="loading-text hidden">Envoi...</span>
+            <button type="submit" class="btn-arch w-full py-6 text-lg uppercase tracking-widest">
+              ENVOYER LE MESSAGE
             </button>
           </form>
         </div>
       </div>
     </div>
   </section>
+</Layout>
 
-  <!-- SEO Semantic Layer: FAQ Schema for Rich Snippets -->
-  <section class="sr-only" aria-hidden="true">
-    <div itemscope itemtype="https://schema.org/FAQPage">
-      <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-        <h3 itemprop="name">Qui est Yanis Amani ?</h3>
-        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-          <div itemprop="text">Yanis Amani est un Développeur Logiciel et Étudiant en Informatique à la HE-Arc Neuchâtel, spécialisé en programmation système et architecture logicielle haute performance.</div>
-        </div>
-      </div>
-      <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-        <h3 itemprop="name">Quels sont les langages de prédilection de Yanis Amani ?</h3>
-        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-          <div itemprop="text">Yanis Amani se spécialise en Rust, C++ et TypeScript pour le développement d'applications à faible latence et de logiciels système sécurisés.</div>
-        </div>
-      </div>
-      <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-        <h3 itemprop="name">Où est basé Yanis Amani ?</h3>
-        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-          <div itemprop="text">Yanis Amani est basé à Neuchâtel, en Suisse, et poursuit actuellement un BSc en Informatique à la HE-Arc.</div>
-        </div>
-      </div>
-    </div>
-  </section>
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+      if (submitBtn) submitBtn.disabled = true;
 
-  <script>
-    document.addEventListener('astro:page-load', () => {
-      const form = document.querySelector('form[name="contact"]') as HTMLFormElement;
-      const button = document.getElementById('submit-button') as HTMLButtonElement;
-      const submitText = button?.querySelector('.submit-text');
-      const loadingText = button?.querySelector('.loading-text');
-
-      form?.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        if (button) {
-          button.disabled = true;
-          submitText?.classList.add('hidden');
-          loadingText?.classList.remove('hidden');
-        }
+      try {
         const formData = new FormData(form);
-        const action = "https://formies.netlify.app/api/v1/submit?project_name=Portfolio";
-        try {
-          const response = await fetch(action, { method: 'POST', body: formData });
-          if (response.status === 201) {
-            window.location.href = '/merci';
-          } else {
-            alert('Une erreur est survenue. Veuillez réessayer.');
-            if (button) {
-              button.disabled = false;
-              submitText?.classList.remove('hidden');
-              loadingText?.classList.add('hidden');
-            }
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
           }
-        } catch (error) {
-          alert('Une erreur réseau est survenue.');
-          if (button) {
-            button.disabled = false;
-            submitText?.classList.remove('hidden');
-            loadingText?.classList.add('hidden');
-          }
+        });
+
+        if (response.ok) {
+          window.location.href = '/merci';
+        } else {
+          const data = await response.json();
+          alert(data.error || "Une erreur est survenue. Veuillez réessayer.");
+          if (submitBtn) submitBtn.disabled = false;
         }
-      });
-
-      // Cursor interaction for cards
-      const updateSpotlight = (e: MouseEvent) => {
-        const cards = document.querySelectorAll('.card-premium');
-        cards.forEach(card => {
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          (card as HTMLElement).style.setProperty('--mouse-x', `${x}px`);
-          (card as HTMLElement).style.setProperty('--mouse-y', `${y}px`);
-        });
-      };
-      window.addEventListener('mousemove', updateSpotlight);
-
-      // Terminal interactivity
-      const terminal = document.querySelector('.terminal-modern');
-      if (terminal) {
-        terminal.addEventListener('click', () => {
-          const status = (terminal.querySelector('.status-val') as HTMLElement);
-          if (status) {
-            const original = status.textContent;
-            status.textContent = "initialisation...";
-            setTimeout(() => {
-              status.textContent = original;
-            }, 1500);
-          }
-        });
+      } catch (error) {
+        alert("Erreur de connexion. Veuillez réessayer plus tard.");
+        if (submitBtn) submitBtn.disabled = false;
       }
     });
-  </script>
-</Layout>
+  }
+</script>

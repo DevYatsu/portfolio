@@ -1,292 +1,110 @@
 ---
-import '../styles/globals.css';
-import '@fontsource-variable/inter/wght.css';
-import Header from '../components/Header.astro';
-import { ClientRouter } from 'astro:transitions';
+import "../styles/globals.css";
+import "@fontsource-variable/hanken-grotesk";
+import "@fontsource-variable/plus-jakarta-sans";
+import "@fontsource-variable/jetbrains-mono";
 
-import { projects } from '../data/portfolio';
+import Header from "../components/Header.astro";
+import { ClientRouter } from "astro:transitions";
 
 interface Props {
 	title: string;
 	description?: string;
-	image?: string;
-	canonicalUrl?: string | URL;
 	lang?: string;
 }
 
 const {
 	title,
-	description = "Yanis Amani , Systems Developer and BSc Computer Science student at HE-Arc Neuchâtel. Specialising in Rust, C++, and high-performance backend infrastructure in Switzerland.",
-	image = "/og-image.png",
-	canonicalUrl = Astro.url.href,
-	lang = "en"
+	description = "Yanis Amani, Computer Science student focused on building reliable, fast, and high-quality software solutions.",
+	lang = "en",
 } = Astro.props;
 
-const siteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://yanis-amani.netlify.app';
-const canonicalStr = typeof canonicalUrl === 'string' ? canonicalUrl : canonicalUrl.toString();
-const ogImageUrl = new URL(image, siteUrl).toString();
-const isFr = lang === 'fr';
+const isFr = lang === "fr";
+const siteUrl = "https://yanis-amani.netlify.app";
 
 // ── Context-aware language switch URL ────────────────────────────
 const pathname = Astro.url.pathname;
 const langSwitchUrl = (() => {
-  if (pathname === '/impressum' || pathname === '/impressum/')    return '/mentions-legales';
-  if (pathname === '/mentions-legales' || pathname === '/mentions-legales/') return '/impressum';
-  if (isFr) return '/';
-  return '/fr';
+	if (isFr) return "/";
+	return "/fr";
 })();
-
-// ── Structured Data (JSON-LD) ───────────────────────────────────
-const personSchema = {
-	"@context": "https://schema.org",
-	"@type": "Person",
-	"@id": `${siteUrl}/#person`,
-	"name": "Yanis Amani",
-	"givenName": "Yanis",
-	"familyName": "Amani",
-	"url": siteUrl,
-	"jobTitle": "Full-Stack Software Developer",
-	"description": "BSc Computer Science student at HE-Arc Neuchâtel. Versatile software engineer specialising in Full-Stack Web Development, Systems Programming (Rust/C++), and Computer Science fundamentals.",
-	"email": "yanis.amani@icloud.com",
-	"image": ogImageUrl,
-	"sameAs": [
-		"https://github.com/DevYatsu",
-		"https://linkedin.com/in/yanis-amani",
-		"https://x.com/DevYatsu"
-	],
-	"alumniOf": {
-		"@type": "EducationalOrganization",
-		"name": "HE-Arc , Haute École Arc Ingénierie"
-	},
-	"worksFor": {
-		"@type": "Organization",
-		"name": "Freelance Software Engineer"
-	},
-	"knowsAbout": [
-		"Full-Stack Web Development", "Computer Science", "Systems Programming",
-		"Rust", "TypeScript", "Python", "JavaScript", "C", "C++",
-		"React", "Next.js", "Astro", "Node.js", "PostgreSQL",
-		"Algorithms", "Data Structures", "Software Architecture"
-	]
-};
-
-const projectSchemas = projects.map(p => ({
-	"@context": "https://schema.org",
-	"@type": "CreativeWork",
-	"name": p.name,
-	"description": p.locales[lang as 'en'|'fr'].description,
-	"url": p.url,
-	"author": { "@type": "Person", "@id": `${siteUrl}/#person` },
-	"keywords": p.tags.join(", "),
-	"genre": "Software Development"
-}));
-
-const websiteSchema = {
-	"@context": "https://schema.org",
-	"@type": "WebSite",
-	"name": "Yanis Amani , Portfolio",
-	"url": siteUrl,
-	"description": description,
-	"inLanguage": lang,
-	"publisher": { "@id": `${siteUrl}/#person` }
-};
-
-const breadcrumbSchema = {
-	"@context": "https://schema.org",
-	"@type": "BreadcrumbList",
-	"itemListElement": [
-		{ "@type": "ListItem", "position": 1, "name": isFr ? "Accueil" : "Home",     "item": isFr ? siteUrl + "/fr" : siteUrl },
-		{ "@type": "ListItem", "position": 2, "name": isFr ? "Projets" : "Projects", "item": (isFr ? siteUrl + "/fr" : siteUrl) + "/#projects" },
-		{ "@type": "ListItem", "position": 3, "name": "Contact",                      "item": (isFr ? siteUrl + "/fr" : siteUrl) + "/#contact" }
-	]
-};
 ---
 
 <!doctype html>
-<html lang={lang} dir="ltr">
+<html lang={lang} class="scroll-smooth">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<ClientRouter />
 
-		<!-- Primary Meta -->
 		<title>{title}</title>
 		<meta name="description" content={description} />
-		<meta name="author" content="Yanis Amani" />
-		<meta name="keywords" content="Yanis Amani, Yanis Amani Portfolio, Web Developer Switzerland, Full-Stack Engineer, Computer Science Student, BSc CS HE-Arc, Software Engineer Neuchâtel, Rust Developer, TypeScript Specialist, React Astro Portfolio, Systems Programming, Computer Science Projects" />
-		<meta name="google-site-verification" content="vZgK7guRQlO8SdjzBed1ZqkrZUQ9pE0dnChE08mfGIQ" />
-		<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-		<meta name="theme-color" content="#0d0d0d" />
-		<meta name="color-scheme" content="dark" />
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-		<meta name="apple-mobile-web-app-title" content="Yanis Amani" />
-		<meta name="application-name" content="Yanis Amani , Systems Development" />
-		<meta name="generator" content={Astro.generator} />
+		<link rel="icon" type="image/png" href="/favicon.png" />
+		<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+		<meta name="theme-color" content="#0a0a0c" media="(prefers-color-scheme: dark)" />
 
-		<!-- Author & copyright -->
-		<meta name="copyright" content="Yanis Amani" />
-		<meta name="reply-to" content="yanis.amani@icloud.com" />
-		<meta name="category" content="Portfolio, Software Development, Computer Science" />
-
-		<!-- Geographic (helps with local/regional SEO) -->
-		<meta name="geo.region" content="CH-NE" />
-		<meta name="geo.placename" content="Neuchâtel, Switzerland" />
-		<meta name="geo.position" content="46.9919;6.9311" />
-		<meta name="ICBM" content="46.9919, 6.9311" />
-
-		<!-- Canonical -->
-		<link rel="canonical" href={canonicalStr} />
-
-		<!-- Hreflang for SEO (French vs English) -->
-		<link rel="alternate" hreflang="en" href={siteUrl} />
-		<link rel="alternate" hreflang="fr" href={`${siteUrl}/fr`} />
-		<link rel="alternate" hreflang="x-default" href={siteUrl} />
-
-		<!-- Sitemap -->
-		<link rel="sitemap" href="/sitemap-index.xml" />
-
-		<!-- Resource Hints , only preconnect to actually loaded origins -->
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link rel="dns-prefetch" href="//github.com" />
-		<link rel="dns-prefetch" href="//linkedin.com" />
-		<link rel="dns-prefetch" href="//gc.zgo.at" />
-
-		<!-- Open Graph -->
+		<!-- OpenGraph / Social -->
 		<meta property="og:type" content="website" />
-		<meta property="og:site_name" content="Yanis Amani , Portfolio" />
-		<meta property="og:url" content={canonicalStr} />
+		<meta property="og:url" content={Astro.url} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
-		<meta property="og:image" content={ogImageUrl} />
-		<meta property="og:image:type" content="image/png" />
-		<meta property="og:image:alt" content="Yanis Amani, Software Developer & CS Student at HE-Arc Neuchâtel" />
-		<meta property="og:image:width" content="1200" />
-		<meta property="og:image:height" content="630" />
-		<meta property="og:locale" content={isFr ? "fr_FR" : "en_US"} />
-		<meta property="og:locale:alternate" content={isFr ? "en_US" : "fr_FR"} />
-		<meta property="og:see_also" content="https://github.com/DevYatsu" />
-		<meta property="og:see_also" content="https://linkedin.com/in/yanis-amani" />
-		<meta property="og:see_also" content="https://x.com/DevYatsu" />
-		<meta property="profile:first_name" content="Yanis" />
-		<meta property="profile:last_name" content="Amani" />
-		<meta property="profile:username" content="DevYatsu" />
-		<meta property="profile:gender" content="male" />
+		<meta property="og:image" content={new URL('/favicon.png', Astro.url)} />
 
-		<!-- Twitter / X Card -->
-		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:site" content="@DevYatsu" />
-		<meta name="twitter:creator" content="@DevYatsu" />
-		<meta name="twitter:url" content={canonicalStr} />
-		<meta name="twitter:title" content={title} />
-		<meta name="twitter:description" content={description} />
-		<meta name="twitter:image" content={ogImageUrl} />
-		<meta name="twitter:image:alt" content="Yanis Amani - Software Developer Portfolio" />
-		<meta name="twitter:label1" content="Role" />
-		<meta name="twitter:data1" content="Software Developer & CS Student" />
-		<meta name="twitter:label2" content="Location" />
-		<meta name="twitter:data2" content="Neuchâtel, Switzerland" />
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:url" content={Astro.url} />
+		<meta property="twitter:title" content={title} />
+		<meta property="twitter:description" content={description} />
+		<meta property="twitter:image" content={new URL('/favicon.png', Astro.url)} />
 
-		<!-- Favicon -->
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="apple-touch-icon" href="/favicon.svg" />
-
-		<!-- JSON-LD Structured Data -->
-		<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
-		<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
-		<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-		{projectSchemas.map(schema => (
-			<script type="application/ld+json" set:html={JSON.stringify(schema)} />
-		))}
-
-		<!-- Privacy-First Analytics (cookieless, GDPR compliant) -->
-		<script data-goatcounter="https://yatsu.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+		<style is:inline>
+			/* Prevent FOUC: Hide content until CSS is loaded */
+			html { 
+				visibility: hidden; 
+				opacity: 0;
+			}
+		</style>
 	</head>
-	<body class={lang}>
-		<a href="#main-content" class="skip-link">{isFr ? 'Aller au contenu' : 'Skip to content'}</a>
-
-		<!-- Command Palette Overlay (Easter Egg) -->
-		<div id="cmd-palette" 
-			role="dialog" 
-			aria-modal="true" 
-			aria-labelledby="cmd-title"
-			class="fixed inset-0 z-10000 bg-bg-base/95 backdrop-blur-2xl flex items-center justify-center p-6 opacity-0 pointer-events-none transition-all duration-300">
-			<div class="w-full max-w-2xl">
-				<div class="terminal-modern shadow-2xl border-primary/30">
-					<h2 id="cmd-title" class="sr-only">Command Palette</h2>
-					<div class="flex items-center gap-3 mb-6">
-						<span class="text-primary font-bold" aria-hidden="true">❯</span>
-						<input type="text" id="cmd-input" 
-							placeholder="Execute system command..." 
-							aria-label="Enter a command"
-							class="bg-transparent border-none outline-none text-white w-full text-xl font-mono placeholder:text-text-dim/50" />
-					</div>
-					<div id="cmd-results" 
-						aria-live="polite"
-						class="space-y-2 text-text-muted font-mono text-sm pl-6 max-h-[40vh] overflow-y-auto">
-						<p>TYPE 'HELP' FOR AVAILABLE PROTOCOLS</p>
-					</div>
-				</div>
-				<p class="text-center mt-6 text-text-dim text-xs font-mono uppercase tracking-[0.2em]">Press ESC to abort mission</p>
-			</div>
-		</div>
-
-		<!-- Noise background -->
-		<div class="fixed inset-0 bg-noise z-9998" aria-hidden="true"></div>
-
-		<div class="relative flex flex-col min-h-screen">
+	<body class="bg-bg-base text-text-main selection:bg-primary/20 selection:text-primary crosshair-cursor">
+		<div class="relative z-10 flex flex-col min-h-screen">
 			<Header lang={lang} langSwitchUrl={langSwitchUrl} />
-			<main id="main-content" class="grow" tabindex="-1">
+			
+			<main id="main-content" class="grow pt-16">
 				<slot />
 			</main>
 
-			<!-- Footer -->
-			<footer class="border-t border-white/5 mt-24 bg-bg-surface/30">
-				<div class="max-w-7xl mx-auto px-6 md:px-12 py-20">
-					<div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 items-start">
-						<!-- Left: education info -->
-						<div class="space-y-4">
+			<footer class="border-t border-border-subtle bg-bg-surface/50 backdrop-blur-sm">
+				<div class="max-w-7xl mx-auto px-6 md:px-12 py-16">
+					<div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+						<div class="md:col-span-2 space-y-6">
 							<div class="flex items-center gap-3">
-								<span class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-bg-base font-black text-sm">YA</span>
-								<div>
-									<p class="text-white font-bold leading-none">Yanis Amani</p>
-									<p class="text-text-muted text-xs font-mono mt-1">Software Developer</p>
-								</div>
+								<div class="w-6 h-6 bg-primary"></div>
+								<span class="font-black uppercase tracking-widest text-xs">Yanis Amani</span>
 							</div>
-							<p class="text-text-muted text-sm max-w-xs">
-								{isFr ? 'Étudiant en BSc Informatique à la HE-Arc, spécialisé dans l\'optimisation système et les infrastructures bas niveau.' : 'BSc Computer Science student at HE-Arc, focusing on systems runtime and low-level infrastructure.'}
+							<p class="text-text-muted text-sm max-w-sm font-mono text-[0.7rem] uppercase leading-relaxed">
+								{isFr 
+									? "Créer des logiciels fiables et rapides, des applications web aux systèmes qui les font fonctionner."
+									: "Building reliable software that works, from web applications to the systems that run them."
+								}
 							</p>
 						</div>
-
-						<!-- Center: social links -->
-						<div class="flex flex-col gap-4">
-							<p class="mono-label">{isFr ? 'Connexion' : 'Connect'}</p>
-							<nav aria-label={isFr ? 'Liens sociaux' : 'Social links'} class="flex flex-col gap-3">
-								<a href="https://github.com/DevYatsu" target="_blank" rel="noopener noreferrer"
-									class="text-text-muted hover:text-primary transition-colors flex items-center gap-2 text-sm w-fit">
-									GitHub <span class="text-xs opacity-50">↗</span>
-								</a>
-								<a href="https://linkedin.com/in/yanis-amani" target="_blank" rel="noopener noreferrer"
-									class="text-text-muted hover:text-primary transition-colors flex items-center gap-2 text-sm w-fit">
-									LinkedIn <span class="text-xs opacity-50">↗</span>
-								</a>
-								<a href={isFr ? '/fr/#contact' : '/#contact'} 
-									class="text-text-muted hover:text-primary transition-colors flex items-center gap-2 text-sm w-fit">
-									Contact <span class="text-xs opacity-50">→</span>
-								</a>
+						
+						<div class="space-y-4">
+							<p class="tech-label">Navigation</p>
+							<nav class="flex flex-col gap-2">
+								<a href="/#projects" class="nav-link" data-astro-prefetch>PROJECTS</a>
+								<a href="/#skills" class="nav-link" data-astro-prefetch>STACK</a>
+								<a href="/#contact" class="nav-link" data-astro-prefetch>CONTACT</a>
 							</nav>
 						</div>
 
-						<!-- Right: copyright + legal -->
-						<div class="flex flex-col gap-4 md:items-end">
-							<p class="mono-label">{isFr ? 'Localisation' : 'Location'}</p>
-							<p class="text-text-muted text-sm md:text-right">Neuchâtel, Switzerland</p>
-							<div class="flex flex-col md:items-end gap-2 mt-4">
-								<p class="text-[hsl(0,0%,28%)] text-xs font-mono">© {new Date().getFullYear()} Yanis Amani</p>
-								<a href={isFr ? '/mentions-legales' : '/impressum'} class="text-[hsl(0,0%,28%)] text-xs font-mono hover:text-primary transition-colors">
-									{isFr ? 'Mentions Légales & RGPD' : 'Impressum & Privacy'}
-								</a>
+						<div class="space-y-4">
+							<p class="tech-label">System Info</p>
+							<div class="font-mono text-[0.6rem] text-text-dim space-y-1">
+								<p>LOC: NEUCHÂTEL, CH</p>
+								<p>STATUS: ACTIVE INTAKE 2026</p>
+								<p>LATENCY: <span id="ping-val">24ms</span></p>
+								<p class="mt-4 opacity-40">© {new Date().getFullYear()} Y_AMANI</p>
 							</div>
 						</div>
 					</div>
@@ -294,185 +112,25 @@ const breadcrumbSchema = {
 			</footer>
 		</div>
 
-		<!-- Scroll-to-top -->
-		<button id="scroll-top" aria-label={isFr ? 'Retour en haut' : 'Back to top'} title={isFr ? 'Retour en haut' : 'Back to top'}
-			class="fixed bottom-6 right-6 z-50 w-10 h-10 rounded-md border border-[hsl(0,0%,20%)] bg-[hsl(0,0%,8%)]
-					text-[hsl(0,0%,50%)] hover:border-orange-500/50 hover:text-orange-400
-					flex items-center justify-center opacity-0 pointer-events-none
-					transition-all duration-300 font-mono text-xs">
-			↑
-		</button>
-
 		<script>
+			// Random latency simulation for the architectural feel
+			setInterval(() => {
+				const el = document.getElementById('ping-val');
+				if (el) el.textContent = `${Math.floor(Math.random() * 15 + 15)}ms`;
+			}, 3000);
+
+			// Intersection Observer for animations
 			document.addEventListener('astro:page-load', () => {
-				// ── Terminal / Palette ────────────────────────────────────
-				const cmdInput = document.getElementById('cmd-input') as HTMLInputElement | null;
-				const cmdPalette = document.getElementById('cmd-palette');
-				const cmdResults = document.getElementById('cmd-results');
-				
-				const cmdMap = {
-					'help': () => 'AVAILABLE: WHOAMI, PROJECTS, SOCIALS, SUDO REBOOT, CLEAR, EXIT',
-					'whoami': () => 'Yanis Amani // Systems Developer // CS Student at HE-Arc Neuchâtel.',
-					'projects': () => 'Filing system data... [Done] [express-rs, YatsuScript, portfolio-modern]',
-					'socials': () => 'GitHub: DevYatsu // LinkedIn: yanis-amani',
-					'clear': () => { if (cmdResults) cmdResults.innerHTML = ''; return ''; },
-					'exit': () => { cmdPalette?.classList.add('hidden'); return ''; },
-					'sudo reboot': () => {
-						document.body.style.filter = 'invert(1) contrast(5)';
-						setTimeout(() => window.location.reload(), 1000);
-						return 'KERNEL PANIC: REBOOTING...';
-					}
-				};
-
-				document.addEventListener('keydown', (e) => {
-					// Keyboard shortcut (Cmd+K)
-					if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-						e.preventDefault();
-						const isOpen = cmdPalette?.classList.contains('opacity-100');
-						if (isOpen) {
-							cmdPalette?.classList.remove('opacity-100', 'pointer-events-auto');
-							cmdPalette?.classList.add('opacity-0', 'pointer-events-none');
-						} else {
-							cmdPalette?.classList.add('opacity-100', 'pointer-events-auto');
-							cmdPalette?.classList.remove('opacity-0', 'pointer-events-none');
-							cmdInput?.focus();
-						}
-					}
-					
-					if (e.key === 'Escape' && cmdPalette?.classList.contains('opacity-100')) {
-						cmdPalette?.classList.remove('opacity-100', 'pointer-events-auto');
-						cmdPalette?.classList.add('opacity-0', 'pointer-events-none');
-					}
-
-					// Focus trap inside palette
-					if (cmdPalette?.classList.contains('opacity-100') && e.key === 'Tab') {
-						if (e.shiftKey) {
-							if (document.activeElement === cmdInput) {
-								e.preventDefault();
-								cmdInput?.focus(); 
-							}
-						} else {
-							if (document.activeElement === cmdInput) {
-								e.preventDefault();
-								cmdInput?.focus();
-							}
-						}
-					}
-				});
-
-				cmdInput?.addEventListener('keydown', (e) => {
-					if (e.key === 'Enter') {
-						const val = cmdInput.value.toLowerCase().trim();
-						if (val === 'exit') {
-							cmdPalette?.classList.remove('opacity-100', 'pointer-events-auto');
-							cmdPalette?.classList.add('opacity-0', 'pointer-events-none');
-							cmdInput.value = '';
-							return;
-						}
-						
-						const out = cmdMap[val as keyof typeof cmdMap] ? cmdMap[val as keyof typeof cmdMap]() : `PROTOCOL_ERROR: ${val} unrecognized.`;
-						
-						if (cmdResults && out) {
-							const d = document.createElement('p');
-							d.className = 'mt-2 text-primary/80';
-							d.textContent = `> ${out}`;
-							cmdResults.appendChild(d);
-							cmdResults.scrollTop = cmdResults.scrollHeight;
-						}
-						cmdInput.value = '';
-					}
-				});
-
-				// ── Konami Code ──────────────────────────────────────────
-				let kIdx = 0;
-				const kCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
-				document.addEventListener('keydown', (e) => {
-					if (e.key === kCode[kIdx]) {
-						kIdx++;
-						if (kIdx === kCode.length) {
-							document.body.classList.toggle('system-override');
-							kIdx = 0;
-							console.log("%c[OVERRIDE] System remapped.", "color: #00ff41; background: black;");
-						}
-					} else { kIdx = 0; }
-				});
-
-				// ── Engagement Tracker (Growth) ───────────────────────────
-				let logPoints = [0.25, 0.5, 0.75, 0.9];
-				window.addEventListener('scroll', () => {
-					const p = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-					logPoints = logPoints.filter(m => {
-						if (p > m) {
-							console.log(`%c[ENGAGEMENT] User depth reached: ${m * 100}%`, "color: #888; border-left: 2px solid #ff6600; padding: 0 4px;");
-							return false;
-						}
-						return true;
-					});
-				});
-
-				// ── CV Download Feedback ──────────────────────────────────
-				document.querySelectorAll('a[download]').forEach(a => {
-					a.addEventListener('click', (e) => {
-						const b = e.currentTarget as HTMLElement;
-						b.classList.add('cv-loading', 'active');
-						const txt = b.textContent;
-						b.textContent = 'TRANSMITTING...';
-						setTimeout(() => {
-							b.classList.remove('active');
-							b.textContent = txt;
-						}, 2000);
-					});
-				});
-
-				// ── Ticker Clock ──────────────────────────────────────────
-				setInterval(() => {
-					const el = document.getElementById('sys-time');
-					if (el) el.textContent = new Date().toLocaleTimeString('en-GB');
-				}, 1000);
-
-				// ── Scroll Behaviors ──────────────────────────────────────
-				const scrollBtn = document.getElementById('scroll-top') as HTMLButtonElement | null;
-				const nav = document.querySelector('nav[aria-label="Main Navigation"]') as HTMLElement | null;
-				
-				window.addEventListener('scroll', () => {
-					const s = window.scrollY;
-					if (scrollBtn) {
-						scrollBtn.style.opacity = s > 800 ? '1' : '0';
-						scrollBtn.style.pointerEvents = s > 800 ? 'all' : 'none';
-						scrollBtn.style.transform = s > 800 ? 'translateY(0)' : 'translateY(16px)';
-					}
-					if (nav) nav.style.borderBottomColor = s > 40 ? 'hsl(0,0%,16%)' : 'transparent';
-				}, { passive: true });
-
-				scrollBtn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-				// ── Intersection Observer ─────────────────────────────────
-				const observer = new IntersectionObserver(ents => {
+				const observer = new IntersectionObserver((ents) => {
 					ents.forEach(e => {
 						if (e.isIntersecting) {
 							(e.target as HTMLElement).classList.add('visible');
 							observer.unobserve(e.target);
 						}
 					});
-				}, { threshold: 0.08 });
+				}, { threshold: 0.1 });
+				
 				document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
-
-				// ── Language Swap Helper ──────────────────────────────────
-				const sects = Array.from(document.querySelectorAll('section[id], header[id]')) as HTMLElement[];
-				document.querySelectorAll<HTMLAnchorElement>('[data-lang-toggle]').forEach(l => {
-					l.addEventListener('click', (e) => {
-						if (!sects.length) return;
-						e.preventDefault();
-						const mid = window.innerHeight / 2;
-						let best = sects[0];
-						let bestDist = Infinity;
-						for (const s of sects) {
-							const dist = Math.abs((s.getBoundingClientRect().top + s.getBoundingClientRect().height/2) - mid);
-							if (dist < bestDist) { bestDist = dist; best = s; }
-						}
-						window.location.href = l.getAttribute('href')! + (best.id !== 'hero' ? '#' + best.id : '');
-					});
-				});
 			});
 		</script>
 	</body>

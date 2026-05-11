@@ -1,48 +1,52 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
 
-const lang = 'en';
+const lang = "en";
 const content = {
-  title: "Transmission Success , Yanis Amani",
-  description: "Your message has been successfully transmitted.",
-  heading: "Payload Received.",
-  subheading: "Thank you for reaching out. I'll process your request and respond via the provided return address.",
-  cta: "Return to Home",
-  bg: "ACKNOWLEDGED"
+	title: "Message Received // Yanis Amani",
+	description: "Your message has been successfully sent.",
+	heading: "MESSAGE RECEIVED",
+	subheading:
+		"Thank you for reaching out. I have received your message and will get back to you as soon as possible.",
+	cta: "BACK TO HOME",
 };
 ---
 
-<Layout
-  title={content.title}
-  description={content.description}
-  lang={lang}
->
-  <section class="relative min-h-[90vh] flex flex-col items-center justify-center text-center px-6 overflow-hidden">
-    <!-- Background Glow -->
-    <div aria-hidden="true" class="absolute inset-0 pointer-events-none">
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 h-120 bg-primary/5 blur-[120px] rounded-full"></div>
-    </div>
+<Layout title={content.title} description={content.description} lang={lang}>
+  <section class="min-h-[80vh] flex flex-col justify-center items-center px-6 py-24 max-w-7xl mx-auto">
+    <div class="text-center space-y-12" data-animate>
+      <div class="inline-flex items-center gap-4">
+        <span class="tech-label">SUCCESS</span>
+        <div class="h-px w-12 bg-primary/30"></div>
+        <span class="font-mono text-[0.6rem] text-text-dim uppercase tracking-widest font-black">MESSAGE SENT</span>
+      </div>
 
-    <div class="relative z-10 max-w-2xl" data-animate>
-      <div class="mb-12 flex justify-center">
-        <div class="w-20 h-20 rounded-3xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shadow-2xl shadow-primary/10">
-          <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
-          </svg>
+      <h1 class="display-title leading-[0.8] tracking-tighter">
+        MESSAGE<br/>
+        <span class="text-primary">RECEIVED.</span>
+      </h1>
+
+      <div class="max-w-xl mx-auto structural-border p-8 bg-bg-surface text-left">
+        <div class="flex justify-between items-start mb-6">
+          <span class="tech-label">CONFIRMATION</span>
+          <span class="text-primary font-mono text-[0.6rem]">STATUS OK</span>
+        </div>
+        <p class="font-mono text-[0.7rem] text-text-muted leading-relaxed mb-8">
+          {content.subheading}
+        </p>
+        <div class="flex flex-col gap-4">
+          <div class="flex justify-between border-b border-border-subtle pb-2 font-mono text-[0.6rem]">
+            <span class="text-text-dim">SECURITY</span>
+            <span class="text-text-main font-bold">ENCRYPTED</span>
+          </div>
+          <div class="flex justify-between border-b border-border-subtle pb-2 font-mono text-[0.6rem]">
+            <span class="text-text-dim">RECIPIENT</span>
+            <span class="text-text-main font-bold">YANIS AMANI</span>
+          </div>
         </div>
       </div>
-      
-      <h1 class="display-lg text-white mb-6 tracking-tighter">
-        {content.heading}
-      </h1>
-      <p class="text-text-muted text-xl mb-12 max-w-md mx-auto leading-relaxed font-medium">
-        {content.subheading}
-      </p>
-      
-      <a href="/" class="btn btn-primary px-8! py-4! text-base group">
-        <svg class="w-5 h-5 transition-transform group-hover:-translate-x-1 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-        </svg>
+
+      <a href="/" class="btn-arch inline-flex mx-auto">
         {content.cta}
       </a>
     </div>

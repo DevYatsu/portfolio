@@ -1,458 +1,251 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { projects, skills, levelColors, marqueeItems } from '../data/portfolio';
+import Layout from "../layouts/Layout.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import { projects, skills } from "../data/portfolio";
 
-const lang = 'en' as "en" | "fr";
-const isFr = lang === 'fr';
+const lang = "en" as "en" | "fr";
+const isFr = lang === "fr";
 
 const content = {
-  title: "Yanis Amani , Software Developer Portfolio & Systems Engineering",
-  description: "Yanis Amani , BSc Computer Science student at HE-Arc. Building high-performance systems and low-latency web infrastructure in Rust, TypeScript, and C++.",
-  status: "available for technical roles & freelance",
-  location: "neuchâtel · switzerland",
-  heroHeading1: "YANIS",
-  heroHeading2: "AMANI",
-  role: "Software Developer",
-  edu: "BSc CS @ HE-Arc",
-  stack: "Rust · TypeScript · C++",
-  heroPara: "I develop deterministic systems where performance is a first-class citizen,spanning from low-latency web interfaces to memory-safe infrastructure.",
-  ctaWork: "view implementations",
-  ctaResume: "↓ resume.pdf",
-  ctaHello: "get in touch →",
-  stat1: "Implementations",
-  stat2: "Core Languages",
-  stat3: "Years Engineering",
-  projectsSub: "§ 01 / selected_work",
-  projectsTitle: "Recent",
-  projectsTitleAccent: "Release",
-  allGithub: "source archives ↗",
-  visit: "live instance",
-  src: "repository ↗",
-  skillsSub: "§ 02 / methodology",
-  skillsTitle: "Core",
-  skillsTitleAccent: "Stack",
-  skillsPara: "Pragmatic tools selected for reliability and performance. I focus on technologies that offer strong type-safety and predictable runtime behavior.",
-  whoami: "whoami",
-  whoamiVal: "Computer Science student @ HE-Arc",
-  whoamiVal2: "Specialising in systems & backend architecture",
-  catInterests: "interests.json",
-  echoStatus: "echo $AVAILABILITY",
-  statusVal: "seeking internships 2026",
-  aboutSub: "§ 03 / perspective",
-  aboutTitle: "Code should be predictable,",
-  aboutPara: "I'm a systems developer interested in the boundary between high-level abstractions and machine execution. My focus is on writing code that respects hardware constraints,whether that's refining rendering pipelines or implementing custom compilers.",
-  aboutPara2: "Correctness is non-negotiable.",
-  fast: "performant",
-  correct: "maintainable",
-  pleasure: "efficient.",
-  currently: "current focus",
-  spoken: "natural languages",
-  spokenVal: "French (Native) · English (C1)",
-  interests: "technical focus",
-  contactSub: "§ 04 / connectivity",
-  contactTitle: "Start a conversation",
-  contactPara: "Available for projects involving systems engineering, performant web infrastructure, or low-level performance auditing.",
-  contactLinkedIn: "LinkedIn ↗",
-  bgTalk: "PROTOCOL: HELLO",
-  formName: "Identifier",
-  formEmail: "Return Address",
-  formMessage: "Payload",
-  formSubmit: "Transmit"
+	title: "Yanis Amani // CS Student",
+	description:
+		"Computer Science student focused on building reliable and high-quality software solutions.",
+	heroTitle: "BUILDING",
+	heroTitle2: "RELIABILITY",
+	heroSubtitle: "Computer Science Student",
+	heroPara:
+		"I am a Computer Science student creating software that is fast, secure, and built to last. I focus on quality and stability in every project.",
+	projectsTitle: "SELECTED PROJECTS",
+	skillsTitle: "MY TOOLS",
+	perspectiveTitle: "MY APPROACH",
+	perspectivePara:
+		"I believe that good software should be invisible—it just works. I focus on the details that make applications reliable and easy to maintain, ensuring that every project I build is solid from the ground up.",
+	contactTitle: "GET IN TOUCH",
+	contactPara:
+		"I'm always open to discussing new projects, high-quality software development, or internship opportunities.",
 };
 ---
 
-<Layout
-  title={content.title}
-  description={content.description}
-  lang={lang}
->
-  <header id="hero" class="relative min-h-screen flex flex-col justify-center overflow-hidden pt-20">
-    <!-- Background Elements -->
-    <div aria-hidden="true" class="absolute inset-0 pointer-events-none">
-      <div class="absolute top-[10%] right-[5%] w-160 h-160 bg-primary/10 blur-[120px] rounded-full animate-pulse"></div>
-      <div class="absolute bottom-[10%] left-[-5%] w-120 h-120 bg-primary/5 blur-[100px] rounded-full"></div>
-    </div>
-    
-    <div class="max-w-7xl mx-auto w-full px-6 md:px-12 relative z-10">
-      <div class="flex flex-col gap-6 md:gap-10">
-        <div data-animate class="flex items-center gap-4">
-          <span class="section-tag mb-0">Portfolio 2026</span>
+<Layout title={content.title} description={content.description} lang={lang}>
+  <!-- Hero Section -->
+  <section id="hero" class="min-h-[90vh] flex flex-col justify-center relative px-6 md:px-12 max-w-7xl mx-auto py-24">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
+      <div class="lg:col-span-8" data-animate>
+        <div class="flex items-center gap-4 mb-8">
+          <span class="tech-label">PORTFOLIO</span>
           <div class="h-px w-12 bg-primary/30"></div>
-          <span class="mono-label text-primary/60">{content.location}</span>
+          <span class="font-mono text-[0.6rem] text-text-dim uppercase tracking-widest">NEUCHÂTEL, SWITZERLAND</span>
         </div>
+        
+        <h1 class="display-title mb-8">
+          {content.heroTitle}<br/>
+          <span class="text-primary">{content.heroTitle2}</span>
+        </h1>
 
-        <div data-animate data-delay="1">
-          <h1 class="relative">
-            <span class="sr-only">Yanis Amani , Systems Developer and Computer Science Student at HE-Arc Neuchâtel. Specialist in Rust, C++, and high-performance TypeScript.</span>
-            <span class="display-xl block text-white tracking-tighter leading-[0.8]" aria-hidden="true">
-              YANIS
-            </span>
-            <div class="flex flex-col md:flex-row md:items-end gap-4 md:gap-12 mt-4 md:mt-0">
-              <span class="display-xl block text-white tracking-tighter leading-[0.8] text-gradient glitch-hover" aria-hidden="true">
-                AMANI<span class="text-primary">.</span>
-              </span>
-              <div class="md:mb-6 flex flex-col gap-2">
-                <p class="text-xl md:text-2xl font-medium text-text-muted max-w-sm leading-tight">
-                  {content.role} <span class="text-primary/40">&</span> <span class="marker-highlight">CS Student</span>
-                </p>
-                <p class="mono-label tracking-widest! text-primary/80">{content.stack}</p>
-              </div>
-            </div>
-          </h1>
-        </div>
+        <p class="text-xl md:text-2xl font-medium text-text-muted max-w-2xl leading-tight">
+          {content.heroPara}
+        </p>
+      </div>
 
-        <div class="mt-8 md:mt-12 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-12" data-animate data-delay="2">
-          <p class="text-text-muted max-w-xl text-lg md:text-xl leading-relaxed font-medium">
-            {content.heroPara}
-          </p>
-          <div class="flex flex-wrap gap-4">
-            <a href="/#projects" class="btn btn-primary text-sm shadow-2xl group" title={content.ctaWork}>
-              {content.ctaWork}
-              <svg class="w-4 h-4 transition-transform group-hover:translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
-              </svg>
-            </a>
-            <a href="/#contact" class="btn btn-ghost text-sm border-white/10 hover:border-white/30">
-              {content.ctaHello}
-            </a>
+      <div class="lg:col-span-4" data-animate data-delay="1">
+        <div class="structural-border p-8 bg-bg-surface/50 backdrop-blur-sm space-y-6">
+          <div class="flex justify-between items-start">
+            <span class="tech-label">CORE INFO</span>
+            <div class="w-2 h-2 bg-primary animate-pulse"></div>
           </div>
+          <ul class="font-mono text-[0.7rem] space-y-4 text-text-muted">
+            <li class="flex justify-between border-b border-border-subtle pb-2">
+              <span>ROLE</span>
+              <span class="text-text-main font-bold">CS STUDENT</span>
+            </li>
+            <li class="flex justify-between border-b border-border-subtle pb-2">
+              <span>FOCUS</span>
+              <span class="text-text-main font-bold">QUALITY CODE</span>
+            </li>
+            <li class="flex justify-between border-b border-border-subtle pb-2">
+              <span>EDUCATION</span>
+              <span class="text-text-main font-bold">BSc COMP SCI</span>
+            </li>
+            <li class="flex justify-between">
+              <span>STATUS</span>
+              <span class="text-primary font-bold">AVAILABLE 2026</span>
+            </li>
+          </ul>
+          <a href="#projects" class="btn-arch w-full justify-center mt-4">
+            {isFr ? 'VOIR_MES_PROJETS' : 'VIEW_MY_PROJECTS'}
+          </a>
         </div>
       </div>
     </div>
+  </section>
 
-    <!-- Scroll Indicator -->
-    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-4 text-text-dim" data-animate data-delay="4">
-      <span class="mono-label text-[0.6rem]">{isFr ? 'DÉFILER' : 'SCROLL'}</span>
-      <div class="w-px h-12 bg-linear-to-b from-primary/50 to-transparent"></div>
+  <!-- Projects Section -->
+  <section id="projects" class="py-32 px-6 md:px-12 max-w-7xl mx-auto border-t border-border-subtle">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20" data-animate>
+      <div>
+        <span class="tech-label mb-6 inline-block">SECTION 01</span>
+        <h2 class="display-md uppercase font-black">{content.projectsTitle}</h2>
+      </div>
+      <p class="text-text-muted font-mono text-[0.7rem] uppercase tracking-widest md:text-right max-w-xs">
+        {isFr ? "Une sélection de projets axés sur la stabilité et la qualité." : "A selection of projects focused on stability and high quality."}
+      </p>
     </div>
-  </header>
 
-  <section class="py-12 border-y border-white/5 bg-bg-surface/30 relative overflow-hidden">
-    <div class="flex gap-16 whitespace-nowrap marquee-container" style="animation: marquee 40s linear infinite;">
-      {[...marqueeItems, ...marqueeItems].map(item => (
-        <span class="inline-flex items-center gap-6 font-mono text-text-dim/40 text-sm font-black uppercase tracking-[0.3em]">
-          {item} <span class="text-primary/20" aria-hidden="true">/</span>
-        </span>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1">
+      {projects.map((p, i) => (
+        <div data-animate data-delay={String((i % 3) + 1)}>
+          <ProjectCard project={p} lang={lang} />
+        </div>
       ))}
     </div>
   </section>
 
-  <section id="projects" aria-labelledby="projects-heading" class="py-32 md:py-48 relative">
-    <div class="max-w-7xl mx-auto px-6 md:px-12">
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-24" data-animate>
-        <div class="max-w-xl">
-          <span class="section-tag">{content.projectsSub}</span>
-          <h2 id="projects-heading" class="display-lg text-white mb-6">
-            {content.projectsTitle} <span class="text-text-muted">{content.projectsTitleAccent}</span>
-          </h2>
-          <p class="text-text-muted text-lg">
-            {isFr ? "Une revue technique de projets axés sur la stabilité, la gestion de la mémoire et l'optimisation des ressources." : "Technical overview of implementations focused on stability, memory safety, and resource optimization."}
-          </p>
-        </div>
-        <a href="https://github.com/DevYatsu" target="_blank" rel="noopener noreferrer"
-          class="btn btn-ghost text-xs py-3 px-6 rounded-full border-white/5 hover:border-primary/50 transition-all font-mono" aria-label={content.allGithub}>
-          {content.allGithub}
-        </a>
+  <!-- Skills Section -->
+  <section id="skills" class="py-32 px-6 md:px-12 max-w-7xl mx-auto border-t border-border-subtle bg-bg-accent/30">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-24">
+      <div class="lg:col-span-4" data-animate>
+        <span class="tech-label mb-6 inline-block">SECTION 02</span>
+        <h2 class="display-md uppercase font-black mb-8">{content.skillsTitle}</h2>
+        <p class="text-text-muted leading-relaxed">
+          {isFr ? "Des outils modernes sélectionnés pour leur fiabilité. Je privilégie les technologies qui assurent une stabilité à long terme." : "Modern tools selected for their reliability. I prioritize technologies that ensure long-term stability and high performance."}
+        </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-        {projects.map((p, i) => (
-          <article id={`project-${p.id}`}
-            class={`card-premium group ${p.span} rounded-[2.5rem]! h-full`}
-            data-animate
-            data-delay={String(i % 3 + 1)}
-            aria-label={`Project: ${p.name}`}>
-            
-            <div class="card-premium-glow"></div>
-            <div class="flex items-start justify-between mb-12">
-              <span class="font-mono text-xs text-primary/60 font-black tracking-widest">{p.num}</span>
-              <span class="chip chip-primary">{p.locales[lang].status}</span>
+      <div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-px bg-border-subtle border border-border-subtle">
+        {skills.map((s, i) => (
+          <div class="bg-bg-base p-8 hover:bg-primary/5 transition-colors group" data-animate data-delay={String((i % 4) + 1)}>
+            <div class="flex justify-between items-center mb-6">
+              <span class="font-mono text-[0.6rem] text-text-dim">0{i + 1}</span>
+              <span class="tech-label group-hover:bg-primary group-hover:text-white transition-colors">{s.level[lang]}</span>
             </div>
-
-            <div class="mt-auto">
-              <h3 class="display-md text-white mb-4 group-hover:text-primary transition-colors duration-500">
-                {p.name}
-              </h3>
-              <p class="text-text-muted text-lg leading-relaxed mb-8 line-clamp-3">
-                {p.locales[lang].description}
-              </p>
-              
-              <div class="flex flex-wrap items-center justify-between gap-6 pt-8 border-t border-white/5">
-                <div class="flex flex-wrap gap-2">
-                  {p.tags.map(t => <span class="chip bg-white/5! border-transparent!">{t}</span>)}
-                </div>
-                {p.url
-                  ? <a href={p.url} target="_blank" rel="noopener noreferrer"
-                      aria-label={`Visit ${p.name} live`}
-                      class="flex items-center gap-2 text-sm font-bold text-white hover:text-primary transition-colors group/link">
-                      {content.visit}
-                      <svg class="w-4 h-4 transition-transform group-hover/link:translate-x-1 group-hover/link:-translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                    </a>
-                  : <a href="https://github.com/DevYatsu" target="_blank" rel="noopener noreferrer"
-                      aria-label={`View source of ${p.name}`}
-                      class="flex items-center gap-2 text-sm font-bold text-text-muted hover:text-white transition-colors">
-                      {content.src}
-                    </a>
-                }
-              </div>
+            <h3 class="text-xl font-black uppercase mb-4">{s.name}</h3>
+            <div class="h-1 bg-border-subtle w-full relative overflow-hidden">
+              <div 
+                class="absolute inset-y-0 left-0 bg-primary transition-all duration-1000 ease-out delay-300"
+                style={`width: ${s.level[lang] === 'Advanced' || s.level[lang] === 'Avancé' ? '100%' : (s.level[lang] === 'Proficient' || s.level[lang] === 'Compétent') ? '70%' : '40%'}`}
+              ></div>
             </div>
-          </article>
+          </div>
         ))}
       </div>
     </div>
   </section>
 
-  <section id="skills" aria-labelledby="skills-heading" class="py-32 md:py-48 bg-bg-surface/20 border-y border-white/5 relative overflow-hidden">
-    <div class="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 lg:gap-32 items-center">
-        <div>
-          <div data-animate>
-            <span class="section-tag">{content.skillsSub}</span>
-            <h2 id="skills-heading" class="display-lg text-white mb-8">
-              {content.skillsTitle} <span class="text-text-muted">{content.skillsTitleAccent}</span>
-            </h2>
-            <p class="text-text-muted text-lg leading-relaxed max-w-md mb-12">
-              {content.skillsPara}
-            </p>
-          </div>
-          
-          <div class="terminal-modern group relative overflow-hidden" data-animate data-delay="2">
-            <div class="terminal-scanlines absolute inset-0 opacity-10 pointer-events-none group-hover:opacity-20 transition-opacity"></div>
-            <div class="flex items-center gap-2 mb-8">
-              <div class="flex gap-1.5">
-                <div class="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50"></div>
-                <div class="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
-                <div class="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50"></div>
-              </div>
-              <span class="ml-4 text-text-dim text-xs font-mono">portfolio@yanis: ~</span>
-            </div>
-            <div class="space-y-4 font-mono text-xs md:text-sm">
-              <p class="flex gap-3 text-white/40 italic">
-                <span class="text-primary font-bold">❯</span>
-                <span>// Try Cmd+K for global search</span>
-              </p>
-              <p class="flex gap-3"><span class="text-primary font-bold">❯</span> <span>{content.whoami}</span></p>
-              <p class="text-text-muted ml-6">{content.whoamiVal}</p>
-              
-              <p class="flex gap-3 pt-2"><span class="text-primary font-bold animate-pulse">❯</span> 
-                <span class="text-white/30 italic">tail -f development.log</span>
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="space-y-4" data-animate data-delay="1">
-          <p class="mono-label mb-8">{isFr ? 'COMPÉTENCES TECHNIQUES' : 'TECHNICAL EXPERTISE'}</p>
-          {skills.map((s, i) => (
-            <div class="group flex flex-col gap-3 p-6 rounded-3xl border border-white/5 hover:border-primary/20 hover:bg-primary/2 transition-all duration-500">
-              <div class="flex items-center justify-between">
-                <div class="flex items-center gap-4">
-                  <span class="text-text-dim font-mono text-xs">{(i + 1).toString().padStart(2, '0')}</span>
-                  <p class="text-white font-bold text-lg">{s.name}</p>
-                </div>
-                <span class="text-xs font-mono uppercase tracking-widest text-primary/60 font-black">{s.level[lang]}</span>
-              </div>
-              <div class="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                <div class="h-full bg-linear-to-r from-primary/20 via-primary to-primary/20 w-0 group-hover:w-full transition-all duration-1000 ease-out"
-                     style={`width: ${s.level[lang] === 'Advanced' || s.level[lang] === 'Avancé' ? '100%' : (s.level[lang] === 'Proficient' || s.level[lang] === 'Compétent') ? '65%' : '40%'}`}>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="about" aria-labelledby="about-heading" class="py-32 md:py-48 relative overflow-hidden">
-    <div class="max-w-7xl mx-auto px-6 md:px-12">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
-        <div data-animate>
-          <span class="section-tag">{content.aboutSub}</span>
-          <h2 id="about-heading" class="display-lg text-white mb-10 leading-[0.9]">
-            {content.aboutTitle}<br/>
-            <span class="text-primary italic">{content.fast}</span>, 
-            <span class="text-text-muted">{content.correct}</span>, {content.pleasure}
-          </h2>
-          <div class="space-y-6 text-text-muted text-xl leading-relaxed max-w-xl">
-            <p>{content.aboutPara}</p>
-            <p class="text-primary font-bold italic">{content.aboutPara2}</p>
-          </div>
-        </div>
-        
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" data-animate data-delay="1">
-          <div class="card-premium p-8! rounded-[2.5rem]!">
-            <p class="mono-label mb-4">{content.currently}</p>
-            <p class="text-xl font-bold text-white leading-tight">BSc Computer Science</p>
-            <p class="text-text-muted text-sm mt-2">HE-Arc · Switzerland</p>
-          </div>
-          <div class="card-premium p-8! rounded-[2.5rem]! bg-primary/5 border-primary/20">
-            <p class="mono-label mb-4 text-primary">GitHub</p>
-            <a href="https://github.com/DevYatsu" target="_blank" rel="noopener noreferrer" class="text-2xl font-black text-white hover:text-primary transition-colors">
-              @DevYatsu <span class="text-sm">↗</span>
-            </a>
-          </div>
-          <div class="card-premium p-8! rounded-[2.5rem]!">
-            <p class="mono-label mb-4">{content.spoken}</p>
-            <p class="text-xl font-bold text-white">{content.spokenVal}</p>
-          </div>
-          <div class="card-premium p-8! rounded-[2.5rem]!">
-            <p class="mono-label mb-4">{content.interests}</p>
-            <div class="flex flex-wrap gap-2">
-              {['Compilers', 'Systems', 'Web Perf'].map(t => <span class="chip bg-white/5!">{t}</span>)}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact" aria-labelledby="contact-heading" class="py-32 md:py-48 border-t border-white/5 relative overflow-hidden bg-bg-surface/10">
-    <div class="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-start">
-        <div data-animate>
-          <span class="section-tag">{content.contactSub}</span>
-          <h2 id="contact-heading" class="display-lg text-white mb-8">
-            {content.contactTitle}
-          </h2>
-          <p class="text-text-muted text-lg leading-relaxed mb-12 max-w-md">
-            {content.contactPara}
+  <!-- About Section -->
+  <section id="about" class="py-32 px-6 md:px-12 max-w-7xl mx-auto border-t border-border-subtle">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-24 items-center">
+      <div class="lg:col-span-7" data-animate>
+        <span class="tech-label mb-6 inline-block">SECTION 03</span>
+        <h2 class="display-md uppercase font-black mb-10 leading-[0.85]">
+          {content.perspectiveTitle}
+        </h2>
+        <div class="space-y-6 text-xl text-text-muted leading-relaxed">
+          <p>{content.perspectivePara}</p>
+          <p class="text-primary font-black uppercase italic">
+            {isFr ? "La qualité n'est pas une option." : "Quality is not optional."}
           </p>
-          
-          <div class="flex flex-col gap-6">
-            <a href="mailto:yanis.amani@icloud.com" class="text-2xl md:text-3xl font-bold text-white hover:text-primary transition-colors underline decoration-white/10 underline-offset-8">
-              yanis.amani@icloud.com
-            </a>
-            <div class="flex gap-8 items-center mt-4">
-              <a href="https://linkedin.com/in/yanis-amani" target="_blank" class="nav-item text-lg!">{content.contactLinkedIn}</a>
-              <a href="https://github.com/DevYatsu" target="_blank" class="nav-item text-lg!">GitHub</a>
-            </div>
+        </div>
+      </div>
+      
+      <div class="lg:col-span-5 grid grid-cols-2 gap-4" data-animate data-delay="1">
+        <div class="structural-border p-6 bg-bg-surface">
+          <span class="tech-label block mb-4">LANG_01</span>
+          <span class="font-black text-2xl">RUST</span>
+        </div>
+        <div class="structural-border p-6 bg-primary text-white">
+          <span class="tech-label block mb-4 border-white/30 text-white bg-white/10">FOCUS</span>
+          <span class="font-black text-2xl uppercase">QUALITY</span>
+        </div>
+        <div class="structural-border p-6 bg-bg-surface">
+          <span class="tech-label block mb-4">LANG_02</span>
+          <span class="font-black text-2xl">TS</span>
+        </div>
+        <div class="structural-border p-6 bg-bg-surface">
+          <span class="tech-label block mb-4">EDU</span>
+          <span class="font-black text-xl uppercase leading-none">HE-ARC</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-32 px-6 md:px-12 max-w-7xl mx-auto border-t border-border-subtle mb-32">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-24 items-start">
+      <div class="lg:col-span-5" data-animate>
+        <span class="tech-label mb-6 inline-block">SECTION 04</span>
+        <h2 class="display-md uppercase font-black mb-8">{content.contactTitle}</h2>
+        <p class="text-text-muted text-lg leading-relaxed mb-12">
+          {content.contactPara}
+        </p>
+        
+        <div class="space-y-4">
+          <a href="mailto:yanis.amani@icloud.com" class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-primary hover:text-primary-dark transition-colors block tracking-tighter">
+            <span class="block text-text-main">YANIS.AMANI</span>
+            <span class="block">@ICLOUD.COM</span>
+          </a>
+          <div class="flex gap-8 mt-12">
+            <a href="https://linkedin.com/in/yanis-amani" target="_blank" class="nav-link">LINKEDIN ↗</a>
+            <a href="https://github.com/DevYatsu" target="_blank" class="nav-link">GITHUB ↗</a>
           </div>
         </div>
+      </div>
 
-        <div class="relative z-20" data-animate data-delay="1">
-          <form name="contact" class="flex flex-col gap-8">
-            <input type="hidden" name="form-name" value="contact" />
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-              <div class="flex flex-col gap-3">
-                <label for="name" class="mono-label">{content.formName}</label>
-                <input type="text" id="name" name="name" required class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-primary focus:bg-bg-surface focus:backdrop-blur-2xl relative z-10 transition-all font-sans" placeholder="John Doe" />
+      <div class="lg:col-span-7" data-animate data-delay="1">
+        <div class="structural-border p-1 md:p-12 bg-bg-surface/50 backdrop-blur-sm">
+          <form id="contact-form" action="https://formspree.io/f/mdabyqvb" method="POST" class="space-y-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+              <div class="space-y-4">
+                <label class="tech-label">YOUR NAME</label>
+                <input type="text" name="name" required placeholder="NAME" class="w-full bg-transparent border-b border-border-subtle py-4 font-mono text-sm focus:outline-none focus:border-primary transition-colors" />
               </div>
-              <div class="flex flex-col gap-3">
-                <label for="email" class="mono-label">{content.formEmail}</label>
-                <input type="email" id="email" name="email" required class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-primary focus:bg-bg-surface focus:backdrop-blur-2xl relative z-10 transition-all font-sans" placeholder="john@example.com" />
+              <div class="space-y-4">
+                <label class="tech-label">YOUR EMAIL</label>
+                <input type="email" name="email" required placeholder="EMAIL" class="w-full bg-transparent border-b border-border-subtle py-4 font-mono text-sm focus:outline-none focus:border-primary transition-colors" />
               </div>
             </div>
-            <div class="flex flex-col gap-3">
-              <label for="message" class="mono-label">{content.formMessage}</label>
-              <textarea id="message" name="message" rows="5" required class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-primary focus:bg-bg-surface focus:backdrop-blur-2xl relative z-10 transition-all shadow-xl font-sans" placeholder="Tell me about your project..."></textarea>
+            <div class="space-y-4">
+              <label class="tech-label">YOUR MESSAGE</label>
+              <textarea name="message" required rows="4" placeholder="HOW CAN I HELP?" class="w-full bg-transparent border-b border-border-subtle py-4 font-mono text-sm focus:outline-none focus:border-primary transition-colors resize-none"></textarea>
             </div>
-            <button id="submit-button" type="submit" class="btn btn-primary w-full py-5 text-lg group relative z-10">
-              <span class="submit-text flex items-center gap-2">
-                {content.formSubmit}
-                <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                </svg>
-              </span>
-              <span class="loading-text hidden">Sending...</span>
+            <button type="submit" class="btn-arch w-full py-6 text-lg uppercase tracking-widest">
+              SEND MESSAGE
             </button>
           </form>
         </div>
       </div>
     </div>
   </section>
+</Layout>
 
-  <!-- SEO Semantic Layer: FAQ Schema for Rich Snippets -->
-  <section class="sr-only" aria-hidden="true">
-    <div itemscope itemtype="https://schema.org/FAQPage">
-      <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-        <h3 itemprop="name">Who is Yanis Amani?</h3>
-        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-          <div itemprop="text">Yanis Amani is a Software Developer and Computer Science student at HE-Arc Neuchâtel, specializing in systems programming and high-performance software architecture.</div>
-        </div>
-      </div>
-      <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-        <h3 itemprop="name">What are Yanis Amani's core programming languages?</h3>
-        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-          <div itemprop="text">Yanis Amani specializes in Rust, C++, and TypeScript for developing low-latency applications and memory-safe systems software.</div>
-        </div>
-      </div>
-      <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-        <h3 itemprop="name">Where is Yanis Amani based?</h3>
-        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-          <div itemprop="text">Yanis Amani is based in Neuchâtel, Switzerland, and is currently pursuing a BSc in Computer Science at HE-Arc.</div>
-        </div>
-      </div>
-    </div>
-  </section>
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+      if (submitBtn) submitBtn.disabled = true;
 
-  <script>
-    document.addEventListener('astro:page-load', () => {
-      const form = document.querySelector('form[name="contact"]') as HTMLFormElement;
-      const button = document.getElementById('submit-button') as HTMLButtonElement;
-      const submitText = button?.querySelector('.submit-text');
-      const loadingText = button?.querySelector('.loading-text');
-
-      form?.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        if (button) {
-          button.disabled = true;
-          submitText?.classList.add('hidden');
-          loadingText?.classList.remove('hidden');
-        }
+      try {
         const formData = new FormData(form);
-        const action = "https://formies.netlify.app/api/v1/submit?project_name=Portfolio";
-        try {
-          const response = await fetch(action, { method: 'POST', body: formData });
-          if (response.status === 201) {
-            window.location.href = '/thanks';
-          } else {
-            alert('An error occurred. Please try again.');
-            if (button) {
-              button.disabled = false;
-              submitText?.classList.remove('hidden');
-              loadingText?.classList.add('hidden');
-            }
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
           }
-        } catch (error) {
-          alert('A network error occurred.');
-          if (button) {
-            button.disabled = false;
-            submitText?.classList.remove('hidden');
-            loadingText?.classList.add('hidden');
-          }
+        });
+
+        if (response.ok) {
+          window.location.href = '/thanks';
+        } else {
+          const data = await response.json();
+          alert(data.error || "Something went wrong. Please try again.");
+          if (submitBtn) submitBtn.disabled = false;
         }
-      });
-
-      // Cursor interaction for cards
-      const updateSpotlight = (e: MouseEvent) => {
-        const cards = document.querySelectorAll('.card-premium');
-        cards.forEach(card => {
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          (card as HTMLElement).style.setProperty('--mouse-x', `${x}px`);
-          (card as HTMLElement).style.setProperty('--mouse-y', `${y}px`);
-        });
-      };
-      window.addEventListener('mousemove', updateSpotlight);
-
-      // Terminal interactivity
-      const terminal = document.querySelector('.terminal-modern');
-      if (terminal) {
-        terminal.addEventListener('click', () => {
-          const status = (terminal.querySelector('.status-val') as HTMLElement);
-          if (status) {
-            const original = status.textContent;
-            status.textContent = "initializing...";
-            setTimeout(() => {
-              status.textContent = original;
-            }, 1500);
-          }
-        });
+      } catch (error) {
+        alert("Connection error. Please try again later.");
+        if (submitBtn) submitBtn.disabled = false;
       }
     });
-  </script>
-</Layout>
+  }
+</script>

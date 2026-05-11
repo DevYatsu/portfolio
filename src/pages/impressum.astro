@@ -1,218 +1,94 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout
-  title="Impressum & Privacy Policy , Yanis Amani"
-  description="Legal notice and privacy policy (GDPR compliance) for Yanis Amani's portfolio."
+  title="Impressum & Privacy Policy // Yanis Amani"
+  description="Legal notice and privacy policy for Yanis Amani's portfolio."
   lang="en"
 >
-  <!-- Decorative background elements -->
-  <div class="fixed inset-0 pointer-events-none z-0" aria-hidden="true">
-    <div class="absolute inset-0 bg-noise opacity-[0.03]"></div>
-    <div class="absolute top-20 right-[15%] w-72 h-72 md:w-[600px] md:h-[600px] rounded-full bg-primary/5 blur-[120px]"></div>
-    <div class="absolute bottom-40 left-[10%] w-48 h-48 md:w-96 md:h-96 rounded-full bg-primary/3 blur-[100px]"></div>
-  </div>
+  <section class="py-24 px-6 md:px-12 max-w-4xl mx-auto">
+    <!-- Navigation -->
+    <a href="/" class="nav-link inline-flex items-center gap-2 mb-16" data-animate>
+      BACK TO HOME ↗
+    </a>
 
-  <section class="relative z-10 pt-32 md:pt-48 pb-24 md:pb-32">
-    <div class="max-w-4xl mx-auto px-6 md:px-12">
-      <!-- Back link -->
-      <a href="/" class="inline-flex items-center gap-3 text-text-muted hover:text-primary transition-all duration-300 mb-16 group" data-animate>
-        <div class="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center group-hover:border-primary/50 group-hover:-translate-x-1 transition-all">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 12H5m0 0l7 7m-7-7l7-7"/>
-          </svg>
+    <!-- Header -->
+    <div class="mb-24" data-animate>
+      <span class="tech-label mb-6 inline-block">LEGAL INFO</span>
+      <h1 class="display-md uppercase font-black mb-6 leading-none">
+        IMPRESSUM &<br/>
+        <span class="text-primary italic">PRIVACY POLICY</span>
+      </h1>
+      <p class="font-mono text-[0.6rem] text-text-dim uppercase tracking-widest">
+        LAST UPDATE // MARCH 2026
+      </p>
+    </div>
+
+    <div class="space-y-24">
+      <!-- Section 1: Publisher -->
+      <div class="structural-border p-12 bg-bg-surface" data-animate>
+        <div class="flex justify-between items-start mb-12">
+          <span class="tech-label">SECTION 01 // PUBLISHER</span>
+          <div class="w-12 h-px bg-border-subtle"></div>
         </div>
-        <span class="mono-label tracking-widest!">Back to portfolio</span>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div class="space-y-6">
+            <h2 class="text-2xl font-black uppercase tracking-tight">YANIS AMANI</h2>
+            <p class="font-mono text-[0.7rem] text-text-muted leading-relaxed uppercase">
+              Computer Science Student @ HE-Arc<br/>
+              Neuchâtel, Switzerland
+            </p>
+          </div>
+          <div class="space-y-6">
+            <span class="tech-label block mb-4 w-fit">CONTACT DIRECT</span>
+            <a href="mailto:yanis.amani@icloud.com" class="text-xl font-black text-primary hover:text-primary-dark transition-colors break-all">
+              YANIS.AMANI@ICLOUD.COM
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Privacy -->
+      <div class="structural-border p-12 bg-bg-surface" data-animate>
+        <div class="flex justify-between items-start mb-12">
+          <span class="tech-label">SECTION 02 // DATA PRIVACY</span>
+          <div class="w-12 h-px bg-border-subtle"></div>
+        </div>
+        <div class="space-y-8">
+          <h2 class="text-2xl font-black uppercase tracking-tight">PRIVACY FIRST POLICY</h2>
+          <p class="text-text-muted leading-relaxed">
+            This website is built with privacy in mind. No tracking cookies are used, and no third-party analytics are active. 
+          </p>
+          <div class="p-6 border border-primary/20 bg-primary/5">
+            <h3 class="font-bold uppercase text-xs mb-4 text-primary">YOUR RIGHTS</h3>
+            <p class="text-sm text-text-muted font-mono leading-relaxed uppercase">
+              You have the right to access, change, or delete any personal information sent through official channels.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3: Hosting -->
+      <div class="structural-border p-12 bg-bg-surface" data-animate>
+        <div class="flex justify-between items-start mb-12">
+          <span class="tech-label">SECTION 03 // HOSTING</span>
+          <div class="w-12 h-px bg-border-subtle"></div>
+        </div>
+        <div class="space-y-4">
+          <h2 class="text-xl font-black uppercase">NETLIFY INC</h2>
+          <p class="font-mono text-[0.7rem] text-text-muted uppercase">
+            44 MONTGOMERY ST, SAN FRANCISCO, CA 94104
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer link -->
+    <div class="mt-32 pt-12 border-t border-border-subtle text-center">
+      <a href="/" class="btn-arch inline-flex">
+        BACK TO HOME
       </a>
-
-      <!-- Page header -->
-      <div data-animate>
-        <span class="section-tag mb-8">§ Legal</span>
-        <h1 class="display-lg text-white mb-6 tracking-tighter">
-          Impressum &<br/>
-          <span class="text-text-muted italic">Privacy Policy</span>
-        </h1>
-        <p class="mono-label text-primary/60">
-          Last updated , March 2026
-        </p>
-      </div>
-
-      <div class="h-px w-full bg-linear-to-r from-white/10 to-transparent my-16" data-animate data-delay="1"></div>
-
-      <!-- ═══ Section 1: Legal Notice ═══ -->
-      <div class="legal-card" data-animate data-delay="1">
-        <div class="legal-card-header">
-          <div class="legal-icon">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-            </svg>
-          </div>
-          <div>
-            <span class="font-mono text-[0.6rem] text-primary font-black tracking-[0.3em] uppercase">Phase 01</span>
-            <h2 class="display-sm text-white mt-1">Legal Notice</h2>
-          </div>
-        </div>
-
-        <div class="legal-card-body">
-          <div class="legal-info-block grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-              <p class="legal-label">Publisher</p>
-              <p class="legal-value">Yanis Amani</p>
-              <p class="legal-detail">BSc Computer Science Student @ HE-Arc</p>
-              <p class="legal-detail">Neuchâtel, Switzerland</p>
-            </div>
-            <div>
-              <p class="legal-label">Direct Communication</p>
-              <a href="mailto:yanis.amani@icloud.com" class="btn btn-ghost border-white/5 py-4! text-sm w-full md:w-auto">
-                yanis.amani@icloud.com
-              </a>
-            </div>
-          </div>
-
-          <div class="h-px bg-white/5 my-8"></div>
-
-          <div class="legal-info-block">
-            <p class="legal-label">Infrastructure Provider</p>
-            <p class="legal-value">Netlify, Inc.</p>
-            <p class="legal-detail">44 Montgomery St, San Francisco, CA 94104</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- ═══ Section 2: Privacy Policy ═══ -->
-      <div class="legal-card" data-animate data-delay="2">
-        <div class="legal-card-header">
-          <div class="legal-icon">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-            </svg>
-          </div>
-          <div>
-            <span class="font-mono text-[0.6rem] text-primary font-black tracking-[0.3em] uppercase">Phase 02</span>
-            <h2 class="display-sm text-white mt-1">Privacy <span class="text-text-dim text-sm font-normal">(GDPR / FADP)</span></h2>
-          </div>
-        </div>
-
-        <div class="legal-card-body space-y-12">
-          <div>
-            <h3 class="flex items-center gap-3 text-white font-bold mb-4">
-              <span class="w-1.5 h-1.5 rounded-full bg-primary" aria-hidden="true"></span>
-              Data Protection
-            </h3>
-            <p class="text-text-muted leading-relaxed text-lg">
-              This website is designed with <strong class="text-white">privacy-first</strong> principles. No tracking cookies are used, and no intrusive third-party analytics scripts remain active. Your browsing data is not traded or shared.
-            </p>
-          </div>
-
-          <div class="p-8 rounded-[2rem] bg-white/2 border border-white/5">
-            <h3 class="flex items-center gap-3 text-white font-bold mb-4">
-              <span class="w-1.5 h-1.5 rounded-full bg-primary" aria-hidden="true"></span>
-              Your Rights
-            </h3>
-            <p class="text-text-muted leading-relaxed mb-6">
-              You have the right to access, rectify, or delete any personal information transmitted via official communication channels.
-            </p>
-            <div class="flex items-center gap-4 text-sm font-mono text-primary bg-primary/5 p-4 rounded-xl border border-primary/10">
-              <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-              </svg>
-              Contact: yanis.amani@icloud.com
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Footer note -->
-      <div class="mt-24 pt-12 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-8" data-animate data-delay="3">
-        <p class="mono-label">© {new Date().getFullYear()} Yanis Amani</p>
-        <a href="/" class="nav-item">
-          Back to portfolio
-        </a>
-      </div>
     </div>
   </section>
 </Layout>
-
-<style>
-  .legal-card {
-    position: relative;
-    margin-top: 3rem;
-    padding: 3rem;
-    border-radius: 3rem;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    background: rgba(255, 255, 255, 0.02);
-    backdrop-filter: blur(20px);
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .legal-card:hover {
-    border-color: rgba(var(--color-primary), 0.2);
-    background: rgba(255, 255, 255, 0.03);
-    transform: translateY(-4px);
-  }
-
-  .legal-card-header {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    margin-bottom: 3rem;
-  }
-
-  .legal-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 4.5rem;
-    height: 4.5rem;
-    border-radius: 1.5rem;
-    background: rgba(var(--color-primary), 0.1);
-    color: rgb(var(--color-primary));
-    flex-shrink: 0;
-    border: 1px solid rgba(var(--color-primary), 0.1);
-  }
-
-  .legal-label {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgb(var(--color-primary));
-    opacity: 0.6;
-    margin-bottom: 0.75rem;
-  }
-
-  .legal-value {
-    color: #fff;
-    font-weight: 800;
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-    letter-spacing: -0.02em;
-  }
-
-  .legal-detail {
-    color: rgba(255, 255, 255, 0.4);
-    font-size: 1rem;
-    line-height: 1.6;
-  }
-
-  @media (max-width: 768px) {
-    .legal-card {
-      padding: 2rem;
-      border-radius: 2rem;
-    }
-    .legal-card-header {
-      gap: 1.5rem;
-      flex-direction: column;
-      align-items: flex-start;
-      margin-bottom: 2rem;
-    }
-    .legal-icon {
-      width: 3.5rem;
-      height: 3.5rem;
-      border-radius: 1rem;
-    }
-    .legal-value {
-      font-size: 1.25rem;
-    }
-  }
-</style>
