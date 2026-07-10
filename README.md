@@ -1,43 +1,31 @@
-# Astro on Netlify Platform Starter
+# Portfolio — Yanis Amani
 
-[Live Demo](https://astro-platform-starter.netlify.app/)
+Personal portfolio at [yanis.adysen.fr](https://yanis.adysen.fr).
 
-A modern starter based on Astro.js, Tailwind, and [Netlify Core Primitives](https://docs.netlify.com/core/overview/#develop) (Edge Functions, Image CDN, Blobs).
+## Stack
 
-## Astro Commands
+- **Astro 7** — static site generation
+- **Vanilla CSS** — no frameworks, self-hosted Inter font
+- **Infomaniak** — Node.js hosting via `server.js`
 
-All commands are run from the root of the project, from a terminal:
+## Features
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+- Light/dark/system theme toggle with `localStorage` persistence
+- English / French i18n with auto-detect on first visit
+- SEO: canonical URLs, hreflang, JSON-LD (Person + WebSite), sitemap, OG image, robots.txt
+- Project detail pages with architecture breakdowns
+- Interactive skill filter
+- No JavaScript runtime — fully static
 
-## Deploying to Netlify
+## Commands
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/netlify-templates/astro-platform-starter)
+| Command | Action |
+| :------ | :----- |
+| `npm install` | Install dependencies |
+| `npm run dev` | Start dev server at `localhost:4321` |
+| `npm run build` | Build to `./dist/` |
+| `npm run preview` | Preview production build locally |
 
-## Developing Locally
+## Deploy
 
-| Prerequisites                                                                |
-| :--------------------------------------------------------------------------- |
-| [Node.js](https://nodejs.org/) v18.20.8+.                                    |
-| (optional) [nvm](https://github.com/nvm-sh/nvm) for Node version management. |
-
-1. Clone this repository, then run `npm install` in its root directory.
-
-2. Recommended: link your local repository to a Netlify project. This will ensure you're using the same runtime version for both local development and your deployed project.
-
-```
-netlify link
-```
-
-3. Run the Astro.js development server:
-
-```
-npm run dev
-```
+The `server.js` file serves `./dist/` statically. Push to main to deploy.
