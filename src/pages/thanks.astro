@@ -1,54 +1,76 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
-const lang = "en";
 const content = {
-	title: "Message Received // Yanis Amani",
-	description: "Your message has been successfully sent.",
-	heading: "MESSAGE RECEIVED",
-	subheading:
-		"Thank you for reaching out. I have received your message and will get back to you as soon as possible.",
-	cta: "BACK TO HOME",
+  title: "Message Received // Yanis Amani",
+  description: "Your message has been successfully sent.",
+  heading: "MESSAGE RECEIVED",
+  subheading: "Thanks for reaching out! I'll get back to you as soon as I can — usually within a day or two.",
+  cta: "Back to Home",
 };
 ---
 
-<Layout title={content.title} description={content.description} lang={lang}>
-  <section class="min-h-[80vh] flex flex-col justify-center items-center px-6 py-24 max-w-7xl mx-auto">
-    <div class="text-center space-y-12" data-animate>
-      <div class="inline-flex items-center gap-4">
-        <span class="tech-label">SUCCESS</span>
-        <div class="h-px w-12 bg-primary/30"></div>
-        <span class="font-mono text-[0.6rem] text-text-dim uppercase tracking-widest font-black">MESSAGE SENT</span>
+<Layout title={content.title} description={content.description} lang="en">
+  <section class="confirm-page" data-animate>
+    <div class="confirm-card">
+      <div class="confirm-top">
+        <span class="confirm-badge">Success</span>
+        <span class="confirm-sep"></span>
+        <span class="confirm-label">Message Sent</span>
       </div>
 
-      <h1 class="display-title leading-[0.8] tracking-tighter">
+      <h1 class="confirm-title">
         MESSAGE<br/>
-        <span class="text-primary">RECEIVED.</span>
+        <span class="confirm-accent">RECEIVED.</span>
       </h1>
 
-      <div class="max-w-xl mx-auto structural-border p-8 bg-bg-surface text-left">
-        <div class="flex justify-between items-start mb-6">
-          <span class="tech-label">CONFIRMATION</span>
-          <span class="text-primary font-mono text-[0.6rem]">STATUS OK</span>
+      <div class="confirm-box">
+        <div class="confirm-box-top">
+          <span class="confirm-box-label">Confirmation</span>
+          <span class="confirm-status">Status OK</span>
         </div>
-        <p class="font-mono text-[0.7rem] text-text-muted leading-relaxed mb-8">
-          {content.subheading}
-        </p>
-        <div class="flex flex-col gap-4">
-          <div class="flex justify-between border-b border-border-subtle pb-2 font-mono text-[0.6rem]">
-            <span class="text-text-dim">SECURITY</span>
-            <span class="text-text-main font-bold">ENCRYPTED</span>
+        <p class="confirm-desc">{content.subheading}</p>
+        <div class="confirm-details">
+          <div class="confirm-row">
+            <span class="confirm-key">Security</span>
+            <span class="confirm-val">Encrypted</span>
           </div>
-          <div class="flex justify-between border-b border-border-subtle pb-2 font-mono text-[0.6rem]">
-            <span class="text-text-dim">RECIPIENT</span>
-            <span class="text-text-main font-bold">YANIS AMANI</span>
+          <div class="confirm-row">
+            <span class="confirm-key">Recipient</span>
+            <span class="confirm-val">Yanis Amani</span>
           </div>
         </div>
       </div>
 
-      <a href="/" class="btn-arch inline-flex mx-auto">
-        {content.cta}
-      </a>
+      <a href="/" class="btn-primary" style="margin-inline: auto;">{content.cta}</a>
     </div>
   </section>
 </Layout>
+
+<style>
+  .confirm-page {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 6rem 1.5rem;
+    text-align: center;
+  }
+  .confirm-card { max-width: 32rem; display: flex; flex-direction: column; gap: 2.5rem; }
+  .confirm-top { display: flex; align-items: center; gap: 1rem; justify-content: center; }
+  .confirm-badge { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent); font-weight: 500; }
+  .confirm-sep { width: 1.5rem; height: 1px; background: rgba(59, 130, 246, 0.3); }
+  .confirm-label { font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-dim); }
+  .confirm-title { font-size: clamp(2.5rem, 6vw, 4rem); letter-spacing: -0.03em; line-height: 0.9; }
+  .confirm-accent { font-style: italic; color: var(--accent); }
+  .confirm-box { border: 1px solid var(--border); border-radius: 8px; padding: 2rem; background: var(--surface); text-align: left; }
+  .confirm-box-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem; }
+  .confirm-box-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-dim); }
+  .confirm-status { font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); }
+  .confirm-desc { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1.5rem; }
+  .confirm-details { display: flex; flex-direction: column; gap: 0.75rem; border-top: 1px solid var(--border); padding-top: 1rem; }
+  .confirm-row { display: flex; justify-content: space-between; font-size: 0.65rem; }
+  .confirm-key { color: var(--text-dim); }
+  .confirm-val { color: var(--text); font-weight: 500; }
+</style>

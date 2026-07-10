@@ -7,88 +7,178 @@ import Layout from "../layouts/Layout.astro";
   description="Legal notice and privacy policy for Yanis Amani's portfolio."
   lang="en"
 >
-  <section class="py-24 px-6 md:px-12 max-w-4xl mx-auto">
-    <!-- Navigation -->
-    <a href="/" class="nav-link inline-flex items-center gap-2 mb-16" data-animate>
-      BACK TO HOME ↗
-    </a>
+  <section class="legal-page" data-animate>
+    <div class="container">
+      <a href="/" class="legal-back">Back to Home ↗</a>
 
-    <!-- Header -->
-    <div class="mb-24" data-animate>
-      <span class="tech-label mb-6 inline-block">LEGAL INFO</span>
-      <h1 class="display-md uppercase font-black mb-6 leading-none">
-        IMPRESSUM &<br/>
-        <span class="text-primary italic">PRIVACY POLICY</span>
-      </h1>
-      <p class="font-mono text-[0.6rem] text-text-dim uppercase tracking-widest">
-        LAST UPDATE // MARCH 2026
-      </p>
-    </div>
-
-    <div class="space-y-24">
-      <!-- Section 1: Publisher -->
-      <div class="structural-border p-12 bg-bg-surface" data-animate>
-        <div class="flex justify-between items-start mb-12">
-          <span class="tech-label">SECTION 01 // PUBLISHER</span>
-          <div class="w-12 h-px bg-border-subtle"></div>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div class="space-y-6">
-            <h2 class="text-2xl font-black uppercase tracking-tight">YANIS AMANI</h2>
-            <p class="font-mono text-[0.7rem] text-text-muted leading-relaxed uppercase">
-              Computer Science Student @ HE-Arc<br/>
-              Neuchâtel, Switzerland
-            </p>
-          </div>
-          <div class="space-y-6">
-            <span class="tech-label block mb-4 w-fit">CONTACT DIRECT</span>
-            <a href="mailto:yanis.amani@icloud.com" class="text-xl font-black text-primary hover:text-primary-dark transition-colors break-all">
-              YANIS.AMANI@ICLOUD.COM
-            </a>
-          </div>
-        </div>
+      <div class="legal-header">
+        <span class="legal-tag">Legal Info</span>
+        <div class="accent-rule"></div>
+        <h1 class="legal-title">
+          IMPRESSUM &<br/>
+          <span class="legal-accent">PRIVACY POLICY</span>
+        </h1>
+        <p class="legal-date">Last Update // July 2026</p>
       </div>
 
-      <!-- Section 2: Privacy -->
-      <div class="structural-border p-12 bg-bg-surface" data-animate>
-        <div class="flex justify-between items-start mb-12">
-          <span class="tech-label">SECTION 02 // DATA PRIVACY</span>
-          <div class="w-12 h-px bg-border-subtle"></div>
+      <div class="legal-sections">
+        <div class="legal-section" data-animate>
+          <span class="legal-section-label">Section 01 // Publisher</span>
+          <div class="legal-section-grid">
+            <div>
+              <h2 class="legal-h2">YANIS AMANI</h2>
+              <p class="legal-p">Computer Science Student @ HE-Arc<br/>Neuchâtel, Switzerland</p>
+            </div>
+            <div>
+              <span class="legal-field-label">Contact Direct</span>
+              <a href="mailto:yanis.amani@icloud.com" class="legal-email">yanis.amani@icloud.com</a>
+            </div>
+          </div>
         </div>
-        <div class="space-y-8">
-          <h2 class="text-2xl font-black uppercase tracking-tight">PRIVACY FIRST POLICY</h2>
-          <p class="text-text-muted leading-relaxed">
-            This website is built with privacy in mind. No tracking cookies are used, and no third-party analytics are active. 
-          </p>
-          <div class="p-6 border border-primary/20 bg-primary/5">
-            <h3 class="font-bold uppercase text-xs mb-4 text-primary">YOUR RIGHTS</h3>
-            <p class="text-sm text-text-muted font-mono leading-relaxed uppercase">
-              You have the right to access, change, or delete any personal information sent through official channels.
-            </p>
+
+        <div class="legal-section" data-animate>
+          <span class="legal-section-label">Section 02 // Data Privacy</span>
+          <div class="legal-section-content">
+            <h2 class="legal-h2">PRIVACY FIRST POLICY</h2>
+            <p class="legal-p">This website is built with privacy in mind. No tracking cookies are used, and no third-party analytics are active.</p>
+            <div class="legal-highlight">
+              <h3 class="legal-highlight-label">Your Rights</h3>
+              <p class="legal-p">You have the right to access, change, or delete any personal information sent through official channels.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="legal-section" data-animate>
+          <span class="legal-section-label">Section 03 // Hosting</span>
+          <div>
+            <h2 class="legal-h2">INFOMANIAK NETWORK SA</h2>
+            <p class="legal-p">Rue Eugène-Marziano 25, 1227 Les Acacias, Switzerland</p>
           </div>
         </div>
       </div>
 
-      <!-- Section 3: Hosting -->
-      <div class="structural-border p-12 bg-bg-surface" data-animate>
-        <div class="flex justify-between items-start mb-12">
-          <span class="tech-label">SECTION 03 // HOSTING</span>
-          <div class="w-12 h-px bg-border-subtle"></div>
-        </div>
-        <div class="space-y-4">
-          <h2 class="text-xl font-black uppercase">NETLIFY INC</h2>
-          <p class="font-mono text-[0.7rem] text-text-muted uppercase">
-            44 MONTGOMERY ST, SAN FRANCISCO, CA 94104
-          </p>
-        </div>
+      <div class="legal-footer">
+        <a href="/" class="btn-primary">Back to Home</a>
       </div>
-    </div>
-
-    <!-- Footer link -->
-    <div class="mt-32 pt-12 border-t border-border-subtle text-center">
-      <a href="/" class="btn-arch inline-flex">
-        BACK TO HOME
-      </a>
     </div>
   </section>
 </Layout>
+
+<style>
+  .legal-page { padding: 6rem 1.5rem; }
+  .legal-back {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 4rem;
+    transition: color 0.2s;
+  }
+  .legal-back:hover { color: var(--text); }
+
+  .legal-header { margin-bottom: 5rem; }
+  .legal-tag {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+    display: block;
+  }
+  .legal-header .accent-rule { margin-bottom: 1.5rem; }
+  .legal-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+    margin-bottom: 1rem;
+  }
+  .legal-accent { font-style: italic; color: var(--accent); }
+  .legal-date { font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; }
+
+  .legal-sections { display: flex; flex-direction: column; gap: 4rem; }
+
+  .legal-section {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2rem;
+    background: var(--surface);
+  }
+  @media (min-width: 768px) { .legal-section { padding: 3rem; } }
+
+  .legal-section-label {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 2rem;
+    display: block;
+  }
+
+  .legal-section-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  @media (min-width: 768px) { .legal-section-grid { grid-template-columns: 1fr 1fr; } }
+
+  .legal-h2 {
+    font-size: 1.25rem;
+    letter-spacing: -0.01em;
+    margin-bottom: 1rem;
+  }
+
+  .legal-p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .legal-field-label {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .legal-email {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.2s;
+    word-break: break-all;
+  }
+  .legal-email:hover { color: var(--accent-hover); }
+
+  .legal-section-content { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .legal-highlight {
+    padding: 1.5rem;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    background: var(--accent-light);
+    border-radius: 8px;
+  }
+  .legal-highlight-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .legal-footer {
+    margin-top: 6rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+</style>

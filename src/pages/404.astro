@@ -3,47 +3,141 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout
-  title="404 // Page Not Found"
-  description="The page you requested was not found on Yanis Amani's portfolio."
+  title="404 // Page Not Found — Yanis Amani"
+  description="The page you requested was not found. Return to Yanis Amani's portfolio to explore projects and skills."
   lang="en"
 >
-  <section class="min-h-[80vh] flex flex-col justify-center items-center px-6 py-24 max-w-7xl mx-auto">
-    <div class="text-center space-y-12" data-animate>
-      <div class="inline-flex items-center gap-4">
-        <span class="tech-label bg-red-500 text-white border-red-600">ERROR 404</span>
-        <div class="h-px w-12 bg-red-500/30"></div>
-        <span class="font-mono text-[0.6rem] text-red-500 uppercase tracking-widest font-black">ACCESS DENIED</span>
-      </div>
+  <section class="error-page" data-animate>
+    <div class="error-card">
+      <span class="error-badge">ERROR 404</span>
 
-      <h1 class="display-title leading-[0.8] tracking-tighter">
+      <h1 class="error-title">
         PAGE NOT<br/>
-        <span class="text-primary italic">FOUND.</span>
+        <span class="error-accent">FOUND.</span>
       </h1>
 
-      <div class="max-w-xl mx-auto structural-border p-8 bg-bg-surface text-left">
-        <div class="flex justify-between items-start mb-6">
-          <span class="tech-label">ERROR INFO</span>
-          <span class="text-red-500 font-mono text-[0.6rem] animate-pulse">SYSTEM ALERT</span>
+      <div class="error-box">
+        <div class="error-box-top">
+          <span class="error-box-label">Error Info</span>
+          <span class="error-alert">System Alert</span>
         </div>
-        <p class="font-mono text-[0.7rem] text-text-muted leading-relaxed mb-8">
-          The link you followed may be broken, or the page may have been removed. 
-          Please return to the main page to continue browsing.
+        <p class="error-desc">
+          Either the link is broken or I moved things around. Sorry about that.
+          Head back to the homepage and you'll find what you need.
         </p>
-        <div class="flex flex-col gap-4">
-          <div class="flex justify-between border-b border-border-subtle pb-2 font-mono text-[0.6rem]">
-            <span class="text-text-dim">ERROR TYPE</span>
-            <span class="text-red-500 font-bold">PAGE NOT FOUND</span>
+        <div class="error-details">
+          <div class="error-row">
+            <span class="error-key">Error Type</span>
+            <span class="error-val error-val-accent">Page Not Found</span>
           </div>
-          <div class="flex justify-between border-b border-border-subtle pb-2 font-mono text-[0.6rem]">
-            <span class="text-text-dim">LOCATION</span>
-            <span class="text-text-main font-bold">/UNKNOWN PATH</span>
+          <div class="error-row">
+            <span class="error-key">Location</span>
+            <span class="error-val">/unknown path</span>
           </div>
         </div>
       </div>
 
-      <a href="/" class="btn-arch inline-flex mx-auto">
-        BACK TO HOME
-      </a>
+      <a href="/" class="btn-primary" style="margin-inline: auto;">Back to Home</a>
     </div>
   </section>
 </Layout>
+
+<style>
+  .error-page {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 6rem 1.5rem;
+    text-align: center;
+  }
+
+  .error-card {
+    max-width: 32rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .error-badge {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    font-weight: 500;
+    background: var(--accent-light);
+    padding: 0.375rem 0.75rem;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    display: inline-block;
+    margin-inline: auto;
+  }
+
+  .error-title {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    letter-spacing: -0.03em;
+    line-height: 0.9;
+  }
+
+  .error-accent { font-style: italic; color: var(--accent); }
+
+  .error-box {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2rem;
+    background: var(--surface);
+    text-align: left;
+  }
+
+  .error-box-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.25rem;
+  }
+
+  .error-box-label {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+  }
+
+  .error-alert {
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  .error-desc {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .error-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+  }
+
+  .error-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.65rem;
+  }
+
+  .error-key { color: var(--text-dim); }
+  .error-val { color: var(--text); font-weight: 500; }
+  .error-val-accent { color: var(--accent); }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+</style>

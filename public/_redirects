@@ -1,7 +1,0 @@
-# Netlify Redirects
-
-# No forced root redirect. 
-# Static language pages are served at / (English) and /fr (French).
-
-# Fallback for explicit files
-/404.html  /404.html  404

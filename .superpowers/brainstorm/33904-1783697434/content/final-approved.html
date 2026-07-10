@@ -1,0 +1,328 @@
+
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f0f2f5;
+    --surface: #ffffff;
+    --surface-hover: #f8f9fb;
+    --border: rgba(15,23,42,0.08);
+    --border-strong: rgba(15,23,42,0.15);
+    --text: #0f172a;
+    --text-muted: #64748b;
+    --text-dim: #94a3b8;
+    --accent: #3b82f6;
+    --accent-hover: #2563eb;
+    --accent-light: rgba(59,130,246,0.08);
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 60px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  h1.page-title { font-size: 36px; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 4px; }
+  .page-subtitle { font-size: 13px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 40px; }
+  .section-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-dim); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+
+  .site-preview { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 60px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+
+  .preview-nav { display: flex; justify-content: space-between; align-items: center; padding: 16px 40px; border-bottom: 1px solid var(--border); }
+  .preview-nav .logo { font-weight: 600; font-size: 14px; letter-spacing: -0.01em; }
+  .preview-nav .logo span { color: var(--accent); }
+  .preview-nav .links { display: flex; gap: 28px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); }
+  .preview-nav .links span.active { color: var(--text); }
+  .preview-nav .cta-nav { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; background: var(--text); color: white; padding: 8px 20px; border-radius: 4px; }
+
+  .preview-hero { padding: 80px 40px 60px; border-bottom: 1px solid var(--border); }
+  .preview-hero .tag { font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent); font-weight: 500; margin-bottom: 20px; }
+  .preview-hero .rule { width: 32px; height: 2px; background: var(--accent); margin-bottom: 32px; }
+  .preview-hero .name { font-family: 'Georgia', 'Times New Roman', serif; font-size: 64px; line-height: 0.95; letter-spacing: -0.03em; margin-bottom: 24px; }
+  .preview-hero .name .accent { font-style: italic; color: var(--accent); }
+  .preview-hero .role { font-size: 16px; color: var(--text-muted); line-height: 1.6; max-width: 480px; margin-bottom: 40px; }
+  .preview-hero .actions { display: flex; gap: 16px; }
+  .btn-primary { font-size: 12px; text-transform: uppercase; letter-spacing: 0.15em; background: var(--text); color: white; padding: 12px 32px; border-radius: 4px; text-decoration: none; font-weight: 500; display: inline-block; transition: background 0.3s; }
+  .btn-primary:hover { background: #1e293b; }
+  .btn-ghost { font-size: 12px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); padding: 12px 8px; text-decoration: none; display: inline-block; transition: color 0.3s; }
+  .btn-ghost:hover { color: var(--text); }
+
+  .hero-bottom { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); }
+  .hero-bottom > div { background: var(--surface); padding: 20px 40px; }
+  .hero-bottom .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-dim); margin-bottom: 4px; }
+  .hero-bottom .value { font-size: 13px; font-weight: 500; }
+
+  .section-card { padding: 60px 40px; }
+  .section-card + .section-card { border-top: 1px solid var(--border); }
+
+  .section-header { margin-bottom: 40px; }
+  .section-header h2 { font-family: 'Georgia', serif; font-size: 32px; font-weight: 400; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .section-header .sub { font-size: 13px; color: var(--text-muted); max-width: 480px; line-height: 1.5; }
+
+  .project-featured { display: flex; flex-direction: column; gap: 32px; }
+
+  .featured-card { border: 1px solid var(--border); border-radius: 8px; padding: 32px; transition: all 0.3s; cursor: pointer; }
+  .featured-card:hover { border-color: var(--accent); box-shadow: 0 4px 20px rgba(59,130,246,0.08); }
+  .featured-card .fc-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+  .featured-card .fc-cat { font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent); font-weight: 500; }
+  .featured-card .fc-name { font-family: 'Georgia', serif; font-size: 24px; margin-bottom: 8px; }
+  .featured-card .fc-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px; }
+  .featured-card .fc-meta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+  .featured-card .fc-meta .tag { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; padding: 4px 10px; border: 1px solid var(--border); border-radius: 2px; color: var(--text-dim); }
+  .featured-card .fc-meta .link { font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); text-decoration: none; font-weight: 500; margin-left: auto; }
+  .featured-card .fc-meta .link:hover { color: var(--accent-hover); }
+
+  .secondary-section { border-top: 1px solid var(--border); }
+  .secondary-section .sec-header { padding: 40px 40px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .secondary-section .sec-header .sec-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-dim); }
+  .secondary-section .sec-header .sec-count { font-size: 11px; color: var(--text-dim); }
+
+  .static-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); margin: 0 40px 40px; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+  .static-card { background: var(--surface); padding: 24px; transition: all 0.3s; cursor: pointer; }
+  .static-card:hover { background: var(--surface-hover); }
+  .static-card .sc-num { font-size: 10px; color: var(--text-dim); font-variant-numeric: tabular-nums; margin-bottom: 8px; }
+  .static-card .sc-name { font-family: 'Georgia', serif; font-size: 15px; margin-bottom: 4px; }
+  .static-card .sc-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px; }
+  .static-card .sc-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+  .static-card .sc-tags span { font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; padding: 2px 6px; border: 1px solid var(--border); border-radius: 2px; color: var(--text-dim); }
+
+  .skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .skill-item { background: var(--surface); padding: 24px; }
+  .skill-item .s-cat { font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-dim); margin-bottom: 12px; }
+  .skill-item .s-name { font-family: 'Georgia', serif; font-size: 16px; margin-bottom: 12px; }
+  .skill-item .s-bar { height: 2px; background: var(--border); position: relative; overflow: hidden; }
+  .skill-item .s-bar-fill { height: 100%; background: var(--accent); border-radius: 1px; }
+
+  .about-split { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; }
+  .about-split .quote-text { font-size: 18px; line-height: 1.6; color: var(--text-muted); }
+  .values-box { background: var(--surface-hover); padding: 24px; border: 1px solid var(--border); }
+  .values-box .v-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-dim); margin-bottom: 12px; }
+  .values-box .v-item { font-size: 14px; font-weight: 500; margin-bottom: 8px; }
+
+  .contact-simple { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+  .contact-simple .c-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-dim); margin-bottom: 8px; }
+  .contact-simple .c-email { font-size: 24px; font-weight: 500; letter-spacing: -0.02em; color: var(--accent); display: block; text-decoration: none; transition: color 0.3s; }
+  .contact-simple .c-email:hover { color: var(--accent-hover); }
+  .contact-simple .c-socials { display: flex; gap: 32px; }
+  .contact-simple .c-socials a { font-size: 12px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); text-decoration: none; transition: color 0.3s; }
+  .contact-simple .c-socials a:hover { color: var(--text); }
+  .contact-simple .c-cta { justify-self: end; text-align: right; }
+  .contact-simple .c-cta .big-link { font-family: 'Georgia', serif; font-size: 28px; font-style: italic; color: var(--text); text-decoration: none; transition: color 0.3s; }
+  .contact-simple .c-cta .big-link:hover { color: var(--accent); }
+
+  .preview-footer { padding: 32px 40px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 12px; color: var(--text-dim); }
+  .preview-footer a { color: var(--text-muted); text-decoration: none; }
+  .preview-footer a:hover { color: var(--text); }
+</style>
+
+<div class="container">
+  <h1 class="page-title">Final Design — Ready for Spec</h1>
+  <p class="page-subtitle">Mangaread · Axto · YatsuScript · Static websites secondary</p>
+
+  <div class="site-preview">
+    <div class="preview-nav">
+      <div class="logo">Yanis<span>Amani</span></div>
+      <div class="links">
+        <span class="active">Projects</span>
+        <span>Stack</span>
+        <span>About</span>
+        <span>Contact</span>
+      </div>
+      <div class="cta-nav">FR</div>
+    </div>
+
+    <!-- Hero -->
+    <div class="preview-hero">
+      <div class="tag">Portfolio · 2026</div>
+      <div class="rule"></div>
+      <div class="name">Building<br><span class="accent">Reliability.</span></div>
+      <div class="role">Computer Science student creating software that is fast, secure, and built to last.</div>
+      <div class="actions">
+        <a href="#" class="btn-primary">View Projects →</a>
+        <a href="#" class="btn-ghost">Get in Touch</a>
+      </div>
+    </div>
+
+    <div class="hero-bottom">
+      <div><div class="label">Role</div><div class="value">CS Student</div></div>
+      <div><div class="label">Focus</div><div class="value">Quality Code</div></div>
+      <div><div class="label">Education</div><div class="value">BSc Computer Science</div></div>
+    </div>
+
+    <!-- ═══ PROJECTS ═══ -->
+    <div class="section-card">
+      <div class="section-header">
+        <h2>Projects</h2>
+        <div class="sub">Systems, tools, and applications I've built from the ground up.</div>
+      </div>
+
+      <div class="project-featured">
+
+        <!-- Mangaread -->
+        <div class="featured-card">
+          <div class="fc-top">
+            <span class="fc-cat">Web Application</span>
+            <span style="color: var(--accent); font-size: 18px;">↗</span>
+          </div>
+          <div class="fc-name">MangaRead</div>
+          <div class="fc-desc">
+            A full-featured manga reading platform built in Rust. Scrapes chapters from third-party sites, 
+            merges them into unified series, and serves them through a web interface with bookmarks, reading 
+            progress tracking, and automatic background sync. Uses Axum, SQLite, and chromedriver-based 
+            scraping across three workspace crates.
+          </div>
+          <div class="fc-meta">
+            <span class="tag">Rust</span>
+            <span class="tag">Axum</span>
+            <span class="tag">SQLite</span>
+            <span class="tag">Docker</span>
+            <a href="#" class="link">Live instance →</a>
+          </div>
+        </div>
+
+        <!-- Axto -->
+        <div class="featured-card">
+          <div class="fc-top">
+            <span class="fc-cat">Full-Stack Marketplace</span>
+            <span style="color: var(--accent); font-size: 18px;">↗</span>
+          </div>
+          <div class="fc-name">Axto</div>
+          <div class="fc-desc">
+            A marketplace platform for auto parts with React Native mobile app and Astro web admin portal. 
+            Features include user/seller profiles, parts inventory with vehicle compatibility, order management, 
+            real-time stock tracking, reviews, notifications, and Supabase backend with Row Level Security.
+          </div>
+          <div class="fc-meta">
+            <span class="tag">React Native</span>
+            <span class="tag">Astro</span>
+            <span class="tag">Supabase</span>
+            <span class="tag">Postgres</span>
+            <a href="#" class="link">Live instance →</a>
+          </div>
+        </div>
+
+        <!-- YatsuScript -->
+        <div class="featured-card">
+          <div class="fc-top">
+            <span class="fc-cat">Compilers & Runtimes</span>
+            <span style="color: var(--accent); font-size: 18px;">↗</span>
+          </div>
+          <div class="fc-name">YatsuScript</div>
+          <div class="fc-desc">
+            A bytecode interpreter written in Rust from scratch. Direct register allocation, custom memory 
+            mapping, and a complete instruction set — all implemented without external libraries. Explores 
+            the boundary between high-level language design and low-level machine execution.
+          </div>
+          <div class="fc-meta">
+            <span class="tag">Rust</span>
+            <span class="tag">Interpreter</span>
+            <span class="tag">Bytecode</span>
+            <span class="tag">No deps</span>
+            <a href="#" class="link">GitHub →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══ STATIC WEBSITES ═══ -->
+    <div class="secondary-section">
+      <div class="sec-header">
+        <span class="sec-label">Also · Static Websites</span>
+        <span class="sec-count">3 client projects</span>
+      </div>
+      <div class="static-grid">
+        <div class="static-card">
+          <div class="sc-num">01</div>
+          <div class="sc-name">De Vigny Avocat</div>
+          <div class="sc-desc">Legal showcase for IP and corporate law. Designed for clarity and trust.</div>
+          <div class="sc-tags"><span>Astro</span><span>Tailwind</span></div>
+        </div>
+        <div class="static-card">
+          <div class="sc-num">02</div>
+          <div class="sc-name">Cisaille Paris</div>
+          <div class="sc-desc">High-end barber shop in Le Marais. Editorial design meets craft.</div>
+          <div class="sc-tags"><span>Astro</span><span>React</span></div>
+        </div>
+        <div class="static-card">
+          <div class="sc-num">03</div>
+          <div class="sc-name">Le Studio</div>
+          <div class="sc-desc">Traditional bowling sanctuary in Paris. Timeless design.</div>
+          <div class="sc-tags"><span>Astro</span><span>Tailwind</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills / About / Contact — unchanged layout, abbreviated for mockup -->
+    <div class="section-card">
+      <div class="section-header">
+        <h2>My Tools</h2>
+        <div class="sub">Modern tools selected for their reliability and performance.</div>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-item"><div class="s-cat">Language</div><div class="s-name">Rust</div><div class="s-bar"><div class="s-bar-fill" style="width:100%"></div></div></div>
+        <div class="skill-item"><div class="s-cat">Language</div><div class="s-name">TypeScript</div><div class="s-bar"><div class="s-bar-fill" style="width:100%"></div></div></div>
+        <div class="skill-item"><div class="s-cat">Language</div><div class="s-name">Python</div><div class="s-bar"><div class="s-bar-fill" style="width:100%"></div></div></div>
+        <div class="skill-item"><div class="s-cat">Language</div><div class="s-name">C / C++</div><div class="s-bar"><div class="s-bar-fill" style="width:70%"></div></div></div>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-header">
+        <h2>My Approach</h2>
+        <div class="sub">I believe good software should be invisible — it just works.</div>
+      </div>
+      <div class="about-split">
+        <p class="quote-text">I focus on the details that make applications reliable and easy to maintain, ensuring that every project I build is solid from the ground up. Quality is not optional.</p>
+        <div class="values-box">
+          <div class="v-label">Core Values</div>
+          <div class="v-item">Reliability</div>
+          <div class="v-item">Performance</div>
+          <div class="v-item">Security</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-header">
+        <h2>Get in Touch</h2>
+        <div class="sub">Open to discussing new projects and opportunities.</div>
+      </div>
+      <div class="contact-simple">
+        <div>
+          <div class="c-label">Email</div>
+          <a href="mailto:yanis.amani@icloud.com" class="c-email">yanis.amani@icloud.com</a>
+          <div style="margin-top: 24px;">
+            <div class="c-label">Social</div>
+            <div class="c-socials">
+              <a href="#">LinkedIn ↗</a>
+              <a href="#">GitHub ↗</a>
+            </div>
+          </div>
+        </div>
+        <div class="c-cta">
+          <div class="c-label">Say Hello</div>
+          <a href="mailto:yanis.amani@icloud.com" class="big-link">hello@ →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="preview-footer">
+      <span>© 2026 Yanis Amani</span>
+      <div style="display: flex; gap: 24px;">
+        <a href="#">Impressum</a>
+        <a href="#">Privacy</a>
+      </div>
+    </div>
+  </div>
+
+  <div style="font-size: 13px; color: var(--text-dim);">
+    ✅ Real project data loaded. All three featured projects have proper descriptions and tags now.
+    <br><br>
+    <strong>Does this look correct?</strong> If yes, I'll write the formal design spec and start implementation.
+  </div>
+</div>

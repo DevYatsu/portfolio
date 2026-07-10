@@ -1,0 +1,94 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="Axto // Yanis Amani"
+  description="A marketplace for auto parts with a React Native mobile app and Astro admin portal."
+  lang="en"
+>
+  <section class="project-hero" data-animate>
+    <div class="container">
+      <a href="/#projects" class="project-back">← Back to Projects</a>
+      <span class="project-cat">Full-Stack Marketplace</span>
+      <div class="accent-rule"></div>
+      <h1 class="project-title">Axto</h1>
+      <p class="project-tagline">A marketplace platform for auto parts. Mobile app for buyers, web dashboard for sellers, all backed by Supabase.</p>
+      <div class="project-links">
+        <span class="btn-primary" style="opacity: 0.5; cursor: default;">Private source</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="project-section" data-animate>
+    <div class="container project-section-inner">
+      <div class="project-sidebar">
+        <span class="project-sidebar-label">Tech Stack</span>
+        <div class="project-techs">
+          <a href="https://reactnative.dev" target="_blank" rel="noopener noreferrer" class="tech-tag">React Native</a>
+          <a href="https://astro.build" target="_blank" rel="noopener noreferrer" class="tech-tag">Astro</a>
+          <a href="https://supabase.com" target="_blank" rel="noopener noreferrer" class="tech-tag">Supabase</a>
+          <a href="https://postgresql.org" target="_blank" rel="noopener noreferrer" class="tech-tag">PostgreSQL</a>
+          <a href="https://expo.dev" target="_blank" rel="noopener noreferrer" class="tech-tag">Expo</a>
+        </div>
+      </div>
+      <div class="project-content">
+        <h2>What it does</h2>
+        <p>Axto connects auto parts sellers with buyers. Sellers list parts with vehicle compatibility info, images, and pricing. Buyers search by vehicle model, compare parts, and place orders. The mobile app is built with React Native (Expo) for buyers, and there's an Astro web dashboard for sellers and admins.</p>
+
+        <h2>Architecture</h2>
+        <p>The project started with a Rust backend, then got ported to Supabase. The final architecture:</p>
+        <ul>
+          <li><strong>Mobile app</strong> — React Native (Expo) for iOS/Android buyers. Features search, vehicle selection, ordering, reviews, favorites</li>
+          <li><strong>Web dashboard</strong> — Astro site for sellers and admins. Inventory management, order processing, bulk upload, analytics</li>
+          <li><strong>Backend</strong> — Supabase. PostgreSQL with Row Level Security, Supabase Auth, Storage for images, Edge Functions for order processing</li>
+        </ul>
+        <p>The Supabase RLS policies are where the real work lives. Every query goes through database-level security: sellers can only edit their own listings, buyers can only see their own orders, admins can see everything. This replaced the Rust AuthorityGuard system.</p>
+
+        <h2>The hard parts</h2>
+        <p><strong>The Rust → Supabase migration.</strong> The original backend was in Rust with custom auth, custom API endpoints, and a handmade ORM. Porting everything to Supabase meant rethinking auth flows, rewriting all queries as Postgres RLS policies, and migrating data. The todo.md for this was 100 items long.</p>
+        <p><strong>Real-time stock tracking.</strong> When a buyer adds a part to their cart, the stock needs to lock immediately to prevent overselling. This meant database-level triggers and careful edge function design. Get it wrong and two buyers order the same last item.</p>
+        <p><strong>Vehicle compatibility.</strong> Parts don't just have a category — they fit specific vehicle makes, models, and years. The filtering logic (year → make → model → compatible parts) is a cascade of queries that needs to be fast even with thousands of parts.</p>
+
+        <h2>What I learned</h2>
+        <p>This was my first real full-stack project with a mobile app, and the scope was ambitious. I learned that Supabase is genuinely impressive for getting a production-ready backend running fast, but RLS policies have a learning curve — they're powerful but debugging "why does this query return nothing" when a policy is silently blocking you takes time.</p>
+        <p>The biggest lesson was about architecture decisions. The original Rust backend was elegant but slow to iterate on. Switching to Supabase meant sacrificing some control for speed, and for a solo project that was absolutely the right call.</p>
+        <p>Also: Expo's development builds are great. Expo's OTA updates are a lifesaver. But configuring native modules for both platforms still hurts.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="project-nav" data-animate>
+    <div class="container project-nav-inner">
+      <a href="/projects/mangaread" class="btn-ghost">← Previous project</a>
+      <a href="/projects/yatsuscript" class="btn-ghost">Next project →</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .project-hero { padding-top: 8rem; padding-bottom: 4rem; }
+  .project-back { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); text-decoration: none; display: inline-block; margin-bottom: 2rem; transition: color 0.2s; }
+  .project-back:hover { color: var(--text); }
+  .project-cat { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent); font-weight: 500; display: block; margin-bottom: 1rem; }
+  .project-hero .accent-rule { margin-bottom: 1.5rem; }
+  .project-title { font-family: var(--font-serif); font-size: clamp(2.5rem, 6vw, 4rem); letter-spacing: -0.03em; line-height: 0.95; margin-bottom: 1rem; }
+  .project-tagline { font-size: 1.125rem; color: var(--text-muted); line-height: 1.6; max-width: 36rem; margin-bottom: 2rem; }
+  .project-links { display: flex; gap: 1rem; }
+  .project-section { padding: 4rem 0; border-top: 1px solid var(--border); }
+  .project-section-inner { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+  @media (min-width: 768px) { .project-section-inner { grid-template-columns: 12rem 1fr; } }
+  @media (min-width: 1024px) { .project-section-inner { grid-template-columns: 14rem 1fr; } }
+  .project-sidebar-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-dim); margin-bottom: 0.75rem; display: block; }
+  .project-techs { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  @media (min-width: 768px) { .project-techs { flex-direction: column; } }
+  .project-content h2 { font-family: var(--font-serif); font-size: 1.5rem; letter-spacing: -0.02em; margin-bottom: 0.75rem; margin-top: 2.5rem; }
+  .project-content h2:first-child { margin-top: 0; }
+  .project-content p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1rem; }
+  .project-content ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
+  .project-content li { font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 0.25rem; }
+  .project-content li strong { color: var(--text); }
+  .project-content code { font-family: "JetBrains Mono", monospace; font-size: 0.85rem; background: var(--accent-light); padding: 0.15rem 0.4rem; border-radius: 3px; color: var(--accent); }
+  .project-nav { padding: 3rem 0 6rem; border-top: 1px solid var(--border); }
+  .project-nav-inner { display: flex; justify-content: space-between; }
+</style>

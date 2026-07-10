@@ -1,0 +1,303 @@
+
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Inter', 'Helvetica Neue', sans-serif;
+    background: #f8f7f4;
+    padding: 60px;
+    color: #1a1a1a;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  h1 {
+    font-size: 36px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  .subtitle {
+    font-size: 13px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 50px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #999;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .options-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+    margin-bottom: 60px;
+  }
+
+  .option-card {
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    background: white;
+  }
+  .option-card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+  .option-card.selected {
+    border-color: #1a1a1a;
+    box-shadow: 0 0 0 1px #1a1a1a;
+  }
+  .option-card .check {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: white;
+    transition: all 0.3s;
+  }
+  .option-card.selected .check {
+    background: #1a1a1a;
+    border-color: #1a1a1a;
+  }
+  .option-card.selected .check::after {
+    content: "✓";
+    color: white;
+  }
+
+  .palette-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    height: 80px;
+  }
+  .palette-bar-single {
+    height: 80px;
+    background: var(--bg);
+  }
+
+  .card-content {
+    padding: 24px;
+  }
+  .card-content h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .card-content .desc {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.5;
+  }
+
+  .hex-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .hex-chip {
+    font-family: 'SF Mono', 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    background: rgba(0,0,0,0.04);
+    color: #555;
+  }
+
+  /* ── Palette 1: Slate Technical ── */
+  .p1-1 { background: #f4f5f6; }
+  .p1-2 { background: #ffffff; }
+  .p1-3 { background: #1e293b; }
+  .p1-4 { background: #64748b; }
+
+  /* ── Palette 2: Dark Navy ── */
+  .p2-1 { background: #f0f2f5; }
+  .p2-2 { background: #ffffff; }
+  .p2-3 { background: #0f172a; }
+  .p2-4 { background: #3b82f6; }
+
+  /* ── Palette 3: Warm Stone ── */
+  .p3-1 { background: #f5f2ed; }
+  .p3-2 { background: #fdfcfa; }
+  .p3-3 { background: #2c2420; }
+  .p3-4 { background: #8b7355; }
+
+  /* ── Palette 4: Cool Graphite ── */
+  .p4-1 { background: #f0efed; }
+  .p4-2 { background: #ffffff; }
+  .p4-3 { background: #1a1d23; }
+  .p4-4 { background: #d4d4d4; }
+
+  /* ── Palette 5: Deep Teal ── */
+  .p5-1 { background: #f2f5f4; }
+  .p5-2 { background: #ffffff; }
+  .p5-3 { background: #0d1b1e; }
+  .p5-4 { background: #2d7d6a; }
+
+  .hero-preview {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 4px;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  .hero-preview .tag {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 12px;
+  }
+  .hero-preview .name {
+    font-family: 'Georgia', serif;
+    font-size: 28px;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .hero-preview .role {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .accent-bar {
+    width: 30px;
+    height: 2px;
+    margin: 12px 0;
+  }
+</style>
+
+<div class="container">
+  <h1>Color System Options</h1>
+  <p class="subtitle">5 directions · click to select your preferred palette</p>
+
+  <div class="options-grid">
+
+    <!-- ═══ Option 1: Slate Technical ═══ -->
+    <div class="option-card" data-choice="slate" onclick="toggleSelect(this)">
+      <div class="check"></div>
+      <div class="palette-bar">
+        <div class="p1-1"></div>
+        <div class="p1-2"></div>
+        <div class="p1-3"></div>
+        <div class="p1-4"></div>
+      </div>
+      <div class="card-content">
+        <h3>A · Slate Technical</h3>
+        <p class="desc">Clean developer aesthetic. Light grey backdrop, white cards, slate navy text, cool grey accents. Feels like a technical documentation site — precise, trusted, understated.</p>
+        <div class="hex-row">
+          <span class="hex-chip">#f4f5f6</span>
+          <span class="hex-chip">#ffffff</span>
+          <span class="hex-chip">#1e293b</span>
+          <span class="hex-chip">#64748b</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Option 2: Dark Navy ═══ -->
+    <div class="option-card" data-choice="navy" onclick="toggleSelect(this)">
+      <div class="check"></div>
+      <div class="palette-bar">
+        <div class="p2-1"></div>
+        <div class="p2-2"></div>
+        <div class="p2-3"></div>
+        <div class="p2-4"></div>
+      </div>
+      <div class="card-content">
+        <h3>B · Dark Navy</h3>
+        <p class="desc">Professional, corporate, trustworthy. Light blue-grey base, clean white surface, deep navy for headings, cobalt blue accent. Standard engineering portfolio palette — safe but effective.</p>
+        <div class="hex-row">
+          <span class="hex-chip">#f0f2f5</span>
+          <span class="hex-chip">#ffffff</span>
+          <span class="hex-chip">#0f172a</span>
+          <span class="hex-chip">#3b82f6</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Option 3: Warm Stone ═══ -->
+    <div class="option-card" data-choice="stone" onclick="toggleSelect(this)">
+      <div class="check"></div>
+      <div class="palette-bar">
+        <div class="p3-1"></div>
+        <div class="p3-2"></div>
+        <div class="p3-3"></div>
+        <div class="p3-4"></div>
+      </div>
+      <div class="card-content">
+        <h3>C · Warm Stone</h3>
+        <p class="desc">Quiet luxury. Warm cream base, off-white surface, dark brown-black text, muted taupe/bronze accent. Feels like a high-end architect's portfolio — distinctive, tactile, warm.</p>
+        <div class="hex-row">
+          <span class="hex-chip">#f5f2ed</span>
+          <span class="hex-chip">#fdfcfa</span>
+          <span class="hex-chip">#2c2420</span>
+          <span class="hex-chip">#8b7355</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Option 4: Cool Graphite ═══ -->
+    <div class="option-card" data-choice="graphite" onclick="toggleSelect(this)">
+      <div class="check"></div>
+      <div class="palette-bar">
+        <div class="p4-1"></div>
+        <div class="p4-2"></div>
+        <div class="p4-3"></div>
+        <div class="p4-4"></div>
+      </div>
+      <div class="card-content">
+        <h3>D · Cool Graphite</h3>
+        <p class="desc">Monochromatic precision. Warm grey base, bright white surface, near-black charcoal text, silver/grey accent. No color — pure structure and typography. Boldest statement through restraint.</p>
+        <div class="hex-row">
+          <span class="hex-chip">#f0efed</span>
+          <span class="hex-chip">#ffffff</span>
+          <span class="hex-chip">#1a1d23</span>
+          <span class="hex-chip">#d4d4d4</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ Option 5: Deep Teal (full width) ═══ -->
+  <div class="options-grid" style="grid-template-columns: 1fr;">
+    <div class="option-card" data-choice="teal" onclick="toggleSelect(this)">
+      <div class="check"></div>
+      <div class="palette-bar">
+        <div class="p5-1"></div>
+        <div class="p5-2"></div>
+        <div class="p5-3"></div>
+        <div class="p5-4"></div>
+      </div>
+      <div class="card-content">
+        <h3>E · Deep Teal</h3>
+        <p class="desc">Confident, unique, engineering-driven. Cool green-grey base, white surface, deep teal-black text, pine/jade accent. Stands out from the sea of blue tech portfolios while staying professional. Memory: the teal suggests reliability (green) + depth (dark).</p>
+        <div class="hex-row">
+          <span class="hex-chip">#f2f5f4</span>
+          <span class="hex-chip">#ffffff</span>
+          <span class="hex-chip">#0d1b1e</span>
+          <span class="hex-chip">#2d7d6a</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="font-size: 12px; color: #999; margin-top: 20px;">
+    Click a card to select it. Then tell me your pick in the terminal.
+  </div>
+</div>

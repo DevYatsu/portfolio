@@ -1,0 +1,97 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="YatsuScript // Yanis Amani"
+  description="A bytecode interpreter written in Rust from scratch. No dependencies, no shortcuts."
+  lang="en"
+>
+  <section class="project-hero" data-animate>
+    <div class="container">
+      <a href="/#projects" class="project-back">← Back to Projects</a>
+      <span class="project-cat">Compilers & Runtimes</span>
+      <div class="accent-rule"></div>
+      <h1 class="project-title">YatsuScript</h1>
+      <p class="project-tagline">A bytecode interpreter built from absolute scratch. No dependencies, no existing code — just me and the Rust compiler.</p>
+      <div class="project-links">
+        <a href="https://github.com/DevYatsu/YatsuScript" target="_blank" rel="noopener noreferrer" class="btn-primary">View on GitHub →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="project-section" data-animate>
+    <div class="container project-section-inner">
+      <div class="project-sidebar">
+        <span class="project-sidebar-label">Tech Stack</span>
+        <div class="project-techs">
+          <a href="https://rust-lang.org" target="_blank" rel="noopener noreferrer" class="tech-tag">Rust</a>
+          <a href="https://en.wikipedia.org/wiki/Bytecode" target="_blank" rel="noopener noreferrer" class="tech-tag">Bytecode</a>
+          <span class="tech-tag" style="cursor: default; opacity: 0.6;">No deps</span>
+        </div>
+      </div>
+      <div class="project-content">
+        <h2>What it is</h2>
+        <p>YatsuScript is a bytecode interpreter written entirely in Rust with zero external dependencies. It has its own instruction set, its own register allocation, its own memory mapping. Everything from the lexer to the VM is hand-written.</p>
+        <p>The goal wasn't to build something production-ready. It was to understand, at a deep level, what happens between typing <code>if (x &gt; 10) &#123; ... &#125;</code> and the CPU actually branching.</p>
+
+        <h2>Architecture</h2>
+        <p>The interpreter has four layers:</p>
+        <ul>
+          <li><strong>Lexer + Parser</strong> — tokenizes source code, builds an AST. Nothing fancy, but it handles expressions, variable declarations, control flow, and functions.</li>
+          <li><strong>Compiler</strong> — walks the AST and emits bytecode. Each node type maps to a sequence of opcodes. Variable lookups become load instructions, arithmetic becomes operation instructions.</li>
+          <li><strong>VM / Interpreter</strong> — a register-based bytecode VM. Fetches instructions, decodes operands, executes them. The main loop is a <code>match</code> on opcodes, about as tight as you can make it in safe Rust.</li>
+          <li><strong>Memory</strong> — custom memory mapping with direct register allocation. No heap allocation during execution after initial setup.</li>
+        </ul>
+
+        <p>The instruction set is minimal by design: load, store, add, sub, jump, compare, call, return. About 20 opcodes total. Enough to be Turing-complete, few enough that each one has a clear purpose.</p>
+
+        <h2>The hard parts</h2>
+        <p><strong>Designing an instruction set.</strong> You don't realize how many decisions go into something as "simple" as an instruction set until you have to make them all. Fixed-width vs variable-width instructions? How many registers? What addressing modes? Every choice constrains everything else.</p>
+        <p><strong>Register allocation.</strong> Infinite registers in the IR is easy. Mapping them to a fixed set of real registers without spilling too much is where the fun starts. I went with a simple linear scan allocator — not optimal, but it works and I understand every line.</p>
+        <p><strong>Zero dependencies.</strong> No <code>nom</code> for parsing, no <code>logos</code> for lexing, no <code>thiserror</code> for errors. Everything is hand-rolled. This means more code and more bugs, but the learning is incomparable. I know exactly how my lexer works because I wrote every character of it.</p>
+
+        <h2>What I learned</h2>
+        <p>This is the project I'm proudest of. Not because it's useful (it's not) but because it's the hardest thing I've built and I didn't cut corners.</p>
+        <p>I learned that compilers are not magic. They're just programs that transform trees into other trees. The mystique around them is undeserved — what's hard is not the concept but the thousands of small, correct decisions you need to make.</p>
+        <p>I learned that Rust is an incredible language for this kind of work. The exhaustiveness checking on the opcode enum means I can never forget to handle an instruction in the VM. The ownership model maps naturally to the compiler pipeline (parse → compile → execute, no shared mutable state).</p>
+        <p>And I learned that building something from nothing — zero dependencies, zero scaffolding — is terrifying and exhilarating in equal measure. Every time the VM executed its first correct instruction, it felt like a small miracle.</p>
+        <p>If you're into compilers, I'd love to talk.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="project-nav" data-animate>
+    <div class="container project-nav-inner">
+      <a href="/projects/axto" class="btn-ghost">← Previous project</a>
+      <span></span>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .project-hero { padding-top: 8rem; padding-bottom: 4rem; }
+  .project-back { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); text-decoration: none; display: inline-block; margin-bottom: 2rem; transition: color 0.2s; }
+  .project-back:hover { color: var(--text); }
+  .project-cat { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent); font-weight: 500; display: block; margin-bottom: 1rem; }
+  .project-hero .accent-rule { margin-bottom: 1.5rem; }
+  .project-title { font-family: var(--font-serif); font-size: clamp(2.5rem, 6vw, 4rem); letter-spacing: -0.03em; line-height: 0.95; margin-bottom: 1rem; }
+  .project-tagline { font-size: 1.125rem; color: var(--text-muted); line-height: 1.6; max-width: 36rem; margin-bottom: 2rem; }
+  .project-links { display: flex; gap: 1rem; }
+  .project-section { padding: 4rem 0; border-top: 1px solid var(--border); }
+  .project-section-inner { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+  @media (min-width: 768px) { .project-section-inner { grid-template-columns: 12rem 1fr; } }
+  @media (min-width: 1024px) { .project-section-inner { grid-template-columns: 14rem 1fr; } }
+  .project-sidebar-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-dim); margin-bottom: 0.75rem; display: block; }
+  .project-techs { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  @media (min-width: 768px) { .project-techs { flex-direction: column; } }
+  .project-content h2 { font-family: var(--font-serif); font-size: 1.5rem; letter-spacing: -0.02em; margin-bottom: 0.75rem; margin-top: 2.5rem; }
+  .project-content h2:first-child { margin-top: 0; }
+  .project-content p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1rem; }
+  .project-content ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
+  .project-content li { font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 0.25rem; }
+  .project-content li strong { color: var(--text); }
+  .project-content code { font-family: "JetBrains Mono", monospace; font-size: 0.85rem; background: var(--accent-light); padding: 0.15rem 0.4rem; border-radius: 3px; color: var(--accent); }
+  .project-nav { padding: 3rem 0 6rem; border-top: 1px solid var(--border); }
+  .project-nav-inner { display: flex; justify-content: space-between; }
+</style>

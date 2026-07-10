@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f0f2f5"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="80" y="80" width="1040" height="470" rx="12" fill="white" stroke="rgba(15,23,42,0.08)" stroke-width="1"/>
+  <rect x="80" y="380" width="60" height="2" fill="#3b82f6"/>
+  <text x="580" y="210" font-family="Georgia,serif" font-size="64" font-weight="400" fill="#0f172a" text-anchor="middle" letter-spacing="-2">Yanis Amani</text>
+  <text x="580" y="270" font-family="Georgia,serif" font-size="36" font-style="italic" fill="#3b82f6" text-anchor="middle" letter-spacing="-1">Building Reliability.</text>
+  <text x="580" y="340" font-family="system-ui,sans-serif" font-size="20" fill="#64748b" text-anchor="middle" letter-spacing="0.5">Computer Science Student · Software Engineer</text>
+  <text x="580" y="540" font-family="system-ui,sans-serif" font-size="14" fill="#94a3b8" text-anchor="middle" letter-spacing="2">yanis.adysen.fr</text>
+</svg>

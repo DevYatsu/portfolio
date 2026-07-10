@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://yanis-amani.netlify.app/sitemap-index.xml
+Sitemap: https://yanis.adysen.fr/sitemap-index.xml

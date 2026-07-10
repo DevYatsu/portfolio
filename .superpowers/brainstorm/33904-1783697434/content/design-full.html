@@ -1,0 +1,667 @@
+
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f0f2f5;
+    --surface: #ffffff;
+    --surface-hover: #f8f9fb;
+    --border: rgba(15,23,42,0.08);
+    --border-strong: rgba(15,23,42,0.15);
+    --text: #0f172a;
+    --text-muted: #64748b;
+    --text-dim: #94a3b8;
+    --accent: #3b82f6;
+    --accent-hover: #2563eb;
+    --accent-light: rgba(59,130,246,0.08);
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 60px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  h1.page-title {
+    font-size: 36px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  .page-subtitle {
+    font-size: 13px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 50px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── Site Preview ── */
+  .site-preview {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 60px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+
+  /* Navigation */
+  .preview-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+  .preview-nav .logo {
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: -0.01em;
+  }
+  .preview-nav .logo span {
+    color: var(--accent);
+  }
+  .preview-nav .links {
+    display: flex;
+    gap: 28px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+  }
+  .preview-nav .links span.active {
+    color: var(--text);
+  }
+  .preview-nav .cta-nav {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    background: var(--text);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 4px;
+  }
+
+  /* Hero */
+  .preview-hero {
+    padding: 80px 40px 60px;
+    border-bottom: 1px solid var(--border);
+  }
+  .preview-hero .tag {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+  .preview-hero .rule {
+    width: 32px;
+    height: 2px;
+    background: var(--accent);
+    margin-bottom: 32px;
+  }
+  .preview-hero .name {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 64px;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+  }
+  .preview-hero .name .accent {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .preview-hero .role {
+    font-size: 16px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    max-width: 480px;
+    margin-bottom: 40px;
+  }
+  .preview-hero .actions {
+    display: flex;
+    gap: 16px;
+  }
+  .btn-primary {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    background: var(--text);
+    color: white;
+    padding: 12px 32px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-block;
+    transition: background 0.3s;
+  }
+  .btn-primary:hover { background: #1e293b; }
+  .btn-ghost {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    padding: 12px 8px;
+    text-decoration: none;
+    display: inline-block;
+    transition: color 0.3s;
+  }
+  .btn-ghost:hover { color: var(--text); }
+
+  /* Info Panel */
+  .hero-bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+  }
+  .hero-bottom > div {
+    background: var(--surface);
+    padding: 24px 40px;
+  }
+  .hero-bottom .label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+  .hero-bottom .value {
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  /* Section Card */
+  .section-card {
+    padding: 60px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-card:last-child { border-bottom: none; }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 40px;
+  }
+  .section-header .number {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+  .section-header h2 {
+    font-family: 'Georgia', serif;
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+  .section-header .sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    max-width: 280px;
+    line-height: 1.5;
+  }
+
+  /* Project List */
+  .project-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .project-row:hover {
+    padding-left: 12px;
+    background: var(--surface-hover);
+    margin: 0 -12px;
+    padding-right: 12px;
+  }
+  .project-row .left { display: flex; align-items: center; gap: 24px; }
+  .project-row .num {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-variant-numeric: tabular-nums;
+    width: 28px;
+  }
+  .project-row .p-name {
+    font-family: 'Georgia', serif;
+    font-size: 18px;
+  }
+  .project-row .tags {
+    display: flex;
+    gap: 8px;
+  }
+  .project-row .tags span {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 3px 8px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-dim);
+  }
+  .project-row .arrow {
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+  .project-row:hover .arrow {
+    color: var(--accent);
+  }
+
+  /* Skills Grid */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .skill-item {
+    background: var(--surface);
+    padding: 24px;
+  }
+  .skill-item .s-cat {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+  }
+  .skill-item .s-name {
+    font-family: 'Georgia', serif;
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+  .skill-item .s-bar {
+    height: 2px;
+    background: var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .skill-item .s-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 1px;
+  }
+
+  /* Contact */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+  .contact-left .c-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+  .contact-left .c-email {
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--accent);
+    margin-bottom: 32px;
+    display: block;
+    text-decoration: none;
+  }
+  .contact-left .c-socials {
+    display: flex;
+    gap: 24px;
+  }
+  .contact-left .c-socials a {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .contact-left .c-socials a:hover { color: var(--text); }
+
+  .contact-right form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .contact-right input,
+  .contact-right textarea {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    padding: 12px 0;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    background: transparent;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  .contact-right input:focus,
+  .contact-right textarea:focus {
+    border-color: var(--accent);
+  }
+  .contact-right textarea { resize: vertical; min-height: 80px; }
+  .contact-right button {
+    align-self: flex-start;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    background: var(--text);
+    color: white;
+    padding: 12px 32px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .contact-right button:hover { background: #1e293b; }
+
+  /* Footer */
+  .preview-footer {
+    padding: 32px 40px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  .preview-footer a {
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+  .preview-footer a:hover { color: var(--text); }
+
+  /* Legend */
+  .legend {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .legend-item {
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+  }
+  .legend-item .swatch {
+    height: 40px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+  .legend-item .l-name {
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+  .legend-item .l-hex {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-family: 'SF Mono', 'JetBrains Mono', monospace;
+  }
+
+  .nav-2 {
+    background: #f0f2f5;
+  }
+  .surf-2 {
+    background: #ffffff;
+  }
+  .text-2 {
+    background: #0f172a;
+  }
+  .acc-2 {
+    background: #3b82f6;
+  }
+</style>
+
+<div class="container">
+  <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px;">
+    <div>
+      <h1 class="page-title">Full Site Design</h1>
+      <p class="page-subtitle">Dark Navy palette · Editorial system</p>
+    </div>
+  </div>
+
+  <!-- Color Legend -->
+  <div class="section-label">Color System</div>
+  <div class="legend">
+    <div class="legend-item">
+      <div class="swatch nav-2"></div>
+      <div class="l-name">Background</div>
+      <div class="l-hex">#f0f2f5</div>
+    </div>
+    <div class="legend-item">
+      <div class="swatch surf-2"></div>
+      <div class="l-name">Surface</div>
+      <div class="l-hex">#ffffff</div>
+    </div>
+    <div class="legend-item">
+      <div class="swatch text-2"></div>
+      <div class="l-name">Text / UI</div>
+      <div class="l-hex">#0f172a</div>
+    </div>
+    <div class="legend-item">
+      <div class="swatch acc-2"></div>
+      <div class="l-name">Accent</div>
+      <div class="l-hex">#3b82f6</div>
+    </div>
+  </div>
+
+  <!-- Full Site Preview -->
+  <div class="section-label">Full Page Preview</div>
+  <div class="site-preview">
+
+    <!-- Nav -->
+    <div class="preview-nav">
+      <div class="logo">Yanis<span>Amani</span></div>
+      <div class="links">
+        <span class="active">Projects</span>
+        <span>Stack</span>
+        <span>About</span>
+        <span>Contact</span>
+      </div>
+      <div class="cta-nav">FR</div>
+    </div>
+
+    <!-- Hero -->
+    <div class="preview-hero">
+      <div class="tag">Portfolio · 2026</div>
+      <div class="rule"></div>
+      <div class="name">Building<br><span class="accent">Reliability.</span></div>
+      <div class="role">Computer Science student creating software that is fast, secure, and built to last.</div>
+      <div class="actions">
+        <a href="#" class="btn-primary">View Projects →</a>
+        <a href="#" class="btn-ghost">Get in Touch</a>
+      </div>
+    </div>
+
+    <div class="hero-bottom">
+      <div>
+        <div class="label">Role</div>
+        <div class="value">CS Student</div>
+      </div>
+      <div>
+        <div class="label">Focus</div>
+        <div class="value">Quality Code</div>
+      </div>
+    </div>
+
+    <!-- Projects Section -->
+    <div class="section-card">
+      <div class="section-header">
+        <div>
+          <div class="number">Section 01</div>
+          <h2>Selected Projects</h2>
+        </div>
+        <div class="sub">A selection of projects focused on stability and high quality.</div>
+      </div>
+
+      <div class="project-row">
+        <div class="left">
+          <span class="num">01</span>
+          <span class="p-name">De Vigny Avocat</span>
+        </div>
+        <div class="tags"><span>Astro</span><span>Tailwind</span><span>Performance</span></div>
+        <span class="arrow">→</span>
+      </div>
+      <div class="project-row">
+        <div class="left">
+          <span class="num">02</span>
+          <span class="p-name">Cisaille Paris</span>
+        </div>
+        <div class="tags"><span>Astro</span><span>React</span><span>Premium</span></div>
+        <span class="arrow">→</span>
+      </div>
+      <div class="project-row">
+        <div class="left">
+          <span class="num">03</span>
+          <span class="p-name">Kora</span>
+        </div>
+        <div class="tags"><span>React</span><span>TypeScript</span><span>Supabase</span></div>
+        <span class="arrow">→</span>
+      </div>
+      <div class="project-row">
+        <div class="left">
+          <span class="num">04</span>
+          <span class="p-name">express_rs</span>
+        </div>
+        <div class="tags"><span>Rust</span><span>HTTP</span><span>TCP</span></div>
+        <span class="arrow">→</span>
+      </div>
+    </div>
+
+    <!-- Skills Section -->
+    <div class="section-card">
+      <div class="section-header">
+        <div>
+          <div class="number">Section 02</div>
+          <h2>My Tools</h2>
+        </div>
+        <div class="sub">Modern tools selected for their reliability and performance.</div>
+      </div>
+
+      <div class="skills-grid">
+        <div class="skill-item">
+          <div class="s-cat">Language</div>
+          <div class="s-name">Rust</div>
+          <div class="s-bar"><div class="s-bar-fill" style="width:100%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="s-cat">Language</div>
+          <div class="s-name">TypeScript</div>
+          <div class="s-bar"><div class="s-bar-fill" style="width:100%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="s-cat">Language</div>
+          <div class="s-name">Python</div>
+          <div class="s-bar"><div class="s-bar-fill" style="width:100%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="s-cat">Language</div>
+          <div class="s-name">C / C++</div>
+          <div class="s-bar"><div class="s-bar-fill" style="width:70%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- About Section -->
+    <div class="section-card">
+      <div class="section-header">
+        <div>
+          <div class="number">Section 03</div>
+          <h2>My Approach</h2>
+        </div>
+        <div class="sub">I believe good software should be invisible — it just works.</div>
+      </div>
+      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 40px;">
+        <p style="font-size: 18px; line-height: 1.6; color: var(--text-muted);">
+          I focus on the details that make applications reliable and easy to maintain, ensuring that every project I build is solid from the ground up. Quality is not optional.
+        </p>
+        <div style="background: var(--surface-hover); padding: 24px; border: 1px solid var(--border);">
+          <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-dim); margin-bottom: 12px;">Core Values</div>
+          <div style="font-size: 14px; font-weight: 500; margin-bottom: 8px;">Reliability</div>
+          <div style="font-size: 14px; font-weight: 500; margin-bottom: 8px;">Performance</div>
+          <div style="font-size: 14px; font-weight: 500;">Security</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="section-card">
+      <div class="section-header">
+        <div>
+          <div class="number">Section 04</div>
+          <h2>Get in Touch</h2>
+        </div>
+        <div class="sub">Open to discussing new projects and opportunities.</div>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-left">
+          <div class="c-label">Email</div>
+          <a href="mailto:yanis.amani@icloud.com" class="c-email">yanis.amani@icloud.com</a>
+          <div class="c-label">Social</div>
+          <div class="c-socials">
+            <a href="#">LinkedIn ↗</a>
+            <a href="#">GitHub ↗</a>
+          </div>
+        </div>
+        <div class="contact-right">
+          <input type="text" placeholder="Name" />
+          <input type="email" placeholder="Email" />
+          <textarea placeholder="Message"></textarea>
+          <button type="submit">Send Message</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="preview-footer">
+      <span>© 2026 Yanis Amani</span>
+      <div style="display: flex; gap: 24px;">
+        <a href="#">Impressum</a>
+        <a href="#">Privacy</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key Changes from Current -->
+  <div class="section-label">What Changes from Current Design</div>
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; font-size: 13px; line-height: 1.6; color: var(--text-muted);">
+    <div style="background: var(--surface); padding: 20px; border: 1px solid var(--border); border-radius: 6px;">
+      <strong style="color: var(--text); display: block; margin-bottom: 6px;">Typography Shift</strong>
+      From technical/mono aesthetic to editorial serif+sans pairing. Georgia for headings, Inter for UI. More refined, less "blueprint."
+    </div>
+    <div style="background: var(--surface); padding: 20px; border: 1px solid var(--border); border-radius: 6px;">
+      <strong style="color: var(--text); display: block; margin-bottom: 6px;">Color System</strong>
+      From cobalt blue + paper → navy slate + off-white surface + blue accent. More professional, less "developer tool."
+    </div>
+    <div style="background: var(--surface); padding: 20px; border: 1px solid var(--border); border-radius: 6px;">
+      <strong style="color: var(--text); display: block; margin-bottom: 6px;">Project Display</strong>
+      From grid of cards → minimalist list. Each project gets focus. Tags inline, cleaner hierarchy, more breathing room.
+    </div>
+  </div>
+
+  <div style="margin-top: 40px; font-size: 13px; color: var(--text-dim);">
+    Tell me what works, what to adjust, or if this direction is approved.
+  </div>
+</div>
