@@ -12,7 +12,7 @@ const root = lang === "fr" ? "/fr" : "/";
 <nav aria-label="Main Navigation" id="main-nav" class="navbar">
 	<div class="container nav-inner">
 		<a href={root} id="nav-logo" class="logo">
-			Yanis<span class="logo-accent">Amani</span>
+			Yanis <span class="logo-accent">Amani</span>
 		</a>
 
 		<div class="nav-desktop">
@@ -55,36 +55,52 @@ const root = lang === "fr" ? "/fr" : "/";
 </nav>
 
 <script>
-	// Save language choice to localStorage when user manually toggles
-	document.querySelectorAll('.nav-lang, .mob-lang').forEach(el => {
-		el.addEventListener('click', () => {
-			localStorage.setItem('lang', 'manual');
+	document.addEventListener('astro:page-load', () => {
+		// Save language choice on manual toggle
+		document.querySelectorAll('.nav-lang, .mob-lang').forEach(el => {
+			el.addEventListener('click', () => {
+				localStorage.setItem('lang', 'manual');
+			});
 		});
-	});
 
-	const nav = document.getElementById('main-nav');
-	const btn = document.getElementById('mob-btn');
-	const menu = document.getElementById('mob-menu');
-	let open = false;
+		// Mobile menu
+		const nav = document.getElementById('main-nav');
+		const btn = document.getElementById('mob-btn');
+		const menu = document.getElementById('mob-menu');
+		if (!nav || !btn || !menu) return;
 
-	if (nav) {
+		// Reset to closed state
+		menu.classList.add('hidden');
+		btn.innerHTML = '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 18h16"/></svg>';
+		btn.setAttribute('aria-expanded', 'false');
+
+		let open = false;
+
+		btn.addEventListener('click', () => {
+			open = !open;
+			menu.classList.toggle('hidden', !open);
+			btn.setAttribute('aria-expanded', String(open));
+			btn.innerHTML = open
+				? '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>'
+				: '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 18h16"/></svg>';
+		});
+
+		// Close menu when any mobile link is clicked
+		menu.querySelectorAll('a').forEach(link => {
+			link.addEventListener('click', () => {
+				open = false;
+				menu.classList.add('hidden');
+				btn.setAttribute('aria-expanded', 'false');
+				btn.innerHTML = '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 18h16"/></svg>';
+			});
+		});
+
+		// Scroll handler
 		window.addEventListener('scroll', () => {
 			if (!open) {
-				if (window.scrollY > 20) {
-					nav.classList.add('scrolled');
-				} else {
-					nav.classList.remove('scrolled');
-				}
+				nav.classList.toggle('scrolled', window.scrollY > 20);
 			}
 		}, { passive: true });
-	}
-
-	btn?.addEventListener('click', () => {
-		open = !open;
-		menu?.classList.toggle('hidden', !open);
-		btn.innerHTML = open
-			? '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>'
-			: '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 18h16"/></svg>';
 	});
 </script>
 
