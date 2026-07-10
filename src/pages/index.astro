@@ -76,7 +76,7 @@ const t = {
 
 			<div class="projects-list">
 				{projects.map((p) => (
-					<a href={`/projects/${p.id}`} class="project-card" data-animate>
+					<a href={`/projects/${p.id}`} class="project-card" data-animate aria-label={p.name}>
 						<div class="project-top">
 							<span class="cat">{p.category[lang]}</span>
 							<span class="project-detail-link">View details</span>
