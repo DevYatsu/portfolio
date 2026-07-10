@@ -3,8 +3,9 @@
     "type": "module",
     "version": "2.0.0",
     "scripts": {
-        "dev": "npx astro dev",
-        "build": "npx astro build",
+        "dev": "astro dev",
+        "prebuild": "npm install",
+        "build": "astro build",
         "start": "node server.js",
         "preview": "astro preview",
         "astro": "astro"
