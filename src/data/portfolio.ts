@@ -89,16 +89,6 @@ export const staticSites: StaticSite[] = [
 		url: "https://yatsu-avocat.netlify.app",
 	},
 	{
-		id: "cisaille",
-		name: "Cisaille Paris",
-		description: {
-			en: "Barber shop in Le Marais, Paris. They do precision haircuts; I did the website.",
-			fr: "Barber shop dans le Marais à Paris. Ils font des coupes de précision ; j'ai fait le site.",
-		},
-		tags: ["Astro", "React"],
-		url: "https://cisaille.netlify.app",
-	},
-	{
 		id: "lestudio",
 		name: "Le Studio",
 		description: {
@@ -107,6 +97,16 @@ export const staticSites: StaticSite[] = [
 		},
 		tags: ["Astro", "Tailwind"],
 		url: "https://le-bowling.netlify.app",
+	},
+	{
+		id: "cisaille",
+		name: "Cisaille Paris",
+		description: {
+			en: "Barber shop in Le Marais, Paris. They do precision haircuts; I did the website.",
+			fr: "Barber shop dans le Marais à Paris. Ils font des coupes de précision ; j'ai fait le site.",
+		},
+		tags: ["Astro", "React"],
+		url: "https://cisaille.netlify.app",
 	},
 ];
 

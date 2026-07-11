@@ -80,12 +80,12 @@ const t = {
 						</div>
 						<h3 class="name">{p.name}</h3>
 						<p class="desc">{p.description[lang]}</p>
-						<div class="project-meta">
+						<div class="project-meta" onclick="event.stopPropagation()">
 							{p.tags.map((tag) => (
-								<a href={tag.url} target="_blank" rel="noopener noreferrer" class="tech-tag">{tag.name}</a>
+								<a href={tag.url} target="_blank" rel="noopener noreferrer" class="tech-tag" onclick="event.stopPropagation()">{tag.name}</a>
 							))}
 							{p.link.url ? (
-								<a href={p.link.url} target="_blank" rel="noopener noreferrer" class="project-link">
+								<a href={p.link.url} target="_blank" rel="noopener noreferrer" class="project-link" onclick="event.stopPropagation()">
 									{p.link.label}
 								</a>
 							) : (
