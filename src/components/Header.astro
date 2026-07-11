@@ -1,26 +1,22 @@
 ---
-const { lang = "en", langSwitchUrl = lang === "fr" ? "/" : "/fr" } = Astro.props;
-
 const t = {
 	en: { projects: "Projects", stack: "Stack", about: "About", contact: "Contact" },
 	fr: { projects: "Projets", stack: "Outils", about: "À propos", contact: "Contact" },
-}[lang];
-
-const root = lang === "fr" ? "/fr" : "/";
+};
 ---
 
 <nav aria-label="Main Navigation" id="main-nav" class="navbar">
 	<div class="container nav-inner">
-		<a href={root} id="nav-logo" class="logo">
+		<a href="/" id="nav-logo" class="logo">
 			Yanis <span class="logo-accent">Amani</span>
 		</a>
 
 		<div class="nav-desktop">
 			<ul class="nav-links">
-				<li><a href={`${root}#projects`} class="nav-link">{t.projects}</a></li>
-				<li><a href={`${root}#skills`} class="nav-link">{t.stack}</a></li>
-				<li><a href={`${root}#about`} class="nav-link">{t.about}</a></li>
-				<li><a href={`${root}#contact`} class="nav-link">{t.contact}</a></li>
+				<li><a href="/#projects" class="nav-link" data-i18n="projects">Projects</a></li>
+				<li><a href="/#skills" class="nav-link" data-i18n="stack">Stack</a></li>
+				<li><a href="/#about" class="nav-link" data-i18n="about">About</a></li>
+				<li><a href="/#contact" class="nav-link" data-i18n="contact">Contact</a></li>
 			</ul>
 
 			<div class="nav-divider"></div>
@@ -32,7 +28,9 @@ const root = lang === "fr" ? "/fr" : "/";
 
 			<div class="nav-divider"></div>
 
-			<a href={langSwitchUrl} class="nav-lang">{lang === 'fr' ? 'EN' : 'FR'}</a>
+			<button class="nav-lang" id="lang-toggle" onclick="window.__setLanguage?.(document.documentElement.lang === 'fr' ? 'en' : 'fr')">
+				<span id="lang-label">FR</span>
+			</button>
 		</div>
 
 		<button id="mob-btn" type="button" class="mob-btn" aria-label="Toggle menu" aria-expanded="false">
@@ -44,29 +42,49 @@ const root = lang === "fr" ? "/fr" : "/";
 
 	<div id="mob-menu" class="mob-menu hidden">
 		<div class="container mob-menu-inner">
-			<a href={`${root}#projects`} class="mob-link">{t.projects}</a>
-			<a href={`${root}#skills`} class="mob-link">{t.stack}</a>
-			<a href={`${root}#about`} class="mob-link">{t.about}</a>
-			<a href={`${root}#contact`} class="mob-link">{t.contact}</a>
+			<a href="/#projects" class="mob-link" data-i18n="projects">Projets</a>
+			<a href="/#skills" class="mob-link" data-i18n="stack">Outils</a>
+			<a href="/#about" class="mob-link" data-i18n="about">À propos</a>
+			<a href="/#contact" class="mob-link" data-i18n="contact">Contact</a>
 			<div class="mob-divider"></div>
-			<a href={langSwitchUrl} class="mob-lang">{lang === 'fr' ? 'English' : 'Français'}</a>
+			<button class="mob-lang" onclick="window.__setLanguage?.(document.documentElement.lang === 'fr' ? 'en' : 'fr')">
+				English
+			</button>
 		</div>
 	</div>
 </nav>
 
 <script>
 	document.addEventListener('astro:page-load', () => {
-		// Save language choice on manual toggle and preserve current section
-		document.querySelectorAll('.nav-lang, .mob-lang').forEach(el => {
-			el.addEventListener('click', (e) => {
-				localStorage.setItem('lang', 'manual');
-				const hash = window.location.hash;
-				if (hash) {
-					e.preventDefault();
-					window.location.href = el.getAttribute('href') + hash;
-				}
+		// Update language toggle label on page load
+		const updateLangLabel = () => {
+			const label = document.getElementById('lang-label');
+			if (label) {
+				const isFr = document.documentElement.lang === 'fr';
+				label.textContent = isFr ? 'EN' : 'FR';
+			}
+			// Update mobile lang text
+			const mobLabel = document.querySelector('.mob-lang');
+			if (mobLabel) {
+				mobLabel.textContent = document.documentElement.lang === 'fr' ? 'English' : 'Français';
+			}
+			// Update nav link text
+			const navLinks = document.querySelectorAll('[data-i18n]');
+			const t = {
+				en: { projects: "Projects", stack: "Stack", about: "About", contact: "Contact" },
+				fr: { projects: "Projets", stack: "Outils", about: "À propos", contact: "Contact" },
+			};
+			const lang = document.documentElement.lang === 'fr' ? 'fr' : 'en';
+			navLinks.forEach(el => {
+				const key = el.dataset.i18n;
+				if (t[lang] && t[lang][key]) el.textContent = t[lang][key];
 			});
-		});
+		};
+
+		// Observe lang changes on <html>
+		const observer = new MutationObserver(() => updateLangLabel());
+		observer.observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+		updateLangLabel();
 
 		// Mobile menu
 		const nav = document.getElementById('main-nav');
@@ -74,7 +92,6 @@ const root = lang === "fr" ? "/fr" : "/";
 		const menu = document.getElementById('mob-menu');
 		if (!nav || !btn || !menu) return;
 
-		// Reset to closed state
 		menu.classList.add('hidden');
 		btn.innerHTML = '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 18h16"/></svg>';
 		btn.setAttribute('aria-expanded', 'false');
@@ -90,7 +107,6 @@ const root = lang === "fr" ? "/fr" : "/";
 				: '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 18h16"/></svg>';
 		});
 
-		// Close menu when any mobile link is clicked
 		menu.querySelectorAll('a').forEach(link => {
 			link.addEventListener('click', () => {
 				open = false;
@@ -100,7 +116,6 @@ const root = lang === "fr" ? "/fr" : "/";
 			});
 		});
 
-		// Scroll handler
 		window.addEventListener('scroll', () => {
 			if (!open) {
 				nav.classList.toggle('scrolled', window.scrollY > 20);
@@ -167,8 +182,12 @@ const root = lang === "fr" ? "/fr" : "/";
 		text-transform: uppercase;
 		letter-spacing: 0.15em;
 		color: var(--text-muted);
-		text-decoration: none;
+		background: none;
+		border: none;
+		padding: 0;
+		cursor: pointer;
 		transition: color 0.2s;
+		font-family: inherit;
 	}
 	.nav-lang:hover { color: var(--text); }
 
@@ -223,6 +242,12 @@ const root = lang === "fr" ? "/fr" : "/";
 		text-transform: uppercase;
 		letter-spacing: 0.1em;
 		color: var(--accent);
-		text-decoration: none;
+		background: none;
+		border: none;
+		padding: 0;
+		cursor: pointer;
+		font-family: inherit;
+		text-align: left;
+		transition: color 0.2s;
 	}
 </style>

@@ -1,207 +1,376 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { projects, staticSites, skills } from "../data/portfolio";
-
-const lang = "en";
-const t = {
-	heroTag: "Systems · Web · Reliability",
-	heroName: "Building",
-	heroNameAccent: "Reliability.",
-	heroRole: "I'm a CS student who likes building stuff that doesn't fall over. Rust, TypeScript, systems programming. The fun kind of problems.",
-	ctaProjects: "View Projects →",
-	ctaContact: "Get in Touch",
-	infoRole: "Role", infoRoleVal: "CS Student",
-	infoFocus: "Focus", infoFocusVal: "Quality Code",
-	infoEdu: "Education", infoEduVal: "BSc Computer Science",
-	projectsTitle: "Projects",
-	projectsSub: "Stuff I actually built. Side projects, open-source tools, the kind of things you work on at 1am because they're fun.",
-	staticTitle: "Also · Static Websites",
-	skillsTitle: "My Tools",
-	skillsSub: "Languages and frameworks I actually reach for.",
-	aboutTitle: "My Approach",
-	aboutSub: "I try to write code that doesn't embarrass me six months later.",
-	aboutText: "I care about the boring stuff. Good error handling. Clean interfaces. Not shipping yet another npm package that could've been a file. I've broken enough things in production to know that \"it works on my machine\" is not a testing strategy. These days I'd rather go slow and get it right.",
-	valuesTitle: "Core Values",
-	values: ["Reliability", "Performance", "Security"],
-	contactTitle: "Get in Touch",
-	contactSub: "Got a project, an idea, or just want to chat? I'm around.",
-	socialLinkedin: "LinkedIn ↗",
-	socialGithub: "GitHub ↗",
-};
 ---
 
-<Layout title="Yanis Amani // CS Student" lang={lang}>
-	<!-- ═══ HERO ═══ -->
-	<section class="hero" data-animate>
-		<div class="container hero-inner">
-			<span class="hero-tag">{t.heroTag}</span>
-			<div class="accent-rule"></div>
-			<h1 class="hero-title">
-				{t.heroName}<br/>
-				<span class="hero-accent">{t.heroNameAccent}</span>
-			</h1>
-			<p class="hero-role">{t.heroRole}</p>
-			<div class="hero-actions">
-				<a href="#projects" class="btn-primary">{t.ctaProjects}</a>
-				<a href="#contact" class="btn-ghost">{t.ctaContact}</a>
+<Layout title="Yanis Amani // CS Student | Étudiant en Informatique">
+	<section data-lang="en">
+		<!-- ═══ HERO ═══ -->
+		<section class="hero" data-animate>
+			<div class="container hero-inner">
+				<span class="hero-tag">Systems · Web · Reliability</span>
+				<div class="accent-rule"></div>
+				<h1 class="hero-title">
+					Building<br/>
+					<span class="hero-accent">Reliability.</span>
+				</h1>
+				<p class="hero-role">I'm a CS student who likes building stuff that doesn't fall over. Rust, TypeScript, systems programming. The fun kind of problems.</p>
+				<div class="hero-actions">
+					<a href="#projects" class="btn-primary">View Projects →</a>
+					<a href="#contact" class="btn-ghost">Get in Touch</a>
+				</div>
 			</div>
-		</div>
-	</section>
+		</section>
 
-	<!-- ═══ INFO BAR ═══ -->
-	<div class="container">
-		<div class="info-bar">
-			<div class="info-item" style="background: var(--bg);">
-				<div class="label">{t.infoRole}</div>
-				<div class="value">{t.infoRoleVal}</div>
-			</div>
-			<div class="info-item" style="background: var(--bg);">
-				<div class="label">{t.infoFocus}</div>
-				<div class="value">{t.infoFocusVal}</div>
-			</div>
-			<div class="info-item" style="background: var(--bg);">
-				<div class="label">{t.infoEdu}</div>
-				<div class="value">{t.infoEduVal}</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- ═══ PROJECTS ═══ -->
-	<section id="projects" class="section-pad">
+		<!-- ═══ INFO BAR ═══ -->
 		<div class="container">
-			<div class="section-header" data-animate>
-				<h2>{t.projectsTitle}</h2>
-				<p class="sub">{t.projectsSub}</p>
-			</div>
-
-			<div class="projects-list">
-				{projects.map((p) => (
-					<a href={`/projects/${p.id}`} class="project-card" data-animate aria-label={p.name}>
-						<div class="project-top">
-							<span class="cat">{p.category[lang]}</span>
-							<span class="project-detail-link">View details</span>
-						</div>
-						<h3 class="name">{p.name}</h3>
-						<p class="desc">{p.description[lang]}</p>
-						<div class="project-meta" onclick="event.stopPropagation()">
-							{p.tags.map((tag) => (
-								<a href={tag.url} target="_blank" rel="noopener noreferrer" class="tech-tag" onclick="event.stopPropagation()">{tag.name}</a>
-							))}
-							{p.link.url ? (
-								<a href={p.link.url} target="_blank" rel="noopener noreferrer" class="project-link" onclick="event.stopPropagation()">
-									{p.link.label}
-								</a>
-							) : (
-								<span class="project-link" style="opacity: 0.4; cursor: default;">{p.link.label}</span>
-							)}
-						</div>
-					</a>
-				))}
+			<div class="info-bar">
+				<div class="info-item" style="background: var(--bg);">
+					<div class="label">Role</div>
+					<div class="value">CS Student</div>
+				</div>
+				<div class="info-item" style="background: var(--bg);">
+					<div class="label">Focus</div>
+					<div class="value">Quality Code</div>
+				</div>
+				<div class="info-item" style="background: var(--bg);">
+					<div class="label">Education</div>
+					<div class="value">BSc Computer Science</div>
+				</div>
 			</div>
 		</div>
-	</section>
 
-	<!-- ═══ STATIC WEBSITES ═══ -->
-	<section class="container" style="padding-bottom: 4rem;">
-		<div class="static-header">
-			<span class="static-label">{t.staticTitle}</span>
-			<span class="static-count">{staticSites.length} projects</span>
-		</div>
-		<div class="static-grid">
-			{staticSites.map((site, i) => (
-				<a href={site.url} target="_blank" rel="noopener noreferrer" class="static-card">
-					<div class="num">0{i + 1}</div>
-					<h3 class="name">{site.name}</h3>
-					<p class="desc">{site.description[lang]}</p>
-					<div class="static-tags">
-						{site.tags.map((tag) => (
-							<span class="mini-tag">{tag}</span>
-						))}
-					</div>
-					<span class="static-hover-text">click to access</span>
-				</a>
-			))}
-		</div>
-	</section>
+		<!-- ═══ PROJECTS ═══ -->
+		<section id="projects" class="section-pad">
+			<div class="container">
+				<div class="section-header" data-animate>
+					<h2>Projects</h2>
+					<p class="sub">Stuff I actually built. Side projects, open-source tools, the kind of things you work on at 1am because they're fun.</p>
+				</div>
 
-	<!-- ═══ SKILLS ═══ -->
-	<section id="skills" class="section-pad" style="border-top: 1px solid var(--border);">
-		<div class="container">
-			<div class="section-header" data-animate>
-				<h2>{t.skillsTitle}</h2>
-				<p class="sub">{t.skillsSub}</p>
-			</div>
-
-			<div class="skills-filter" data-animate>
-				<button class="skills-filter-btn active" data-filter="all">All</button>
-				<button class="skills-filter-btn" data-filter="lang">Languages</button>
-				<button class="skills-filter-btn" data-filter="frontend">Frontend</button>
-				<button class="skills-filter-btn" data-filter="backend">Backend</button>
-				<button class="skills-filter-btn" data-filter="systems">Systems</button>
-			</div>
-
-			<div class="skills-grid" data-animate>
-				{skills.map((s) => (
-					<div class="skill-item" data-category={s.category}>
-						<span class="s-cat">{s.category}</span>
-						<div class="s-name">{s.name}</div>
-						<div class="s-bar">
-							<div class="s-bar-fill" style={`width: ${s.level[lang] === 'Advanced' || s.level[lang] === 'Avancé' ? '100%' : s.level[lang] === 'Proficient' || s.level[lang] === 'Compétent' ? '70%' : '40%'}`}></div>
-						</div>
-					</div>
-				))}
-			</div>
-		</div>
-	</section>
-
-	<!-- ═══ ABOUT ═══ -->
-	<section id="about" class="section-pad" style="border-top: 1px solid var(--border);">
-		<div class="container">
-			<div class="section-header" data-animate>
-				<h2>{t.aboutTitle}</h2>
-				<p class="sub">{t.aboutSub}</p>
-			</div>
-
-			<div class="about-grid" data-animate>
-				<p class="about-text">{t.aboutText}</p>
-				<div class="values-box">
-					<div class="v-label">{t.valuesTitle}</div>
-					{t.values.map((v) => (
-						<div class="v-item">{v}</div>
+				<div class="projects-list">
+					{projects.map((p) => (
+						<a href={`/projects/${p.id}`} class="project-card" data-animate aria-label={p.name}>
+							<div class="project-top">
+								<span class="cat">{p.category.en}</span>
+								<span class="project-detail-link">View details</span>
+							</div>
+							<h3 class="name">{p.name}</h3>
+							<p class="desc">{p.description.en}</p>
+							<div class="project-meta" onclick="event.stopPropagation()">
+								{p.tags.map((tag) => (
+									<a href={tag.url} target="_blank" rel="noopener noreferrer" class="tech-tag" onclick="event.stopPropagation()">{tag.name}</a>
+								))}
+								{p.link.url ? (
+									<a href={p.link.url} target="_blank" rel="noopener noreferrer" class="project-link" onclick="event.stopPropagation()">
+										{p.link.label}
+									</a>
+								) : (
+									<span class="project-link" style="opacity: 0.4; cursor: default;">{p.link.label}</span>
+								)}
+							</div>
+						</a>
 					))}
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
 
-	<!-- ═══ CONTACT ═══ -->
-	<section id="contact" class="section-pad" style="border-top: 1px solid var(--border); margin-bottom: 4rem;">
-		<div class="container">
-			<div class="section-header" data-animate>
-				<h2>{t.contactTitle}</h2>
-				<p class="sub">{t.contactSub}</p>
+		<!-- ═══ STATIC WEBSITES ═══ -->
+		<section class="container" style="padding-bottom: 4rem;">
+			<div class="static-header">
+				<span class="static-label">Also · Static Websites</span>
+				<span class="static-count">{staticSites.length} projects</span>
 			</div>
-
-			<div class="contact-grid" data-animate>
-				<div>
-					<p class="contact-label">Email</p>
-					<a href="mailto:yanis.amani@icloud.com" class="contact-email">
-						yanis.amani@icloud.com
+			<div class="static-grid">
+				{staticSites.map((site, i) => (
+					<a href={site.url} target="_blank" rel="noopener noreferrer" class="static-card">
+						<div class="num">0{i + 1}</div>
+						<h3 class="name">{site.name}</h3>
+						<p class="desc">{site.description.en}</p>
+						<div class="static-tags">
+							{site.tags.map((tag) => (
+								<span class="mini-tag">{tag}</span>
+							))}
+						</div>
+						<span class="static-hover-text">click to access</span>
 					</a>
-					<p class="contact-label" style="margin-top: 2rem;">Social</p>
-					<div class="contact-socials">
-						<a href="https://linkedin.com/in/yanis-amani" target="_blank" class="social-link">{t.socialLinkedin}</a>
-						<a href="https://github.com/DevYatsu" target="_blank" class="social-link">{t.socialGithub}</a>
+				))}
+			</div>
+		</section>
+
+		<!-- ═══ SKILLS ═══ -->
+		<section id="skills" class="section-pad" style="border-top: 1px solid var(--border);">
+			<div class="container">
+				<div class="section-header" data-animate>
+					<h2>My Tools</h2>
+					<p class="sub">Languages and frameworks I actually reach for.</p>
+				</div>
+
+				<div class="skills-filter" data-animate>
+					<button class="skills-filter-btn active" data-filter="all">All</button>
+					<button class="skills-filter-btn" data-filter="lang">Languages</button>
+					<button class="skills-filter-btn" data-filter="frontend">Frontend</button>
+					<button class="skills-filter-btn" data-filter="backend">Backend</button>
+					<button class="skills-filter-btn" data-filter="systems">Systems</button>
+				</div>
+
+				<div class="skills-grid" data-animate>
+					{skills.map((s) => (
+						<div class="skill-item" data-category={s.category}>
+							<span class="s-cat">{s.category}</span>
+							<div class="s-name">{s.name}</div>
+							<div class="s-bar">
+								<div class="s-bar-fill" style={`width: ${s.level.en === 'Advanced' ? '100%' : s.level.en === 'Proficient' ? '70%' : '40%'}`}></div>
+							</div>
+						</div>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<!-- ═══ ABOUT ═══ -->
+		<section id="about" class="section-pad" style="border-top: 1px solid var(--border);">
+			<div class="container">
+				<div class="section-header" data-animate>
+					<h2>My Approach</h2>
+					<p class="sub">I try to write code that doesn't embarrass me six months later.</p>
+				</div>
+
+				<div class="about-grid" data-animate>
+					<p class="about-text">I care about the boring stuff. Good error handling. Clean interfaces. Not shipping yet another npm package that could've been a file. I've broken enough things in production to know that "it works on my machine" is not a testing strategy. These days I'd rather go slow and get it right.</p>
+					<div class="values-box">
+						<div class="v-label">Core Values</div>
+						<div class="v-item">Reliability</div>
+						<div class="v-item">Performance</div>
+						<div class="v-item">Security</div>
 					</div>
 				</div>
-				<div class="contact-hello">
-					<p class="contact-label">Say Hello</p>
-					<a href="mailto:yanis.amani@icloud.com" class="big-hello">hello@ →</a>
+			</div>
+		</section>
+
+		<!-- ═══ CONTACT ═══ -->
+		<section id="contact" class="section-pad" style="border-top: 1px solid var(--border); margin-bottom: 4rem;">
+			<div class="container">
+				<div class="section-header" data-animate>
+					<h2>Get in Touch</h2>
+					<p class="sub">Got a project, an idea, or just want to chat? I'm around.</p>
+				</div>
+
+				<div class="contact-grid" data-animate>
+					<div>
+						<p class="contact-label">Email</p>
+						<a href="mailto:yanis.amani@icloud.com" class="contact-email">
+							yanis.amani@icloud.com
+						</a>
+						<p class="contact-label" style="margin-top: 2rem;">Social</p>
+						<div class="contact-socials">
+							<a href="https://linkedin.com/in/yanis-amani" target="_blank" class="social-link">LinkedIn ↗</a>
+							<a href="https://github.com/DevYatsu" target="_blank" class="social-link">GitHub ↗</a>
+						</div>
+					</div>
+					<div class="contact-hello">
+						<p class="contact-label">Say Hello</p>
+						<a href="mailto:yanis.amani@icloud.com" class="big-hello">hello@ →</a>
+					</div>
+				</div>
+			</div>
+		</section>
+	</section>
+
+	<section data-lang="fr">
+		<!-- ═══ HERO ═══ -->
+		<section class="hero" data-animate>
+			<div class="container hero-inner">
+				<span class="hero-tag">Systèmes · Web · Fiabilité</span>
+				<div class="accent-rule"></div>
+				<h1 class="hero-title">
+					Construire la<br/>
+					<span class="hero-accent">Fiabilité.</span>
+				</h1>
+				<p class="hero-role">Étudiant en informatique, j'aime construire des trucs qui tiennent la route. Rust, TypeScript, programmation système. Le genre de problèmes qui sont marrants.</p>
+				<div class="hero-actions">
+					<a href="#projects" class="btn-primary">Voir les projets →</a>
+					<a href="#contact" class="btn-ghost">Me contacter</a>
+				</div>
+			</div>
+		</section>
+
+		<!-- ═══ INFO BAR ═══ -->
+		<div class="container">
+			<div class="info-bar">
+				<div class="info-item" style="background: var(--bg);">
+					<div class="label">Rôle</div>
+					<div class="value">Étudiant</div>
+				</div>
+				<div class="info-item" style="background: var(--bg);">
+					<div class="label">Focus</div>
+					<div class="value">Code de qualité</div>
+				</div>
+				<div class="info-item" style="background: var(--bg);">
+					<div class="label">Formation</div>
+					<div class="value">BSc Informatique</div>
 				</div>
 			</div>
 		</div>
+
+		<!-- ═══ PROJECTS ═══ -->
+		<section id="projects" class="section-pad">
+			<div class="container">
+				<div class="section-header" data-animate>
+					<h2>Projets</h2>
+					<p class="sub">Des trucs que j'ai vraiment construits. Projets perso, outils open-source, le genre de code que tu écris à 1h du matin parce que c'est trop fun.</p>
+				</div>
+
+				<div class="projects-list">
+					{projects.map((p) => (
+						<a href={`/projects/${p.id}`} class="project-card" data-animate aria-label={p.name}>
+							<div class="project-top">
+								<span class="cat">{p.category.fr}</span>
+								<span class="project-detail-link">Voir plus</span>
+							</div>
+							<h3 class="name">{p.name}</h3>
+							<p class="desc">{p.description.fr}</p>
+							<div class="project-meta" onclick="event.stopPropagation()">
+								{p.tags.map((tag) => (
+									<a href={tag.url} target="_blank" rel="noopener noreferrer" class="tech-tag" onclick="event.stopPropagation()">{tag.name}</a>
+								))}
+								{p.link.url ? (
+									<a href={p.link.url} target="_blank" rel="noopener noreferrer" class="project-link" onclick="event.stopPropagation()">
+										{p.link.label}
+									</a>
+								) : (
+									<span class="project-link" style="opacity: 0.4; cursor: default;">{p.link.label}</span>
+								)}
+							</div>
+						</a>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<!-- ═══ STATIC WEBSITES ═══ -->
+		<section class="container" style="padding-bottom: 4rem;">
+			<div class="static-header">
+				<span class="static-label">Aussi · Sites statiques</span>
+				<span class="static-count">{staticSites.length} projets</span>
+			</div>
+			<div class="static-grid">
+				{staticSites.map((site, i) => (
+					<a href={site.url} target="_blank" rel="noopener noreferrer" class="static-card">
+						<div class="num">0{i + 1}</div>
+						<h3 class="name">{site.name}</h3>
+						<p class="desc">{site.description.fr}</p>
+						<div class="static-tags">
+							{site.tags.map((tag) => (
+								<span class="mini-tag">{tag}</span>
+							))}
+						</div>
+						<span class="static-hover-text">cliquer pour accéder</span>
+					</a>
+				))}
+			</div>
+		</section>
+
+		<!-- ═══ SKILLS ═══ -->
+		<section id="skills" class="section-pad" style="border-top: 1px solid var(--border);">
+			<div class="container">
+				<div class="section-header" data-animate>
+					<h2>Mes outils</h2>
+					<p class="sub">Langages et frameworks que j'utilise vraiment.</p>
+				</div>
+
+				<div class="skills-filter" data-animate>
+					<button class="skills-filter-btn active" data-filter="all">Tous</button>
+					<button class="skills-filter-btn" data-filter="lang">Langages</button>
+					<button class="skills-filter-btn" data-filter="frontend">Frontend</button>
+					<button class="skills-filter-btn" data-filter="backend">Backend</button>
+					<button class="skills-filter-btn" data-filter="systems">Système</button>
+				</div>
+
+				<div class="skills-grid" data-animate>
+					{skills.map((s) => (
+						<div class="skill-item" data-category={s.category}>
+							<span class="s-cat">{s.category}</span>
+							<div class="s-name">{s.name}</div>
+							<div class="s-bar">
+								<div class="s-bar-fill" style={`width: ${s.level.fr === 'Avancé' ? '100%' : s.level.fr === 'Compétent' ? '70%' : '40%'}`}></div>
+							</div>
+						</div>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<!-- ═══ ABOUT ═══ -->
+		<section id="about" class="section-pad" style="border-top: 1px solid var(--border);">
+			<div class="container">
+				<div class="section-header" data-animate>
+					<h2>Mon approche</h2>
+					<p class="sub">J'essaie d'écrire du code qui ne me fait pas honte six mois après.</p>
+				</div>
+
+				<div class="about-grid" data-animate>
+					<p class="about-text">Je me soucie des trucs ennuyeux. La gestion d'erreurs propre. Des interfaces claires. Ne pas balancer un énième package npm qui aurait pu être un fichier. J'ai assez cassé de choses en production pour savoir que "ça marche sur ma machine" n'est pas une stratégie de test. Maintenant je préfère aller lentement mais bien faire les choses.</p>
+					<div class="values-box">
+						<div class="v-label">Valeurs</div>
+						<div class="v-item">Fiabilité</div>
+						<div class="v-item">Performance</div>
+						<div class="v-item">Sécurité</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ═══ CONTACT ═══ -->
+		<section id="contact" class="section-pad" style="border-top: 1px solid var(--border); margin-bottom: 4rem;">
+			<div class="container">
+				<div class="section-header" data-animate>
+					<h2>Me contacter</h2>
+					<p class="sub">Un projet, une idée, ou juste envie de parler ? Je suis là.</p>
+				</div>
+
+				<div class="contact-grid" data-animate>
+					<div>
+						<p class="contact-label">Email</p>
+						<a href="mailto:yanis.amani@icloud.com" class="contact-email">
+							yanis.amani@icloud.com
+						</a>
+						<p class="contact-label" style="margin-top: 2rem;">Social</p>
+						<div class="contact-socials">
+							<a href="https://linkedin.com/in/yanis-amani" target="_blank" class="social-link">LinkedIn ↗</a>
+							<a href="https://github.com/DevYatsu" target="_blank" class="social-link">GitHub ↗</a>
+						</div>
+					</div>
+					<div class="contact-hello">
+						<p class="contact-label">Dire bonjour</p>
+						<a href="mailto:yanis.amani@icloud.com" class="big-hello">bonjour@ →</a>
+					</div>
+				</div>
+			</div>
+		</section>
 	</section>
 </Layout>
+
+<script is:inline data-astro-rerun>
+	(function() {
+		var stored = localStorage.getItem('lang');
+		var browserLang = (navigator.language || navigator.userLanguage || '').substring(0, 2);
+		var lang = stored || (browserLang === 'fr' ? 'fr' : 'en');
+		if (lang !== 'en') {
+			document.documentElement.setAttribute('data-lang', lang);
+			document.documentElement.lang = lang;
+		}
+	})();
+
+	window.__setLanguage = function(lang) {
+		document.documentElement.setAttribute('data-lang', lang);
+		document.documentElement.lang = lang;
+		localStorage.setItem('lang', lang);
+		// Update language toggle button text
+		var el = document.getElementById('lang-label');
+		if (el) el.textContent = lang === 'fr' ? 'EN' : 'FR';
+	};
+</script>
 
 <script>
 	// Skill filter interaction
@@ -212,16 +381,10 @@ const t = {
 		buttons.forEach(btn => {
 			btn.addEventListener('click', () => {
 				const filter = btn.dataset.filter;
-
 				buttons.forEach(b => b.classList.remove('active'));
 				btn.classList.add('active');
-
 				items.forEach(item => {
-					if (filter === 'all' || item.dataset.category === filter) {
-						item.style.display = 'block';
-					} else {
-						item.style.display = 'none';
-					}
+					item.style.display = (filter === 'all' || item.dataset.category === filter) ? 'block' : 'none';
 				});
 			});
 		});
@@ -229,6 +392,12 @@ const t = {
 </script>
 
 <style>
+	/* ── Language toggle ── */
+	[data-lang] { display: none; }
+	[data-lang="en"] { display: block; }
+	html[data-lang="fr"] [data-lang="en"] { display: none; }
+	html[data-lang="fr"] [data-lang="fr"] { display: block; }
+
 	/* ── Hero ── */
 	.hero {
 		min-height: 85vh;
@@ -237,7 +406,6 @@ const t = {
 		justify-content: center;
 		padding-top: 3.5rem;
 	}
-
 	.hero-tag {
 		font-size: 0.65rem;
 		text-transform: uppercase;
@@ -247,18 +415,14 @@ const t = {
 		margin-bottom: 1.25rem;
 		display: block;
 	}
-
 	.hero .accent-rule { margin-bottom: 2rem; }
-
 	.hero-title {
 		font-size: clamp(2.5rem, 8vw, 5rem);
 		letter-spacing: -0.03em;
 		line-height: 0.92;
 		margin-bottom: 1.5rem;
 	}
-
 	.hero-accent { font-style: italic; color: var(--accent); }
-
 	.hero-role {
 		font-size: 1rem;
 		color: var(--text-muted);
@@ -266,16 +430,8 @@ const t = {
 		max-width: 32rem;
 		margin-bottom: 2.5rem;
 	}
-
-	@media (min-width: 768px) {
-		.hero-role { font-size: 1.125rem; }
-	}
-
-	.hero-actions {
-		display: flex;
-		gap: 1rem;
-		align-items: center;
-	}
+	@media (min-width: 768px) { .hero-role { font-size: 1.125rem; } }
+	.hero-actions { display: flex; gap: 1rem; align-items: center; }
 
 	/* ── Info Bar ── */
 	.info-bar {
@@ -292,17 +448,14 @@ const t = {
 		flex-direction: column;
 		gap: 1.5rem;
 	}
-
 	.project-top {
 		display: flex;
 		justify-content: space-between;
 		align-items: flex-start;
 		margin-bottom: 1rem;
 	}
-
 	.project-detail-link { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text); opacity: 0.35; font-weight: 400; transition: opacity 0.2s; }
 	.project-card:hover .project-detail-link { opacity: 0.6; }
-
 	.project-meta {
 		display: flex;
 		flex-wrap: wrap;
@@ -322,8 +475,6 @@ const t = {
 	}
 	.project-link:hover { color: var(--accent-hover); }
 
-
-
 	/* ── Static Websites ── */
 	.static-header {
 		border-top: 1px solid var(--border);
@@ -333,19 +484,16 @@ const t = {
 		justify-content: space-between;
 		align-items: center;
 	}
-
 	.static-label {
 		font-size: 0.6rem;
 		text-transform: uppercase;
 		letter-spacing: 0.2em;
 		color: var(--text-dim);
 	}
-
 	.static-count {
 		font-size: 0.65rem;
 		color: var(--text-dim);
 	}
-
 	.static-grid {
 		display: grid;
 		grid-template-columns: 1fr;
@@ -355,20 +503,13 @@ const t = {
 		border-radius: 8px;
 		overflow: hidden;
 	}
-
 	@media (min-width: 640px) {
 		.static-grid { grid-template-columns: repeat(2, 1fr); }
 	}
-
 	@media (min-width: 1024px) {
 		.static-grid { grid-template-columns: repeat(3, 1fr); }
 	}
-
-	.static-tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.375rem;
-	}
+	.static-tags { display: flex; flex-wrap: wrap; gap: 0.375rem; }
 
 	/* ── Skills Filter ── */
 	.skills-filter {
@@ -408,11 +549,9 @@ const t = {
 		background: var(--border);
 		border: 1px solid var(--border);
 	}
-
 	@media (min-width: 768px) {
 		.skills-grid { grid-template-columns: repeat(3, 1fr); }
 	}
-
 	@media (min-width: 1024px) {
 		.skills-grid { grid-template-columns: repeat(4, 1fr); }
 	}
@@ -424,13 +563,11 @@ const t = {
 		gap: 2.5rem;
 		align-items: start;
 	}
-
 	@media (min-width: 1024px) {
 		.about-grid {
 			grid-template-columns: 2fr 1fr;
 		}
 	}
-
 	.about-text {
 		font-size: 1.125rem;
 		color: var(--text-muted);
@@ -444,13 +581,11 @@ const t = {
 		gap: 3rem;
 		align-items: center;
 	}
-
 	@media (min-width: 768px) {
 		.contact-grid {
 			grid-template-columns: 1fr 1fr;
 		}
 	}
-
 	.contact-label {
 		font-size: 0.6rem;
 		text-transform: uppercase;
@@ -458,12 +593,10 @@ const t = {
 		color: var(--text-dim);
 		margin-bottom: 0.5rem;
 	}
-
 	.contact-socials {
 		display: flex;
 		gap: 1.5rem;
 	}
-
 	.contact-hello { text-align: right; }
 	@media (max-width: 767px) {
 		.contact-hello { text-align: left; }

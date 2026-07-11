@@ -7,20 +7,14 @@ import { ClientRouter } from "astro:transitions";
 interface Props {
 	title: string;
 	description?: string;
-	lang?: "en" | "fr";
 }
 
 const {
 	title,
 	description = "Yanis Amani — CS student who builds software that doesn't break. Rust, TypeScript, systems programming.",
-	lang = "en",
 } = Astro.props;
 
-const isFr = lang === "fr";
 const siteUrl = "https://yanis.adysen.fr";
-const canonicalURL = new URL(Astro.url.pathname, siteUrl);
-
-const langSwitchUrl = isFr ? "/" : "/fr";
 
 // JSON-LD structured data
 const personSchema = {
@@ -45,13 +39,13 @@ const websiteSchema = {
 	name: "Yanis Amani",
 	url: siteUrl,
 	description: "Portfolio of Yanis Amani, Computer Science student focused on building reliable software.",
-	inLanguage: lang === "fr" ? "fr" : "en",
+	inLanguage: "en",
 	author: { "@id": `${siteUrl}/#person` },
 };
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -63,25 +57,20 @@ const websiteSchema = {
 		<meta name="theme-color" content="#f0f2f5" media="(prefers-color-scheme: light)" />
 		<meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
 
-		<link rel="canonical" href={canonicalURL} />
-
-		<!-- Hreflang for multilingual SEO -->
-		<link rel="alternate" hreflang="en" href={new URL("/", siteUrl)} />
-		<link rel="alternate" hreflang="fr" href={new URL("/fr/", siteUrl)} />
-		<link rel="alternate" hreflang="x-default" href={new URL("/", siteUrl)} />
+		<link rel="canonical" href={new URL("/", siteUrl)} />
 
 		<meta property="og:type" content="website" />
-		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:url" content={new URL("/", siteUrl)} />
 		<meta property="og:site_name" content="Yanis Amani" />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:image" content={new URL('/og-image.svg', siteUrl)} />
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
-		<meta property="og:locale" content={lang === "fr" ? "fr_FR" : "en_GB"} />
+		<meta property="og:locale" content="en_GB" />
 
 		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:url" content={canonicalURL} />
+		<meta name="twitter:url" content={new URL("/", siteUrl)} />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={new URL('/og-image.svg', siteUrl)} />
@@ -92,7 +81,7 @@ const websiteSchema = {
 	</head>
 	<body>
 		<div class="page-wrap">
-			<Header lang={lang} langSwitchUrl={langSwitchUrl} />
+			<Header />
 
 			<main id="main-content" class="main-content">
 				<slot />
@@ -102,9 +91,10 @@ const websiteSchema = {
 				<div class="container">
 					<div class="footer-inner">
 						<p>&copy; {new Date().getFullYear()} Yanis Amani</p>
-						<a href={isFr ? "/mentions-legales" : "/impressum"} class="footer-link">
-							{isFr ? "Mentions Légales" : "Impressum"}
-						</a>
+						<div class="footer-links">
+							<a href="/impressum" data-lang="en" class="footer-link">Impressum</a>
+							<a href="/mentions-legales" data-lang="fr" class="footer-link">Mentions Légales</a>
+						</div>
 					</div>
 				</div>
 			</footer>
@@ -119,23 +109,6 @@ const websiteSchema = {
 					document.documentElement.setAttribute('data-theme', 'dark');
 				} else if (stored === 'light') {
 					document.documentElement.setAttribute('data-theme', 'light');
-				}
-			})();
-
-			// Language — redirect French browser users to /fr (only once)
-			(function() {
-				var langChoice = localStorage.getItem('lang');
-				if (langChoice) return; // user already chose
-				var path = window.location.pathname;
-				var browserLang = (navigator.language || navigator.userLanguage || '').substring(0, 2);
-				if (browserLang === 'fr' && path !== '/fr' && !path.startsWith('/fr')) {
-					localStorage.setItem('lang', 'fr');
-					window.location.replace('/fr');
-				} else if (browserLang === 'fr') {
-					// Already on a French page, save preference to prevent redirect on navigation
-					localStorage.setItem('lang', 'fr');
-				} else if (path !== '/' && path !== '/fr') {
-					localStorage.setItem('lang', 'en');
 				}
 			})();
 		</script>
@@ -226,5 +199,10 @@ const websiteSchema = {
 	.footer-inner p {
 		font-size: 0.75rem;
 		color: var(--text-dim);
+	}
+
+	.footer-links {
+		display: flex;
+		gap: 1rem;
 	}
 </style>
