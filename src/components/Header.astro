@@ -56,10 +56,15 @@ const root = lang === "fr" ? "/fr" : "/";
 
 <script>
 	document.addEventListener('astro:page-load', () => {
-		// Save language choice on manual toggle
+		// Save language choice on manual toggle and preserve current section
 		document.querySelectorAll('.nav-lang, .mob-lang').forEach(el => {
-			el.addEventListener('click', () => {
+			el.addEventListener('click', (e) => {
 				localStorage.setItem('lang', 'manual');
+				const hash = window.location.hash;
+				if (hash) {
+					e.preventDefault();
+					window.location.href = el.getAttribute('href') + hash;
+				}
 			});
 		});
 
