@@ -131,7 +131,10 @@ const websiteSchema = {
 				if (browserLang === 'fr' && path !== '/fr' && !path.startsWith('/fr')) {
 					localStorage.setItem('lang', 'fr');
 					window.location.replace('/fr');
-				} else if (browserLang !== 'fr' && path !== '/' && path !== '/fr') {
+				} else if (browserLang === 'fr') {
+					// Already on a French page, save preference to prevent redirect on navigation
+					localStorage.setItem('lang', 'fr');
+				} else if (path !== '/' && path !== '/fr') {
 					localStorage.setItem('lang', 'en');
 				}
 			})();
