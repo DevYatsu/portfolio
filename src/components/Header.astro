@@ -107,24 +107,29 @@ const t = {
 				: '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 18h16"/></svg>';
 		});
 
-		menu.querySelectorAll('a').forEach(link => {
-			link.addEventListener('click', (e) => {
+		// Handle ALL hash links in the navbar (both desktop and mobile).
+		// ClientRouter intercepts <a href="/#..."> clicks but doesn't
+		// scroll to the section, so we manually handle same-page hashes.
+		nav.addEventListener('click', (e) => {
+			const link = e.target.closest('a');
+			if (!link) return;
+			const href = link.getAttribute('href');
+			if (!href || !href.startsWith('/#')) return;
+			const id = href.substring(2);
+			const el = document.getElementById(id);
+			if (!el) return;
+			e.preventDefault();
+			history.replaceState(null, '', href);
+			const offset = 80;
+			const top = el.getBoundingClientRect().top + window.scrollY - offset;
+			window.scrollTo({ top, behavior: 'smooth' });
+			// Close mobile menu if open
+			if (open) {
 				open = false;
 				menu.classList.add('hidden');
 				btn.setAttribute('aria-expanded', 'false');
 				btn.innerHTML = '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 18h16"/></svg>';
-				// Handle hash links manually for ClientRouter compat
-				const href = link.getAttribute('href');
-				if (href && href.startsWith('/#')) {
-					const id = href.substring(2);
-					const el = document.getElementById(id);
-					if (el) {
-						e.preventDefault();
-						history.replaceState(null, '', href);
-						el.scrollIntoView({ behavior: 'smooth' });
-					}
-				}
-			});
+			}
 		});
 
 		window.addEventListener('scroll', () => {
