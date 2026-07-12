@@ -5,47 +5,47 @@ import Layout from "../../layouts/Layout.astro";
 <Layout
   title="YatsuScript // Yanis Amani"
   description="A bytecode interpreter written in Rust from scratch. No dependencies, no shortcuts."
-  lang="en"
 >
-  <section class="project-hero" data-animate>
-    <div class="container">
-      <a href="/#projects" class="project-back">← Back to Projects</a>
-      <span class="project-cat">Compilers & Runtimes</span>
-      <div class="accent-rule"></div>
-      <h1 class="project-title">YatsuScript</h1>
-      <p class="project-tagline">A bytecode interpreter built from absolute scratch. No dependencies, no existing code — just me and the Rust compiler.</p>
-      <div class="project-links">
-        <a href="https://github.com/DevYatsu/YatsuScript" target="_blank" rel="noopener noreferrer" class="btn-primary">View on GitHub →</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="project-section" data-animate>
-    <div class="container project-section-inner">
-      <div class="project-sidebar">
-        <span class="project-sidebar-label">Tech Stack</span>
-        <div class="project-techs">
-          <a href="https://rust-lang.org" target="_blank" rel="noopener noreferrer" class="tech-tag">Rust</a>
-          <a href="https://en.wikipedia.org/wiki/Bytecode" target="_blank" rel="noopener noreferrer" class="tech-tag">Bytecode</a>
+  <section data-lang="en">
+    <section class="project-hero" data-animate>
+      <div class="container">
+        <a href="/#projects" class="project-back">← Back to Projects</a>
+        <span class="project-cat">Compilers & Runtimes</span>
+        <div class="accent-rule"></div>
+        <h1 class="project-title">YatsuScript</h1>
+        <p class="project-tagline">A bytecode interpreter built from absolute scratch. No dependencies, no existing code - just me and the Rust compiler.</p>
+        <div class="project-links">
+          <a href="https://github.com/DevYatsu/YatsuScript" target="_blank" rel="noopener noreferrer" class="btn-primary">View on GitHub →</a>
         </div>
       </div>
-      <div class="project-content">
-        <h2>What it is</h2>
-        <p>YatsuScript is a bytecode interpreter written entirely in Rust with zero external dependencies. It has its own instruction set, its own register allocation, its own memory mapping. Everything from the lexer to the VM is hand-written.</p>
-        <p>The goal wasn't to build something production-ready. It was to understand, at a deep level, what happens between typing <code>if (x &gt; 10) &#123; ... &#125;</code> and the CPU actually branching.</p>
+    </section>
 
-        <h2>Architecture</h2>
-        <p>The interpreter has four layers:</p>
-        <ul>
-          <li><strong>Lexer + Parser</strong> — tokenizes source code, builds an AST. Nothing fancy, but it handles expressions, variable declarations, control flow, and functions.</li>
-          <li><strong>Compiler</strong> — walks the AST and emits bytecode. Each node type maps to a sequence of opcodes. Variable lookups become load instructions, arithmetic becomes operation instructions.</li>
-          <li><strong>VM / Interpreter</strong> — a register-based bytecode VM. Fetches instructions, decodes operands, executes them. The main loop is a <code>match</code> on opcodes, about as tight as you can make it in safe Rust.</li>
-          <li><strong>Memory</strong> — custom memory mapping with direct register allocation. No heap allocation during execution after initial setup.</li>
-        </ul>
+    <section class="project-section" data-animate>
+      <div class="container project-section-inner">
+        <div class="project-sidebar">
+          <span class="project-sidebar-label">Tech Stack</span>
+          <div class="project-techs">
+            <a href="https://rust-lang.org" target="_blank" rel="noopener noreferrer" class="tech-tag">Rust</a>
+            <a href="https://en.wikipedia.org/wiki/Bytecode" target="_blank" rel="noopener noreferrer" class="tech-tag">Bytecode</a>
+          </div>
+        </div>
+        <div class="project-content">
+          <h2>What it is</h2>
+          <p>YatsuScript is a bytecode interpreter in <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a>. Custom instruction set, register allocator, memory mapping, generational GC. The compiler, VM, and memory system are built from scratch. The lexer uses <a href="https://docs.rs/logos" target="_blank" rel="noopener noreferrer">logos</a>, utility crates use <a href="https://docs.rs/thiserror" target="_blank" rel="noopener noreferrer">thiserror</a>, but the core pipeline is mine.</p>
+          <p>The goal wasn't production-readiness. It was understanding what happens between typing <code>if (x &gt; 10) &#123; ... &#125;</code> and the CPU branching.</p>
 
-        <p>The instruction set is minimal by design: load, store, add, sub, jump, compare, call, return. About 20 opcodes total. Enough to be Turing-complete, few enough that each one has a clear purpose.</p>
+          <h2>Architecture</h2>
+          <p>Four layers, each responsible for one thing:</p>
+          <ul>
+            <li><strong>Lexer + Parser</strong> - tokenizes source code, builds an AST. Nothing fancy, but it handles expressions, variable declarations, control flow, and functions.</li>
+            <li><strong>Compiler</strong> - walks the AST and emits bytecode. Each node type maps to a sequence of opcodes. Variable lookups become load instructions, arithmetic becomes operation instructions.</li>
+            <li><strong>VM / Interpreter</strong> - a register-based bytecode VM. Fetches instructions, decodes operands, executes them. The main loop is a <code>match</code> on opcodes, about as tight as you can make it in safe Rust.</li>
+            <li><strong>Memory</strong> - custom memory mapping with direct register allocation. No heap allocation during execution after initial setup.</li>
+          </ul>
 
-        <pre class="mermaid">
+          <p>The instruction set is minimal. Load, store, add, sub, jump, compare, call, return - about 20 opcodes. Turing-complete, but few enough that each one justifies its existence.</p>
+
+          <pre class="mermaid">
 flowchart LR
     SRC["Source Code"] --> LEX["Lexer"]
     LEX --> PAR["Parser"]
@@ -55,28 +55,102 @@ flowchart LR
     BC --> VM["VM / Interpreter"]
     VM --> OUT["Execution"]
     MEM["Memory Manager"] <--> VM
-        </pre>
+          </pre>
 
-        <h2>The hard parts</h2>
-        <p><strong>Designing an instruction set.</strong> You don't realize how many decisions go into something as "simple" as an instruction set until you have to make them all. Fixed-width vs variable-width instructions? How many registers? What addressing modes? Every choice constrains everything else.</p>
-        <p><strong>Register allocation.</strong> Infinite registers in the IR is easy. Mapping them to a fixed set of real registers without spilling too much is where the fun starts. I went with a simple linear scan allocator — not optimal, but it works and I understand every line.</p>
-        <p><strong>Zero dependencies.</strong> No <code>nom</code> for parsing, no <code>logos</code> for lexing, no <code>thiserror</code> for errors. Everything is hand-rolled. This means more code and more bugs, but the learning is incomparable. I know exactly how my lexer works because I wrote every character of it.</p>
+          <h2>The hard parts</h2>
+          <p><strong>Designing an instruction set.</strong> You don't realize how many decisions go into something that looks "simple" until you make them all. Fixed vs variable-width instructions? How many registers? What addressing modes? Every choice constrains the next.</p>
+          <p><strong>Register allocation.</strong> Infinite registers in the IR is easy. Mapping them to a fixed set without spilling everywhere - that's the fun part. I wrote a linear scan allocator. Not optimal, but it works and I understand every line.</p>
+          <p><strong>The lexer-balancer.</strong> I use <a href="https://docs.rs/logos" target="_blank" rel="noopener noreferrer">logos</a> because writing a lexer by hand is tedious. But the parser, compiler, and every opcode after that is hand-written. The hard part was designing 20 opcodes that fit in your head but still compile control flow, closures, and string ops.</p>
 
-        <h2>What I learned</h2>
-        <p>This is the project I'm proudest of. Not because it's useful (it's not) but because it's the hardest thing I've built and I didn't cut corners.</p>
-        <p>I learned that compilers are not magic. They're just programs that transform trees into other trees. The mystique around them is undeserved — what's hard is not the concept but the thousands of small, correct decisions you need to make.</p>
-        <p>I learned that Rust is an incredible language for this kind of work. The exhaustiveness checking on the opcode enum means I can never forget to handle an instruction in the VM. The ownership model maps naturally to the compiler pipeline (parse → compile → execute, no shared mutable state).</p>
-        <p>And I learned that building something from nothing — zero dependencies, zero scaffolding — is terrifying and exhilarating in equal measure. Every time the VM executed its first correct instruction, it felt like a small miracle.</p>
-        <p>If you're into compilers, I'd love to talk.</p>
+          <h2>What I learned</h2>
+          <p>This is the project I'm proudest of. Not because it's useful (it's not) but because it's the hardest thing I've built and I didn't cut corners.</p>
+          <p>Compilers aren't magic. They're programs that transform trees into other trees. The hard part isn't the big idea - it's the thousands of small, correct decisions. Every opcode, every register choice, every edge case.</p>
+          <p><a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a> is really good for this kind of work. The exhaustiveness checking on the opcode enum means forgetting an instruction in the VM is a compile error, not a runtime crash. And the ownership model maps naturally to the pipeline - parse → compile → execute, no shared mutable state.</p>
+          <p>Building a VM from scratch - instruction set, register allocator, memory, GC - is equal parts terrifying and thrilling. Every time the VM executed a correct instruction, it felt like a small miracle.</p>
+
+        </div>
       </div>
-    </div>
+    </section>
+
+    <section class="project-nav" data-animate>
+      <div class="container project-nav-inner">
+        <a href="/projects/axto" class="btn-ghost">← Previous project</a>
+        <span></span>
+      </div>
+    </section>
   </section>
 
-  <section class="project-nav" data-animate>
-    <div class="container project-nav-inner">
-      <a href="/projects/axto" class="btn-ghost">← Previous project</a>
-      <span></span>
-    </div>
+  <section data-lang="fr">
+    <section class="project-hero" data-animate>
+      <div class="container">
+        <a href="/#projects" class="project-back">← Retour aux projets</a>
+        <span class="project-cat">Compilateurs & Runtimes</span>
+        <div class="accent-rule"></div>
+        <h1 class="project-title">YatsuScript</h1>
+        <p class="project-tagline">Un interpréteur bytecode construit from scratch. Zéro dépendance, zéro raccourci - juste moi et le compilateur Rust.</p>
+        <div class="project-links">
+          <a href="https://github.com/DevYatsu/YatsuScript" target="_blank" rel="noopener noreferrer" class="btn-primary">Voir sur GitHub →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="project-section" data-animate>
+      <div class="container project-section-inner">
+        <div class="project-sidebar">
+          <span class="project-sidebar-label">Stack Technique</span>
+          <div class="project-techs">
+            <a href="https://rust-lang.org" target="_blank" rel="noopener noreferrer" class="tech-tag">Rust</a>
+            <a href="https://en.wikipedia.org/wiki/Bytecode" target="_blank" rel="noopener noreferrer" class="tech-tag">Bytecode</a>
+          </div>
+        </div>
+        <div class="project-content">
+          <h2>Ce que c'est</h2>
+          <p>YatsuScript est un interpréteur bytecode en <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a>. Jeu d'instructions sur-mesure, allocateur de registres, mapping mémoire, ramasse-miettes générationnel. Le compilateur, la VM et la mémoire sont construits from scratch. Le lexer utilise <a href="https://docs.rs/logos" target="_blank" rel="noopener noreferrer">logos</a>, les utilitaires utilisent <a href="https://docs.rs/thiserror" target="_blank" rel="noopener noreferrer">thiserror</a>, mais le pipeline central est à moi.</p>
+          <p>Le but n'était pas un truc prêt pour la prod. C'était comprendre ce qui se passe entre <code>if (x &gt; 10) &#123; ... &#125;</code> et le CPU qui branche.</p>
+
+          <h2>Architecture</h2>
+          <p>Quatre couches, chacune responsable d'une chose :</p>
+          <ul>
+            <li><strong>Lexer + Parser</strong> - tokenise le code source, construit un AST. Rien d'extraordinaire, mais il gère les expressions, déclarations de variables, flux de contrôle et fonctions.</li>
+            <li><strong>Compilateur</strong> - parcourt l'AST et émet du bytecode. Chaque type de nœud correspond à une séquence d'opcodes. Les recherches de variables deviennent des instructions load, l'arithmétique devient des instructions d'opération.</li>
+            <li><strong>VM / Interpréteur</strong> - une VM bytecode basée sur des registres. Récupère les instructions, décode les opérandes, les exécute. La boucle principale est un <code>match</code> sur les opcodes, aussi serré que possible en Rust safe.</li>
+            <li><strong>Mémoire</strong> - mapping mémoire custom avec allocation directe de registres. Pas d'allocation heap pendant l'exécution après la configuration initiale.</li>
+          </ul>
+
+          <p>Le jeu d'instructions est minimal. Load, store, add, sub, jump, compare, call, return - environ 20 opcodes. Turing-complet, mais assez peu pour que chacun justifie son existence.</p>
+
+          <pre class="mermaid">
+flowchart LR
+    SRC["Code Source"] --> LEX["Lexer"]
+    LEX --> PAR["Parser"]
+    PAR --> AST["AST"]
+    AST --> COMP["Compilateur"]
+    COMP --> BC["Bytecode"]
+    BC --> VM["VM / Interpréteur"]
+    VM --> OUT["Exécution"]
+    MEM["Gestionnaire Mémoire"] <--> VM
+          </pre>
+
+          <h2>Les parties difficiles</h2>
+          <p><strong>Concevoir un jeu d'instructions.</strong> Tu réalises pas combien de décisions vont dans un truc "simple" jusqu'à ce que tu doives toutes les prendre. Instructions taille fixe ou variable ? Combien de registres ? Quels modes d'adressage ? Chaque choix contraint le suivant.</p>
+          <p><strong>Allocation de registres.</strong> Des registres infinis dans l'IR, c'est facile. Les mapper sur un ensemble fixe sans déborder partout - c'est là que le fun commence. J'ai écrit un allocateur à scan linéaire. Pas optimal, mais ça marche et je comprends chaque ligne.</p>
+          <p><strong>L'équilibre lexer.</strong> J'utilise <a href="https://docs.rs/logos" target="_blank" rel="noopener noreferrer">logos</a> parce qu'écrire un lexer à la main est fastidieux. Mais le parseur, le compilateur et chaque opcode après sont faits main. Le vrai défi : 20 opcodes qui tiennent dans ta tête mais compilent du vrai flux de contrôle, des closures et des opérations sur les chaînes.</p>
+
+          <h2>Ce que j'ai appris</h2>
+          <p>C'est le projet dont je suis le plus fier. Pas parce qu'il est utile (il ne l'est pas) mais parce que c'est la chose la plus difficile que j'ai construite et je n'ai pris aucun raccourci.</p>
+          <p>Les compilateurs ne sont pas de la magie. Ce sont des programmes qui transforment des arbres en d'autres arbres. Le dur, c'est pas la grande idée - ce sont les milliers de petites décisions correctes. Chaque opcode, chaque registre, chaque edge case.</p>
+          <p><a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a> est vraiment bon pour ce genre de boulot. Le checking d'exhaustivité sur l'enum des opcodes - oublier une instruction dans la VM, c'est une erreur de compilation, pas un crash. Et le modèle d'ownership se marie naturellement avec le pipeline : parse → compile → execute, pas d'état mutable partagé.</p>
+          <p>Construire une VM from scratch - jeu d'instructions, allocateur de registres, mémoire, GC - c'est terrifiant et exaltant à la fois. Chaque fois que la VM exécutait une instruction correcte, ça ressemblait à un petit miracle.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="project-nav" data-animate>
+      <div class="container project-nav-inner">
+        <a href="/projects/axto" class="btn-ghost">← Projet précédent</a>
+        <span></span>
+      </div>
+    </section>
   </section>
 </Layout>
 

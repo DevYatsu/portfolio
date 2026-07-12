@@ -72,6 +72,14 @@
 	}
 }
 
+/* ── Language Toggle ──────────────────────────── */
+/* NOTE: :not(html) prevents matching <html data-lang="fr"> itself
+   which would make the entire page display:none */
+[data-lang]:not(html) { display: none; }
+[data-lang="en"]:not(html) { display: block; }
+html[data-lang="fr"] [data-lang="en"] { display: none; }
+html[data-lang="fr"] [data-lang="fr"] { display: block; }
+
 /* ── Navbar backdrop (follows theme) ──────── */
 .navbar { background: rgba(240, 242, 245, 0.8); }
 [data-theme="dark"] .navbar { background: rgba(15, 23, 42, 0.8); }
@@ -398,6 +406,25 @@ ul, ol { padding: 0; margin: 0; list-style: none; }
 	border: 1px solid var(--border);
 	border-radius: 2px;
 	color: var(--text-dim);
+}
+
+/* ── Project Content Inline Links ──────────── */
+.project-content a {
+	color: var(--accent);
+	text-decoration: underline;
+	text-underline-offset: 2px;
+	text-decoration-thickness: 1px;
+	text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
+	transition: all 0.2s;
+}
+.project-content a:hover {
+	color: var(--accent-hover);
+	text-decoration-color: var(--accent-hover);
+}
+.project-content a code {
+	color: inherit;
+	background: none;
+	padding: 0;
 }
 
 /* ── Skills ────────────────────────────────── */

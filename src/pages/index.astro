@@ -340,33 +340,22 @@ import { projects, staticSites, skills } from "../data/portfolio";
 </Layout>
 
 <script is:inline data-astro-rerun>
-	(function() {
-		var stored = localStorage.getItem('lang');
-		var browserLang = (navigator.language || navigator.userLanguage || '').substring(0, 2);
-		var lang = stored || (browserLang === 'fr' ? 'fr' : 'en');
-		if (lang !== 'en') {
-			document.documentElement.setAttribute('data-lang', lang);
-			document.documentElement.lang = lang;
-		}
+	// Extend __setLanguage (from Layout) with homepage-specific behavior
+	window.__setLanguage = (function() {
+		var orig = window.__setLanguage;
+		return function(lang) {
+			if (orig) orig(lang);
+			// Reset skill filter — activate "All" in the visible language section
+			document.querySelectorAll('.skill-tag').forEach(function(el) { el.style.display = ''; });
+			document.querySelectorAll('.skills-filter-btn').forEach(function(b) { b.classList.remove('active'); });
+			var visibleAll = document.querySelector('section[data-lang="' + lang + '"] .skills-filter-btn[data-filter="all"]');
+			if (visibleAll) visibleAll.classList.add('active');
+			// Force .visible on data-animate elements in the now-visible section
+			if (window.__revealAnimations) window.__revealAnimations();
+			// Re-apply filter to the visible section
+			if (window.__filterSkills) window.__filterSkills();
+		};
 	})();
-
-	window.__setLanguage = function(lang) {
-		document.documentElement.setAttribute('data-lang', lang);
-		document.documentElement.lang = lang;
-		localStorage.setItem('lang', lang);
-		// Reset skill filter — activate "All" in the visible language section
-		document.querySelectorAll('.skill-tag').forEach(function(el) { el.style.display = ''; });
-		document.querySelectorAll('.skills-filter-btn').forEach(function(b) { b.classList.remove('active'); });
-		var visibleAll = document.querySelector('section[data-lang="' + lang + '"] .skills-filter-btn[data-filter="all"]');
-		if (visibleAll) visibleAll.classList.add('active');
-		// Force .visible on data-animate elements that are in the now-visible section
-		if (window.__revealAnimations) window.__revealAnimations();
-		// Re-apply filter to the visible section
-		if (window.__filterSkills) window.__filterSkills();
-		// Update language toggle button text
-		var el = document.getElementById('lang-label');
-		if (el) el.textContent = lang === 'fr' ? 'EN' : 'FR';
-	};
 </script>
 
 <script>
@@ -405,12 +394,6 @@ import { projects, staticSites, skills } from "../data/portfolio";
 </script>
 
 <style>
-	/* ── Language toggle ── */
-	[data-lang] { display: none; }
-	[data-lang="en"] { display: block; }
-	html[data-lang="fr"] [data-lang="en"] { display: none; }
-	html[data-lang="fr"] [data-lang="fr"] { display: block; }
-
 	/* ── Hero ── */
 	.hero {
 		min-height: 85vh;

@@ -28,7 +28,7 @@ export interface Skill {
 export const projects: Project[] = [
 	{
 		id: "mangaread",
-		name: "MangaRead",
+		name: "MangaReader",
 		category: { en: "Web Application", fr: "Application Web" },
 		description: {
 			en: "A manga reader that scrapes chapters from third-party sites, merges them into series, and serves them through a web UI. Built in Rust with Axum and SQLite. Three workspace crates, a background sync loop, and more time spent debugging chromedriver than I'd like to admit.",

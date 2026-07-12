@@ -5,60 +5,114 @@ import Layout from "../layouts/Layout.astro";
 <Layout
   title="Mentions Légales & RGPD // Yanis Amani"
 >
-  <section class="legal-page" data-animate>
-    <div class="container">
-      <a href="/" class="legal-back">Retour à l'accueil ↗</a>
+  <section data-lang="en">
+    <section class="legal-page" data-animate>
+      <div class="container">
+        <a href="/" class="legal-back">Back to Home ↗</a>
 
-      <div class="legal-header">
-        <span class="legal-tag">Infos Légales</span>
-        <div class="accent-rule"></div>
-        <h1 class="legal-title">
-          MENTIONS LÉGALES &<br/>
-          <span class="legal-accent">CONFIDENTIALITÉ</span>
-        </h1>
-        <p class="legal-date">Dernière MAJ // Juillet 2026</p>
-      </div>
+        <div class="legal-header">
+          <span class="legal-tag">Legal Info</span>
+          <div class="accent-rule"></div>
+          <h1 class="legal-title">
+            IMPRESSUM &<br/>
+            <span class="legal-accent">PRIVACY POLICY</span>
+          </h1>
+          <p class="legal-date">Last Update // July 2026</p>
+        </div>
 
-      <div class="legal-sections">
-        <div class="legal-section" data-animate>
-          <span class="legal-section-label">Section 01 // Éditeur</span>
-          <div class="legal-section-grid">
+        <div class="legal-sections">
+          <div class="legal-section" data-animate>
+            <div class="legal-section-grid">
+              <div>
+                <h2 class="legal-h2">YANIS AMANI</h2>
+                <p class="legal-p">Computer Science Student @ HE-Arc<br/>Neuchâtel, Switzerland</p>
+              </div>
+              <div>
+                <span class="legal-field-label">Contact Direct</span>
+                <a href="mailto:yanis.amani@icloud.com" class="legal-email">yanis.amani@icloud.com</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="legal-section" data-animate>
+            <div class="legal-section-content">
+              <h2 class="legal-h2">PRIVACY FIRST POLICY</h2>
+              <p class="legal-p">This website is built with privacy in mind. No tracking cookies are used, and no third-party analytics are active.</p>
+              <div class="legal-highlight">
+                <h3 class="legal-highlight-label">Your Rights</h3>
+                <p class="legal-p">You have the right to access, change, or delete any personal information sent through official channels.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="legal-section" data-animate>
             <div>
-              <h2 class="legal-h2">YANIS AMANI</h2>
-              <p class="legal-p">Étudiant en Informatique @ HE-Arc<br/>Neuchâtel, Suisse</p>
+              <h2 class="legal-h2">INFOMANIAK NETWORK SA</h2>
+              <p class="legal-p">Rue Eugène-Marziano 25, 1227 Les Acacias, Switzerland</p>
             </div>
+          </div>
+        </div>
+
+        <div class="legal-footer">
+          <a href="/" class="btn-primary">Back to Home</a>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <section data-lang="fr">
+    <section class="legal-page" data-animate>
+      <div class="container">
+        <a href="/" class="legal-back">Retour à l'accueil ↗</a>
+
+        <div class="legal-header">
+          <span class="legal-tag">Infos Légales</span>
+          <div class="accent-rule"></div>
+          <h1 class="legal-title">
+            MENTIONS LÉGALES &<br/>
+            <span class="legal-accent">CONFIDENTIALITÉ</span>
+          </h1>
+          <p class="legal-date">Dernière MAJ // Juillet 2026</p>
+        </div>
+
+        <div class="legal-sections">
+          <div class="legal-section" data-animate>
+            <div class="legal-section-grid">
+              <div>
+                <h2 class="legal-h2">YANIS AMANI</h2>
+                <p class="legal-p">Étudiant en Informatique @ HE-Arc<br/>Neuchâtel, Suisse</p>
+              </div>
+              <div>
+                <span class="legal-field-label">Contact Direct</span>
+                <a href="mailto:yanis.amani@icloud.com" class="legal-email">yanis.amani@icloud.com</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="legal-section" data-animate>
+            <div class="legal-section-content">
+              <h2 class="legal-h2">POLITIQUE CONFIDENTIALITÉ</h2>
+              <p class="legal-p">Ce site est conçu dans le respect de votre vie privée. Aucun cookie de traçage n'est utilisé, et aucun script d'analyse tiers n'est actif.</p>
+              <div class="legal-highlight">
+                <h3 class="legal-highlight-label">Vos Droits</h3>
+                <p class="legal-p">Vous disposez d'un droit d'accès, de modification et d'effacement de toute information transmise via les canaux officiels.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="legal-section" data-animate>
             <div>
-              <span class="legal-field-label">Contact Direct</span>
-              <a href="mailto:yanis.amani@icloud.com" class="legal-email">yanis.amani@icloud.com</a>
+              <h2 class="legal-h2">INFOMANIAK NETWORK SA</h2>
+              <p class="legal-p">Rue Eugène-Marziano 25, 1227 Les Acacias, Suisse</p>
             </div>
           </div>
         </div>
 
-        <div class="legal-section" data-animate>
-          <span class="legal-section-label">Section 02 // Vie Privée</span>
-          <div class="legal-section-content">
-            <h2 class="legal-h2">POLITIQUE CONFIDENTIALITÉ</h2>
-            <p class="legal-p">Ce site est conçu dans le respect de votre vie privée. Aucun cookie de traçage n'est utilisé, et aucun script d'analyse tiers n'est actif.</p>
-            <div class="legal-highlight">
-              <h3 class="legal-highlight-label">Vos Droits</h3>
-              <p class="legal-p">Vous disposez d'un droit d'accès, de modification et d'effacement de toute information transmise via les canaux officiels.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="legal-section" data-animate>
-          <span class="legal-section-label">Section 03 // Hébergement</span>
-          <div>
-            <h2 class="legal-h2">INFOMANIAK NETWORK SA</h2>
-            <p class="legal-p">Rue Eugène-Marziano 25, 1227 Les Acacias, Suisse</p>
-          </div>
+        <div class="legal-footer">
+          <a href="/" class="btn-primary">Retour à l'accueil</a>
         </div>
       </div>
-
-      <div class="legal-footer">
-        <a href="/" class="btn-primary">Retour à l'accueil</a>
-      </div>
-    </div>
+    </section>
   </section>
 </Layout>
 

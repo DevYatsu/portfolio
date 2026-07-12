@@ -5,47 +5,47 @@ import Layout from "../../layouts/Layout.astro";
 <Layout
   title="Axto // Yanis Amani"
   description="A marketplace for auto parts with a React Native mobile app and Astro admin portal."
-  lang="en"
 >
-  <section class="project-hero" data-animate>
-    <div class="container">
-      <a href="/#projects" class="project-back">← Back to Projects</a>
-      <span class="project-cat">Full-Stack Marketplace</span>
-      <div class="accent-rule"></div>
-      <h1 class="project-title">Axto</h1>
-      <p class="project-tagline">A marketplace platform for auto parts. Mobile app for buyers, web dashboard for sellers, all backed by Supabase.</p>
-      <div class="project-links">
-        <span class="btn-primary" style="opacity: 0.5; cursor: default;">Private source</span>
-      </div>
-    </div>
-  </section>
-
-  <section class="project-section" data-animate>
-    <div class="container project-section-inner">
-      <div class="project-sidebar">
-        <span class="project-sidebar-label">Tech Stack</span>
-        <div class="project-techs">
-          <a href="https://reactnative.dev" target="_blank" rel="noopener noreferrer" class="tech-tag">React Native</a>
-          <a href="https://astro.build" target="_blank" rel="noopener noreferrer" class="tech-tag">Astro</a>
-          <a href="https://supabase.com" target="_blank" rel="noopener noreferrer" class="tech-tag">Supabase</a>
-          <a href="https://postgresql.org" target="_blank" rel="noopener noreferrer" class="tech-tag">PostgreSQL</a>
-          <a href="https://expo.dev" target="_blank" rel="noopener noreferrer" class="tech-tag">Expo</a>
+  <section data-lang="en">
+    <section class="project-hero" data-animate>
+      <div class="container">
+        <a href="/#projects" class="project-back">← Back to Projects</a>
+        <span class="project-cat">Full-Stack Marketplace</span>
+        <div class="accent-rule"></div>
+        <h1 class="project-title">Axto</h1>
+        <p class="project-tagline">A marketplace platform for auto parts. Mobile app for buyers, web dashboard for sellers, all backed by Supabase.</p>
+        <div class="project-links">
+          <span class="btn-primary" style="opacity: 0.5; cursor: default;">Private source</span>
         </div>
       </div>
-      <div class="project-content">
-        <h2>What it does</h2>
-        <p>Axto connects auto parts sellers with buyers. Sellers list parts with vehicle compatibility info, images, and pricing. Buyers search by vehicle model, compare parts, and place orders. The mobile app is built with React Native (Expo) for buyers, and there's an Astro web dashboard for sellers and admins.</p>
+    </section>
 
-        <h2>Architecture</h2>
-        <p>The project started with a Rust backend, then got ported to Supabase. The final architecture:</p>
-        <ul>
-          <li><strong>Mobile app</strong> — React Native (Expo) for iOS/Android buyers. Features search, vehicle selection, ordering, reviews, favorites</li>
-          <li><strong>Web dashboard</strong> — Astro site for sellers and admins. Inventory management, order processing, bulk upload, analytics</li>
-          <li><strong>Backend</strong> — Supabase. PostgreSQL with Row Level Security, Supabase Auth, Storage for images, Edge Functions for order processing</li>
-        </ul>
-        <p>The Supabase RLS policies are where the real work lives. Every query goes through database-level security: sellers can only edit their own listings, buyers can only see their own orders, admins can see everything. This replaced the Rust AuthorityGuard system.</p>
+    <section class="project-section" data-animate>
+      <div class="container project-section-inner">
+        <div class="project-sidebar">
+          <span class="project-sidebar-label">Tech Stack</span>
+          <div class="project-techs">
+            <a href="https://reactnative.dev" target="_blank" rel="noopener noreferrer" class="tech-tag">React Native</a>
+            <a href="https://astro.build" target="_blank" rel="noopener noreferrer" class="tech-tag">Astro</a>
+            <a href="https://supabase.com" target="_blank" rel="noopener noreferrer" class="tech-tag">Supabase</a>
+            <a href="https://postgresql.org" target="_blank" rel="noopener noreferrer" class="tech-tag">PostgreSQL</a>
+            <a href="https://expo.dev" target="_blank" rel="noopener noreferrer" class="tech-tag">Expo</a>
+          </div>
+        </div>
+        <div class="project-content">
+          <h2>What it does</h2>
+          <p>Axto connects auto parts sellers with buyers - sellers list parts with vehicle compatibility, photos, and prices; buyers search by car model, compare, and order. The mobile app is <a href="https://reactnative.dev" target="_blank" rel="noopener noreferrer">React Native</a> (<a href="https://expo.dev" target="_blank" rel="noopener noreferrer">Expo</a>) for buyers, and there's an <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro</a> web dashboard for sellers and admins.</p>
 
-        <pre class="mermaid">
+          <h2>Architecture</h2>
+          <p>The project started with a <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a> backend, then got ported to <a href="https://supabase.com" target="_blank" rel="noopener noreferrer">Supabase</a>. The final architecture:</p>
+          <ul>
+            <li><strong>Mobile app</strong> - React Native (Expo) for iOS/Android buyers. Features search, vehicle selection, ordering, reviews, favorites</li>
+            <li><strong>Web dashboard</strong> - Astro site for sellers and admins. Inventory management, order processing, bulk upload, analytics</li>
+            <li><strong>Backend</strong> - Supabase. PostgreSQL with Row Level Security, Supabase Auth, Storage for images, <a href="https://supabase.com/docs/guides/functions" target="_blank" rel="noopener noreferrer">Edge Functions</a> for order processing</li>
+          </ul>
+          <p>The <a href="https://supabase.com" target="_blank" rel="noopener noreferrer">Supabase</a> RLS policies are where the real work lives - every query goes through database-level security. Sellers can only edit their own listings, buyers see only their orders, admins see everything. This replaced a hand-rolled <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a> authorization system I'd built earlier.</p>
+
+          <pre class="mermaid">
 flowchart LR
     subgraph MOBILE["Mobile App"]
         RN["React Native (Expo)"]
@@ -67,26 +67,109 @@ flowchart LR
     WEB -->|Queries| PG
     EDGE --> PG
     PG -->|RLS| PG
-        </pre>
+          </pre>
 
-        <h2>The hard parts</h2>
-        <p><strong>The Rust → Supabase migration.</strong> The original backend was in Rust with custom auth, custom API endpoints, and a handmade ORM. Porting everything to Supabase meant rethinking auth flows, rewriting all queries as Postgres RLS policies, and migrating data. The todo.md for this was 100 items long.</p>
-        <p><strong>Real-time stock tracking.</strong> When a buyer adds a part to their cart, the stock needs to lock immediately to prevent overselling. This meant database-level triggers and careful edge function design. Get it wrong and two buyers order the same last item.</p>
-        <p><strong>Vehicle compatibility.</strong> Parts don't just have a category — they fit specific vehicle makes, models, and years. The filtering logic (year → make → model → compatible parts) is a cascade of queries that needs to be fast even with thousands of parts.</p>
+          <h2>The hard parts</h2>
+          <p><strong>The <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a> → <a href="https://supabase.com" target="_blank" rel="noopener noreferrer">Supabase</a> migration.</strong> The original backend was in <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a> with custom auth, custom API endpoints, and a handmade ORM. Porting to <a href="https://supabase.com" target="_blank" rel="noopener noreferrer">Supabase</a> meant rethinking the whole auth flow, rewriting every query as <a href="https://www.postgresql.org/" target="_blank" rel="noopener noreferrer">Postgres</a> RLS policies, and migrating all the data. The todo.md had 100 items.</p>
+          <p><strong>Real-time stock tracking.</strong> When a buyer adds a part to their cart, stock has to lock immediately or two people order the same last item. That meant database-level triggers and careful <a href="https://supabase.com/docs/guides/functions" target="_blank" rel="noopener noreferrer">Edge Function</a> design.</p>
+          <p><strong>Vehicle compatibility.</strong> A "brake pad" isn't just a "brake pad" - it fits specific makes, models, and years. The filtering cascade (year → make → model → compatible parts) has to stay fast with thousands of parts.</p>
 
-        <h2>What I learned</h2>
-        <p>This was my first real full-stack project with a mobile app, and the scope was ambitious. I learned that Supabase is genuinely impressive for getting a production-ready backend running fast, but RLS policies have a learning curve — they're powerful but debugging "why does this query return nothing" when a policy is silently blocking you takes time.</p>
-        <p>The biggest lesson was about architecture decisions. The original Rust backend was elegant but slow to iterate on. Switching to Supabase meant sacrificing some control for speed, and for a solo project that was absolutely the right call.</p>
-        <p>Also: Expo's development builds are great. Expo's OTA updates are a lifesaver. But configuring native modules for both platforms still hurts.</p>
+          <h2>What I learned</h2>
+          <p>This was my first full-stack project with a mobile app, and I definitely overscoped it. <a href="https://supabase.com" target="_blank" rel="noopener noreferrer">Supabase</a> genuinely impressed me - you can go from zero to a working backend fast. But RLS policies have a learning curve. Debugging "why does this query return nothing" when a policy is silently blocking you? That's hours of your life.</p>
+          <p>The original <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a> backend was elegant but took forever to iterate on. Switching to <a href="https://supabase.com" target="_blank" rel="noopener noreferrer">Supabase</a> meant giving up some control for speed. For a solo project, that tradeoff was worth it.</p>
+          <p><a href="https://expo.dev" target="_blank" rel="noopener noreferrer">Expo</a>'s dev builds and OTA updates are genuinely great. But configuring native modules for both platforms still hurts. Some things never change.</p>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="project-nav" data-animate>
-    <div class="container project-nav-inner">
-      <a href="/projects/mangaread" class="btn-ghost">← Previous project</a>
-      <a href="/projects/yatsuscript" class="btn-ghost">Next project →</a>
-    </div>
+    <section class="project-nav" data-animate>
+      <div class="container project-nav-inner">
+        <a href="/projects/mangaread" class="btn-ghost">← Previous project</a>
+        <a href="/projects/yatsuscript" class="btn-ghost">Next project →</a>
+      </div>
+    </section>
+  </section>
+  <section data-lang="fr">
+    <section class="project-hero" data-animate>
+      <div class="container">
+        <a href="/#projects" class="project-back">← Retour aux projets</a>
+        <span class="project-cat">Marketplace Full-Stack</span>
+        <div class="accent-rule"></div>
+        <h1 class="project-title">Axto</h1>
+        <p class="project-tagline">Une plateforme marketplace pour pièces auto. App mobile pour les acheteurs, dashboard web pour les vendeurs, le tout propulsé par Supabase.</p>
+        <div class="project-links">
+          <span class="btn-primary" style="opacity: 0.5; cursor: default;">Source privée</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="project-section" data-animate>
+      <div class="container project-section-inner">
+        <div class="project-sidebar">
+          <span class="project-sidebar-label">Stack Technique</span>
+          <div class="project-techs">
+            <a href="https://reactnative.dev" target="_blank" rel="noopener noreferrer" class="tech-tag">React Native</a>
+            <a href="https://astro.build" target="_blank" rel="noopener noreferrer" class="tech-tag">Astro</a>
+            <a href="https://supabase.com" target="_blank" rel="noopener noreferrer" class="tech-tag">Supabase</a>
+            <a href="https://postgresql.org" target="_blank" rel="noopener noreferrer" class="tech-tag">PostgreSQL</a>
+            <a href="https://expo.dev" target="_blank" rel="noopener noreferrer" class="tech-tag">Expo</a>
+          </div>
+        </div>
+        <div class="project-content">
+          <h2>Ce que ça fait</h2>
+          <p>Axto connecte vendeurs et acheteurs de pièces auto - les vendeurs listent leurs pièces avec compatibilité, photos et prix ; les acheteurs cherchent par modèle, comparent et commandent. L'app mobile est en <a href="https://reactnative.dev" target="_blank" rel="noopener noreferrer">React Native</a> (<a href="https://expo.dev" target="_blank" rel="noopener noreferrer">Expo</a>) pour les acheteurs, et il y a un dashboard web <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro</a> pour les vendeurs et admins.</p>
+
+          <h2>Architecture</h2>
+          <p>Le projet a commencé avec un backend <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a>, puis a été porté vers <a href="https://supabase.com" target="_blank" rel="noopener noreferrer">Supabase</a>. L'architecture finale :</p>
+          <ul>
+            <li><strong>App mobile</strong> - React Native (Expo) pour les acheteurs iOS/Android. Recherche, sélection de véhicule, commandes, avis, favoris</li>
+            <li><strong>Dashboard web</strong> - Site Astro pour vendeurs et admins. Gestion d'inventaire, traitement des commandes, import en masse, analytics</li>
+            <li><strong>Backend</strong> - Supabase. PostgreSQL avec Row Level Security, Supabase Auth, Storage pour les images, <a href="https://supabase.com/docs/guides/functions" target="_blank" rel="noopener noreferrer">Edge Functions</a> pour le traitement des commandes</li>
+          </ul>
+          <p>Les politiques RLS <a href="https://supabase.com" target="_blank" rel="noopener noreferrer">Supabase</a> sont là où le vrai travail se fait - chaque requête passe par la sécurité au niveau base de données. Les vendeurs ne modifient que leurs propres annonces, les acheteurs ne voient que leurs commandes, les admins voient tout. Ce système a remplacé un système d'autorisation <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a> que j'avais codé à la main plus tôt.</p>
+
+          <pre class="mermaid">
+flowchart LR
+    subgraph MOBILE["App Mobile"]
+        RN["React Native (Expo)"]
+    end
+    subgraph WEB["Dashboard Web"]
+        ASTRO["Astro"]
+    end
+    subgraph BACKEND["Backend Supabase"]
+        PG[("PostgreSQL<br/>+ RLS")]
+        AUTH["Auth"]
+        STORAGE["Storage"]
+        EDGE["Edge Functions"]
+    end
+
+    MOBILE -->|REST API| EDGE
+    MOBILE -->|Auth| AUTH
+    MOBILE -->|Images| STORAGE
+    WEB -->|Admin| EDGE
+    WEB -->|Requêtes| PG
+    EDGE --> PG
+    PG -->|RLS| PG
+          </pre>
+
+          <h2>Les parties difficiles</h2>
+          <p><strong>La migration <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a> → <a href="https://supabase.com" target="_blank" rel="noopener noreferrer">Supabase</a>.</strong> Le backend original était en <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a> avec auth custom, API custom et un ORM fait main. Tout porter sur <a href="https://supabase.com" target="_blank" rel="noopener noreferrer">Supabase</a> a demandé de repenser tout le flux d'auth, réécrire chaque requête en politiques RLS <a href="https://www.postgresql.org/" target="_blank" rel="noopener noreferrer">Postgres</a>, et migrer toutes les données. La todo.md faisait 100 items.</p>
+          <p><strong>Suivi de stock en temps réel.</strong> Quand un acheteur ajoute une pièce au panier, le stock doit se verrouiller immédiatement ou deux personnes commandent la même dernière pièce. Cela a nécessité des triggers base de données et une conception minutieuse des <a href="https://supabase.com/docs/guides/functions" target="_blank" rel="noopener noreferrer">Edge Functions</a>.</p>
+          <p><strong>Compatibilité véhicule.</strong> Un "disque de frein" n'est pas juste un "disque de frein" - il correspond à des marques, modèles et années spécifiques. La cascade de filtrage (année → marque → modèle → pièces compatibles) doit rester rapide même avec des milliers de pièces.</p>
+
+          <h2>Ce que j'ai appris</h2>
+          <p>C'était mon premier projet full-stack avec une app mobile, et j'ai clairement visé trop large. <a href="https://supabase.com" target="_blank" rel="noopener noreferrer">Supabase</a> m'a vraiment impressionné - tu passes de zéro à un backend fonctionnel rapidement. Mais les politiques RLS ont une courbe d'apprentissage. Debugguer un "pourquoi cette requête ne retourne rien" quand une politique te bloque sans rien dire ? Ça te bouffe des heures.</p>
+          <p>Le backend <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a> était élégant mais prenait trop de temps à itérer. Passer à <a href="https://supabase.com" target="_blank" rel="noopener noreferrer">Supabase</a> a signifié sacrifier du contrôle pour de la vitesse. Pour un projet solo, ce tradeoff en valait la peine.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="project-nav" data-animate>
+      <div class="container project-nav-inner">
+        <a href="/projects/mangaread" class="btn-ghost">← Projet précédent</a>
+        <a href="/projects/yatsuscript" class="btn-ghost">Projet suivant →</a>
+      </div>
+    </section>
   </section>
 </Layout>
 

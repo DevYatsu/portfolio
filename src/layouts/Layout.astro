@@ -101,16 +101,32 @@ const websiteSchema = {
 		</div>
 
 		<script is:inline data-astro-rerun>
-			// Theme — match browser preference before paint
+			// Theme & Language — match stored/browser preference before paint
 			(function() {
-				const stored = localStorage.getItem('theme');
-				const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+				var stored = localStorage.getItem('theme');
+				var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 				if (stored === 'dark' || (!stored && prefersDark)) {
 					document.documentElement.setAttribute('data-theme', 'dark');
 				} else if (stored === 'light') {
 					document.documentElement.setAttribute('data-theme', 'light');
 				}
+
+				var langStored = localStorage.getItem('lang');
+				var browserLang = (navigator.language || navigator.userLanguage || '').substring(0, 2);
+				var lang = langStored || (browserLang === 'fr' ? 'fr' : 'en');
+				if (lang !== 'en') {
+					document.documentElement.setAttribute('data-lang', lang);
+					document.documentElement.lang = lang;
+				}
 			})();
+
+			window.__setLanguage = function(lang) {
+				document.documentElement.setAttribute('data-lang', lang);
+				document.documentElement.lang = lang;
+				localStorage.setItem('lang', lang);
+				var el = document.getElementById('lang-label');
+				if (el) el.textContent = lang === 'fr' ? 'EN' : 'FR';
+			};
 		</script>
 
 		<script>
