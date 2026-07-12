@@ -162,6 +162,124 @@ const websiteSchema = {
 				document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
 			});
 		</script>
+
+		<script>
+			// Mermaid.js — lazy-loaded only on pages with .mermaid elements
+			// Re-renders on theme change to match light/dark mode.
+			document.addEventListener('astro:page-load', () => {
+				const els = document.querySelectorAll('.mermaid');
+				if (els.length === 0) return;
+
+				function getThemeVars(isDark) {
+					return isDark
+						? {
+							background: 'transparent',
+							fontFamily: '"Inter Variable", Inter, ui-sans-serif, system-ui, sans-serif',
+							fontSize: '14px',
+							mainBkg: '#1e293b',
+							primaryColor: '#1e293b',
+							primaryBorderColor: '#60a5fa',
+							primaryTextColor: '#f1f5f9',
+							lineColor: '#64748b',
+							secondaryColor: '#243044',
+							tertiaryColor: '#2d3a4d',
+							clusterBkg: 'rgba(96, 165, 250, 0.08)',
+							clusterBorder: 'rgba(255, 255, 255, 0.1)',
+							edgeLabelBackground: '#1e293b',
+							nodeBorder: '#60a5fa',
+							nodeTextColor: '#f1f5f9',
+							titleColor: '#94a3b8',
+							actorBorder: '#60a5fa',
+							actorBkg: '#1e293b',
+							actorTextColor: '#f1f5f9',
+							labelBoxBkgColor: '#1e293b',
+							labelBoxBorderColor: '#60a5fa',
+							labelTextColor: '#f1f5f9',
+							classText: '#f1f5f9',
+							fillType0: '#1e293b',
+							fillType1: '#243044',
+							fillType2: '#2d3a4d',
+							fillType3: '#1e293b',
+						}
+						: {
+							background: 'transparent',
+							fontFamily: '"Inter Variable", Inter, ui-sans-serif, system-ui, sans-serif',
+							fontSize: '14px',
+							mainBkg: '#ffffff',
+							primaryColor: '#ffffff',
+							primaryBorderColor: '#2563eb',
+							primaryTextColor: '#0f172a',
+							lineColor: '#94a3b8',
+							secondaryColor: '#f8f9fb',
+							tertiaryColor: '#eef1f6',
+							clusterBkg: 'rgba(37, 99, 235, 0.05)',
+							clusterBorder: 'rgba(15, 23, 42, 0.1)',
+							edgeLabelBackground: '#ffffff',
+							nodeBorder: '#2563eb',
+							nodeTextColor: '#0f172a',
+							titleColor: '#5b6d87',
+							actorBorder: '#2563eb',
+							actorBkg: '#ffffff',
+							actorTextColor: '#0f172a',
+							labelBoxBkgColor: '#ffffff',
+							labelBoxBorderColor: '#2563eb',
+							labelTextColor: '#0f172a',
+							classText: '#0f172a',
+							fillType0: '#ffffff',
+							fillType1: '#f8f9fb',
+							fillType2: '#eef1f6',
+							fillType3: '#ffffff',
+						};
+				}
+
+				function isDarkTheme() {
+					return document.documentElement.getAttribute('data-theme') === 'dark'
+						|| (!document.documentElement.getAttribute('data-theme')
+							&& window.matchMedia('(prefers-color-scheme: dark)').matches);
+				}
+
+				async function render() {
+					const vars = getThemeVars(isDarkTheme());
+					mermaid.initialize({ startOnLoad: false, theme: 'base', themeVariables: vars });
+
+					for (const el of els) {
+						// Read source from dataset (re-render) or textContent (first time)
+						const src = (el.dataset.mermaidSource || el.textContent || '').trim();
+						if (!src) continue;
+						// Save on first render so we don't need textContent next time
+						if (!el.dataset.mermaidSource) {
+							el.dataset.mermaidSource = src;
+						}
+						try {
+							const { svg } = await mermaid.render(
+								'mermaid-' + Math.random().toString(36).slice(2, 8),
+								src,
+							);
+							el.innerHTML = svg;
+						} catch (e) {
+							console.warn('Mermaid render failed:', e);
+						}
+					}
+				}
+
+				if (typeof mermaid !== 'undefined') { render(); return; }
+				const s = document.createElement('script');
+				s.src = 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js';
+				s.onload = render;
+				s.onerror = () => console.warn('Failed to load Mermaid.js');
+				document.head.appendChild(s);
+
+				// Watch for theme changes and re-render all diagrams
+				const themeObserver = new MutationObserver(() => {
+					if (typeof mermaid === 'undefined') return;
+					render();
+				});
+				themeObserver.observe(document.documentElement, {
+					attributes: true,
+					attributeFilter: ['data-theme'],
+				});
+			});
+		</script>
 	</body>
 </html>
 

@@ -27,7 +27,6 @@ import Layout from "../../layouts/Layout.astro";
         <div class="project-techs">
           <a href="https://rust-lang.org" target="_blank" rel="noopener noreferrer" class="tech-tag">Rust</a>
           <a href="https://en.wikipedia.org/wiki/Bytecode" target="_blank" rel="noopener noreferrer" class="tech-tag">Bytecode</a>
-          <span class="tech-tag" style="cursor: default; opacity: 0.6;">No deps</span>
         </div>
       </div>
       <div class="project-content">
@@ -45,6 +44,18 @@ import Layout from "../../layouts/Layout.astro";
         </ul>
 
         <p>The instruction set is minimal by design: load, store, add, sub, jump, compare, call, return. About 20 opcodes total. Enough to be Turing-complete, few enough that each one has a clear purpose.</p>
+
+        <pre class="mermaid">
+flowchart LR
+    SRC["Source Code"] --> LEX["Lexer"]
+    LEX --> PAR["Parser"]
+    PAR --> AST["AST"]
+    AST --> COMP["Compiler"]
+    COMP --> BC["Bytecode"]
+    BC --> VM["VM / Interpreter"]
+    VM --> OUT["Execution"]
+    MEM["Memory Manager"] <--> VM
+        </pre>
 
         <h2>The hard parts</h2>
         <p><strong>Designing an instruction set.</strong> You don't realize how many decisions go into something as "simple" as an instruction set until you have to make them all. Fixed-width vs variable-width instructions? How many registers? What addressing modes? Every choice constrains everything else.</p>

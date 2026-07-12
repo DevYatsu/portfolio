@@ -542,3 +542,36 @@ ul, ol { padding: 0; margin: 0; list-style: none; }
 	opacity: 1;
 	transform: translateY(0);
 }
+
+/* ── Mermaid Diagrams ────────────────────────── */
+
+.mermaid {
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: 6px;
+	padding: 1.25rem;
+	margin-bottom: 1rem;
+	display: flex;
+	justify-content: center;
+	overflow-x: auto;
+}
+
+.mermaid svg {
+	max-width: 100%;
+	height: auto;
+	overflow: visible;
+}
+
+/* Mermaid uses inline styles for many elements, so we can only theme
+   what it exposes via themeVariables. Provide a fallback font via CSS
+   without forcing !important so Mermaid's own width calculations are
+   not disrupted. */
+.mermaid * {
+	font-family: var(--font-sans);
+}
+
+/* Subtle hover lift on diagram container */
+.mermaid:hover {
+	border-color: var(--border-strong);
+	transition: border-color 0.2s;
+}

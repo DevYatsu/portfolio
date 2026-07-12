@@ -163,7 +163,7 @@ import { projects, staticSites, skills } from "../data/portfolio";
 						</div>
 					</div>
 					<div class="contact-hello">
-						<p class="contact-label">Say Hello</p>
+						<p class="contact-label">Send a message</p>
 						<a href="mailto:yanis.amani@icloud.com" class="big-hello">hello@ →</a>
 					</div>
 				</div>
@@ -330,8 +330,8 @@ import { projects, staticSites, skills } from "../data/portfolio";
 						</div>
 					</div>
 					<div class="contact-hello">
-						<p class="contact-label">Dire bonjour</p>
-						<a href="mailto:yanis.amani@icloud.com" class="big-hello">bonjour@ →</a>
+						<p class="contact-label">Envoyer un message</p>
+						<a href="mailto:yanis.amani@icloud.com" class="big-hello">hello@ →</a>
 					</div>
 				</div>
 			</div>
@@ -354,11 +354,15 @@ import { projects, staticSites, skills } from "../data/portfolio";
 		document.documentElement.setAttribute('data-lang', lang);
 		document.documentElement.lang = lang;
 		localStorage.setItem('lang', lang);
-		// Reset skill filter when language changes
+		// Reset skill filter — activate "All" in the visible language section
 		document.querySelectorAll('.skill-tag').forEach(function(el) { el.style.display = ''; });
 		document.querySelectorAll('.skills-filter-btn').forEach(function(b) { b.classList.remove('active'); });
-		var allBtn = document.querySelector('.skills-filter-btn[data-filter="all"]');
-		if (allBtn) allBtn.classList.add('active');
+		var visibleAll = document.querySelector('section[data-lang="' + lang + '"] .skills-filter-btn[data-filter="all"]');
+		if (visibleAll) visibleAll.classList.add('active');
+		// Force .visible on data-animate elements that are in the now-visible section
+		if (window.__revealAnimations) window.__revealAnimations();
+		// Re-apply filter to the visible section
+		if (window.__filterSkills) window.__filterSkills();
 		// Update language toggle button text
 		var el = document.getElementById('lang-label');
 		if (el) el.textContent = lang === 'fr' ? 'EN' : 'FR';
@@ -366,24 +370,35 @@ import { projects, staticSites, skills } from "../data/portfolio";
 </script>
 
 <script>
-	// Skill filter interaction — only filter tags in the currently visible language
-	document.addEventListener('astro:page-load', () => {
-		const filter = () => {
-			const active = document.querySelector('.skills-filter-btn.active');
-			const tags = document.querySelectorAll('.skill-tag');
-			const filterVal = active ? active.dataset.filter : 'all';
-			tags.forEach(tag => {
-				// Only toggle tags in the visible language container
-				if (tag.offsetParent === null) return;
-				tag.style.display = (filterVal === 'all' || tag.dataset.category === filterVal) ? '' : 'none';
-			});
-		};
+	// Skill filter interaction — global function so __setLanguage can call it
+	window.__filterSkills = function() {
+		const active = document.querySelector('.skills-filter-btn.active');
+		const tags = document.querySelectorAll('.skill-tag');
+		const filterVal = active ? active.dataset.filter : 'all';
+		tags.forEach(tag => {
+			// Only toggle tags in the visible language container.
+			// Check the section's offsetParent (null when section has display:none)
+			// rather than the tag's — tags hidden by a previous filter also have
+			// offsetParent === null, which would make them unfixable.
+			const section = tag.closest('[data-lang]');
+			if (!section || section.offsetParent === null) return;
+			tag.style.display = (filterVal === 'all' || tag.dataset.category === filterVal) ? '' : 'none';
+		});
+	};
 
+	// Force .visible on data-animate elements that are currently visible (skips IntersectionObserver delay)
+	window.__revealAnimations = function() {
+		document.querySelectorAll('[data-animate]').forEach(el => {
+			if (el.offsetParent !== null) el.classList.add('visible');
+		});
+	};
+
+	document.addEventListener('astro:page-load', () => {
 		document.querySelectorAll('.skills-filter-btn').forEach(btn => {
 			btn.addEventListener('click', () => {
 				document.querySelectorAll('.skills-filter-btn').forEach(b => b.classList.remove('active'));
 				btn.classList.add('active');
-				filter();
+				window.__filterSkills();
 			});
 		});
 	});

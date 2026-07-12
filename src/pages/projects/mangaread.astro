@@ -46,11 +46,49 @@ import Layout from "../../layouts/Layout.astro";
         <p>The database uses SQLite with WAL mode. Four tables: series, manga, chapters, pages. All inserts use <code>ON CONFLICT ... DO UPDATE</code> so the whole thing is safe to re-run.</p>
         <p>Chapters from different sources get linked to one unified series by normalized title. If two sources have the same chapter, the one with the most pages wins.</p>
 
-        <pre class="code-block"><code>flowchart TB
+		<pre class="mermaid">flowchart TB
     CLI[ScraperEngine] --> DB[(SQLite)]
     WEB[Axum Server] --> DB
     WEB <--> BROWSER[Browser]
-    BROWSER --> JS[app.js + localStorage]</code></pre>
+    BROWSER --> JS[app.js + localStorage]</pre>
+
+        <pre class="mermaid">
+erDiagram
+    SERIES ||--o&#123; MANGA : contains
+    MANGA ||--o&#123; CHAPTER : has
+    CHAPTER ||--o&#123; PAGE : contains
+
+    SERIES &#123;
+        int id PK
+        string title
+        string normalized_title UK
+        string description
+    &#125;
+
+    MANGA &#123;
+        int id PK
+        int series_id FK
+        string source
+        string source_url
+        string title
+    &#125;
+
+    CHAPTER &#123;
+        int id PK
+        int manga_id FK
+        int number
+        string title
+        int page_count
+        string source
+    &#125;
+
+    PAGE &#123;
+        int id PK
+        int chapter_id FK
+        int page_number
+        string image_url
+    &#125;
+        </pre>
 
         <h2>The hard parts</h2>
         <p><strong>Chromedriver.</strong> The scraper uses a real browser to render JavaScript-heavy manga sites. Getting chromedriver to behave consistently in Docker was easily 30% of the development time. Headless mode, sandbox issues, zombie processes — the usual webdriver horror show.</p>
@@ -177,23 +215,8 @@ import Layout from "../../layouts/Layout.astro";
     border-radius: 3px;
     color: var(--accent);
   }
-  .code-block {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 1.25rem;
-    margin-bottom: 1rem;
-    overflow-x: auto;
-  }
-  .code-block code {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 0.8rem;
-    line-height: 1.6;
-    color: var(--text-muted);
-    background: none;
-    padding: 0;
-  }
-
   .project-nav { padding: 3rem 0 6rem; border-top: 1px solid var(--border); }
   .project-nav-inner { display: flex; justify-content: space-between; }
 </style>
+
+
