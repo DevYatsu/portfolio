@@ -390,6 +390,26 @@ import { projects, staticSites, skills } from "../data/portfolio";
 				window.__filterSkills();
 			});
 		});
+
+		// Handle plain #hash links (hero buttons etc.) — when duplicate IDs
+		// exist across en/fr sections, scroll to the VISIBLE element.
+		document.addEventListener('click', (e) => {
+			const link = e.target.closest('a[href^="#"]:not([href="#"])');
+			if (!link) return;
+			const id = link.getAttribute('href').substring(1);
+			const candidates = document.querySelectorAll(`[id="${id}"]`);
+			if (candidates.length <= 1) return; // no dupes → native is fine
+			e.preventDefault();
+			let el = null;
+			for (const c of candidates) {
+				if (c.offsetParent !== null) { el = c; break; }
+			}
+			if (!el) el = document.getElementById(id);
+			if (!el) return;
+			history.replaceState(null, '', link.getAttribute('href'));
+			const top = el.getBoundingClientRect().top + window.scrollY - 80;
+			window.scrollTo({ top, behavior: 'smooth' });
+		});
 	});
 </script>
 
