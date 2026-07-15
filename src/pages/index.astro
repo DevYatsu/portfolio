@@ -1,6 +1,17 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { projects, staticSites, skills } from "../data/portfolio";
+
+const categoryLabels = {
+  en: { lang: "Languages", frontend: "Frontend", backend: "Backend", data: "Data & Storage", systems: "Systems" },
+  fr: { lang: "Langages", frontend: "Frontend", backend: "Backend", data: "Données & Stockage", systems: "Système" },
+};
+
+const skillsByCat = skills.reduce((acc, s) => {
+  if (!acc[s.category]) acc[s.category] = [];
+  acc[s.category].push(s);
+  return acc;
+}, {} as Record<string, typeof skills>);
 ---
 
 <Layout title="Yanis Amani // CS Student | Étudiant en Informatique">
@@ -74,16 +85,16 @@ import { projects, staticSites, skills } from "../data/portfolio";
           <h2 class="section__title">Skills</h2>
           <p class="section__sub">Languages and frameworks I reach for daily.</p>
         </div>
-        <div class="skills-filter" data-animate>
-          <button class="filter-btn active" data-filter="all">All</button>
-          <button class="filter-btn" data-filter="lang">Languages</button>
-          <button class="filter-btn" data-filter="frontend">Frontend</button>
-          <button class="filter-btn" data-filter="backend">Backend</button>
-          <button class="filter-btn" data-filter="systems">Systems</button>
-        </div>
-        <div class="skills-pool" data-animate>
-          {skills.map((s) => (
-            <span class="skill-chip" data-category={s.category}>{s.name}</span>
+        <div class="skill-groups" data-animate>
+          {Object.entries(skillsByCat).map(([cat, catSkills]) => (
+            <div class="skill-group">
+              <span class="skill-group__label">{categoryLabels.en[cat] || cat}</span>
+              <div class="skill-group__chips">
+                {catSkills.map((s) => (
+                  <span class="skill-chip" data-category={s.category}>{s.name}</span>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       </div>
@@ -198,16 +209,16 @@ import { projects, staticSites, skills } from "../data/portfolio";
           <h2 class="section__title">Compétences</h2>
           <p class="section__sub">Langages et frameworks que j'utilise quotidiennement.</p>
         </div>
-        <div class="skills-filter" data-animate>
-          <button class="filter-btn active" data-filter="all">Tous</button>
-          <button class="filter-btn" data-filter="lang">Langages</button>
-          <button class="filter-btn" data-filter="frontend">Frontend</button>
-          <button class="filter-btn" data-filter="backend">Backend</button>
-          <button class="filter-btn" data-filter="systems">Système</button>
-        </div>
-        <div class="skills-pool" data-animate>
-          {skills.map((s) => (
-            <span class="skill-chip" data-category={s.category}>{s.name}</span>
+        <div class="skill-groups" data-animate>
+          {Object.entries(skillsByCat).map(([cat, catSkills]) => (
+            <div class="skill-group">
+              <span class="skill-group__label">{categoryLabels.fr[cat] || cat}</span>
+              <div class="skill-group__chips">
+                {catSkills.map((s) => (
+                  <span class="skill-chip" data-category={s.category}>{s.name}</span>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       </div>
@@ -259,28 +270,12 @@ import { projects, staticSites, skills } from "../data/portfolio";
     var orig = window.__setLanguage;
     return function(lang) {
       if (orig) orig(lang);
-      document.querySelectorAll('.skill-chip').forEach(function(el) { el.style.display = ''; });
-      document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
-      var visibleAll = document.querySelector('section[data-lang="' + lang + '"] .filter-btn[data-filter="all"]');
-      if (visibleAll) visibleAll.classList.add('active');
       if (window.__revealAnimations) window.__revealAnimations();
-      if (window.__filterSkills) window.__filterSkills();
     };
   })();
 </script>
 
 <script>
-  window.__filterSkills = function() {
-    var active = document.querySelector('.filter-btn.active');
-    var chips = document.querySelectorAll('.skill-chip');
-    var filterVal = active ? active.dataset.filter : 'all';
-    chips.forEach(function(chip) {
-      var section = chip.closest('[data-lang]');
-      if (!section || section.offsetParent === null) return;
-      chip.style.display = (filterVal === 'all' || chip.dataset.category === filterVal) ? '' : 'none';
-    });
-  };
-
   window.__revealAnimations = function() {
     document.querySelectorAll('[data-animate]').forEach(function(el) {
       if (el.offsetParent !== null) el.classList.add('visible');
@@ -288,14 +283,6 @@ import { projects, staticSites, skills } from "../data/portfolio";
   };
 
   document.addEventListener('astro:page-load', function() {
-    document.querySelectorAll('.filter-btn').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
-        btn.classList.add('active');
-        window.__filterSkills();
-      });
-    });
-
     document.addEventListener('click', function(e) {
       var link = e.target.closest('a[href^="#"]:not([href="#"])');
       if (!link) return;
@@ -519,15 +506,29 @@ import { projects, staticSites, skills } from "../data/portfolio";
   margin-top: auto;
 }
 
-/* ── Skills Filter ── */
-.skills-filter {
+/* ── Skill Groups ── */
+.skill-groups {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2xs);
-  margin-bottom: var(--space-md);
+  flex-direction: column;
+  gap: var(--space-lg);
 }
 
-.skills-pool {
+.skill-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.skill-group__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+}
+
+.skill-group__chips {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2xs);
