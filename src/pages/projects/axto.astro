@@ -46,6 +46,46 @@ import Layout from "../../layouts/Layout.astro";
           <p><strong>Search.</strong> Postgres full-text search is fine for text, but auto parts have VIN-specific queries, OEM numbers, and fuzzy brand matching. We ended up with a hybrid: Postgres tsvector for full-text + a custom matching layer for compatibility queries.</p>
           <p><strong>Image moderation.</strong> Users upload part photos. We built an automated moderation pipeline using a third-party API, but the false-positive rate on engine parts vs. prohibited items was… educational.</p>
 
+          <h2>Screenshots</h2>
+          <div class="screenshot-grid">
+            <figure class="screenshot">
+              <img src="/axto-images/home.png" alt="Axto home screen" loading="lazy" width="200" height="433" />
+              <figcaption>Home — Browse listings by vehicle</figcaption>
+            </figure>
+            <figure class="screenshot">
+              <img src="/axto-images/search.png" alt="Axto search screen" loading="lazy" width="200" height="433" />
+              <figcaption>Search — Find parts by name or OEM number</figcaption>
+            </figure>
+            <figure class="screenshot">
+              <img src="/axto-images/product-details.png" alt="Axto product details" loading="lazy" width="200" height="433" />
+              <figcaption>Product details — Compatibility info, price, seller</figcaption>
+            </figure>
+            <figure class="screenshot">
+              <img src="/axto-images/cart-empty.png" alt="Empty cart" loading="lazy" width="200" height="433" />
+              <figcaption>Cart — Empty state</figcaption>
+            </figure>
+            <figure class="screenshot">
+              <img src="/axto-images/cart-with-products.png" alt="Cart with products" loading="lazy" width="200" height="433" />
+              <figcaption>Cart — Items ready for checkout</figcaption>
+            </figure>
+            <figure class="screenshot">
+              <img src="/axto-images/checkout-address.png" alt="Checkout address form" loading="lazy" width="200" height="433" />
+              <figcaption>Checkout — Shipping address</figcaption>
+            </figure>
+            <figure class="screenshot">
+              <img src="/axto-images/checkout-credit-card.png" alt="Checkout payment" loading="lazy" width="200" height="433" />
+              <figcaption>Checkout — Payment via Stripe</figcaption>
+            </figure>
+            <figure class="screenshot">
+              <img src="/axto-images/notifications.png" alt="Notifications" loading="lazy" width="200" height="433" />
+              <figcaption>Notifications — Price drops and messages</figcaption>
+            </figure>
+            <figure class="screenshot">
+              <img src="/axto-images/profile.png" alt="Profile screen" loading="lazy" width="200" height="433" />
+              <figcaption>Profile — Account and saved searches</figcaption>
+            </figure>
+          </div>
+
           <h2>What I learned</h2>
           <p>This was my first full-stack marketplace and the project where I learned that <em>scope management is a skill, not a constraint</em>. The feature list kept growing — reviews, messaging, notifications, analytics — and each one taught me something about state management across platforms, real-time data sync, and why you don't skip writing integration tests for your Stripe webhook handler.</p>
           <p>Also: React Native's FlatList performance with 10,000+ parts listings is genuinely impressive. Astro's partial hydration meant the dashboard felt instant despite having React components embedded in static pages.</p>
@@ -93,6 +133,46 @@ import Layout from "../../layouts/Layout.astro";
             <li><strong>Backend</strong> — Supabase gère l'auth, Postgres avec Row Level Security, stockage d'images, souscriptions temps réel pour la messagerie.</li>
           </ul>
 
+          <h2>Captures d'écran</h2>
+          <div class="screenshot-grid">
+            <figure class="screenshot">
+              <img src="/axto-images/home.png" alt="Écran d'accueil Axto" loading="lazy" width="200" height="433" />
+              <figcaption>Accueil — Parcourir les annonces par véhicule</figcaption>
+            </figure>
+            <figure class="screenshot">
+              <img src="/axto-images/search.png" alt="Recherche Axto" loading="lazy" width="200" height="433" />
+              <figcaption>Recherche — Trouver des pièces par nom ou numéro OEM</figcaption>
+            </figure>
+            <figure class="screenshot">
+              <img src="/axto-images/product-details.png" alt="Détails du produit" loading="lazy" width="200" height="433" />
+              <figcaption>Détails — Infos de compatibilité, prix, vendeur</figcaption>
+            </figure>
+            <figure class="screenshot">
+              <img src="/axto-images/cart-empty.png" alt="Panier vide" loading="lazy" width="200" height="433" />
+              <figcaption>Panier — État vide</figcaption>
+            </figure>
+            <figure class="screenshot">
+              <img src="/axto-images/cart-with-products.png" alt="Panier avec articles" loading="lazy" width="200" height="433" />
+              <figcaption>Panier — Articles prêts pour le paiement</figcaption>
+            </figure>
+            <figure class="screenshot">
+              <img src="/axto-images/checkout-address.png" alt="Adresse de livraison" loading="lazy" width="200" height="433" />
+              <figcaption>Paiement — Adresse de livraison</figcaption>
+            </figure>
+            <figure class="screenshot">
+              <img src="/axto-images/checkout-credit-card.png" alt="Paiement par carte" loading="lazy" width="200" height="433" />
+              <figcaption>Paiement — Carte bancaire via Stripe</figcaption>
+            </figure>
+            <figure class="screenshot">
+              <img src="/axto-images/notifications.png" alt="Notifications" loading="lazy" width="200" height="433" />
+              <figcaption>Notifications — Baisses de prix et messages</figcaption>
+            </figure>
+            <figure class="screenshot">
+              <img src="/axto-images/profile.png" alt="Profil" loading="lazy" width="200" height="433" />
+              <figcaption>Profil — Compte et recherches sauvegardées</figcaption>
+            </figure>
+          </div>
+
           <h2>Ce que j'ai appris</h2>
           <p>Mon premier marketplace full-stack et le projet où j'ai compris que <em>la gestion du périmètre est une compétence, pas une contrainte</em>. La liste de fonctionnalités n'arrêtait pas de s'allonger — avis, messagerie, notifications, analytics — et chacune m'a appris quelque chose sur la gestion d'état multiplateforme, la synchronisation temps réel, et pourquoi on ne saute pas les tests d'intégration de son webhook Stripe.</p>
         </div>
@@ -112,9 +192,6 @@ import Layout from "../../layouts/Layout.astro";
 /* Hallmark · genre: modern-minimal · macrostructure: Long Document
  * design-system: design.md · designed-as-app
  */
-
-/* ── Project Hero Visual ── */
-
 
 /* ── Project Page Layout ── */
 .project-page {
@@ -249,5 +326,44 @@ import Layout from "../../layouts/Layout.astro";
 .project-nav-inner {
   display: flex;
   justify-content: space-between;
+}
+
+/* ── Screenshot Gallery ── */
+.screenshot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--space-md);
+  margin: var(--space-lg) 0;
+}
+
+@media (min-width: 640px) {
+  .screenshot-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
+
+.screenshot {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.screenshot img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-rule);
+  background: var(--color-paper);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--color-ink) 6%, transparent);
+}
+
+.screenshot figcaption {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  margin-top: var(--space-2xs);
+  text-align: center;
+  line-height: 1.4;
 }
 </style>
