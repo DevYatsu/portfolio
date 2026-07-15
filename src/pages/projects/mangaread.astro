@@ -48,6 +48,26 @@ import Layout from "../../layouts/Layout.astro";
 
           <p><strong>Client-side state without accounts.</strong> No auth, no database sessions. Bookmarks and reading progress live entirely in localStorage. The JS reads from there and builds the DOM with a tiny h() helper. It's surprisingly clean — but debugging state without a database to query is harder.</p>
 
+          <h2>Screenshots</h2>
+          <div class="screenshot-grid">
+            <figure class="screenshot">
+              <img src="/mangareader-images/home.jpg" alt="MangaReader home page" loading="lazy" width="400" height="248" />
+              <figcaption>Home — Browse your series library</figcaption>
+            </figure>
+            <figure class="screenshot">
+              <img src="/mangareader-images/series.jpg" alt="MangaReader series view" loading="lazy" width="400" height="248" />
+              <figcaption>Series — View chapters and track reading</figcaption>
+            </figure>
+            <figure class="screenshot">
+              <img src="/mangareader-images/series-details.jpg" alt="MangaReader series details" loading="lazy" width="400" height="248" />
+              <figcaption>Series details — Manage and organize</figcaption>
+            </figure>
+            <figure class="screenshot">
+              <img src="/mangareader-images/chapter.jpg" alt="MangaReader chapter view" loading="lazy" width="400" height="248" />
+              <figcaption>Reader — Chapter viewing interface</figcaption>
+            </figure>
+          </div>
+
           <h2>The hard parts</h2>
           <p><strong>Chromedriver.</strong> The scraper uses a real browser for JavaScript-heavy manga sites. Getting chromedriver to behave in Docker was 30% of the dev time. Headless mode bugs, sandbox issues, zombie processes — the usual webdriver circus.</p>
           <p><strong><a href="https://sqlite.org" target="_blank" rel="noopener noreferrer">SQLite</a> and threading.</strong> <a href="https://docs.rs/rusqlite" target="_blank" rel="noopener noreferrer">rusqlite</a>'s Connection isn't Sync, so each scraper thread opens its own connection. The main AppState wraps its own in a <a href="https://doc.rust-lang.org/std/sync/struct.Mutex.html" target="_blank" rel="noopener noreferrer">Mutex</a>. Sounds simple, but the borrow checker had opinions.</p>
@@ -109,6 +129,26 @@ import Layout from "../../layouts/Layout.astro";
 
           <p><strong>État côté client sans comptes.</strong> Pas d'auth, pas de sessions. Les marque-pages et la progression vivent dans localStorage. Le JS lit localStorage et construit le DOM avec une petite fonction h(). C'est étonnamment propre — mais debugguer l'état sans base de données, c'est plus dur.</p>
 
+          <h2>Captures d'écran</h2>
+          <div class="screenshot-grid">
+            <figure class="screenshot">
+              <img src="/mangareader-images/home.jpg" alt="Page d'accueil MangaReader" loading="lazy" width="400" height="248" />
+              <figcaption>Accueil — Parcourir votre bibliothèque</figcaption>
+            </figure>
+            <figure class="screenshot">
+              <img src="/mangareader-images/series.jpg" alt="Vue série MangaReader" loading="lazy" width="400" height="248" />
+              <figcaption>Série — Voir les chapitres</figcaption>
+            </figure>
+            <figure class="screenshot">
+              <img src="/mangareader-images/series-details.jpg" alt="Détails série MangaReader" loading="lazy" width="400" height="248" />
+              <figcaption>Détails — Gérer et organiser</figcaption>
+            </figure>
+            <figure class="screenshot">
+              <img src="/mangareader-images/chapter.jpg" alt="Lecture chapitre MangaReader" loading="lazy" width="400" height="248" />
+              <figcaption>Lecture — Interface de lecture</figcaption>
+            </figure>
+          </div>
+
           <h2>Les parties difficiles</h2>
           <p><strong>Chromedriver.</strong> Le scraper utilise un vrai navigateur pour les sites manga chargés en JS. Faire marcher chromedriver dans Docker a pris 30% du temps de dev. Bugs de mode headless, problèmes de sandbox, processus zombies — le cirque habituel des webdrivers.</p>
           <p><strong><a href="https://sqlite.org" target="_blank" rel="noopener noreferrer">SQLite</a> et le threading.</strong> La Connection de <a href="https://docs.rs/rusqlite" target="_blank" rel="noopener noreferrer">rusqlite</a> n'est pas Sync, donc chaque thread de scraping ouvre sa propre connexion. Le AppState principal wrappe la sienne dans un <a href="https://doc.rust-lang.org/std/sync/struct.Mutex.html" target="_blank" rel="noopener noreferrer">Mutex</a>. Ça semble simple, mais le borrow checker avait des opinions.</p>
@@ -138,10 +178,6 @@ import Layout from "../../layouts/Layout.astro";
 .project-page {
   padding-top: 7rem;
   padding-bottom: var(--space-2xl);
-}
-
-.project-cat {
-  display: block;
 }
 
 .project-title {
@@ -267,5 +303,59 @@ import Layout from "../../layouts/Layout.astro";
 .project-nav-inner {
   display: flex;
   justify-content: space-between;
+}
+
+/* ── Screenshot Gallery ── */
+.screenshot-grid {
+  display: flex;
+  gap: var(--space-md);
+  margin: var(--space-lg) calc(-1 * var(--space-md));
+  padding: var(--space-xs) var(--space-md);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.screenshot-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.screenshot {
+  margin: 0;
+  flex: 0 0 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  scroll-snap-align: start;
+}
+
+@media (min-width: 640px) {
+  .screenshot {
+    flex: 0 0 380px;
+  }
+}
+
+.screenshot img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-rule);
+  background: var(--color-paper);
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--color-ink) 8%, transparent);
+  transition: transform var(--dur-short) var(--ease-out);
+}
+
+.screenshot:hover img {
+  transform: translateY(-2px);
+}
+
+.screenshot figcaption {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  margin-top: var(--space-2xs);
+  text-align: center;
+  line-height: 1.3;
 }
 </style>
