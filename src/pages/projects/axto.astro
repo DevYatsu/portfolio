@@ -330,23 +330,33 @@ import Layout from "../../layouts/Layout.astro";
 
 /* ── Screenshot Gallery ── */
 .screenshot-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  display: flex;
   gap: var(--space-md);
-  margin: var(--space-lg) 0;
+  margin: var(--space-lg) calc(-1 * var(--space-md));
+  padding: var(--space-xs) var(--space-md);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
 
-@media (min-width: 640px) {
-  .screenshot-grid {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  }
+.screenshot-grid::-webkit-scrollbar {
+  display: none;
 }
 
 .screenshot {
   margin: 0;
+  flex: 0 0 180px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  scroll-snap-align: start;
+}
+
+@media (min-width: 640px) {
+  .screenshot {
+    flex: 0 0 200px;
+  }
 }
 
 .screenshot img {
@@ -355,7 +365,12 @@ import Layout from "../../layouts/Layout.astro";
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-rule);
   background: var(--color-paper);
-  box-shadow: 0 2px 8px color-mix(in srgb, var(--color-ink) 6%, transparent);
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--color-ink) 8%, transparent);
+  transition: transform var(--dur-short) var(--ease-out);
+}
+
+.screenshot:hover img {
+  transform: translateY(-2px);
 }
 
 .screenshot figcaption {
@@ -364,6 +379,7 @@ import Layout from "../../layouts/Layout.astro";
   color: var(--color-muted);
   margin-top: var(--space-2xs);
   text-align: center;
-  line-height: 1.4;
+  line-height: 1.3;
+  max-width: 200px;
 }
 </style>
