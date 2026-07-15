@@ -1,0 +1,20 @@
+[
+  {
+    "date": "2026-07-15",
+    "macrostructure": "Marquee Hero",
+    "theme": "custom",
+    "theme_axes": "light / geometric-sans / cool",
+    "vibe": "Hyperlane-inspired, technical, cool purple",
+    "enrichment": "none (typography only)",
+    "brief": "Yanis Amani portfolio — redesign for recruiters and engineers",
+    "scope": "app",
+    "nav": "N1b",
+    "footer": "Ft5",
+    "pages": [
+      "index.astro (Marquee Hero)",
+      "projects/*.astro (Long Document)",
+      "404.astro, merci.astro, thanks.astro (minimal card)",
+      "impressum.astro, mentions-legales.astro (legal cards)"
+    ]
+  }
+]

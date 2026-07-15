@@ -1,4 +1,5 @@
 ---
+import "../styles/tokens.css";
 import "../styles/globals.css";
 
 import Header from "../components/Header.astro";
@@ -54,8 +55,8 @@ const websiteSchema = {
 		<title>{title}</title>
 		<meta name="description" content={description} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="theme-color" content="#f0f2f5" media="(prefers-color-scheme: light)" />
-		<meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
+		<meta name="theme-color" content="#eceef2" media="(prefers-color-scheme: light)" />
+		<meta name="theme-color" content="#0b0e14" media="(prefers-color-scheme: dark)" />
 
 		<link rel="canonical" href={new URL("/", siteUrl)} />
 
@@ -75,6 +76,11 @@ const websiteSchema = {
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={new URL('/og-image.svg', siteUrl)} />
 
+		<!-- Geist + JetBrains Mono (Google Fonts) -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
 		<!-- Structured Data -->
 		<script type="application/ld+json" set:html={JSON.stringify(personSchema)}></script>
 		<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)}></script>
@@ -87,14 +93,13 @@ const websiteSchema = {
 				<slot />
 			</main>
 
-			<footer class="site-footer">
-				<div class="container">
-					<div class="footer-inner">
-						<p>&copy; {new Date().getFullYear()} Yanis Amani</p>
-						<div class="footer-links">
-							<a href="/impressum" data-lang="en" class="footer-link">Impressum</a>
-							<a href="/mentions-legales" data-lang="fr" class="footer-link">Mentions Légales</a>
-						</div>
+			<footer class="foot-stmt">
+				<p class="foot-stmt__line">Build software that doesn't break.</p>
+				<div class="foot-stmt__meta">
+					<span class="foot-stmt__copy">&copy; {new Date().getFullYear()} Yanis Amani</span>
+					<div class="foot-stmt__links">
+						<a href="/impressum" data-lang="en" class="foot-stmt__link">Impressum</a>
+						<a href="/mentions-legales" data-lang="fr" class="foot-stmt__link">Mentions Légales</a>
 					</div>
 				</div>
 			</footer>
@@ -152,7 +157,6 @@ const websiteSchema = {
 					updateIcon();
 				});
 
-				// Listen for system changes (when no stored preference)
 				window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
 					if (!localStorage.getItem('theme')) {
 						html.setAttribute('data-theme', e.matches ? 'dark' : 'light');
@@ -165,6 +169,7 @@ const websiteSchema = {
 		</script>
 
 		<script>
+			// Scroll-triggered reveal animations
 			document.addEventListener('astro:page-load', () => {
 				const observer = new IntersectionObserver((ents) => {
 					ents.forEach(e => {
@@ -179,122 +184,61 @@ const websiteSchema = {
 			});
 		</script>
 
-		<script>
-			// Mermaid.js — lazy-loaded only on pages with .mermaid elements
-			// Re-renders on theme change to match light/dark mode.
-			document.addEventListener('astro:page-load', () => {
-				const els = document.querySelectorAll('.mermaid');
-				if (els.length === 0) return;
+		<!-- Mermaid — diagram rendering with theme support -->
+		<script is:inline src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+		<script is:inline>
+			(function() {
+				function initMermaid() {
+					const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+					const paper = isDark ? '#0f121c' : '#f2f4f7';
+					const paper2 = isDark ? '#1a1e2a' : '#eef0f4';
+					const ink2 = isDark ? '#aeb1bf' : '#656a80';
+					const rule = isDark ? '#1f2332' : '#d5d8e2';
+					const accent = isDark ? '#6391e8' : '#3b7add';
+					const muted = isDark ? '#8084a0' : '#878ca0';
 
-				function getThemeVars(isDark) {
-					return isDark
-						? {
-							background: 'transparent',
-							fontFamily: '"Inter Variable", Inter, ui-sans-serif, system-ui, sans-serif',
+					mermaid.initialize({
+						startOnLoad: false,
+						theme: 'base',
+						themeVariables: {
+							primaryColor: accent,
+							primaryTextColor: isDark ? '#0f121c' : '#f2f4f7',
+							primaryBorderColor: accent,
+							lineColor: muted,
+							secondaryColor: paper2,
+							tertiaryColor: paper,
+							fontFamily: '"Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif',
 							fontSize: '14px',
-							mainBkg: '#1e293b',
-							primaryColor: '#1e293b',
-							primaryBorderColor: '#60a5fa',
-							primaryTextColor: '#f1f5f9',
-							lineColor: '#64748b',
-							secondaryColor: '#243044',
-							tertiaryColor: '#2d3a4d',
-							clusterBkg: 'rgba(96, 165, 250, 0.08)',
-							clusterBorder: 'rgba(255, 255, 255, 0.1)',
-							edgeLabelBackground: '#1e293b',
-							nodeBorder: '#60a5fa',
-							nodeTextColor: '#f1f5f9',
-							titleColor: '#94a3b8',
-							actorBorder: '#60a5fa',
-							actorBkg: '#1e293b',
-							actorTextColor: '#f1f5f9',
-							labelBoxBkgColor: '#1e293b',
-							labelBoxBorderColor: '#60a5fa',
-							labelTextColor: '#f1f5f9',
-							classText: '#f1f5f9',
-							fillType0: '#1e293b',
-							fillType1: '#243044',
-							fillType2: '#2d3a4d',
-							fillType3: '#1e293b',
-						}
-						: {
-							background: 'transparent',
-							fontFamily: '"Inter Variable", Inter, ui-sans-serif, system-ui, sans-serif',
-							fontSize: '14px',
-							mainBkg: '#ffffff',
-							primaryColor: '#ffffff',
-							primaryBorderColor: '#2563eb',
-							primaryTextColor: '#0f172a',
-							lineColor: '#94a3b8',
-							secondaryColor: '#f8f9fb',
-							tertiaryColor: '#eef1f6',
-							clusterBkg: 'rgba(37, 99, 235, 0.05)',
-							clusterBorder: 'rgba(15, 23, 42, 0.1)',
-							edgeLabelBackground: '#ffffff',
-							nodeBorder: '#2563eb',
-							nodeTextColor: '#0f172a',
-							titleColor: '#5b6d87',
-							actorBorder: '#2563eb',
-							actorBkg: '#ffffff',
-							actorTextColor: '#0f172a',
-							labelBoxBkgColor: '#ffffff',
-							labelBoxBorderColor: '#2563eb',
-							labelTextColor: '#0f172a',
-							classText: '#0f172a',
-							fillType0: '#ffffff',
-							fillType1: '#f8f9fb',
-							fillType2: '#eef1f6',
-							fillType3: '#ffffff',
-						};
+							background: paper,
+							mainBkg: paper2,
+							nodeBorder: rule,
+							clusterBkg: paper,
+							clusterBorder: rule,
+							titleColor: isDark ? '#eef0f4' : '#141b2c',
+							edgeLabelBackground: paper2,
+							nodeTextColor: ink2,
+						},
+					});
+					document.querySelectorAll('.mermaid').forEach(el => {
+						mermaid.render(el.id || 'mermaid-' + Math.random().toString(36).slice(2), el.textContent.trim())
+							.then(({ svg }) => {
+								el.innerHTML = svg;
+							});
+					});
 				}
 
-				function isDarkTheme() {
-					return document.documentElement.getAttribute('data-theme') === 'dark'
-						|| (!document.documentElement.getAttribute('data-theme')
-							&& window.matchMedia('(prefers-color-scheme: dark)').matches);
-				}
+				document.addEventListener('astro:page-load', () => {
+					if (typeof mermaid !== 'undefined') initMermaid();
+				});
 
-				async function render() {
-					const vars = getThemeVars(isDarkTheme());
-					mermaid.initialize({ startOnLoad: false, theme: 'base', themeVariables: vars });
-
-					for (const el of els) {
-						// Read source from dataset (re-render) or textContent (first time)
-						const src = (el.dataset.mermaidSource || el.textContent || '').trim();
-						if (!src) continue;
-						// Save on first render so we don't need textContent next time
-						if (!el.dataset.mermaidSource) {
-							el.dataset.mermaidSource = src;
-						}
-						try {
-							const { svg } = await mermaid.render(
-								'mermaid-' + Math.random().toString(36).slice(2, 8),
-								src,
-							);
-							el.innerHTML = svg;
-						} catch (e) {
-							console.warn('Mermaid render failed:', e);
-						}
-					}
-				}
-
-				if (typeof mermaid !== 'undefined') { render(); return; }
-				const s = document.createElement('script');
-				s.src = 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js';
-				s.onload = render;
-				s.onerror = () => console.warn('Failed to load Mermaid.js');
-				document.head.appendChild(s);
-
-				// Watch for theme changes and re-render all diagrams
+				// Re-render on theme toggle
 				const themeObserver = new MutationObserver(() => {
-					if (typeof mermaid === 'undefined') return;
-					render();
+					if (typeof mermaid !== 'undefined' && document.querySelector('.mermaid svg')) {
+						initMermaid();
+					}
 				});
-				themeObserver.observe(document.documentElement, {
-					attributes: true,
-					attributeFilter: ['data-theme'],
-				});
-			});
+				themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+			})();
 		</script>
 	</body>
 </html>
@@ -308,35 +252,66 @@ const websiteSchema = {
 
 	.main-content {
 		flex: 1;
-		padding-top: 4rem;
+		padding-top: 0;
 	}
 
-	.site-footer {
-		border-top: 1px solid var(--border);
-	}
-
-	.footer-inner {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 1.5rem;
-		padding: 3rem 0;
+	/* ── Footer (Ft5 Statement) ── */
+	.foot-stmt {
+		padding: var(--space-2xl) var(--space-md) var(--space-xl);
+		max-width: 72rem;
+		margin: 0 auto;
+		border-top: 1px solid var(--color-rule);
 	}
 
 	@media (min-width: 768px) {
-		.footer-inner {
-			flex-direction: row;
-			justify-content: space-between;
+		.foot-stmt {
+			padding-left: var(--space-xl);
+			padding-right: var(--space-xl);
 		}
 	}
 
-	.footer-inner p {
-		font-size: 0.75rem;
-		color: var(--text-dim);
+	.foot-stmt__line {
+		font-family: var(--font-display);
+		font-size: clamp(1.5rem, 4vw, 2.75rem);
+		font-weight: 600;
+		line-height: 1.05;
+		letter-spacing: -0.02em;
+		max-width: 28ch;
+		margin: 0 0 var(--space-lg);
+		color: var(--color-ink);
 	}
 
-	.footer-links {
+	.foot-stmt__meta {
 		display: flex;
-		gap: 1rem;
+		flex-direction: column;
+		gap: var(--space-sm);
+		padding-top: var(--space-md);
+		border-top: 1px solid var(--color-rule);
+		font-size: var(--text-sm);
+		color: var(--color-muted);
+		font-family: var(--font-body);
+	}
+
+	@media (min-width: 768px) {
+		.foot-stmt__meta {
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+		}
+	}
+
+	.foot-stmt__links {
+		display: flex;
+		gap: var(--space-md);
+	}
+
+	.foot-stmt__link {
+		color: var(--color-muted);
+		text-decoration: none;
+		transition: color var(--dur-short) var(--ease-out);
+	}
+
+	.foot-stmt__link:hover {
+		color: var(--color-accent);
 	}
 </style>

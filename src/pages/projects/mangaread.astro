@@ -7,24 +7,17 @@ import Layout from "../../layouts/Layout.astro";
   description="A Rust-powered manga reading platform with automatic scraping, merging, and a web interface."
 >
   <section data-lang="en">
-    <section class="project-hero" data-animate>
+    <article class="project-page" data-animate>
       <div class="container">
-        <a href="/#projects" class="project-back">← Back to Projects</a>
-        <span class="project-cat">Web Application</span>
-        <div class="accent-rule"></div>
         <h1 class="project-title">MangaReader</h1>
         <p class="project-tagline">A manga reader that scrapes chapters from third-party sites, merges them into series, and serves them through a web interface.</p>
         <div class="project-links">
-          <a href="https://github.com/DevYatsu/mangaread" target="_blank" rel="noopener noreferrer" class="btn-primary">View on GitHub →</a>
+          <a href="https://github.com/DevYatsu/mangaread" target="_blank" rel="noopener noreferrer" class="btn-primary">View on GitHub</a>
         </div>
-      </div>
-    </section>
 
-    <section class="project-section" data-animate>
-      <div class="container project-section-inner">
-        <div class="project-sidebar">
-          <span class="project-sidebar-label">Tech Stack</span>
-          <div class="project-techs">
+        <div class="project-tech-stack" data-animate>
+          <span class="tech-label">Tech Stack</span>
+          <div class="tech-list">
             <a href="https://rust-lang.org" target="_blank" rel="noopener noreferrer" class="tech-tag">Rust</a>
             <a href="https://docs.rs/axum" target="_blank" rel="noopener noreferrer" class="tech-tag">Axum</a>
             <a href="https://sqlite.org" target="_blank" rel="noopener noreferrer" class="tech-tag">SQLite</a>
@@ -32,6 +25,7 @@ import Layout from "../../layouts/Layout.astro";
             <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" rel="noopener noreferrer" class="tech-tag">HTML/CSS/JS</a>
           </div>
         </div>
+
         <div class="project-content">
           <h2>What it does</h2>
           <p>MangaReader scrapes manga chapters from third-party scanlation sites, merges them into series, and serves them through a local web interface. You can bookmark series, track your reading, and the server auto-syncs new chapters in the background.</p>
@@ -39,78 +33,12 @@ import Layout from "../../layouts/Layout.astro";
           <h2>Architecture</h2>
           <p>Three Rust crates in one workspace:</p>
           <ul>
-            <li><strong>mangaread-core</strong> - domain types, SQLite repository, series merging logic</li>
-            <li><strong>scraper</strong> - SiteAdapter trait with per-site implementations (Demonicscans, Manhuaplus), CLI binary + library</li>
-            <li><strong>website</strong> - Axum web server with 10 route modules, <a href="https://maud.lambda.xyz/" target="_blank" rel="noopener noreferrer">Maud</a> templates, static assets</li>
+            <li><strong>mangaread-core</strong> — domain types, SQLite repository, series merging logic</li>
+            <li><strong>scraper</strong> — SiteAdapter trait with per-site implementations (Demonicscans, Manhuaplus), CLI binary + library</li>
+            <li><strong>website</strong> — Axum web server with 10 route modules, <a href="https://maud.lambda.xyz/" target="_blank" rel="noopener noreferrer">Maud</a> templates, static assets</li>
           </ul>
-          <p>The database uses <a href="https://sqlite.org" target="_blank" rel="noopener noreferrer">SQLite</a> in WAL mode - four tables (series, manga, chapters, pages), all inserts use <code>ON CONFLICT ... DO UPDATE</code>, so it's safe to re-run.</p>
+          <p>The database uses <a href="https://sqlite.org" target="_blank" rel="noopener noreferrer">SQLite</a> in WAL mode — four tables (series, manga, chapters, pages), all inserts use <code>ON CONFLICT ... DO UPDATE</code>, so it's safe to re-run.</p>
           <p>Chapters from different sources get merged by normalized title. If two sources have the same chapter, the one with the most pages wins.</p>
-
-  		<pre class="mermaid">flowchart TB
-    CLI[ScraperEngine] --> DB[(SQLite)]
-    WEB[Axum Server] --> DB
-    WEB <--> BROWSER[Browser]
-    BROWSER --> JS[app.js + localStorage]</pre>
-
-          <p><strong>Client-side state without accounts.</strong> No auth, no database sessions. Bookmarks and reading progress live entirely in localStorage. The JS reads from there and builds the DOM with a tiny h() helper. It's surprisingly clean - but debugging state without a database to query is harder.</p>
-
-          <h2>The hard parts</h2>
-          <p><strong>Chromedriver.</strong> The scraper uses a real browser for JavaScript-heavy manga sites. Getting chromedriver to behave in Docker was 30% of the dev time. Headless mode bugs, sandbox issues, zombie processes - the usual webdriver circus.</p>
-          <p><strong><a href="https://sqlite.org" target="_blank" rel="noopener noreferrer">SQLite</a> and threading.</strong> <a href="https://docs.rs/rusqlite" target="_blank" rel="noopener noreferrer">rusqlite</a>'s Connection isn't Sync, so each scraper thread opens its own connection. The main AppState wraps its own in a <a href="https://doc.rust-lang.org/std/sync/struct.Mutex.html" target="_blank" rel="noopener noreferrer">Mutex</a>. Sounds simple, but the borrow checker had opinions.</p>
-          <h2>What I learned</h2>
-          <p>This was my first <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a> project with multiple workspace crates, and it taught me more than any tutorial. <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a>'s type system is genuinely great for domain modeling - no invalid states possible - but fighting the borrow checker for the 50th time at 2am is a rite of passage.</p>
-          <p>The scraper adapter pattern - trait + per-site implementations - paid off immediately when adding a second source. And the sync loop (background thread, 6-hour interval, parallel scraping) taught me about <a href="https://tokio.rs" target="_blank" rel="noopener noreferrer">Tokio</a> channels and graceful shutdown the hard way.</p>
-          <p>Also: always pin your chromedriver version. Always.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="project-nav" data-animate>
-      <div class="container project-nav-inner">
-        <span></span>
-        <a href="/projects/axto" class="btn-ghost">Next project →</a>
-      </div>
-    </section>
-  </section>
-
-  <section data-lang="fr">
-    <section class="project-hero" data-animate>
-      <div class="container">
-        <a href="/#projects" class="project-back">← Retour aux projets</a>
-        <span class="project-cat">Application Web</span>
-        <div class="accent-rule"></div>
-        <h1 class="project-title">MangaReader</h1>
-        <p class="project-tagline">Un lecteur de manga qui scrape des chapitres depuis des sites tiers, les fusionne en séries, et les sert via une interface web.</p>
-        <div class="project-links">
-          <a href="https://github.com/DevYatsu/mangaread" target="_blank" rel="noopener noreferrer" class="btn-primary">Voir sur GitHub →</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="project-section" data-animate>
-      <div class="container project-section-inner">
-        <div class="project-sidebar">
-          <span class="project-sidebar-label">Stack Technique</span>
-          <div class="project-techs">
-            <a href="https://rust-lang.org" target="_blank" rel="noopener noreferrer" class="tech-tag">Rust</a>
-            <a href="https://docs.rs/axum" target="_blank" rel="noopener noreferrer" class="tech-tag">Axum</a>
-            <a href="https://sqlite.org" target="_blank" rel="noopener noreferrer" class="tech-tag">SQLite</a>
-            <a href="https://docker.com" target="_blank" rel="noopener noreferrer" class="tech-tag">Docker</a>
-            <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" rel="noopener noreferrer" class="tech-tag">HTML/CSS/JS</a>
-          </div>
-        </div>
-        <div class="project-content">
-          <h2>Ce que ça fait</h2>
-          <p>MangaReader scrape des chapitres de manga depuis des sites de scanlation, les fusionne en séries, et les sert via une interface web locale. Tu peux marquer tes séries, suivre ta progression, et le serveur synchronise les nouveaux chapitres en arrière-plan.</p>
-
-          <h2>Architecture</h2>
-          <p>Trois crates Rust dans un workspace :</p>
-          <ul>
-            <li><strong>mangaread-core</strong> - types du domaine, repository SQLite, logique de fusion des séries</li>
-            <li><strong>scraper</strong> - trait SiteAdapter avec implémentations par site (Demonicscans, Manhuaplus), binaire CLI + bibliothèque</li>
-            <li><strong>website</strong> - serveur web Axum avec 10 modules de routes, templates <a href="https://maud.lambda.xyz/" target="_blank" rel="noopener noreferrer">Maud</a>, assets statiques</li>
-          </ul>
-          <p>La base de données utilise <a href="https://sqlite.org" target="_blank" rel="noopener noreferrer">SQLite</a> en mode WAL - quatre tables (series, manga, chapters, pages), tous les inserts utilisent <code>ON CONFLICT ... DO UPDATE</code>, donc tout est sûr à relancer.</p>
 
           <pre class="mermaid">flowchart TB
     CLI[ScraperEngine] --> DB[(SQLite)]
@@ -118,131 +46,226 @@ import Layout from "../../layouts/Layout.astro";
     WEB <--> BROWSER[Browser]
     BROWSER --> JS[app.js + localStorage]</pre>
 
-          <p><strong>État côté client sans comptes.</strong> Pas d'auth, pas de sessions. Les marque-pages et la progression vivent dans localStorage. Le JS lit localStorage et construit le DOM avec une petite fonction h(). C'est étonnamment propre - mais debugguer l'état sans base de données, c'est plus dur.</p>
+          <p><strong>Client-side state without accounts.</strong> No auth, no database sessions. Bookmarks and reading progress live entirely in localStorage. The JS reads from there and builds the DOM with a tiny h() helper. It's surprisingly clean — but debugging state without a database to query is harder.</p>
 
-          <h2>Les parties difficiles</h2>
-          <p><strong>Chromedriver.</strong> Le scraper utilise un vrai navigateur pour les sites manga chargés en JS. Faire marcher chromedriver dans Docker a pris 30% du temps de dev. Bugs de mode headless, problèmes de sandbox, processus zombies - le cirque habituel des webdrivers.</p>
-          <p><strong><a href="https://sqlite.org" target="_blank" rel="noopener noreferrer">SQLite</a> et le threading.</strong> La Connection de <a href="https://docs.rs/rusqlite" target="_blank" rel="noopener noreferrer">rusqlite</a> n'est pas Sync, donc chaque thread de scraping ouvre sa propre connexion. Le AppState principal wrappe la sienne dans un <a href="https://doc.rust-lang.org/std/sync/struct.Mutex.html" target="_blank" rel="noopener noreferrer">Mutex</a>. Ça semble simple, mais le borrow checker avait des opinions.</p>
-          <h2>Ce que j'ai appris</h2>
-          <p>C'était mon premier projet <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a> avec plusieurs crates dans un workspace, et ça m'a plus appris que n'importe quel tutoriel. Le système de types de <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a> est génial pour la modélisation du domaine - pas d'états invalides possibles - mais se battre avec le borrow checker pour la 50ème fois à 2h du matin, c'est un rite de passage.</p>
-          <p>Le pattern d'adaptateur (trait + implémentations par site) a payé immédiatement en ajoutant une deuxième source. Et la boucle de sync (thread background, intervalle de 6h, scraping parallèle) m'a appris les channels <a href="https://tokio.rs" target="_blank" rel="noopener noreferrer">Tokio</a> et l'arrêt gracieux à la dure.</p>
+          <h2>The hard parts</h2>
+          <p><strong>Chromedriver.</strong> The scraper uses a real browser for JavaScript-heavy manga sites. Getting chromedriver to behave in Docker was 30% of the dev time. Headless mode bugs, sandbox issues, zombie processes — the usual webdriver circus.</p>
+          <p><strong><a href="https://sqlite.org" target="_blank" rel="noopener noreferrer">SQLite</a> and threading.</strong> <a href="https://docs.rs/rusqlite" target="_blank" rel="noopener noreferrer">rusqlite</a>'s Connection isn't Sync, so each scraper thread opens its own connection. The main AppState wraps its own in a <a href="https://doc.rust-lang.org/std/sync/struct.Mutex.html" target="_blank" rel="noopener noreferrer">Mutex</a>. Sounds simple, but the borrow checker had opinions.</p>
+
+          <h2>What I learned</h2>
+          <p>This was my first <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a> project with multiple workspace crates, and it taught me more than any tutorial. Rust's type system is genuinely great for domain modeling — no invalid states possible — but fighting the borrow checker for the 50th time at 2am is a rite of passage.</p>
+          <p>The scraper adapter pattern — trait + per-site implementations — paid off immediately when adding a second source. And the sync loop (background thread, 6-hour interval, parallel scraping) taught me about <a href="https://tokio.rs" target="_blank" rel="noopener noreferrer">Tokio</a> channels and graceful shutdown the hard way.</p>
+          <p>Also: always pin your chromedriver version. Always.</p>
         </div>
       </div>
-    </section>
+    </article>
 
-    <section class="project-nav" data-animate>
+    <nav class="project-nav">
+      <div class="container project-nav-inner">
+        <span></span>
+        <a href="/projects/axto" class="btn-ghost">Next project →</a>
+      </div>
+    </nav>
+  </section>
+
+  <section data-lang="fr">
+    <article class="project-page" data-animate>
+      <div class="container">
+        <h1 class="project-title">MangaReader</h1>
+        <p class="project-tagline">Un lecteur de manga qui scrape des chapitres depuis des sites tiers, les fusionne en séries, et les sert via une interface web.</p>
+        <div class="project-links">
+          <a href="https://github.com/DevYatsu/mangaread" target="_blank" rel="noopener noreferrer" class="btn-primary">Voir sur GitHub</a>
+        </div>
+
+        <div class="project-tech-stack" data-animate>
+          <span class="tech-label">Stack Technique</span>
+          <div class="tech-list">
+            <a href="https://rust-lang.org" target="_blank" rel="noopener noreferrer" class="tech-tag">Rust</a>
+            <a href="https://docs.rs/axum" target="_blank" rel="noopener noreferrer" class="tech-tag">Axum</a>
+            <a href="https://sqlite.org" target="_blank" rel="noopener noreferrer" class="tech-tag">SQLite</a>
+            <a href="https://docker.com" target="_blank" rel="noopener noreferrer" class="tech-tag">Docker</a>
+            <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" rel="noopener noreferrer" class="tech-tag">HTML/CSS/JS</a>
+          </div>
+        </div>
+
+        <div class="project-content">
+          <h2>Ce que ça fait</h2>
+          <p>MangaReader scrape des chapitres de manga depuis des sites de scanlation, les fusionne en séries, et les sert via une interface web locale. Tu peux marquer tes séries, suivre ta progression, et le serveur synchronise les nouveaux chapitres en arrière-plan.</p>
+
+          <h2>Architecture</h2>
+          <p>Trois crates Rust dans un workspace :</p>
+          <ul>
+            <li><strong>mangaread-core</strong> — types du domaine, repository SQLite, logique de fusion des séries</li>
+            <li><strong>scraper</strong> — trait SiteAdapter avec implémentations par site (Demonicscans, Manhuaplus), binaire CLI + bibliothèque</li>
+            <li><strong>website</strong> — serveur web Axum avec 10 modules de routes, templates <a href="https://maud.lambda.xyz/" target="_blank" rel="noopener noreferrer">Maud</a>, assets statiques</li>
+          </ul>
+          <p>La base de données utilise <a href="https://sqlite.org" target="_blank" rel="noopener noreferrer">SQLite</a> en mode WAL — quatre tables (series, manga, chapters, pages), tous les inserts utilisent <code>ON CONFLICT ... DO UPDATE</code>, donc tout est sûr à relancer.</p>
+
+          <pre class="mermaid">flowchart TB
+    CLI[ScraperEngine] --> DB[(SQLite)]
+    WEB[Axum Server] --> DB
+    WEB <--> BROWSER[Browser]
+    BROWSER --> JS[app.js + localStorage]</pre>
+
+          <p><strong>État côté client sans comptes.</strong> Pas d'auth, pas de sessions. Les marque-pages et la progression vivent dans localStorage. Le JS lit localStorage et construit le DOM avec une petite fonction h(). C'est étonnamment propre — mais debugguer l'état sans base de données, c'est plus dur.</p>
+
+          <h2>Les parties difficiles</h2>
+          <p><strong>Chromedriver.</strong> Le scraper utilise un vrai navigateur pour les sites manga chargés en JS. Faire marcher chromedriver dans Docker a pris 30% du temps de dev. Bugs de mode headless, problèmes de sandbox, processus zombies — le cirque habituel des webdrivers.</p>
+          <p><strong><a href="https://sqlite.org" target="_blank" rel="noopener noreferrer">SQLite</a> et le threading.</strong> La Connection de <a href="https://docs.rs/rusqlite" target="_blank" rel="noopener noreferrer">rusqlite</a> n'est pas Sync, donc chaque thread de scraping ouvre sa propre connexion. Le AppState principal wrappe la sienne dans un <a href="https://doc.rust-lang.org/std/sync/struct.Mutex.html" target="_blank" rel="noopener noreferrer">Mutex</a>. Ça semble simple, mais le borrow checker avait des opinions.</p>
+
+          <h2>Ce que j'ai appris</h2>
+          <p>C'était mon premier projet <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a> avec plusieurs crates dans un workspace, et ça m'a plus appris que n'importe quel tutoriel. Le système de types de Rust est génial pour la modélisation du domaine — pas d'états invalides possibles — mais se battre avec le borrow checker pour la 50ème fois à 2h du matin, c'est un rite de passage.</p>
+          <p>Le pattern d'adaptateur — trait + implémentations par site — a payé immédiatement en ajoutant une deuxième source. Et la boucle de sync (thread background, intervalle de 6h, scraping parallèle) m'a appris les channels <a href="https://tokio.rs" target="_blank" rel="noopener noreferrer">Tokio</a> et l'arrêt gracieux à la dure.</p>
+        </div>
+      </div>
+    </article>
+
+    <nav class="project-nav">
       <div class="container project-nav-inner">
         <span></span>
         <a href="/projects/axto" class="btn-ghost">Projet suivant →</a>
       </div>
-    </section>
+    </nav>
   </section>
 </Layout>
 
 <style>
-  .project-hero { padding-top: 8rem; padding-bottom: 4rem; }
-  .project-back {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--text-muted);
-    text-decoration: none;
-    display: inline-block;
-    margin-bottom: 2rem;
-    transition: color 0.2s;
-  }
-  .project-back:hover { color: var(--text); }
-  .project-cat {
-    font-size: 0.65rem;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: var(--accent);
-    font-weight: 500;
-    display: block;
-    margin-bottom: 1rem;
-  }
-  .project-hero .accent-rule { margin-bottom: 1.5rem; }
-  .project-title {
-    font-family: var(--font-serif);
-    font-size: clamp(2.5rem, 6vw, 4rem);
-    letter-spacing: -0.03em;
-    line-height: 0.95;
-    margin-bottom: 1rem;
-  }
-  .project-tagline {
-    font-size: 1.125rem;
-    color: var(--text-muted);
-    line-height: 1.6;
-    max-width: 36rem;
-    margin-bottom: 2rem;
-  }
-  .project-links { display: flex; gap: 1rem; }
+/* Hallmark · genre: modern-minimal · macrostructure: Long Document
+ * design-system: design.md · designed-as-app
+ */
 
-  .project-section { padding: 4rem 0; border-top: 1px solid var(--border); }
-  .project-section-inner {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-  @media (min-width: 768px) {
-    .project-section-inner {
-      grid-template-columns: 12rem 1fr;
-    }
-  }
-  @media (min-width: 1024px) {
-    .project-section-inner {
-      grid-template-columns: 14rem 1fr;
-    }
-  }
+/* ── Project Page Layout ── */
+.project-page {
+  padding-top: 7rem;
+  padding-bottom: var(--space-2xl);
+}
 
-  .project-sidebar { }
-  .project-sidebar-label {
-    font-size: 0.6rem;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: var(--text-dim);
-    margin-bottom: 0.75rem;
-    display: block;
-  }
-  .project-techs { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-  @media (min-width: 768px) {
-    .project-techs { flex-direction: column; }
-  }
+.project-cat {
+  display: block;
+}
 
-  .project-content h2 {
-    font-family: var(--font-serif);
-    font-size: 1.5rem;
-    letter-spacing: -0.02em;
-    margin-bottom: 0.75rem;
-    margin-top: 2.5rem;
-  }
-  .project-content h2:first-child { margin-top: 0; }
-  .project-content p {
-    font-size: 0.95rem;
-    color: var(--text-muted);
-    line-height: 1.7;
-    margin-bottom: 1rem;
-  }
-  .project-content ul {
-    list-style: disc;
-    padding-left: 1.5rem;
-    margin-bottom: 1rem;
-  }
-  .project-content li {
-    font-size: 0.95rem;
-    color: var(--text-muted);
-    line-height: 1.7;
-    margin-bottom: 0.25rem;
-  }
-  .project-content li strong { color: var(--text); }
-  .project-content code {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 0.85rem;
-    background: var(--accent-light);
-    padding: 0.15rem 0.4rem;
-    border-radius: 3px;
-    color: var(--accent);
-  }
-  .project-nav { padding: 3rem 0 6rem; border-top: 1px solid var(--border); }
-  .project-nav-inner { display: flex; justify-content: space-between; }
+.project-title {
+  font-size: clamp(2.25rem, 5vw + 0.5rem, var(--text-display));
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  margin-bottom: var(--space-sm);
+}
+
+.project-tagline {
+  font-size: var(--text-md);
+  color: var(--color-muted);
+  line-height: 1.65;
+  max-width: 36rem;
+  margin-bottom: var(--space-lg);
+  font-family: var(--font-body);
+}
+
+@media (min-width: 768px) {
+  .project-tagline { font-size: var(--text-lg); }
+}
+
+.project-links {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-2xl);
+}
+
+.project-tech-stack {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding-bottom: var(--space-xl);
+  margin-bottom: var(--space-xl);
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.tech-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  white-space: nowrap;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tech-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+}
+
+.project-content {
+  max-width: 48rem;
+}
+
+.project-content h2 {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-top: var(--space-2xl);
+  margin-bottom: var(--space-sm);
+}
+
+.project-content h2:first-child { margin-top: 0; }
+
+.project-content p {
+  font-size: var(--text-base);
+  color: var(--color-ink-2);
+  line-height: 1.7;
+  margin-bottom: var(--space-md);
+}
+
+.project-content ul {
+  list-style: disc;
+  padding-left: var(--space-lg);
+  margin-bottom: var(--space-md);
+}
+
+.project-content li {
+  font-size: var(--text-base);
+  color: var(--color-ink-2);
+  line-height: 1.7;
+  margin-bottom: var(--space-2xs);
+}
+
+.project-content li strong { color: var(--color-ink); }
+
+.project-content code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: color-mix(in srgb, var(--color-accent) 8%, transparent);
+  padding: 0.15rem 0.4rem;
+  border-radius: var(--radius-sm);
+  color: var(--color-accent);
+}
+
+.project-content a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in srgb, var(--color-accent) 40%, transparent);
+  transition: all var(--dur-short) var(--ease-out);
+}
+
+.project-content a:hover {
+  text-decoration-color: var(--color-accent);
+}
+
+.project-content a code {
+  color: inherit;
+  background: none;
+  padding: 0;
+}
+
+.project-nav {
+  padding: var(--space-xl) 0 var(--space-2xl);
+}
+
+.project-nav-inner {
+  display: flex;
+  justify-content: space-between;
+}
 </style>

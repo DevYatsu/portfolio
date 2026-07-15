@@ -31,8 +31,8 @@ export const projects: Project[] = [
 		name: "MangaReader",
 		category: { en: "Web Application", fr: "Application Web" },
 		description: {
-			en: "A manga reader that scrapes chapters from third-party sites, merges them into series, and serves them through a web UI. Built in Rust with Axum and SQLite. Three workspace crates, a background sync loop, and more time spent debugging chromedriver than I'd like to admit.",
-			fr: "Un lecteur de manga qui scrape des chapitres depuis des sites tiers, les fusionne en séries, et les sert dans une interface web. Construit en Rust avec Axum et SQLite. Trois crates, une boucle de synchronisation, et plus de temps passé à debugger chromedriver que je veux bien l'admettre.",
+			en: "A Rust-powered manga reader that scrapes chapters from third-party sites, merges them into series, and serves them through a web interface. Three workspace crates — core domain, scraper adapter, Axum web server — with a background sync loop and SQLite persistence.",
+			fr: "Un lecteur de manga en Rust qui récupère des chapitres depuis des sites tiers, les fusionne en séries, et les sert dans une interface web. Trois crates d'espace de travail — domaine principal, adaptateur de scraper, serveur web Axum — avec une boucle de synchronisation en arrière-plan et une persistance SQLite.",
 		},
 		tags: [
 			{ name: "Rust", url: "https://rust-lang.org" },
@@ -47,8 +47,8 @@ export const projects: Project[] = [
 		name: "Axto",
 		category: { en: "Full-Stack Marketplace", fr: "Marketplace Full-Stack" },
 		description: {
-			en: "A marketplace for car parts. React Native mobile app for buyers, Astro web dashboard for sellers and admins. Supabase backend, vehicle compatibility matching, order management, reviews, notifications. The kind of project where the scope creep was real but I learned more than any tutorial could teach.",
-			fr: "Une marketplace pour pièces auto. App mobile React Native pour les acheteurs, portail web Astro pour les vendeurs. Backend Supabase, compatibilité véhicule, gestion des commandes, avis, notifications. Le genre de projet où le scope creep était réel mais où j'ai appris plus qu'avec n'importe quel tutoriel.",
+			en: "A marketplace platform for car parts. React Native mobile app for buyers, Astro web dashboard for sellers and admins. Supabase backend with vehicle compatibility matching, order management, reviews, and push notifications.",
+			fr: "Une plateforme marketplace pour pièces auto. App mobile React Native pour les acheteurs, portail web Astro pour les vendeurs et administrateurs. Backend Supabase avec compatibilité véhicule, gestion des commandes, avis et notifications push.",
 		},
 		tags: [
 			{ name: "React Native", url: "https://reactnative.dev" },
@@ -63,8 +63,8 @@ export const projects: Project[] = [
 		name: "YatsuScript",
 		category: { en: "Compilers & Runtimes", fr: "Compilateurs & Runtimes" },
 		description: {
-			en: "A bytecode interpreter from absolute scratch. No dependencies, no existing code, just me and the Rust compiler. Register allocation, memory mapping, instruction set design. Honestly the hardest and most rewarding thing I've built. If you like compilers, we should talk.",
-			fr: "Un interpréteur de bytecode écrit à partir de rien. Aucune dépendance, aucun code existant, juste moi et le compilateur Rust. Allocation de registres, mapping mémoire, design de jeu d'instructions. Honnêtement le truc le plus dur et le plus gratifiant que j'ai construit. Si t'aimes les compilateurs, on devrait parler.",
+			en: "A bytecode interpreter written entirely from scratch — no dependencies, no existing code, just Rust and the compiler. Register allocation, memory mapping, instruction set design. The hardest and most rewarding thing I've built.",
+			fr: "Un interpréteur de bytecode écrit intégralement à partir de rien — aucune dépendance, aucun code existant, juste Rust et le compilateur. Allocation de registres, mapping mémoire, conception de jeu d'instructions. Le projet le plus difficile et le plus gratifiant que j'ai réalisé.",
 		},
 		tags: [
 			{ name: "Rust", url: "https://rust-lang.org" },
@@ -82,8 +82,8 @@ export const staticSites: StaticSite[] = [
 		id: "devigny",
 		name: "De Vigny Avocat",
 		description: {
-			en: "Law firm website for IP and corporate law. Clean, professional, gets out of the way of the content.",
-			fr: "Site vitrine pour un cabinet d'avocats en droit des affaires. Propre, professionnel, laisse parler le contenu.",
+			en: "Law firm website for IP and corporate law. Clean, professional law firm site that lets the content speak.",
+			fr: "Site professionnel pour un cabinet d'avocats en droit des affaires. Sobre, élégant, le contenu prime.",
 		},
 		tags: ["Astro", "Tailwind"],
 		url: "https://yatsu-avocat.netlify.app",
@@ -92,8 +92,8 @@ export const staticSites: StaticSite[] = [
 		id: "lestudio",
 		name: "Le Studio",
 		description: {
-			en: "Bowling alley in Paris. Oak lanes, good food, and a website that matches the vibe.",
-			fr: "Bowling à Paris. Pistes en chêne, bonne cuisine, et un site qui colle à l'ambiance.",
+			en: "Bowling alley in Paris. Oak lanes, good food, clean web presence.",
+			fr: "Bowling à Paris. Pistes en chêne, bonne cuisine, présence web soignée.",
 		},
 		tags: ["Astro", "Tailwind"],
 		url: "https://le-bowling.netlify.app",
@@ -102,8 +102,8 @@ export const staticSites: StaticSite[] = [
 		id: "cisaille",
 		name: "Cisaille Paris",
 		description: {
-			en: "Barber shop in Le Marais, Paris. They do precision haircuts; I did the website.",
-			fr: "Barber shop dans le Marais à Paris. Ils font des coupes de précision ; j'ai fait le site.",
+			en: "Precision barber shop in Le Marais, Paris. Clean site, sharp cuts.",
+			fr: "Barbier de précision dans le Marais à Paris. Site propre, coupes nettes.",
 		},
 		tags: ["Astro", "React"],
 		url: "https://cisaille.netlify.app",

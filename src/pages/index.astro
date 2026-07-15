@@ -4,625 +4,636 @@ import { projects, staticSites, skills } from "../data/portfolio";
 ---
 
 <Layout title="Yanis Amani // CS Student | Étudiant en Informatique">
-	<section data-lang="en">
-		<!-- ═══ HERO ═══ -->
-		<section class="hero" data-animate>
-			<div class="container hero-inner">
-				<span class="hero-tag">Systems · Web · Reliability</span>
-				<div class="accent-rule"></div>
-				<h1 class="hero-title">
-					Building<br/>
-					<span class="hero-accent">Reliability.</span>
-				</h1>
-				<p class="hero-role">I'm a CS student who likes building stuff that doesn't fall over. Rust, TypeScript, systems programming. The fun kind of problems.</p>
-				<div class="hero-actions">
-					<a href="#projects" class="btn-primary">View Projects →</a>
-					<a href="#contact" class="btn-ghost">Get in Touch</a>
-				</div>
-			</div>
-		</section>
+  <!-- ═══════ ENGLISH ═══════ -->
+  <section data-lang="en">
 
-		<!-- ═══ INFO BAR ═══ -->
-		<div class="container">
-			<div class="info-bar">
-				<div class="info-item" style="background: var(--bg);">
-					<div class="label">Role</div>
-					<div class="value">CS Student</div>
-				</div>
-				<div class="info-item" style="background: var(--bg);">
-					<div class="label">Focus</div>
-					<div class="value">Quality Code</div>
-				</div>
-				<div class="info-item" style="background: var(--bg);">
-					<div class="label">Education</div>
-					<div class="value">BSc Computer Science</div>
-				</div>
-			</div>
-		</div>
+    <!-- MARQUEE HERO -->
+    <section class="marquee-hero">
+      <div class="container marquee-hero__inner">
+        <span class="marquee-hero__badge">CS Student · Systems · Web · Reliability</span>
+        <h1 class="marquee-hero__title">Yanis <span class="marquee-hero__accent">Amani</span></h1>
+        <p class="marquee-hero__desc">I build reliable software. Rust, TypeScript, systems programming — the kind that doesn't fall over in production.</p>
+      </div>
+    </section>
 
-		<!-- ═══ PROJECTS ═══ -->
-		<section id="projects" class="section-pad">
-			<div class="container">
-				<div class="section-header" data-animate>
-					<h2>Projects</h2>
-					<p class="sub">Stuff I actually built. Side projects, open-source tools, the kind of things you work on at 1am because they're fun.</p>
-				</div>
+    <hr class="section-divider" />
 
-				<div class="projects-list">
-					{projects.map((p) => (
-						<a href={`/projects/${p.id}`} class="project-card" data-animate aria-label={p.name}>
-							<div class="project-top">
-								<span class="cat">{p.category.en}</span>
-								<span class="project-detail-link">View details</span>
-							</div>
-							<h3 class="name">{p.name}</h3>
-							<p class="desc">{p.description.en}</p>
-							<div class="project-meta" onclick="event.stopPropagation()">
-								{p.tags.map((tag) => (
-									<a href={tag.url} target="_blank" rel="noopener noreferrer" class="tech-tag" onclick="event.stopPropagation()">{tag.name}</a>
-								))}
-								{p.link.url ? (
-									<a href={p.link.url} target="_blank" rel="noopener noreferrer" class="project-link" onclick="event.stopPropagation()">
-										{p.link.label}
-									</a>
-								) : (
-									<span class="project-link" style="opacity: 0.4; cursor: default;">{p.link.label}</span>
-								)}
-							</div>
-						</a>
-					))}
-				</div>
-			</div>
-		</section>
+    <!-- PROJECTS -->
+    <section id="projects" class="section marquee-section">
+      <div class="container">
+        <div class="section__head" data-animate>
+          <h2 class="section__title">Projects</h2>
+          <p class="section__sub">Side projects, open-source tools, and things I built because they were interesting problems.</p>
+        </div>
+        <div class="project-grid" data-animate>
+          {projects.map((p) => (
+            <a href={`/projects/${p.id}`} class="project-card" aria-label={p.name}>
+              <span class="project-card__cat">{p.category.en}</span>
+              <h3 class="project-card__name">{p.name}</h3>
+              <p class="project-card__desc">{p.description.en}</p>
+              <div class="project-card__tags">
+                {p.tags.map((tag) => (
+                  <a href={tag.url} target="_blank" rel="noopener noreferrer" class="tech-tag">{tag.name}</a>
+                ))}
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
 
-		<!-- ═══ STATIC WEBSITES ═══ -->
-		<section class="container" style="padding-bottom: 4rem;">
-			<div class="static-header">
-				<span class="static-label">Also · Static Websites</span>
-				<span class="static-count">{staticSites.length} projects</span>
-			</div>
-			<div class="static-grid">
-				{staticSites.map((site, i) => (
-					<a href={site.url} target="_blank" rel="noopener noreferrer" class="static-card">
-						<div class="num">0{i + 1}</div>
-						<h3 class="name">{site.name}</h3>
-						<p class="desc">{site.description.en}</p>
-						<div class="static-tags">
-							{site.tags.map((tag) => (
-								<span class="mini-tag">{tag}</span>
-							))}
-						</div>
-						<span class="static-hover-text">click to access</span>
-					</a>
-				))}
-			</div>
-		</section>
+    <!-- STATIC SITES -->
+    <section class="section marquee-section">
+      <div class="container">
+        <div class="section__head" data-animate>
+          <h2 class="section__title">Static Sites</h2>
+          <p class="section__sub">Client projects — clean, professional web presence.</p>
+        </div>
+        <div class="static-grid" data-animate>
+          {staticSites.map((site) => (
+            <a href={site.url} target="_blank" rel="noopener noreferrer" class="static-card">
+              <h3 class="static-card__name">{site.name}</h3>
+              <p class="static-card__desc">{site.description.en}</p>
+              <div class="static-card__tags">
+                {site.tags.map((tag) => (
+                  <span class="mini-tag">{tag}</span>
+                ))}
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
 
-		<!-- ═══ SKILLS ═══ -->
-		<section id="skills" class="section-pad" style="border-top: 1px solid var(--border);">
-			<div class="container">
-				<div class="section-header" data-animate>
-					<h2>My Tools</h2>
-					<p class="sub">Languages and frameworks I actually reach for.</p>
-				</div>
+    <hr class="section-divider" />
 
-				<div class="skills-filter" data-animate>
-					<button class="skills-filter-btn active" data-filter="all">All</button>
-					<button class="skills-filter-btn" data-filter="lang">Languages</button>
-					<button class="skills-filter-btn" data-filter="frontend">Frontend</button>
-					<button class="skills-filter-btn" data-filter="backend">Backend</button>
-					<button class="skills-filter-btn" data-filter="systems">Systems</button>
-				</div>
+    <!-- SKILLS -->
+    <section id="skills" class="section marquee-section">
+      <div class="container container--narrow">
+        <div class="section__head" data-animate>
+          <h2 class="section__title">Skills</h2>
+          <p class="section__sub">Languages and frameworks I reach for daily.</p>
+        </div>
+        <div class="skills-filter" data-animate>
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="lang">Languages</button>
+          <button class="filter-btn" data-filter="frontend">Frontend</button>
+          <button class="filter-btn" data-filter="backend">Backend</button>
+          <button class="filter-btn" data-filter="systems">Systems</button>
+        </div>
+        <div class="skills-pool" data-animate>
+          {skills.map((s) => (
+            <span class="skill-chip" data-category={s.category}>{s.name}</span>
+          ))}
+        </div>
+      </div>
+    </section>
 
-				<div class="skills-tags" data-animate>
-					{skills.map((s) => (
-						<span class="skill-tag" data-category={s.category}>{s.name}</span>
-					))}
-				</div>
-			</div>
-		</section>
+    <!-- ABOUT -->
+    <section id="about" class="section marquee-section">
+      <div class="container container--narrow">
+        <div class="section__head" data-animate>
+          <h2 class="section__title">Approach</h2>
+          <p class="section__sub">How I think about building software.</p>
+        </div>
+        <div class="about-body" data-animate>
+          <p class="about-text">I care about the boring stuff. Good error handling, clean interfaces, code that's still readable six months later. I've broken enough things in production to know that "it works on my machine" is not a testing strategy. These days I'd rather go slow and get it right.</p>
+          <div class="values-row">
+            <span class="value-chip">Reliability</span>
+            <span class="value-chip">Performance</span>
+            <span class="value-chip">Security</span>
+          </div>
+        </div>
+      </div>
+    </section>
 
-		<!-- ═══ ABOUT ═══ -->
-		<section id="about" class="section-pad" style="border-top: 1px solid var(--border);">
-			<div class="container">
-				<div class="section-header" data-animate>
-					<h2>My Approach</h2>
-					<p class="sub">I try to write code that doesn't embarrass me six months later.</p>
-				</div>
+    <hr class="section-divider" />
 
-				<div class="about-grid" data-animate>
-					<p class="about-text">I care about the boring stuff. Good error handling. Clean interfaces. Not shipping yet another npm package that could've been a file. I've broken enough things in production to know that "it works on my machine" is not a testing strategy. These days I'd rather go slow and get it right.</p>
-					<div class="values-box">
-						<div class="v-label">Core Values</div>
-						<div class="v-item">Reliability</div>
-						<div class="v-item">Performance</div>
-						<div class="v-item">Security</div>
-					</div>
-				</div>
-			</div>
-		</section>
+    <!-- CONTACT -->
+    <section id="contact" class="section marquee-section">
+      <div class="container container--narrow">
+        <div class="contact-card" data-animate>
+          <h2 class="contact-card__title">Get in Touch</h2>
+          <p class="contact-card__sub">Got a project, an idea, or just want to chat? I'm around.</p>
+          <div class="contact-card__body">
+            <a href="mailto:yanis.amani@icloud.com" class="contact-card__email">yanis.amani@icloud.com</a>
+            <div class="contact-card__socials">
+              <a href="https://linkedin.com/in/yanis-amani" target="_blank" class="contact-card__social">LinkedIn</a>
+              <a href="https://github.com/DevYatsu" target="_blank" class="contact-card__social">GitHub</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-		<!-- ═══ CONTACT ═══ -->
-		<section id="contact" class="section-pad" style="border-top: 1px solid var(--border); margin-bottom: 4rem;">
-			<div class="container">
-				<div class="section-header" data-animate>
-					<h2>Get in Touch</h2>
-					<p class="sub">Got a project, an idea, or just want to chat? I'm around.</p>
-				</div>
+  </section>
 
-				<div class="contact-grid" data-animate>
-					<div>
-						<p class="contact-label">Email</p>
-						<a href="mailto:yanis.amani@icloud.com" class="contact-email">
-							yanis.amani@icloud.com
-						</a>
-						<p class="contact-label" style="margin-top: 2rem;">Social</p>
-						<div class="contact-socials">
-							<a href="https://linkedin.com/in/yanis-amani" target="_blank" class="social-link">LinkedIn ↗</a>
-							<a href="https://github.com/DevYatsu" target="_blank" class="social-link">GitHub ↗</a>
-						</div>
-					</div>
-					<div class="contact-hello">
-						<p class="contact-label">Send a message</p>
-						<a href="mailto:yanis.amani@icloud.com" class="big-hello">hello@ →</a>
-					</div>
-				</div>
-			</div>
-		</section>
-	</section>
+  <!-- ═══════ FRENCH ═══════ -->
+  <section data-lang="fr">
 
-	<section data-lang="fr">
-		<!-- ═══ HERO ═══ -->
-		<section class="hero" data-animate>
-			<div class="container hero-inner">
-				<span class="hero-tag">Systèmes · Web · Fiabilité</span>
-				<div class="accent-rule"></div>
-				<h1 class="hero-title">
-					Construire la<br/>
-					<span class="hero-accent">Fiabilité.</span>
-				</h1>
-				<p class="hero-role">Étudiant en informatique, j'aime construire des trucs qui tiennent la route. Rust, TypeScript, programmation système. Le genre de problèmes qui sont marrants.</p>
-				<div class="hero-actions">
-					<a href="#projects" class="btn-primary">Voir les projets →</a>
-					<a href="#contact" class="btn-ghost">Me contacter</a>
-				</div>
-			</div>
-		</section>
+    <!-- MARQUEE HERO -->
+    <section class="marquee-hero">
+      <div class="container marquee-hero__inner">
+        <span class="marquee-hero__badge">Étudiant en Informatique · Systèmes · Web · Fiabilité</span>
+        <h1 class="marquee-hero__title">Yanis <span class="marquee-hero__accent">Amani</span></h1>
+        <p class="marquee-hero__desc">Je construis des logiciels fiables. Rust, TypeScript, programmation système — le genre qui tient la route en production.</p>
+      </div>
+    </section>
 
-		<!-- ═══ INFO BAR ═══ -->
-		<div class="container">
-			<div class="info-bar">
-				<div class="info-item" style="background: var(--bg);">
-					<div class="label">Rôle</div>
-					<div class="value">Étudiant</div>
-				</div>
-				<div class="info-item" style="background: var(--bg);">
-					<div class="label">Focus</div>
-					<div class="value">Code de qualité</div>
-				</div>
-				<div class="info-item" style="background: var(--bg);">
-					<div class="label">Formation</div>
-					<div class="value">BSc Informatique</div>
-				</div>
-			</div>
-		</div>
+    <hr class="section-divider" />
 
-		<!-- ═══ PROJECTS ═══ -->
-		<section id="projects" class="section-pad">
-			<div class="container">
-				<div class="section-header" data-animate>
-					<h2>Projets</h2>
-					<p class="sub">Des trucs que j'ai vraiment construits. Projets perso, outils open-source, le genre de code que tu écris à 1h du matin parce que c'est trop fun.</p>
-				</div>
+    <!-- PROJETS -->
+    <section id="projects" class="section marquee-section">
+      <div class="container">
+        <div class="section__head" data-animate>
+          <h2 class="section__title">Projets</h2>
+          <p class="section__sub">Projets perso, outils open-source, des trucs construits parce que le problème était intéressant.</p>
+        </div>
+        <div class="project-grid" data-animate>
+          {projects.map((p) => (
+            <a href={`/projects/${p.id}`} class="project-card" aria-label={p.name}>
+              <span class="project-card__cat">{p.category.fr}</span>
+              <h3 class="project-card__name">{p.name}</h3>
+              <p class="project-card__desc">{p.description.fr}</p>
+              <div class="project-card__tags">
+                {p.tags.map((tag) => (
+                  <a href={tag.url} target="_blank" rel="noopener noreferrer" class="tech-tag">{tag.name}</a>
+                ))}
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
 
-				<div class="projects-list">
-					{projects.map((p) => (
-						<a href={`/projects/${p.id}`} class="project-card" data-animate aria-label={p.name}>
-							<div class="project-top">
-								<span class="cat">{p.category.fr}</span>
-								<span class="project-detail-link">Voir plus</span>
-							</div>
-							<h3 class="name">{p.name}</h3>
-							<p class="desc">{p.description.fr}</p>
-							<div class="project-meta" onclick="event.stopPropagation()">
-								{p.tags.map((tag) => (
-									<a href={tag.url} target="_blank" rel="noopener noreferrer" class="tech-tag" onclick="event.stopPropagation()">{tag.name}</a>
-								))}
-								{p.link.url ? (
-									<a href={p.link.url} target="_blank" rel="noopener noreferrer" class="project-link" onclick="event.stopPropagation()">
-										{p.link.label}
-									</a>
-								) : (
-									<span class="project-link" style="opacity: 0.4; cursor: default;">{p.link.label}</span>
-								)}
-							</div>
-						</a>
-					))}
-				</div>
-			</div>
-		</section>
+    <!-- SITES STATIQUES -->
+    <section class="section marquee-section">
+      <div class="container">
+        <div class="section__head" data-animate>
+          <h2 class="section__title">Sites statiques</h2>
+          <p class="section__sub">Projets clients — présence web propre et professionnelle.</p>
+        </div>
+        <div class="static-grid" data-animate>
+          {staticSites.map((site) => (
+            <a href={site.url} target="_blank" rel="noopener noreferrer" class="static-card">
+              <h3 class="static-card__name">{site.name}</h3>
+              <p class="static-card__desc">{site.description.fr}</p>
+              <div class="static-card__tags">
+                {site.tags.map((tag) => (
+                  <span class="mini-tag">{tag}</span>
+                ))}
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
 
-		<!-- ═══ STATIC WEBSITES ═══ -->
-		<section class="container" style="padding-bottom: 4rem;">
-			<div class="static-header">
-				<span class="static-label">Aussi · Sites statiques</span>
-				<span class="static-count">{staticSites.length} projets</span>
-			</div>
-			<div class="static-grid">
-				{staticSites.map((site, i) => (
-					<a href={site.url} target="_blank" rel="noopener noreferrer" class="static-card">
-						<div class="num">0{i + 1}</div>
-						<h3 class="name">{site.name}</h3>
-						<p class="desc">{site.description.fr}</p>
-						<div class="static-tags">
-							{site.tags.map((tag) => (
-								<span class="mini-tag">{tag}</span>
-							))}
-						</div>
-						<span class="static-hover-text">cliquer pour accéder</span>
-					</a>
-				))}
-			</div>
-		</section>
+    <hr class="section-divider" />
 
-		<!-- ═══ SKILLS ═══ -->
-		<section id="skills" class="section-pad" style="border-top: 1px solid var(--border);">
-			<div class="container">
-				<div class="section-header" data-animate>
-					<h2>Mes outils</h2>
-					<p class="sub">Langages et frameworks que j'utilise vraiment.</p>
-				</div>
+    <!-- COMPÉTENCES -->
+    <section id="skills" class="section marquee-section">
+      <div class="container container--narrow">
+        <div class="section__head" data-animate>
+          <h2 class="section__title">Compétences</h2>
+          <p class="section__sub">Langages et frameworks que j'utilise quotidiennement.</p>
+        </div>
+        <div class="skills-filter" data-animate>
+          <button class="filter-btn active" data-filter="all">Tous</button>
+          <button class="filter-btn" data-filter="lang">Langages</button>
+          <button class="filter-btn" data-filter="frontend">Frontend</button>
+          <button class="filter-btn" data-filter="backend">Backend</button>
+          <button class="filter-btn" data-filter="systems">Système</button>
+        </div>
+        <div class="skills-pool" data-animate>
+          {skills.map((s) => (
+            <span class="skill-chip" data-category={s.category}>{s.name}</span>
+          ))}
+        </div>
+      </div>
+    </section>
 
-				<div class="skills-filter" data-animate>
-					<button class="skills-filter-btn active" data-filter="all">Tous</button>
-					<button class="skills-filter-btn" data-filter="lang">Langages</button>
-					<button class="skills-filter-btn" data-filter="frontend">Frontend</button>
-					<button class="skills-filter-btn" data-filter="backend">Backend</button>
-					<button class="skills-filter-btn" data-filter="systems">Système</button>
-				</div>
+    <!-- APPROCHE -->
+    <section id="about" class="section marquee-section">
+      <div class="container container--narrow">
+        <div class="section__head" data-animate>
+          <h2 class="section__title">Approche</h2>
+          <p class="section__sub">Comment je pense le développement logiciel.</p>
+        </div>
+        <div class="about-body" data-animate>
+          <p class="about-text">Je me soucie des trucs ennuyeux. La gestion d'erreurs propre, des interfaces claires, du code qui se relit encore six mois après. J'ai assez cassé de choses en production pour savoir que « ça marche sur ma machine » n'est pas une stratégie de test. Maintenant je préfère aller lentement mais bien faire les choses.</p>
+          <div class="values-row">
+            <span class="value-chip">Fiabilité</span>
+            <span class="value-chip">Performance</span>
+            <span class="value-chip">Sécurité</span>
+          </div>
+        </div>
+      </div>
+    </section>
 
-				<div class="skills-tags" data-animate>
-					{skills.map((s) => (
-						<span class="skill-tag" data-category={s.category}>{s.name}</span>
-					))}
-				</div>
-			</div>
-		</section>
+    <hr class="section-divider" />
 
-		<!-- ═══ ABOUT ═══ -->
-		<section id="about" class="section-pad" style="border-top: 1px solid var(--border);">
-			<div class="container">
-				<div class="section-header" data-animate>
-					<h2>Mon approche</h2>
-					<p class="sub">J'essaie d'écrire du code qui ne me fait pas honte six mois après.</p>
-				</div>
+    <!-- CONTACT -->
+    <section id="contact" class="section marquee-section">
+      <div class="container container--narrow">
+        <div class="contact-card" data-animate>
+          <h2 class="contact-card__title">Me contacter</h2>
+          <p class="contact-card__sub">Un projet, une idée, ou juste envie de parler ? Je suis là.</p>
+          <div class="contact-card__body">
+            <a href="mailto:yanis.amani@icloud.com" class="contact-card__email">yanis.amani@icloud.com</a>
+            <div class="contact-card__socials">
+              <a href="https://linkedin.com/in/yanis-amani" target="_blank" class="contact-card__social">LinkedIn</a>
+              <a href="https://github.com/DevYatsu" target="_blank" class="contact-card__social">GitHub</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-				<div class="about-grid" data-animate>
-					<p class="about-text">Je me soucie des trucs ennuyeux. La gestion d'erreurs propre. Des interfaces claires. Ne pas balancer un énième package npm qui aurait pu être un fichier. J'ai assez cassé de choses en production pour savoir que "ça marche sur ma machine" n'est pas une stratégie de test. Maintenant je préfère aller lentement mais bien faire les choses.</p>
-					<div class="values-box">
-						<div class="v-label">Valeurs</div>
-						<div class="v-item">Fiabilité</div>
-						<div class="v-item">Performance</div>
-						<div class="v-item">Sécurité</div>
-					</div>
-				</div>
-			</div>
-		</section>
-
-		<!-- ═══ CONTACT ═══ -->
-		<section id="contact" class="section-pad" style="border-top: 1px solid var(--border); margin-bottom: 4rem;">
-			<div class="container">
-				<div class="section-header" data-animate>
-					<h2>Me contacter</h2>
-					<p class="sub">Un projet, une idée, ou juste envie de parler ? Je suis là.</p>
-				</div>
-
-				<div class="contact-grid" data-animate>
-					<div>
-						<p class="contact-label">Email</p>
-						<a href="mailto:yanis.amani@icloud.com" class="contact-email">
-							yanis.amani@icloud.com
-						</a>
-						<p class="contact-label" style="margin-top: 2rem;">Social</p>
-						<div class="contact-socials">
-							<a href="https://linkedin.com/in/yanis-amani" target="_blank" class="social-link">LinkedIn ↗</a>
-							<a href="https://github.com/DevYatsu" target="_blank" class="social-link">GitHub ↗</a>
-						</div>
-					</div>
-					<div class="contact-hello">
-						<p class="contact-label">Envoyer un message</p>
-						<a href="mailto:yanis.amani@icloud.com" class="big-hello">hello@ →</a>
-					</div>
-				</div>
-			</div>
-		</section>
-	</section>
+  </section>
 </Layout>
 
+<!-- Scripts (same as current — keep these exactly) -->
 <script is:inline data-astro-rerun>
-	// Extend __setLanguage (from Layout) with homepage-specific behavior
-	window.__setLanguage = (function() {
-		var orig = window.__setLanguage;
-		return function(lang) {
-			if (orig) orig(lang);
-			// Reset skill filter — activate "All" in the visible language section
-			document.querySelectorAll('.skill-tag').forEach(function(el) { el.style.display = ''; });
-			document.querySelectorAll('.skills-filter-btn').forEach(function(b) { b.classList.remove('active'); });
-			var visibleAll = document.querySelector('section[data-lang="' + lang + '"] .skills-filter-btn[data-filter="all"]');
-			if (visibleAll) visibleAll.classList.add('active');
-			// Force .visible on data-animate elements in the now-visible section
-			if (window.__revealAnimations) window.__revealAnimations();
-			// Re-apply filter to the visible section
-			if (window.__filterSkills) window.__filterSkills();
-		};
-	})();
+  window.__setLanguage = (function() {
+    var orig = window.__setLanguage;
+    return function(lang) {
+      if (orig) orig(lang);
+      document.querySelectorAll('.skill-chip').forEach(function(el) { el.style.display = ''; });
+      document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+      var visibleAll = document.querySelector('section[data-lang="' + lang + '"] .filter-btn[data-filter="all"]');
+      if (visibleAll) visibleAll.classList.add('active');
+      if (window.__revealAnimations) window.__revealAnimations();
+      if (window.__filterSkills) window.__filterSkills();
+    };
+  })();
 </script>
 
 <script>
-	// Skill filter interaction — global function so __setLanguage can call it
-	window.__filterSkills = function() {
-		const active = document.querySelector('.skills-filter-btn.active');
-		const tags = document.querySelectorAll('.skill-tag');
-		const filterVal = active ? active.dataset.filter : 'all';
-		tags.forEach(tag => {
-			// Only toggle tags in the visible language container.
-			// Check the section's offsetParent (null when section has display:none)
-			// rather than the tag's — tags hidden by a previous filter also have
-			// offsetParent === null, which would make them unfixable.
-			const section = tag.closest('[data-lang]');
-			if (!section || section.offsetParent === null) return;
-			tag.style.display = (filterVal === 'all' || tag.dataset.category === filterVal) ? '' : 'none';
-		});
-	};
+  window.__filterSkills = function() {
+    var active = document.querySelector('.filter-btn.active');
+    var chips = document.querySelectorAll('.skill-chip');
+    var filterVal = active ? active.dataset.filter : 'all';
+    chips.forEach(function(chip) {
+      var section = chip.closest('[data-lang]');
+      if (!section || section.offsetParent === null) return;
+      chip.style.display = (filterVal === 'all' || chip.dataset.category === filterVal) ? '' : 'none';
+    });
+  };
 
-	// Force .visible on data-animate elements that are currently visible (skips IntersectionObserver delay)
-	window.__revealAnimations = function() {
-		document.querySelectorAll('[data-animate]').forEach(el => {
-			if (el.offsetParent !== null) el.classList.add('visible');
-		});
-	};
+  window.__revealAnimations = function() {
+    document.querySelectorAll('[data-animate]').forEach(function(el) {
+      if (el.offsetParent !== null) el.classList.add('visible');
+    });
+  };
 
-	document.addEventListener('astro:page-load', () => {
-		document.querySelectorAll('.skills-filter-btn').forEach(btn => {
-			btn.addEventListener('click', () => {
-				document.querySelectorAll('.skills-filter-btn').forEach(b => b.classList.remove('active'));
-				btn.classList.add('active');
-				window.__filterSkills();
-			});
-		});
+  document.addEventListener('astro:page-load', function() {
+    document.querySelectorAll('.filter-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        window.__filterSkills();
+      });
+    });
 
-		// Handle plain #hash links (hero buttons etc.) — when duplicate IDs
-		// exist across en/fr sections, scroll to the VISIBLE element.
-		document.addEventListener('click', (e) => {
-			const link = e.target.closest('a[href^="#"]:not([href="#"])');
-			if (!link) return;
-			const id = link.getAttribute('href').substring(1);
-			const candidates = document.querySelectorAll(`[id="${id}"]`);
-			if (candidates.length <= 1) return; // no dupes → native is fine
-			e.preventDefault();
-			let el = null;
-			for (const c of candidates) {
-				if (c.offsetParent !== null) { el = c; break; }
-			}
-			if (!el) el = document.getElementById(id);
-			if (!el) return;
-			history.replaceState(null, '', link.getAttribute('href'));
-			const top = el.getBoundingClientRect().top + window.scrollY - 80;
-			window.scrollTo({ top, behavior: 'smooth' });
-		});
-	});
+    document.addEventListener('click', function(e) {
+      var link = e.target.closest('a[href^="#"]:not([href="#"])');
+      if (!link) return;
+      var id = link.getAttribute('href').substring(1);
+      var candidates = document.querySelectorAll('[id="' + id + '"]');
+      if (candidates.length <= 1) return;
+      e.preventDefault();
+      var el = null;
+      for (var i = 0; i < candidates.length; i++) {
+        if (candidates[i].offsetParent !== null) { el = candidates[i]; break; }
+      }
+      if (!el) el = document.getElementById(id);
+      if (!el) return;
+      history.replaceState(null, '', link.getAttribute('href'));
+      var top = el.getBoundingClientRect().top + window.scrollY - 96;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    });
+  });
 </script>
 
 <style>
-	/* ── Hero ── */
-	.hero {
-		min-height: 85vh;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		padding-top: 3.5rem;
-	}
-	.hero-tag {
-		font-size: 0.65rem;
-		text-transform: uppercase;
-		letter-spacing: 0.2em;
-		color: var(--accent);
-		font-weight: 500;
-		margin-bottom: 1.25rem;
-		display: block;
-	}
-	.hero .accent-rule { margin-bottom: 2rem; }
-	.hero-title {
-		font-size: clamp(2.5rem, 8vw, 5rem);
-		letter-spacing: -0.03em;
-		line-height: 0.92;
-		margin-bottom: 1.5rem;
-	}
-	.hero-accent { font-style: italic; color: var(--accent); }
-	.hero-role {
-		font-size: 1rem;
-		color: var(--text-muted);
-		line-height: 1.6;
-		max-width: 32rem;
-		margin-bottom: 2.5rem;
-	}
-	@media (min-width: 768px) { .hero-role { font-size: 1.125rem; } }
-	.hero-actions { display: flex; gap: 1rem; align-items: center; }
+/* ═══════════════════════════════════════════
+   Hallmark · genre: modern-minimal · macrostructure: Marquee Hero
+   design-system: design.md · designed-as-app
+   pre-emit critique: P5 H4 E4 S4 R4 V5
+   ═══════════════════════════════════════════ */
 
-	/* ── Info Bar ── */
-	.info-bar {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 1px;
-		background: var(--border);
-		border-top: 1px solid var(--border);
-	}
+/* ── Marquee Hero ── */
+.marquee-hero {
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
 
-	/* ── Projects ── */
-	.projects-list {
-		display: flex;
-		flex-direction: column;
-		gap: 1.5rem;
-	}
-	.project-top {
-		display: flex;
-		justify-content: space-between;
-		align-items: flex-start;
-		margin-bottom: 1rem;
-	}
-	.project-detail-link { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text); opacity: 0.35; font-weight: 400; transition: opacity 0.2s; }
-	.project-card:hover .project-detail-link { opacity: 0.6; }
-	.project-meta {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-		align-items: center;
-	}
-	.project-link {
-		font-size: 0.65rem;
-		text-transform: uppercase;
-		letter-spacing: 0.15em;
-		color: var(--accent);
-		font-weight: 500;
-		text-decoration: none;
-		margin-left: auto;
-		transition: color 0.2s;
-		white-space: nowrap;
-	}
-	.project-link:hover { color: var(--accent-hover); }
+.marquee-hero__inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
 
-	/* ── Static Websites ── */
-	.static-header {
-		border-top: 1px solid var(--border);
-		padding-top: 2.5rem;
-		margin-bottom: 1.5rem;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-	}
-	.static-label {
-		font-size: 0.6rem;
-		text-transform: uppercase;
-		letter-spacing: 0.2em;
-		color: var(--text-dim);
-	}
-	.static-count {
-		font-size: 0.65rem;
-		color: var(--text-dim);
-	}
-	.static-grid {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1px;
-		background: var(--border);
-		border: 1px solid var(--border);
-		border-radius: 8px;
-		overflow: hidden;
-	}
-	@media (min-width: 640px) {
-		.static-grid { grid-template-columns: repeat(2, 1fr); }
-	}
-	@media (min-width: 1024px) {
-		.static-grid { grid-template-columns: repeat(3, 1fr); }
-	}
-	.static-tags { display: flex; flex-wrap: wrap; gap: 0.375rem; }
+.marquee-hero__badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-accent);
+  margin-bottom: var(--space-md);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
 
-	/* ── Skills Filter ── */
-	.skills-filter {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-		margin-bottom: 1.5rem;
-	}
-	.skills-filter-btn {
-		font-family: var(--font-sans);
-		font-size: 0.65rem;
-		text-transform: uppercase;
-		letter-spacing: 0.12em;
-		padding: 0.4rem 0.85rem;
-		border: 1px solid var(--border);
-		border-radius: 999px;
-		background: transparent;
-		color: var(--text-muted);
-		cursor: pointer;
-		transition: all 0.2s;
-	}
-	.skills-filter-btn:hover {
-		border-color: var(--accent);
-		color: var(--accent);
-	}
-	.skills-filter-btn.active {
-		background: var(--accent);
-		color: white;
-		border-color: var(--accent);
-	}
+.marquee-hero__title {
+  font-size: clamp(3.25rem, 8vw + 0.5rem, 6.5rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 0.9;
+  margin-bottom: var(--space-md);
+  max-width: 8ch;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
 
-	/* ── Skills ── */
-	.skills-tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-	}
-	.skill-tag {
-		font-size: 0.8125rem;
-		padding: 0.35rem 0.85rem;
-		border: 1px solid var(--border);
-		border-radius: 999px;
-		color: var(--text-muted);
-		background: var(--surface);
-		transition: all 0.2s;
-		cursor: default;
-		line-height: 1.4;
-	}
-	.skill-tag:hover {
-		border-color: var(--accent);
-		color: var(--accent);
-		background: var(--accent-light);
-	}
+.marquee-hero__accent {
+  color: var(--color-accent);
+  font-style: normal;
+}
 
-	/* ── About ── */
-	.about-grid {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 2.5rem;
-		align-items: start;
-	}
-	@media (min-width: 1024px) {
-		.about-grid {
-			grid-template-columns: 2fr 1fr;
-		}
-	}
-	.about-text {
-		font-size: 1.125rem;
-		color: var(--text-muted);
-		line-height: 1.7;
-	}
+.marquee-hero__desc {
+  font-size: var(--text-md);
+  color: var(--color-muted);
+  line-height: 1.65;
+  max-width: 34rem;
+  font-family: var(--font-body);
+  margin-bottom: 0;
+}
 
-	/* ── Contact ── */
-	.contact-grid {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 3rem;
-		align-items: center;
-	}
-	@media (min-width: 768px) {
-		.contact-grid {
-			grid-template-columns: 1fr 1fr;
-		}
-	}
-	.contact-label {
-		font-size: 0.6rem;
-		text-transform: uppercase;
-		letter-spacing: 0.2em;
-		color: var(--text-dim);
-		margin-bottom: 0.5rem;
-	}
-	.contact-socials {
-		display: flex;
-		gap: 1.5rem;
-	}
-	.contact-hello { text-align: right; }
-	@media (max-width: 767px) {
-		.contact-hello { text-align: left; }
-	}
+@media (min-width: 768px) {
+  .marquee-hero__desc { font-size: var(--text-lg); }
+  .marquee-hero__title { font-size: clamp(4rem, 8vw + 0.5rem, 7rem); }
+}
+
+/* ── Section Headers ── */
+.section__head {
+  margin-bottom: var(--space-lg);
+}
+
+.section__title {
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  margin-bottom: var(--space-2xs);
+}
+
+.section__sub {
+  font-size: var(--text-base);
+  color: var(--color-muted);
+  max-width: 32rem;
+  line-height: 1.6;
+  font-family: var(--font-body);
+}
+
+/* ── Project Cards ── */
+.project-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+
+@media (min-width: 768px) {
+  .project-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-lg);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-lg);
+  background: var(--color-paper-2);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out);
+}
+
+.project-card:hover {
+  border-color: var(--color-accent);
+  box-shadow: 0 2px 20px color-mix(in srgb, var(--color-accent) 8%, transparent);
+  transform: translateY(-2px);
+}
+
+.project-card__cat {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-2xs);
+}
+
+.project-card__name {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  margin-bottom: var(--space-2xs);
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 768px) {
+  .project-card__name { font-size: var(--text-2xl); }
+}
+
+.project-card__desc {
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  line-height: 1.6;
+  margin-bottom: var(--space-sm);
+  font-family: var(--font-body);
+}
+
+.project-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+  margin-top: auto;
+}
+
+/* ── Static Sites Grid ── */
+.static-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: var(--color-rule);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+@media (min-width: 640px) {
+  .static-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .static-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.static-card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-md);
+  background: var(--color-paper);
+  text-decoration: none;
+  color: inherit;
+  transition: background var(--dur-short) var(--ease-out);
+}
+
+.static-card:hover {
+  background: var(--color-paper-2);
+}
+
+.static-card__name {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 600;
+  margin-bottom: var(--space-2xs);
+}
+
+.static-card__desc {
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  line-height: 1.5;
+  margin-bottom: var(--space-sm);
+  font-family: var(--font-body);
+}
+
+.static-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+  margin-top: auto;
+}
+
+/* ── Skills Filter ── */
+.skills-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+  margin-bottom: var(--space-md);
+}
+
+.skills-pool {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+}
+
+/* ── About ── */
+.about-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.about-text {
+  font-size: var(--text-md);
+  color: var(--color-ink-2);
+  line-height: 1.7;
+  font-family: var(--font-body);
+  max-width: 48rem;
+}
+
+@media (min-width: 768px) {
+  .about-text { font-size: var(--text-lg); }
+}
+
+.values-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.value-chip {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 600;
+  padding: var(--space-2xs) var(--space-sm);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-pill);
+  color: var(--color-ink);
+  background: var(--color-paper-2);
+}
+
+/* ── Contact ── */
+.contact-card {
+  padding: var(--space-xl) 0;
+}
+
+.contact-card__title {
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-2xs);
+}
+
+.contact-card__sub {
+  font-size: var(--text-base);
+  color: var(--color-muted);
+  margin-bottom: var(--space-lg);
+  font-family: var(--font-body);
+}
+
+.contact-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  align-items: flex-start;
+}
+
+.contact-card__email {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 500;
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: opacity var(--dur-short) var(--ease-out);
+}
+
+.contact-card__email:hover {
+  opacity: 0.75;
+}
+
+.contact-card__email:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.contact-card__socials {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.contact-card__social {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-ink-2);
+  text-decoration: none;
+  transition: color var(--dur-short) var(--ease-out);
+}
+
+.contact-card__social:hover {
+  color: var(--color-accent);
+}
+
+/* ── Responsive tweaks ── */
+@media (max-width: 767px) {
+  .marquee-hero__title {
+    font-size: clamp(2.5rem, 10vw, 3.75rem);
+  }
+}
 </style>

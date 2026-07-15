@@ -5,70 +5,57 @@ const t = {
 };
 ---
 
-<nav aria-label="Main Navigation" id="main-nav" class="navbar">
-	<div class="container nav-inner">
-		<a href="/" id="nav-logo" class="logo">
-			Yanis <span class="logo-accent">Amani</span>
-		</a>
+<header class="nav">
+	<div class="nav__inner">
+		<a href="/" class="nav__brand">YA</a>
 
-		<div class="nav-desktop">
-			<ul class="nav-links">
-				<li><a href="/#projects" class="nav-link" data-i18n="projects">Projects</a></li>
-				<li><a href="/#skills" class="nav-link" data-i18n="stack">Stack</a></li>
-				<li><a href="/#about" class="nav-link" data-i18n="about">About</a></li>
-				<li><a href="/#contact" class="nav-link" data-i18n="contact">Contact</a></li>
-			</ul>
+		<nav class="nav__center">
+			<a href="/#projects" class="nav__link" data-i18n="projects">Projects</a>
+			<a href="/#skills" class="nav__link" data-i18n="stack">Stack</a>
+			<a href="/#about" class="nav__link" data-i18n="about">About</a>
+			<a href="/#contact" class="nav__link" data-i18n="contact">Contact</a>
+		</nav>
 
-			<div class="nav-divider"></div>
-
-			<button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-				<span class="theme-icon-light" aria-hidden="true">○</span>
-				<span class="theme-icon-dark" aria-hidden="true">●</span>
+		<div class="nav__right">
+			<button class="nav__theme" id="theme-toggle" aria-label="Toggle theme">
+				<span class="theme-icon-light">☀</span>
+				<span class="theme-icon-dark">☾</span>
 			</button>
-
-			<div class="nav-divider"></div>
-
-			<button class="nav-lang" id="lang-toggle" onclick="window.__setLanguage?.(document.documentElement.lang === 'fr' ? 'en' : 'fr')">
+			<button class="nav__lang" id="lang-toggle" onclick="window.__setLanguage?.(document.documentElement.lang === 'fr' ? 'en' : 'fr')">
 				<span id="lang-label">FR</span>
 			</button>
+			<button id="mob-btn" class="mob-btn" aria-label="Toggle menu" aria-expanded="false">
+				<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+				</svg>
+			</button>
 		</div>
-
-		<button id="mob-btn" type="button" class="mob-btn" aria-label="Toggle menu" aria-expanded="false">
-			<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 18h16"/>
-			</svg>
-		</button>
 	</div>
 
 	<div id="mob-menu" class="mob-menu hidden">
-		<div class="container mob-menu-inner">
-			<a href="/#projects" class="mob-link" data-i18n="projects">Projets</a>
-			<a href="/#skills" class="mob-link" data-i18n="stack">Outils</a>
-			<a href="/#about" class="mob-link" data-i18n="about">À propos</a>
+		<div class="container">
+			<a href="/#projects" class="mob-link" data-i18n="projects">Projects</a>
+			<a href="/#skills" class="mob-link" data-i18n="stack">Stack</a>
+			<a href="/#about" class="mob-link" data-i18n="about">About</a>
 			<a href="/#contact" class="mob-link" data-i18n="contact">Contact</a>
-			<div class="mob-divider"></div>
-			<button class="mob-lang" onclick="window.__setLanguage?.(document.documentElement.lang === 'fr' ? 'en' : 'fr')">
-				English
-			</button>
+			<hr class="mob-rule">
+			<button class="mob-lang" onclick="window.__setLanguage?.(document.documentElement.lang === 'fr' ? 'en' : 'fr')">English</button>
 		</div>
 	</div>
-</nav>
+</header>
 
 <script>
 	document.addEventListener('astro:page-load', () => {
-		// Update language toggle label on page load
 		const updateLangLabel = () => {
 			const label = document.getElementById('lang-label');
 			if (label) {
 				const isFr = document.documentElement.lang === 'fr';
 				label.textContent = isFr ? 'EN' : 'FR';
 			}
-			// Update mobile lang text
 			const mobLabel = document.querySelector('.mob-lang');
 			if (mobLabel) {
 				mobLabel.textContent = document.documentElement.lang === 'fr' ? 'English' : 'Français';
 			}
-			// Update nav link text
 			const navLinks = document.querySelectorAll('[data-i18n]');
 			const t = {
 				en: { projects: "Projects", stack: "Stack", about: "About", contact: "Contact" },
@@ -81,19 +68,34 @@ const t = {
 			});
 		};
 
-		// Observe lang changes on <html>
 		const observer = new MutationObserver(() => updateLangLabel());
 		observer.observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
 		updateLangLabel();
 
+		// Scroll handler — .is-scrolled
+		const header = document.querySelector('.nav');
+		const onScroll = () => {
+			if (!header) return;
+			header.classList.toggle('is-scrolled', window.scrollY > 24);
+		};
+		let ticking = false;
+		window.addEventListener('scroll', () => {
+			if (!ticking) {
+				window.requestAnimationFrame(() => {
+					onScroll();
+					ticking = false;
+				});
+				ticking = true;
+			}
+		});
+		onScroll();
+
 		// Mobile menu
-		const nav = document.getElementById('main-nav');
 		const btn = document.getElementById('mob-btn');
 		const menu = document.getElementById('mob-menu');
-		if (!nav || !btn || !menu) return;
+		if (!btn || !menu) return;
 
 		menu.classList.add('hidden');
-		btn.innerHTML = '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 18h16"/></svg>';
 		btn.setAttribute('aria-expanded', 'false');
 
 		let open = false;
@@ -103,20 +105,18 @@ const t = {
 			menu.classList.toggle('hidden', !open);
 			btn.setAttribute('aria-expanded', String(open));
 			btn.innerHTML = open
-				? '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>'
-				: '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 18h16"/></svg>';
+				? '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>'
+				: '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>';
 		});
 
-		// Handle ALL hash links in the navbar (both desktop and mobile).
-		// ClientRouter intercepts <a href="/#..."> clicks but doesn't
-		// scroll to the section, so we manually handle same-page hashes.
-		nav.addEventListener('click', (e) => {
+		// Hash link smooth scrolling (delegated on .nav)
+		const nav = document.querySelector('.nav');
+		nav?.addEventListener('click', (e) => {
 			const link = e.target.closest('a');
 			if (!link) return;
 			const href = link.getAttribute('href');
 			if (!href || !href.startsWith('/#')) return;
 			const id = href.substring(2);
-			// Find the visible element with this id (handles duplicate IDs across lang sections)
 			let el = null;
 			for (const candidate of document.querySelectorAll(`[id="${id}"]`)) {
 				if (candidate.offsetParent !== null) { el = candidate; break; }
@@ -128,27 +128,17 @@ const t = {
 			const offset = 80;
 			const top = el.getBoundingClientRect().top + window.scrollY - offset;
 			window.scrollTo({ top, behavior: 'smooth' });
-			// Close mobile menu if open
 			if (open) {
 				open = false;
 				menu.classList.add('hidden');
 				btn.setAttribute('aria-expanded', 'false');
-				btn.innerHTML = '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 18h16"/></svg>';
+				btn.innerHTML = '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>';
 			}
 		});
 
-		window.addEventListener('scroll', () => {
-			if (!open) {
-				nav.classList.toggle('scrolled', window.scrollY > 20);
-			}
-		}, { passive: true });
-
-		// On reload, scroll to the hash section if the URL has one.
-		// ClientRouter sometimes interferes with the browser's native
-		// hash scroll, so we do it ourselves after the layout settles.
+		// Reload hash scroll
 		if (window.location.hash) {
 			const id = window.location.hash.substring(1);
-			// Find the visible element with this id (handles duplicate IDs across lang sections)
 			let el = null;
 			for (const candidate of document.querySelectorAll(`[id="${id}"]`)) {
 				if (candidate.offsetParent !== null) { el = candidate; break; }
@@ -166,135 +156,214 @@ const t = {
 </script>
 
 <style>
-	.navbar {
+	/* ═══ N1b Canonical SaaS Nav ═══ */
+	.nav {
 		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		z-index: 50;
-		backdrop-filter: blur(12px);
-		-webkit-backdrop-filter: blur(12px);
-		border-bottom: 1px solid var(--border);
-		transition: all 0.3s;
+		inset: 0 0 auto;
+		z-index: 500;
+		height: 64px;
+		background: transparent;
+		transition: background var(--dur-short) var(--ease-out),
+		            backdrop-filter var(--dur-short) var(--ease-out),
+		            border-color var(--dur-short) var(--ease-out);
 	}
 
-	.nav-inner {
+	.nav.is-scrolled {
+		background: color-mix(in srgb, var(--color-paper) 72%, transparent);
+		backdrop-filter: blur(18px);
+		-webkit-backdrop-filter: blur(18px);
+		border-bottom: 1px solid var(--color-rule);
+	}
+
+	.nav__inner {
+		max-width: 72rem;
+		margin: 0 auto;
+		padding-inline: var(--space-md);
+		height: 100%;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		height: 4rem;
-	}
-
-	.logo {
-		font-family: var(--font-sans);
-		font-weight: 600;
-		font-size: 0.875rem;
-		letter-spacing: -0.01em;
-		color: var(--text);
-		text-decoration: none;
-	}
-
-	.logo-accent { color: var(--accent); }
-
-	.nav-desktop {
-		display: none;
-		align-items: center;
-		gap: 2rem;
 	}
 
 	@media (min-width: 768px) {
-		.nav-desktop { display: flex; }
+		.nav__inner {
+			padding-inline: var(--space-xl);
+		}
 	}
 
-	.nav-links {
+	.nav__brand {
+		font-family: var(--font-display);
+		font-weight: 700;
+		font-size: 1rem;
+		letter-spacing: -0.02em;
+		color: var(--color-ink);
+		text-decoration: none;
 		display: flex;
-		gap: 1.5rem;
+		align-items: center;
+		gap: 0.1em;
 	}
 
-	.nav-divider {
-		width: 1px;
-		height: 1rem;
-		background: var(--border);
+	.nav__center {
+		display: flex;
+		gap: var(--space-2xs);
 	}
 
-	.nav-lang {
-		font-size: 0.7rem;
-		font-weight: 500;
+	.nav__link {
+		font-family: var(--font-body);
+		font-size: var(--text-sm);
+		color: var(--color-ink-2);
+		text-decoration: none;
+		padding: 0.35rem 0.65rem;
+		border-radius: var(--radius-pill);
+		transition: color var(--dur-short) var(--ease-out),
+		            background var(--dur-short) var(--ease-out);
+	}
+
+	.nav__link:hover {
+		color: var(--color-accent);
+		background: color-mix(in srgb, var(--color-accent) 6%, transparent);
+	}
+
+	.nav__link:focus-visible {
+		outline: 2px solid var(--color-focus);
+		outline-offset: 2px;
+	}
+
+	.nav__right {
+		display: flex;
+		align-items: center;
+		gap: var(--space-2xs);
+	}
+
+	.nav__theme,
+	.nav__lang {
+		background: none;
+		border: none;
+		padding: 0.35rem 0.5rem;
+		border-radius: var(--radius-pill);
+		color: var(--color-muted);
+		cursor: pointer;
+		font-size: var(--text-sm);
+		font-family: var(--font-body);
+		transition: color var(--dur-short) var(--ease-out);
+	}
+
+	.nav__theme:hover,
+	.nav__lang:hover {
+		color: var(--color-accent);
+	}
+
+	.nav__theme:focus-visible,
+	.nav__lang:focus-visible,
+	.mob-btn:focus-visible {
+		outline: 2px solid var(--color-focus);
+		outline-offset: 2px;
+	}
+
+	.nav__theme .theme-icon-dark {
+		opacity: 0.35;
+		transition: opacity var(--dur-short) var(--ease-out);
+	}
+
+	.nav__theme.dark .theme-icon-dark {
+		opacity: 1;
+		color: var(--color-accent);
+	}
+
+	.nav__theme.dark .theme-icon-light {
+		opacity: 0.35;
+	}
+
+	.nav__lang {
 		text-transform: uppercase;
-		letter-spacing: 0.15em;
-		color: var(--text-muted);
-		background: none;
-		border: none;
-		padding: 0;
-		cursor: pointer;
-		transition: color 0.2s;
-		font-family: inherit;
+		letter-spacing: 0.08em;
+		font-size: var(--text-xs);
 	}
-	.nav-lang:hover { color: var(--text); }
 
+	/* ── Mobile ── */
 	.mob-btn {
-		display: block;
+		display: none;
 		background: none;
 		border: none;
-		padding: 0.5rem;
-		color: var(--text-muted);
+		padding: 0.375rem;
+		color: var(--color-ink-2);
 		cursor: pointer;
-		transition: color 0.2s;
 		touch-action: manipulation;
 	}
-	.mob-btn:hover { color: var(--text); }
 
-	@media (min-width: 768px) {
-		.mob-btn { display: none; }
+	@media (max-width: 767px) {
+		.nav {
+			height: 56px;
+		}
+
+		.nav__center {
+			display: none;
+		}
+
+		.nav__right :not(.mob-btn) {
+			display: none;
+		}
+
+		.mob-btn {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
 	}
 
 	.hidden { display: none; }
 
 	.mob-menu {
-		position: absolute;
-		top: 100%;
+		position: fixed;
+		top: 64px;
 		left: 0;
 		right: 0;
-		z-index: 50;
-		border-top: 1px solid var(--border);
+		z-index: 500;
+		background: color-mix(in srgb, var(--color-paper) 96%, transparent);
 		backdrop-filter: blur(24px);
 		-webkit-backdrop-filter: blur(24px);
+		border-bottom: 1px solid var(--color-rule);
+		box-shadow: 0 8px 32px rgba(0,0,0,0.08);
 	}
 
-	.mob-menu-inner {
-		display: flex;
-		flex-direction: column;
-		gap: 1.5rem;
-		padding-top: 2.5rem;
-		padding-bottom: 2.5rem;
+	@media (max-width: 767px) {
+		.mob-menu {
+			top: 56px;
+		}
 	}
 
 	.mob-link {
-		font-family: var(--font-serif);
-		font-size: 1.875rem;
-		color: var(--text);
+		display: block;
+		font-family: var(--font-display);
+		font-size: 1.25rem;
+		padding: var(--space-sm) var(--space-md);
+		color: var(--color-ink);
 		text-decoration: none;
-		transition: color 0.2s;
+		transition: color var(--dur-short) var(--ease-out);
 	}
-	.mob-link:hover { color: var(--accent); }
 
-	.mob-divider {
+	.mob-link:hover {
+		color: var(--color-accent);
+	}
+
+	.mob-rule {
+		border: none;
 		height: 1px;
-		background: var(--border);
-		margin: 0.5rem 0;
+		background: var(--color-rule);
+		margin: var(--space-xs) var(--space-md);
 	}
 
 	.mob-lang {
-		font-size: 0.875rem;
+		font-family: var(--font-body);
+		font-size: var(--text-sm);
 		text-transform: uppercase;
-		letter-spacing: 0.1em;
-		color: var(--accent);
+		letter-spacing: 0.08em;
+		color: var(--color-accent);
 		background: none;
 		border: none;
-		padding: 0;
+		padding: var(--space-sm) var(--space-md);
 		cursor: pointer;
-		font-family: inherit;
 		text-align: left;
-		transition: color 0.2s;
+		transition: color var(--dur-short) var(--ease-out);
 	}
 </style>

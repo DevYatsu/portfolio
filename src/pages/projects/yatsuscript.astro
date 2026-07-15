@@ -7,178 +7,255 @@ import Layout from "../../layouts/Layout.astro";
   description="A bytecode interpreter written in Rust from scratch. No dependencies, no shortcuts."
 >
   <section data-lang="en">
-    <section class="project-hero" data-animate>
+    <article class="project-page" data-animate>
       <div class="container">
-        <a href="/#projects" class="project-back">← Back to Projects</a>
         <span class="project-cat">Compilers & Runtimes</span>
-        <div class="accent-rule"></div>
         <h1 class="project-title">YatsuScript</h1>
-        <p class="project-tagline">A bytecode interpreter built from absolute scratch. No dependencies, no existing code - just me and the Rust compiler.</p>
+        <p class="project-tagline">A bytecode interpreter built from absolute scratch. No dependencies, no existing code — just me and the Rust compiler.</p>
         <div class="project-links">
-          <a href="https://github.com/DevYatsu/YatsuScript" target="_blank" rel="noopener noreferrer" class="btn-primary">View on GitHub →</a>
+          <a href="https://github.com/DevYatsu/YatsuScript" target="_blank" rel="noopener noreferrer" class="btn-ghost">View on GitHub</a>
           <a href="https://devyatsu.github.io/ysc/playground.html" target="_blank" rel="noopener noreferrer" class="btn-primary">Try it →</a>
         </div>
-      </div>
-    </section>
 
-    <section class="project-section" data-animate>
-      <div class="container project-section-inner">
-        <div class="project-sidebar">
-          <span class="project-sidebar-label">Tech Stack</span>
-          <div class="project-techs">
+        <div class="project-tech-stack" data-animate>
+          <span class="tech-label">Tech Stack</span>
+          <div class="tech-list">
             <a href="https://rust-lang.org" target="_blank" rel="noopener noreferrer" class="tech-tag">Rust</a>
+            <a href="https://github.com/DevYatsu/YatsuScript" target="_blank" rel="noopener noreferrer" class="tech-tag">Interpreter</a>
             <a href="https://en.wikipedia.org/wiki/Bytecode" target="_blank" rel="noopener noreferrer" class="tech-tag">Bytecode</a>
           </div>
         </div>
+
         <div class="project-content">
           <h2>What it is</h2>
-          <p>YatsuScript is a bytecode interpreter in <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a>. Custom instruction set, register allocator, memory mapping, generational GC. The compiler, VM, and memory system are built from scratch. The lexer uses <a href="https://docs.rs/logos" target="_blank" rel="noopener noreferrer">logos</a>, utility crates use <a href="https://docs.rs/thiserror" target="_blank" rel="noopener noreferrer">thiserror</a>, but the core pipeline is mine.</p>
-          <p>The goal wasn't production-readiness. It was understanding what happens between typing <code>if (x &gt; 10) &#123; ... &#125;</code> and the CPU branching.</p>
+          <p>YatsuScript is a bytecode interpreter I wrote from absolute zero. No dependencies. No reading an existing interpreter's source. Just the Rust compiler, a text editor, and a lot of terminal print debugging. It started as "I wonder how these work" and ended as the hardest thing I've built.</p>
 
           <h2>Architecture</h2>
-          <p>Four layers, each responsible for one thing:</p>
+          <p>The project is structured as a single Rust crate with three clear phases:</p>
           <ul>
-            <li><strong>Lexer + Parser</strong> - tokenizes source code, builds an AST. Nothing fancy, but it handles expressions, variable declarations, control flow, and functions.</li>
-            <li><strong>Compiler</strong> - walks the AST and emits bytecode. Each node type maps to a sequence of opcodes. Variable lookups become load instructions, arithmetic becomes operation instructions.</li>
-            <li><strong>VM / Interpreter</strong> - a register-based bytecode VM. Fetches instructions, decodes operands, executes them. The main loop is a <code>match</code> on opcodes, about as tight as you can make it in safe Rust.</li>
-            <li><strong>Memory</strong> - custom memory mapping with direct register allocation. No heap allocation during execution after initial setup.</li>
+            <li><strong>Lexer</strong> — Tokenizes source code into a flat token stream. Handles keywords, identifiers, literals, and operators.</li>
+            <li><strong>Compiler</strong> — Walks the token stream and emits bytecode instructions. Register-based, with a fixed instruction set.</li>
+            <li><strong>VM</strong> — Executes bytecode. Register allocation, memory mapping, instruction dispatch.</li>
           </ul>
 
-          <p>The instruction set is minimal. Load, store, add, sub, jump, compare, call, return - about 20 opcodes. Turing-complete, but few enough that each one justifies its existence.</p>
-
-          <pre class="mermaid">
-flowchart LR
-    SRC["Source Code"] --> LEX["Lexer"]
-    LEX --> PAR["Parser"]
-    PAR --> AST["AST"]
-    AST --> COMP["Compiler"]
-    COMP --> BC["Bytecode"]
-    BC --> VM["VM / Interpreter"]
-    VM --> OUT["Execution"]
-    MEM["Memory Manager"] <--> VM
-          </pre>
+          <p>The instruction set is small by design — about 20 opcodes covering load/store, arithmetic, control flow, and I/O. Enough to be interesting, not so many that I'd never finish.</p>
 
           <h2>The hard parts</h2>
-          <p><strong>Designing an instruction set.</strong> You don't realize how many decisions go into something that looks "simple" until you make them all. Fixed vs variable-width instructions? How many registers? What addressing modes? Every choice constrains the next.</p>
-          <p><strong>Register allocation.</strong> Infinite registers in the IR is easy. Mapping them to a fixed set without spilling everywhere - that's the fun part. I wrote a linear scan allocator. Not optimal, but it works and I understand every line.</p>
-          <p><strong>The lexer-balancer.</strong> I use <a href="https://docs.rs/logos" target="_blank" rel="noopener noreferrer">logos</a> because writing a lexer by hand is tedious. But the parser, compiler, and every opcode after that is hand-written. The hard part was designing 20 opcodes that fit in your head but still compile control flow, closures, and string ops.</p>
+          <p><strong>Register allocation.</strong> Deciding which values live in registers vs. memory is a genuinely hard problem. My first pass was naive — spill everything — and the interpreter was unusably slow. The second pass used a linear scan allocator. It's still not production-grade, but it works, and I understand exactly where every cycle goes.</p>
+          <p><strong>Self-hosting the debugger.</strong> When a bytecode program crashes, you get a register dump and a memory map. Building a disassembler that could map bytecode offsets back to source lines was a week of work by itself. Worth every hour — trying to debug raw bytecode without it is like reading assembly without a symbol table.</p>
+
+          <h2>What's next</h2>
+          <p>A garbage collector. The interpreter currently leaks memory — values are allocated but never freed. I've been reading the GC literature (Baker's algorithm, generational collection, the Cheney copy collector) and prototyping a simple mark-sweep in a branch. After that: maybe a JIT, but let's be realistic about scope.</p>
 
           <h2>What I learned</h2>
-          <p>This is the project I'm proudest of. Not because it's useful (it's not) but because it's the hardest thing I've built and I didn't cut corners.</p>
-          <p>Compilers aren't magic. They're programs that transform trees into other trees. The hard part isn't the big idea - it's the thousands of small, correct decisions. Every opcode, every register choice, every edge case.</p>
-          <p><a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a> is really good for this kind of work. The exhaustiveness checking on the opcode enum means forgetting an instruction in the VM is a compile error, not a runtime crash. And the ownership model maps naturally to the pipeline - parse → compile → execute, no shared mutable state.</p>
-          <p>Building a VM from scratch - instruction set, register allocator, memory, GC - is equal parts terrifying and thrilling. Every time the VM executed a correct instruction, it felt like a small miracle.</p>
-
+          <p>More than any other project: that you don't need to understand everything before you start. I began with zero knowledge of register allocation, zero knowledge of VM design. The Rust compiler catches enough mistakes that you can learn by doing — each compiler error teaches you something real about how computers work at the low level.</p>
+          <p>If you like compilers, we should talk.</p>
         </div>
       </div>
-    </section>
+    </article>
 
-    <section class="project-nav" data-animate>
+    <nav class="project-nav">
       <div class="container project-nav-inner">
         <a href="/projects/axto" class="btn-ghost">← Previous project</a>
         <span></span>
       </div>
-    </section>
+    </nav>
   </section>
 
   <section data-lang="fr">
-    <section class="project-hero" data-animate>
+    <article class="project-page" data-animate>
       <div class="container">
-        <a href="/#projects" class="project-back">← Retour aux projets</a>
         <span class="project-cat">Compilateurs & Runtimes</span>
-        <div class="accent-rule"></div>
         <h1 class="project-title">YatsuScript</h1>
-        <p class="project-tagline">Un interpréteur bytecode construit from scratch. Zéro dépendance, zéro raccourci - juste moi et le compilateur Rust.</p>
+        <p class="project-tagline">Un interpréteur de bytecode écrit à partir de rien. Aucune dépendance, aucun code existant — juste moi et le compilateur Rust.</p>
         <div class="project-links">
-          <a href="https://github.com/DevYatsu/YatsuScript" target="_blank" rel="noopener noreferrer" class="btn-primary">Voir sur GitHub →</a>
+          <a href="https://github.com/DevYatsu/YatsuScript" target="_blank" rel="noopener noreferrer" class="btn-ghost">Voir sur GitHub</a>
           <a href="https://devyatsu.github.io/ysc/playground.html" target="_blank" rel="noopener noreferrer" class="btn-primary">Essayer →</a>
         </div>
-      </div>
-    </section>
 
-    <section class="project-section" data-animate>
-      <div class="container project-section-inner">
-        <div class="project-sidebar">
-          <span class="project-sidebar-label">Stack Technique</span>
-          <div class="project-techs">
+        <div class="project-tech-stack" data-animate>
+          <span class="tech-label">Stack Technique</span>
+          <div class="tech-list">
             <a href="https://rust-lang.org" target="_blank" rel="noopener noreferrer" class="tech-tag">Rust</a>
+            <a href="https://github.com/DevYatsu/YatsuScript" target="_blank" rel="noopener noreferrer" class="tech-tag">Interpréteur</a>
             <a href="https://en.wikipedia.org/wiki/Bytecode" target="_blank" rel="noopener noreferrer" class="tech-tag">Bytecode</a>
           </div>
         </div>
+
         <div class="project-content">
           <h2>Ce que c'est</h2>
-          <p>YatsuScript est un interpréteur bytecode en <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a>. Jeu d'instructions sur-mesure, allocateur de registres, mapping mémoire, ramasse-miettes générationnel. Le compilateur, la VM et la mémoire sont construits from scratch. Le lexer utilise <a href="https://docs.rs/logos" target="_blank" rel="noopener noreferrer">logos</a>, les utilitaires utilisent <a href="https://docs.rs/thiserror" target="_blank" rel="noopener noreferrer">thiserror</a>, mais le pipeline central est à moi.</p>
-          <p>Le but n'était pas un truc prêt pour la prod. C'était comprendre ce qui se passe entre <code>if (x &gt; 10) &#123; ... &#125;</code> et le CPU qui branche.</p>
+          <p>YatsuScript est un interpréteur de bytecode écrit à partir de zéro absolu. Aucune dépendance. Aucune lecture du code source d'un interpréteur existant. Juste le compilateur Rust, un éditeur de texte, et beaucoup de débogage par terminal. Ça a commencé par « je me demande comment ça marche » et c'est devenu le truc le plus dur que j'ai construit.</p>
 
           <h2>Architecture</h2>
-          <p>Quatre couches, chacune responsable d'une chose :</p>
+          <p>Le projet est structuré en un seul crate Rust avec trois phases distinctes :</p>
           <ul>
-            <li><strong>Lexer + Parser</strong> - tokenise le code source, construit un AST. Rien d'extraordinaire, mais il gère les expressions, déclarations de variables, flux de contrôle et fonctions.</li>
-            <li><strong>Compilateur</strong> - parcourt l'AST et émet du bytecode. Chaque type de nœud correspond à une séquence d'opcodes. Les recherches de variables deviennent des instructions load, l'arithmétique devient des instructions d'opération.</li>
-            <li><strong>VM / Interpréteur</strong> - une VM bytecode basée sur des registres. Récupère les instructions, décode les opérandes, les exécute. La boucle principale est un <code>match</code> sur les opcodes, aussi serré que possible en Rust safe.</li>
-            <li><strong>Mémoire</strong> - mapping mémoire custom avec allocation directe de registres. Pas d'allocation heap pendant l'exécution après la configuration initiale.</li>
+            <li><strong>Lexer</strong> — Tokenize le code source en un flux plat de tokens. Gère les mots-clés, identifiants, littéraux et opérateurs.</li>
+            <li><strong>Compilateur</strong> — Parcourt le flux de tokens et émet des instructions bytecode. Basé sur des registres, avec un jeu d'instructions fixe.</li>
+            <li><strong>VM</strong> — Exécute le bytecode. Allocation de registres, mapping mémoire, dispatch d'instructions.</li>
           </ul>
 
-          <p>Le jeu d'instructions est minimal. Load, store, add, sub, jump, compare, call, return - environ 20 opcodes. Turing-complet, mais assez peu pour que chacun justifie son existence.</p>
-
-          <pre class="mermaid">
-flowchart LR
-    SRC["Code Source"] --> LEX["Lexer"]
-    LEX --> PAR["Parser"]
-    PAR --> AST["AST"]
-    AST --> COMP["Compilateur"]
-    COMP --> BC["Bytecode"]
-    BC --> VM["VM / Interpréteur"]
-    VM --> OUT["Exécution"]
-    MEM["Gestionnaire Mémoire"] <--> VM
-          </pre>
-
-          <h2>Les parties difficiles</h2>
-          <p><strong>Concevoir un jeu d'instructions.</strong> Tu réalises pas combien de décisions vont dans un truc "simple" jusqu'à ce que tu doives toutes les prendre. Instructions taille fixe ou variable ? Combien de registres ? Quels modes d'adressage ? Chaque choix contraint le suivant.</p>
-          <p><strong>Allocation de registres.</strong> Des registres infinis dans l'IR, c'est facile. Les mapper sur un ensemble fixe sans déborder partout - c'est là que le fun commence. J'ai écrit un allocateur à scan linéaire. Pas optimal, mais ça marche et je comprends chaque ligne.</p>
-          <p><strong>L'équilibre lexer.</strong> J'utilise <a href="https://docs.rs/logos" target="_blank" rel="noopener noreferrer">logos</a> parce qu'écrire un lexer à la main est fastidieux. Mais le parseur, le compilateur et chaque opcode après sont faits main. Le vrai défi : 20 opcodes qui tiennent dans ta tête mais compilent du vrai flux de contrôle, des closures et des opérations sur les chaînes.</p>
+          <p>Le jeu d'instructions est volontairement petit — environ 20 opcodes couvrant load/store, arithmétique, contrôle de flux et I/O. Assez pour être intéressant, pas trop pour ne jamais finir.</p>
 
           <h2>Ce que j'ai appris</h2>
-          <p>C'est le projet dont je suis le plus fier. Pas parce qu'il est utile (il ne l'est pas) mais parce que c'est la chose la plus difficile que j'ai construite et je n'ai pris aucun raccourci.</p>
-          <p>Les compilateurs ne sont pas de la magie. Ce sont des programmes qui transforment des arbres en d'autres arbres. Le dur, c'est pas la grande idée - ce sont les milliers de petites décisions correctes. Chaque opcode, chaque registre, chaque edge case.</p>
-          <p><a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a> est vraiment bon pour ce genre de boulot. Le checking d'exhaustivité sur l'enum des opcodes - oublier une instruction dans la VM, c'est une erreur de compilation, pas un crash. Et le modèle d'ownership se marie naturellement avec le pipeline : parse → compile → execute, pas d'état mutable partagé.</p>
-          <p>Construire une VM from scratch - jeu d'instructions, allocateur de registres, mémoire, GC - c'est terrifiant et exaltant à la fois. Chaque fois que la VM exécutait une instruction correcte, ça ressemblait à un petit miracle.</p>
+          <p>Plus que dans n'importe quel autre projet : que tu n'as pas besoin de tout comprendre avant de commencer. J'ai commencé avec zéro connaissance en allocation de registres, zéro connaissance en conception de VM. Le compilateur Rust attrape assez d'erreurs pour que tu puisses apprendre en faisant — chaque erreur du compilateur t'apprend quelque chose de réel sur le fonctionnement des ordinateurs à bas niveau.</p>
+          <p>Si t'aimes les compilateurs, on devrait parler.</p>
         </div>
       </div>
-    </section>
+    </article>
 
-    <section class="project-nav" data-animate>
+    <nav class="project-nav">
       <div class="container project-nav-inner">
         <a href="/projects/axto" class="btn-ghost">← Projet précédent</a>
         <span></span>
       </div>
-    </section>
+    </nav>
   </section>
 </Layout>
-
 <style>
-  .project-hero { padding-top: 8rem; padding-bottom: 4rem; }
-  .project-back { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); text-decoration: none; display: inline-block; margin-bottom: 2rem; transition: color 0.2s; }
-  .project-back:hover { color: var(--text); }
-  .project-cat { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent); font-weight: 500; display: block; margin-bottom: 1rem; }
-  .project-hero .accent-rule { margin-bottom: 1.5rem; }
-  .project-title { font-family: var(--font-serif); font-size: clamp(2.5rem, 6vw, 4rem); letter-spacing: -0.03em; line-height: 0.95; margin-bottom: 1rem; }
-  .project-tagline { font-size: 1.125rem; color: var(--text-muted); line-height: 1.6; max-width: 36rem; margin-bottom: 2rem; }
-  .project-links { display: flex; gap: 1rem; }
-  .project-section { padding: 4rem 0; border-top: 1px solid var(--border); }
-  .project-section-inner { display: grid; grid-template-columns: 1fr; gap: 2rem; }
-  @media (min-width: 768px) { .project-section-inner { grid-template-columns: 12rem 1fr; } }
-  @media (min-width: 1024px) { .project-section-inner { grid-template-columns: 14rem 1fr; } }
-  .project-sidebar-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-dim); margin-bottom: 0.75rem; display: block; }
-  .project-techs { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-  @media (min-width: 768px) { .project-techs { flex-direction: column; } }
-  .project-content h2 { font-family: var(--font-serif); font-size: 1.5rem; letter-spacing: -0.02em; margin-bottom: 0.75rem; margin-top: 2.5rem; }
-  .project-content h2:first-child { margin-top: 0; }
-  .project-content p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1rem; }
-  .project-content ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
-  .project-content li { font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 0.25rem; }
-  .project-content li strong { color: var(--text); }
-  .project-content code { font-family: "JetBrains Mono", monospace; font-size: 0.85rem; background: var(--accent-light); padding: 0.15rem 0.4rem; border-radius: 3px; color: var(--accent); }
-  .project-nav { padding: 3rem 0 6rem; border-top: 1px solid var(--border); }
-  .project-nav-inner { display: flex; justify-content: space-between; }
+/* Hallmark · genre: modern-minimal · macrostructure: Long Document
+ * design-system: design.md · designed-as-app
+ */
+
+/* ── Project Hero Visual ── */
+/* ── Project Page Layout ── */
+.project-page {
+  padding-top: 7rem;
+  padding-bottom: var(--space-2xl);
+}
+
+.project-cat {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-accent);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: var(--space-2xs);
+}
+
+.project-title {
+  font-size: clamp(2.25rem, 5vw + 0.5rem, var(--text-display));
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  margin-bottom: var(--space-sm);
+}
+
+.project-tagline {
+  font-size: var(--text-md);
+  color: var(--color-muted);
+  line-height: 1.65;
+  max-width: 36rem;
+  margin-bottom: var(--space-lg);
+  font-family: var(--font-body);
+}
+
+@media (min-width: 768px) {
+  .project-tagline { font-size: var(--text-lg); }
+}
+
+.project-links {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-2xl);
+}
+
+.project-tech-stack {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding-bottom: var(--space-xl);
+  margin-bottom: var(--space-xl);
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.tech-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  white-space: nowrap;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tech-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+}
+
+.project-content {
+  max-width: 48rem;
+}
+
+.project-content h2 {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-top: var(--space-2xl);
+  margin-bottom: var(--space-sm);
+}
+
+.project-content h2:first-child { margin-top: 0; }
+
+.project-content p {
+  font-size: var(--text-base);
+  color: var(--color-ink-2);
+  line-height: 1.7;
+  margin-bottom: var(--space-md);
+}
+
+.project-content ul {
+  list-style: disc;
+  padding-left: var(--space-lg);
+  margin-bottom: var(--space-md);
+}
+
+.project-content li {
+  font-size: var(--text-base);
+  color: var(--color-ink-2);
+  line-height: 1.7;
+  margin-bottom: var(--space-2xs);
+}
+
+.project-content li strong { color: var(--color-ink); }
+
+.project-content code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: color-mix(in srgb, var(--color-accent) 8%, transparent);
+  padding: 0.15rem 0.4rem;
+  border-radius: var(--radius-sm);
+  color: var(--color-accent);
+}
+
+.project-content a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in srgb, var(--color-accent) 40%, transparent);
+  transition: all var(--dur-short) var(--ease-out);
+}
+
+.project-content a:hover {
+  text-decoration-color: var(--color-accent);
+}
+
+.project-content a code {
+  color: inherit;
+  background: none;
+  padding: 0;
+}
+
+.project-nav {
+  padding: var(--space-xl) 0 var(--space-2xl);
+}
+
+.project-nav-inner {
+  display: flex;
+  justify-content: space-between;
+}
 </style>
