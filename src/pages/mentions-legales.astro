@@ -62,10 +62,10 @@ import Layout from "../layouts/Layout.astro";
 
         <div class="legal-header">
           <span class="legal-tag">Infos Légales</span>
-          <h1 class="legal-title">
+          <div class="legal-title" role="presentation">
             Mentions légales &<br/>
             <span class="legal-accent">Confidentialité</span>
-          </h1>
+          </div>
           <p class="legal-date">Dernière mise à jour — Juillet 2026</p>
         </div>
 
@@ -137,6 +137,7 @@ import Layout from "../layouts/Layout.astro";
 }
 
 .legal-title {
+  font-family: var(--font-display);
   font-size: var(--text-display-s);
   font-weight: 600;
   letter-spacing: -0.03em;

@@ -91,7 +91,7 @@ import Layout from "../../layouts/Layout.astro";
   <section data-lang="fr">
     <article class="project-page" data-animate>
       <div class="container">
-        <h1 class="project-title">MangaReader</h1>
+        <div class="project-title" role="presentation">MangaReader</div>
         <p class="project-tagline">Un lecteur de manga qui scrape des chapitres depuis des sites tiers, les fusionne en séries, et les sert via une interface web.</p>
         <div class="project-links">
           <a href="https://github.com/DevYatsu/mangaread" target="_blank" rel="noopener noreferrer" class="btn-primary">Voir sur GitHub</a>
@@ -181,6 +181,7 @@ import Layout from "../../layouts/Layout.astro";
 }
 
 .project-title {
+  font-family: var(--font-display);
   font-size: clamp(2.25rem, 5vw + 0.5rem, var(--text-display));
   font-weight: 600;
   letter-spacing: -0.03em;

@@ -3,14 +3,14 @@ import Layout from "../layouts/Layout.astro";
 
 const content = {
   title: "Message Received // Yanis Amani",
-  description: "Your message has been successfully sent.",
+  description: "Thanks for reaching out! Your message has been sent successfully. I'll get back to you within a day or two.",
   heading: "MESSAGE RECEIVED",
   subheading: "Thanks for reaching out! I'll get back to you as soon as I can — usually within a day or two.",
   cta: "Back to Home",
 };
 ---
 
-<Layout title={content.title} description={content.description}>
+<Layout title={content.title} description={content.description} noindex={true}>
   <section class="confirm-page" data-animate>
     <div class="confirm-card">
       <span class="confirm-badge">Success</span>

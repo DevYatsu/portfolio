@@ -104,7 +104,7 @@ import Layout from "../../layouts/Layout.astro";
   <section data-lang="fr">
     <article class="project-page" data-animate>
       <div class="container">
-        <h1 class="project-title">Axto</h1>
+        <div class="project-title" role="presentation">Axto</div>
         <p class="project-tagline">Une marketplace pour pièces auto. App mobile React Native pour les acheteurs, portail web Astro pour les vendeurs.</p>
         <div class="project-links">
           <span class="btn-primary" style="opacity: 0.5; cursor: default;">Source privée</span>
@@ -204,6 +204,7 @@ import Layout from "../../layouts/Layout.astro";
 }
 
 .project-title {
+  font-family: var(--font-display);
   font-size: clamp(2.25rem, 5vw + 0.5rem, var(--text-display));
   font-weight: 600;
   letter-spacing: -0.03em;
