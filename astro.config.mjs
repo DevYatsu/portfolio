@@ -7,6 +7,12 @@ export default defineConfig({
 	output: "static",
 	compressHTML: true,
 	integrations: [
-		sitemap(),
+		sitemap({
+			filter: (page) => {
+				const url = new URL(page);
+				// Only include pages intended for search indexing
+				return url.pathname === "/" || url.pathname.startsWith("/projects");
+			},
+		}),
 	],
 });
