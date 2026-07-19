@@ -19,8 +19,9 @@ const {
 
 const siteUrl = "https://yanis.adysen.fr";
 
-// Per-page canonical URL instead of hardcoding root
-const pageUrl = new URL(Astro.url.pathname, siteUrl);
+// Per-page canonical URL — strip trailing slash to match internal link format
+const canonicalPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const pageUrl = new URL(canonicalPath, siteUrl);
 
 // JSON-LD structured data
 const personSchema = {
