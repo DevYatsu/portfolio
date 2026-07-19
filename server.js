@@ -43,7 +43,24 @@ function cacheControl(url) {
 	return "public, max-age=86400";
 }
 
+// Renamed-path redirects (preserve old bookmarks / backlinks)
+const REDIRECTS = {
+	"/impressum": "/legal",
+	"/impressum/": "/legal",
+	"/mentions-legales": "/legal",
+	"/mentions-legales/": "/legal",
+	"/merci": "/thanks",
+	"/merci/": "/thanks",
+};
+
 const server = createServer((req, res) => {
+	const redirect = REDIRECTS[req.url];
+	if (redirect) {
+		res.writeHead(301, { Location: redirect });
+		res.end();
+		return;
+	}
+
 	let filePath = join(DIST, req.url === "/" ? "index.html" : req.url);
 
 	// SPA-style fallback: if no extension, try .html

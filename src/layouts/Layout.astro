@@ -9,7 +9,7 @@ interface Props {
 	title: string;
 	description?: string;
 	noindex?: boolean;
-	/** Override canonical URL path. E.g. "/impressum" — uses siteUrl as base. */
+	/** Override canonical URL path. E.g. "/legal" — uses siteUrl as base. */
 	canonical?: string;
 }
 
@@ -110,8 +110,7 @@ const websiteSchema = {
 				<div class="foot-stmt__meta">
 					<span class="foot-stmt__copy">&copy; {new Date().getFullYear()} Yanis Amani</span>
 					<div class="foot-stmt__links">
-						<a href="/impressum" data-lang="en" class="foot-stmt__link">Impressum</a>
-						<a href="/mentions-legales" data-lang="fr" class="foot-stmt__link">Mentions Légales</a>
+						<a href="/legal" class="foot-stmt__link">Legal</a>
 					</div>
 				</div>
 			</footer>
