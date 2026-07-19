@@ -9,18 +9,22 @@ interface Props {
 	title: string;
 	description?: string;
 	noindex?: boolean;
+	/** Override canonical URL path. E.g. "/impressum" — uses siteUrl as base. */
+	canonical?: string;
 }
 
 const {
 	title,
 	description = "Yanis Amani — CS student who builds software that doesn't break. Rust, TypeScript, systems programming.",
 	noindex = false,
+	canonical,
 } = Astro.props;
 
 const siteUrl = "https://yanis.adysen.fr";
 
 // Per-page canonical URL — strip trailing slash to match internal link format
-const canonicalPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const rawPath = Astro.url.pathname.replace(/\/$/, '');
+const canonicalPath = canonical !== undefined ? canonical : (rawPath || '/');
 const pageUrl = new URL(canonicalPath, siteUrl);
 
 // JSON-LD structured data
