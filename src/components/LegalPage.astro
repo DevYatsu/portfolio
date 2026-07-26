@@ -1,0 +1,234 @@
+---
+import Layout from "../layouts/Layout.astro";
+import type { Language } from "../types";
+
+interface Props {
+	lang: Language;
+}
+
+const { lang } = Astro.props;
+const en = lang === "en";
+
+const t = en
+	? {
+			title: "Legal Notice & Privacy Policy // Yanis Amani",
+			description: "Legal notice and privacy policy for Yanis Amani's portfolio. No tracking cookies, no third-party analytics — built with privacy in mind.",
+			back: "← Back to Home",
+			tag: "Legal Info",
+			heading1: "Impressum &",
+			heading2: "Privacy Policy",
+			date: "Last Update — July 2026",
+			role: "Computer Science Student @ HE-Arc",
+			place: "Neuchâtel, Switzerland",
+			contactLabel: "Contact Direct",
+			privacyTitle: "Privacy First Policy",
+			privacyText: "This website is built with privacy in mind. No tracking cookies are used, and no third-party analytics are active.",
+			rightsLabel: "Your Rights",
+			rightsText: "You have the right to access, change, or delete any personal information sent through official channels.",
+			hostAddress: "Rue Eugène-Marziano 25, 1227 Les Acacias, Switzerland",
+			home: "Back to Home",
+			homeHref: "/",
+		}
+	: {
+			title: "Mentions légales & Confidentialité // Yanis Amani",
+			description: "Mentions légales et politique de confidentialité du portfolio de Yanis Amani. Aucun cookie de traçage, aucun script d'analyse tiers.",
+			back: "← Retour à l'accueil",
+			tag: "Infos Légales",
+			heading1: "Mentions légales &",
+			heading2: "Confidentialité",
+			date: "Dernière mise à jour — Juillet 2026",
+			role: "Étudiant en Informatique @ HE-Arc",
+			place: "Neuchâtel, Suisse",
+			contactLabel: "Contact Direct",
+			privacyTitle: "Politique Confidentialité",
+			privacyText: "Ce site est conçu dans le respect de votre vie privée. Aucun cookie de traçage n'est utilisé, et aucun script d'analyse tiers n'est actif.",
+			rightsLabel: "Vos Droits",
+			rightsText: "Vous disposez d'un droit d'accès, de modification et d'effacement de toute information transmise via les canaux officiels.",
+			hostAddress: "Rue Eugène-Marziano 25, 1227 Les Acacias, Suisse",
+			home: "Retour à l'accueil",
+			homeHref: "/fr/",
+		};
+---
+
+<Layout title={t.title} description={t.description} lang={lang} noindex={true}>
+	<article class="legal-page" data-animate>
+		<div class="container">
+			<a href={t.homeHref} class="legal-back">{t.back}</a>
+
+			<div class="legal-header">
+				<span class="legal-tag">{t.tag}</span>
+				<h1 class="legal-title">
+					{t.heading1}<br/>
+					<span class="legal-accent">{t.heading2}</span>
+				</h1>
+				<p class="legal-date">{t.date}</p>
+			</div>
+
+			<div class="legal-sections">
+				<div class="legal-section">
+					<div class="legal-section-grid">
+						<div>
+							<h2 class="legal-h2">Yanis Amani</h2>
+							<p class="legal-p">{t.role}<br/>{t.place}</p>
+						</div>
+						<div>
+							<span class="legal-field-label">{t.contactLabel}</span>
+							<a href="mailto:yanis.amani@icloud.com" class="legal-email">yanis.amani@icloud.com</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="legal-section">
+					<h2 class="legal-h2">{t.privacyTitle}</h2>
+					<p class="legal-p">{t.privacyText}</p>
+					<div class="legal-highlight">
+						<h3 class="legal-highlight-label">{t.rightsLabel}</h3>
+						<p class="legal-p">{t.rightsText}</p>
+					</div>
+				</div>
+
+				<div class="legal-section">
+					<h2 class="legal-h2">Infomaniak Network SA</h2>
+					<p class="legal-p">{t.hostAddress}</p>
+				</div>
+			</div>
+
+			<div class="legal-footer">
+				<a href={t.homeHref} class="btn-primary">{t.home}</a>
+			</div>
+		</div>
+	</article>
+</Layout>
+
+<style>
+.legal-page {
+  padding-top: 8rem;
+  padding-bottom: var(--space-2xl);
+}
+
+.legal-back {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  text-decoration: none;
+  margin-bottom: var(--space-xl);
+  transition: color var(--dur-short) var(--ease-out);
+}
+.legal-back:hover { color: var(--color-accent); }
+
+.legal-header {
+  margin-bottom: var(--space-2xl);
+}
+
+.legal-tag {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-accent);
+  font-weight: 500;
+  margin-bottom: var(--space-sm);
+}
+
+.legal-title {
+  font-family: var(--font-display);
+  font-size: var(--text-display-s);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  margin-bottom: var(--space-sm);
+}
+
+.legal-accent {
+  color: var(--color-accent);
+  font-style: normal;
+}
+
+.legal-date {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+}
+
+.legal-sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.legal-section {
+  padding: var(--space-lg);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-lg);
+  background: var(--color-paper-2);
+}
+
+@media (min-width: 768px) {
+  .legal-section { padding: var(--space-xl); }
+}
+
+.legal-section-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+}
+
+@media (min-width: 768px) {
+  .legal-section-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.legal-h2 {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-sm);
+}
+
+.legal-p {
+  font-size: var(--text-sm);
+  color: var(--color-ink-2);
+  line-height: 1.65;
+  font-family: var(--font-body);
+}
+
+.legal-field-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  margin-bottom: var(--space-2xs);
+  letter-spacing: 0.05em;
+}
+
+.legal-email {
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: opacity var(--dur-short) var(--ease-out);
+  word-break: break-all;
+}
+.legal-email:hover { opacity: 0.75; }
+
+/* Flat sub-block — a rule + accent label, not a nested card */
+.legal-highlight {
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-rule);
+}
+
+.legal-highlight-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-accent);
+  margin-bottom: var(--space-2xs);
+}
+
+.legal-footer {
+  margin-top: var(--space-2xl);
+  padding-top: var(--space-xl);
+  border-top: 1px solid var(--color-rule);
+  text-align: center;
+}
+</style>

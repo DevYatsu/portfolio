@@ -5,22 +5,60 @@ import Layout from "../layouts/Layout.astro";
 <Layout
   title="404 // Page Not Found — Yanis Amani"
   description="The page you requested was not found. Return to Yanis Amani's portfolio."
+  noindex={true}
+  alternates={false}
 >
-  <section class="error-page" data-animate>
-    <div class="error-card">
-      <span class="error-code">404</span>
-      <h1 class="error-title">
-        Page not<br/>
-        <span class="error-accent">found.</span>
-      </h1>
-      <p class="error-desc">
-        Either the link is broken or I moved things around. Sorry about that.
-        Head back to the homepage and you'll find what you need.
-      </p>
-      <a href="/" class="btn-primary">Back to Home</a>
-    </div>
+  <!-- One 404.html serves every missed path in both locales, so this page
+       keeps a client-toggled dual DOM (the only page that still does). -->
+  <section data-lang="en">
+    <section class="error-page" data-animate>
+      <div class="error-card">
+        <span class="error-code">404</span>
+        <h1 class="error-title">
+          Page not<br/>
+          <span class="error-accent">found.</span>
+        </h1>
+        <p class="error-desc">
+          Either the link is broken or I moved things around. Sorry about that.
+          Head back to the homepage and you'll find what you need.
+        </p>
+        <a href="/" class="btn-primary">Back to Home</a>
+      </div>
+    </section>
+  </section>
+
+  <section data-lang="fr">
+    <section class="error-page" data-animate>
+      <div class="error-card">
+        <span class="error-code">404</span>
+        <div class="error-title" role="presentation">
+          Page<br/>
+          <span class="error-accent">introuvable.</span>
+        </div>
+        <p class="error-desc">
+          Soit le lien est cassé, soit j'ai déplacé des choses. Désolé.
+          Retournez à l'accueil et vous trouverez ce qu'il vous faut.
+        </p>
+        <a href="/fr/" class="btn-primary">Retour à l'accueil</a>
+      </div>
+    </section>
   </section>
 </Layout>
+
+<script is:inline data-astro-rerun>
+  // Show the visitor's language: URL prefix first, then stored choice,
+  // then browser language.
+  (function() {
+    var fromPath = location.pathname === '/fr' || location.pathname.startsWith('/fr/');
+    var stored = localStorage.getItem('lang');
+    var browser = (navigator.language || '').substring(0, 2);
+    var lang = fromPath ? 'fr' : (stored || (browser === 'fr' ? 'fr' : 'en'));
+    if (lang === 'fr') {
+      document.documentElement.setAttribute('data-lang', 'fr');
+      document.documentElement.lang = 'fr';
+    }
+  })();
+</script>
 
 <style>
 .error-page {
@@ -49,6 +87,7 @@ import Layout from "../layouts/Layout.astro";
 }
 
 .error-title {
+  font-family: var(--font-display);
   font-size: var(--text-display);
   font-weight: 600;
   letter-spacing: -0.03em;

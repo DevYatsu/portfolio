@@ -1,29 +1,53 @@
 ---
+import type { Language } from "../types";
+
+interface Props {
+	lang?: Language;
+}
+
+const { lang = "en" } = Astro.props;
+
 const t = {
-	en: { projects: "Projects", stack: "Stack", about: "About", contact: "Contact" },
-	fr: { projects: "Projets", stack: "Outils", about: "À propos", contact: "Contact" },
-};
+	en: { projects: "Projects", stack: "Stack", about: "About", contact: "Contact", switchLang: "Voir en français", theme: "Toggle theme" },
+	fr: { projects: "Projets", stack: "Outils", about: "À propos", contact: "Contact", switchLang: "View in English", theme: "Changer de thème" },
+}[lang];
+
+const home = lang === "fr" ? "/fr/" : "/";
+
+// Counterpart URL for the language toggle — same page, other locale
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const altPath =
+	lang === "fr"
+		? path.replace(/^\/fr(?=\/|$)/, "") || "/"
+		: path === "/"
+			? "/fr/"
+			: `/fr${path}`;
+const altLang = lang === "fr" ? "en" : "fr";
+const altLabel = lang === "fr" ? "EN" : "FR";
 ---
 
 <header class="nav">
 	<div class="nav__inner">
-		<a href="/" class="nav__brand">YA</a>
+		<a href={home} class="nav__brand">YA</a>
 
 		<nav class="nav__center">
-			<a href="/#projects" class="nav__link" data-i18n="projects">Projects</a>
-			<a href="/#skills" class="nav__link" data-i18n="stack">Stack</a>
-			<a href="/#about" class="nav__link" data-i18n="about">About</a>
-			<a href="/#contact" class="nav__link" data-i18n="contact">Contact</a>
+			<a href={`${home}#projects`} class="nav__link">{t.projects}</a>
+			<a href={`${home}#skills`} class="nav__link">{t.stack}</a>
+			<a href={`${home}#about`} class="nav__link">{t.about}</a>
+			<a href={`${home}#contact`} class="nav__link">{t.contact}</a>
 		</nav>
 
 		<div class="nav__right">
-			<button class="nav__theme" id="theme-toggle" aria-label="Toggle theme">
+			<button class="nav__theme" id="theme-toggle" aria-label={t.theme}>
 				<span class="theme-icon-light">☀</span>
 				<span class="theme-icon-dark">☾</span>
 			</button>
-			<button class="nav__lang" id="lang-toggle" onclick="window.__setLanguage?.(document.documentElement.lang === 'fr' ? 'en' : 'fr')">
-				<span id="lang-label">FR</span>
-			</button>
+			<a
+				class="nav__lang"
+				href={altPath}
+				aria-label={t.switchLang}
+				onclick={`localStorage.setItem('lang','${altLang}')`}
+			>{altLabel}</a>
 			<button id="mob-btn" class="mob-btn" aria-label="Toggle menu" aria-expanded="false">
 				<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
@@ -34,121 +58,93 @@ const t = {
 
 	<div id="mob-menu" class="mob-menu hidden">
 		<div class="container">
-			<a href="/#projects" class="mob-link" data-i18n="projects">Projects</a>
-			<a href="/#skills" class="mob-link" data-i18n="stack">Stack</a>
-			<a href="/#about" class="mob-link" data-i18n="about">About</a>
-			<a href="/#contact" class="mob-link" data-i18n="contact">Contact</a>
+			<a href={`${home}#projects`} class="mob-link">{t.projects}</a>
+			<a href={`${home}#skills`} class="mob-link">{t.stack}</a>
+			<a href={`${home}#about`} class="mob-link">{t.about}</a>
+			<a href={`${home}#contact`} class="mob-link">{t.contact}</a>
 			<hr class="mob-rule">
-			<button class="mob-lang" onclick="window.__setLanguage?.(document.documentElement.lang === 'fr' ? 'en' : 'fr')">English</button>
+			<a
+				class="mob-lang"
+				href={altPath}
+				onclick={`localStorage.setItem('lang','${altLang}')`}
+			>{lang === "fr" ? "English" : "Français"}</a>
 		</div>
 	</div>
 </header>
 
 <script>
-	document.addEventListener('astro:page-load', () => {
-		const updateLangLabel = () => {
-			const label = document.getElementById('lang-label');
-			if (label) {
-				const isFr = document.documentElement.lang === 'fr';
-				label.textContent = isFr ? 'EN' : 'FR';
-			}
-			const mobLabel = document.querySelector('.mob-lang');
-			if (mobLabel) {
-				mobLabel.textContent = document.documentElement.lang === 'fr' ? 'English' : 'Français';
-			}
-			const navLinks = document.querySelectorAll('[data-i18n]');
-			const t = {
-				en: { projects: "Projects", stack: "Stack", about: "About", contact: "Contact" },
-				fr: { projects: "Projets", stack: "Outils", about: "À propos", contact: "Contact" },
-			};
-			const lang = document.documentElement.lang === 'fr' ? 'fr' : 'en';
-			navLinks.forEach(el => {
-				const key = el.dataset.i18n;
-				if (t[lang] && t[lang][key]) el.textContent = t[lang][key];
-			});
-		};
+	const scrollBehavior = () =>
+		window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
 
-		const observer = new MutationObserver(() => updateLangLabel());
-		observer.observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
-		updateLangLabel();
-
-		// Scroll handler — .is-scrolled
-		const header = document.querySelector('.nav');
-		const onScroll = () => {
-			if (!header) return;
-			header.classList.toggle('is-scrolled', window.scrollY > 24);
-		};
-		let ticking = false;
-		window.addEventListener('scroll', () => {
-			if (!ticking) {
-				window.requestAnimationFrame(() => {
-					onScroll();
-					ticking = false;
-				});
-				ticking = true;
-			}
+	// window-level listeners register once at module scope —
+	// astro:page-load fires on every ClientRouter navigation and would
+	// otherwise stack a new copy of each listener per navigation.
+	let ticking = false;
+	window.addEventListener('scroll', () => {
+		if (ticking) return;
+		ticking = true;
+		window.requestAnimationFrame(() => {
+			document.querySelector('.nav')?.classList.toggle('is-scrolled', window.scrollY > 24);
+			ticking = false;
 		});
-		onScroll();
+	});
+
+	const normalize = (p) => p.replace(/\/$/, '') || '/';
+
+	document.addEventListener('astro:page-load', () => {
+		document.querySelector('.nav')?.classList.toggle('is-scrolled', window.scrollY > 24);
 
 		// Mobile menu
 		const btn = document.getElementById('mob-btn');
 		const menu = document.getElementById('mob-menu');
 		if (!btn || !menu) return;
 
-		menu.classList.add('hidden');
-		btn.setAttribute('aria-expanded', 'false');
+		const iconClosed = '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>';
+		const iconOpen = '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>';
 
 		let open = false;
-
-		btn.addEventListener('click', () => {
-			open = !open;
+		const setOpen = (next) => {
+			open = next;
 			menu.classList.toggle('hidden', !open);
 			btn.setAttribute('aria-expanded', String(open));
-			btn.innerHTML = open
-				? '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>'
-				: '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>';
+			btn.innerHTML = open ? iconOpen : iconClosed;
+		};
+		setOpen(false);
+
+		btn.addEventListener('click', () => setOpen(!open));
+
+		const header = btn.closest('header');
+
+		// Escape closes the menu and returns focus to the toggle
+		header?.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape' && open) {
+				setOpen(false);
+				btn.focus();
+			}
 		});
 
-		// Hash link smooth scrolling (delegated on .nav)
-		const nav = document.querySelector('.nav');
-		nav?.addEventListener('click', (e) => {
+		// Same-page hash links scroll with a fixed-nav offset
+		header?.addEventListener('click', (e) => {
 			const link = e.target.closest('a');
-			if (!link) return;
-			const href = link.getAttribute('href');
-			if (!href || !href.startsWith('/#')) return;
-			const id = href.substring(2);
-			let el = null;
-			for (const candidate of document.querySelectorAll(`[id="${id}"]`)) {
-				if (candidate.offsetParent !== null) { el = candidate; break; }
-			}
-			if (!el) el = document.getElementById(id);
+			if (!link || !link.hash) return;
+			const url = new URL(link.href);
+			if (normalize(url.pathname) !== normalize(location.pathname)) return;
+			const el = document.getElementById(url.hash.substring(1));
 			if (!el) return;
 			e.preventDefault();
-			history.replaceState(null, '', href);
-			const offset = 80;
-			const top = el.getBoundingClientRect().top + window.scrollY - offset;
-			window.scrollTo({ top, behavior: 'smooth' });
-			if (open) {
-				open = false;
-				menu.classList.add('hidden');
-				btn.setAttribute('aria-expanded', 'false');
-				btn.innerHTML = '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>';
-			}
+			history.replaceState(null, '', url.pathname + url.hash);
+			const top = el.getBoundingClientRect().top + window.scrollY - 80;
+			window.scrollTo({ top, behavior: scrollBehavior() });
+			if (open) setOpen(false);
 		});
 
 		// Reload hash scroll
 		if (window.location.hash) {
-			const id = window.location.hash.substring(1);
-			let el = null;
-			for (const candidate of document.querySelectorAll(`[id="${id}"]`)) {
-				if (candidate.offsetParent !== null) { el = candidate; break; }
-			}
-			if (!el) el = document.getElementById(id);
+			const el = document.getElementById(window.location.hash.substring(1));
 			if (el) {
 				requestAnimationFrame(() => {
-					const offset = 80;
-					const top = el.getBoundingClientRect().top + window.scrollY - offset;
-					window.scrollTo({ top, behavior: 'smooth' });
+					const top = el.getBoundingClientRect().top + window.scrollY - 80;
+					window.scrollTo({ top, behavior: scrollBehavior() });
 				});
 			}
 		}
@@ -215,6 +211,7 @@ const t = {
 		text-decoration: none;
 		padding: 0.35rem 0.65rem;
 		border-radius: var(--radius-pill);
+		white-space: nowrap;
 		transition: color var(--dur-short) var(--ease-out),
 		            background var(--dur-short) var(--ease-out);
 	}
@@ -245,6 +242,7 @@ const t = {
 		cursor: pointer;
 		font-size: var(--text-sm);
 		font-family: var(--font-body);
+		text-decoration: none;
 		transition: color var(--dur-short) var(--ease-out);
 	}
 
@@ -300,7 +298,9 @@ const t = {
 			display: none;
 		}
 
-		.nav__right :not(.mob-btn) {
+		/* Keep the theme toggle reachable on mobile; language switch
+		   lives in the mobile menu. */
+		.nav__lang {
 			display: none;
 		}
 
@@ -354,6 +354,7 @@ const t = {
 	}
 
 	.mob-lang {
+		display: block;
 		font-family: var(--font-body);
 		font-size: var(--text-sm);
 		text-transform: uppercase;
@@ -364,6 +365,7 @@ const t = {
 		padding: var(--space-sm) var(--space-md);
 		cursor: pointer;
 		text-align: left;
+		text-decoration: none;
 		transition: color var(--dur-short) var(--ease-out);
 	}
 </style>

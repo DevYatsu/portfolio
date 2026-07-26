@@ -6,12 +6,25 @@ export default defineConfig({
 	site: "https://yanis.adysen.fr",
 	output: "static",
 	compressHTML: true,
+	i18n: {
+		defaultLocale: "en",
+		locales: ["en", "fr"],
+		routing: {
+			prefixDefaultLocale: false,
+		},
+	},
 	integrations: [
 		sitemap({
 			filter: (page) => {
 				const url = new URL(page);
-				// Only include pages intended for search indexing
-				return url.pathname === "/" || url.pathname.startsWith("/projects");
+				const path = url.pathname.replace(/\/$/, "") || "/";
+				// Only include pages intended for search indexing (EN + FR trees)
+				return (
+					path === "/" ||
+					path === "/fr" ||
+					path.startsWith("/projects") ||
+					path.startsWith("/fr/projects")
+				);
 			},
 		}),
 	],

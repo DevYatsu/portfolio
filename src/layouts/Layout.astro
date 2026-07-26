@@ -1,22 +1,35 @@
 ---
+import "@fontsource-variable/geist";
+import "@fontsource-variable/jetbrains-mono";
 import "../styles/tokens.css";
 import "../styles/globals.css";
 
 import Header from "../components/Header.astro";
 import { ClientRouter } from "astro:transitions";
+import type { Language } from "../types";
 
 interface Props {
 	title: string;
 	description?: string;
 	noindex?: boolean;
+	lang?: Language;
+	/** Emit hreflang alternate links (default true — off for 404). */
+	alternates?: boolean;
 	/** Override canonical URL path. E.g. "/legal" — uses siteUrl as base. */
 	canonical?: string;
 }
 
+const defaultDescriptions: Record<Language, string> = {
+	en: "Yanis Amani — CS student who builds software that doesn't break. Rust, TypeScript, systems programming.",
+	fr: "Yanis Amani — étudiant en informatique qui construit des logiciels fiables. Rust, TypeScript, programmation système.",
+};
+
 const {
 	title,
-	description = "Yanis Amani — CS student who builds software that doesn't break. Rust, TypeScript, systems programming.",
+	lang = "en",
+	description = defaultDescriptions[lang],
 	noindex = false,
+	alternates = true,
 	canonical,
 } = Astro.props;
 
@@ -26,6 +39,17 @@ const siteUrl = "https://yanis.adysen.fr";
 const rawPath = Astro.url.pathname.replace(/\/$/, '');
 const canonicalPath = canonical !== undefined ? canonical : (rawPath || '/');
 const pageUrl = new URL(canonicalPath, siteUrl);
+
+// hreflang pair — the FR tree mirrors the EN tree under /fr
+const enPath = lang === "fr" ? (canonicalPath.replace(/^\/fr(?=\/|$)/, "") || "/") : canonicalPath;
+const frPath = enPath === "/" ? "/fr/" : `/fr${enPath}`;
+const enUrl = new URL(enPath, siteUrl);
+const frUrl = new URL(frPath, siteUrl);
+
+const footer = {
+	en: { line: "Build software that doesn't break.", legal: "Legal", legalHref: "/legal", skip: "Skip to content" },
+	fr: { line: "Construire des logiciels qui ne cassent pas.", legal: "Mentions légales", legalHref: "/fr/legal", skip: "Aller au contenu" },
+}[lang];
 
 // JSON-LD structured data
 const personSchema = {
@@ -50,13 +74,13 @@ const websiteSchema = {
 	name: "Yanis Amani",
 	url: siteUrl,
 	description: "Portfolio of Yanis Amani, Computer Science student focused on building reliable software.",
-	inLanguage: "en",
+	inLanguage: lang,
 	author: { "@id": `${siteUrl}/#person` },
 };
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -70,6 +94,14 @@ const websiteSchema = {
 
 		<link rel="canonical" href={pageUrl} />
 
+		{alternates && (
+			<>
+				<link rel="alternate" hreflang="en" href={enUrl} />
+				<link rel="alternate" hreflang="fr" href={frUrl} />
+				<link rel="alternate" hreflang="x-default" href={enUrl} />
+			</>
+		)}
+
 		{noindex && <meta name="robots" content="noindex" />}
 
 		<meta property="og:type" content="website" />
@@ -77,47 +109,73 @@ const websiteSchema = {
 		<meta property="og:site_name" content="Yanis Amani" />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
-		<meta property="og:image" content={new URL('/og-image.svg', siteUrl)} />
+		<meta property="og:image" content={new URL('/og-image.png', siteUrl)} />
+		<meta property="og:image:type" content="image/png" />
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
-		<meta property="og:locale" content="en_GB" />
+		<meta property="og:image:alt" content="Yanis Amani — I build reliable software" />
+		<meta property="og:locale" content={lang === "fr" ? "fr_FR" : "en_GB"} />
 
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:url" content={pageUrl} />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
-		<meta name="twitter:image" content={new URL('/og-image.svg', siteUrl)} />
+		<meta name="twitter:image" content={new URL('/og-image.png', siteUrl)} />
 
-		<!-- Geist + JetBrains Mono (Google Fonts) -->
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+		<script is:inline>
+			// Language preference — on the two home pages only, honour a stored
+			// choice (or first-visit browser language) before paint. Deep links
+			// are never redirected.
+			(function() {
+				var p = location.pathname;
+				var enHome = p === '/';
+				var frHome = p === '/fr' || p === '/fr/';
+				if (!enHome && !frHome) return;
+				var stored = localStorage.getItem('lang');
+				if (enHome) {
+					var pref = stored || (((navigator.language || '').substring(0, 2) === 'fr') ? 'fr' : 'en');
+					if (pref === 'fr') location.replace('/fr/');
+				} else if (stored === 'en') {
+					location.replace('/');
+				}
+			})();
+		</script>
 
 		<!-- Structured Data -->
 		<script type="application/ld+json" set:html={JSON.stringify(personSchema)}></script>
 		<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)}></script>
+
+		<!-- Reveal animations depend on JS — never hide content without it -->
+		<noscript>
+			<style>
+				[data-animate] { opacity: 1 !important; transform: none !important; }
+			</style>
+		</noscript>
 	</head>
 	<body>
+		<a href="#main-content" class="skip-link">{footer.skip}</a>
 		<div class="page-wrap">
-			<Header />
+			<Header lang={lang} />
 
 			<main id="main-content" class="main-content">
 				<slot />
 			</main>
 
 			<footer class="foot-stmt">
-				<p class="foot-stmt__line">Build software that doesn't break.</p>
+				<p class="foot-stmt__line">{footer.line}</p>
 				<div class="foot-stmt__meta">
 					<span class="foot-stmt__copy">&copy; {new Date().getFullYear()} Yanis Amani</span>
 					<div class="foot-stmt__links">
-						<a href="/legal" class="foot-stmt__link">Legal</a>
+						<a href="https://github.com/DevYatsu" target="_blank" rel="noopener noreferrer" class="foot-stmt__link">GitHub</a>
+						<a href="https://linkedin.com/in/yanis-amani" target="_blank" rel="noopener noreferrer" class="foot-stmt__link">LinkedIn</a>
+						<a href={footer.legalHref} class="foot-stmt__link">{footer.legal}</a>
 					</div>
 				</div>
 			</footer>
 		</div>
 
 		<script is:inline data-astro-rerun>
-			// Theme & Language — match stored/browser preference before paint
+			// Theme — match stored/browser preference before paint
 			(function() {
 				var stored = localStorage.getItem('theme');
 				var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -126,23 +184,7 @@ const websiteSchema = {
 				} else if (stored === 'light') {
 					document.documentElement.setAttribute('data-theme', 'light');
 				}
-
-				var langStored = localStorage.getItem('lang');
-				var browserLang = (navigator.language || navigator.userLanguage || '').substring(0, 2);
-				var lang = langStored || (browserLang === 'fr' ? 'fr' : 'en');
-				if (lang !== 'en') {
-					document.documentElement.setAttribute('data-lang', lang);
-					document.documentElement.lang = lang;
-				}
 			})();
-
-			window.__setLanguage = function(lang) {
-				document.documentElement.setAttribute('data-lang', lang);
-				document.documentElement.lang = lang;
-				localStorage.setItem('lang', lang);
-				var el = document.getElementById('lang-label');
-				if (el) el.textContent = lang === 'fr' ? 'EN' : 'FR';
-			};
 		</script>
 
 		<script>
@@ -154,6 +196,7 @@ const websiteSchema = {
 				const updateIcon = () => {
 					const isDark = html.getAttribute('data-theme') === 'dark';
 					btn?.classList.toggle('dark', isDark);
+					btn?.setAttribute('aria-pressed', String(isDark));
 				};
 
 				btn?.addEventListener('click', () => {
@@ -195,10 +238,25 @@ const websiteSchema = {
 			});
 		</script>
 
-		<!-- Mermaid — diagram rendering with theme support -->
-		<script is:inline src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+		<!-- Mermaid — loaded on demand, only on pages that contain a diagram -->
 		<script is:inline>
 			(function() {
+				var MERMAID_SRC = 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js';
+				var loading = null;
+
+				function loadMermaid() {
+					if (typeof mermaid !== 'undefined') return Promise.resolve();
+					if (loading) return loading;
+					loading = new Promise(function(resolve, reject) {
+						var s = document.createElement('script');
+						s.src = MERMAID_SRC;
+						s.onload = resolve;
+						s.onerror = reject;
+						document.head.appendChild(s);
+					});
+					return loading;
+				}
+
 				function initMermaid() {
 					const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
 					const paper = isDark ? '#0f121c' : '#f2f4f7';
@@ -231,20 +289,29 @@ const websiteSchema = {
 						},
 					});
 					document.querySelectorAll('.mermaid').forEach(el => {
-						mermaid.render(el.id || 'mermaid-' + Math.random().toString(36).slice(2), el.textContent.trim())
+						// Stash the diagram source before the SVG replaces it,
+						// so theme-toggle re-renders still have the source text.
+						if (!el.dataset.src) el.dataset.src = el.textContent.trim();
+						mermaid.render(el.id || 'mermaid-' + Math.random().toString(36).slice(2), el.dataset.src)
 							.then(({ svg }) => {
 								el.innerHTML = svg;
 							});
 					});
 				}
 
-				document.addEventListener('astro:page-load', () => {
-					if (typeof mermaid !== 'undefined') initMermaid();
-				});
+				function renderIfPresent() {
+					if (!document.querySelector('.mermaid')) return;
+					// Wait for webfonts — Mermaid sizes node boxes from measured
+					// text, so rendering with fallback metrics clips the labels.
+					var fonts = document.fonts ? document.fonts.ready : Promise.resolve();
+					Promise.all([loadMermaid(), fonts]).then(initMermaid).catch(function() {});
+				}
+
+				document.addEventListener('astro:page-load', renderIfPresent);
 
 				// Re-render on theme toggle
 				const themeObserver = new MutationObserver(() => {
-					if (typeof mermaid !== 'undefined' && document.querySelector('.mermaid svg')) {
+					if (typeof mermaid !== 'undefined' && document.querySelector('.mermaid[data-src]')) {
 						initMermaid();
 					}
 				});

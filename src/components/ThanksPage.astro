@@ -1,0 +1,93 @@
+---
+import Layout from "../layouts/Layout.astro";
+import type { Language } from "../types";
+
+interface Props {
+	lang: Language;
+}
+
+const { lang } = Astro.props;
+
+const t = lang === "en"
+	? {
+			title: "Message Received // Yanis Amani",
+			description: "Thanks for reaching out! Your message has been sent successfully. I'll get back to you within a day or two.",
+			badge: "Success",
+			line1: "Message",
+			line2: "received.",
+			desc: "Thanks for reaching out! I'll get back to you as soon as I can — usually within a day or two.",
+			cta: "Back to Home",
+			home: "/",
+		}
+	: {
+			title: "Message reçu // Yanis Amani",
+			description: "Merci de m'avoir contacté ! Votre message a bien été envoyé. Je vous réponds sous un jour ou deux.",
+			badge: "Succès",
+			line1: "Message",
+			line2: "reçu.",
+			desc: "Merci de m'avoir contacté ! Je vous réponds dès que possible — en général sous un jour ou deux.",
+			cta: "Retour à l'accueil",
+			home: "/fr/",
+		};
+---
+
+<Layout title={t.title} description={t.description} lang={lang} noindex={true}>
+	<section class="confirm-page" data-animate>
+		<div class="confirm-card">
+			<span class="confirm-badge">{t.badge}</span>
+			<h1 class="confirm-title">
+				{t.line1}<br/>
+				<span class="confirm-accent">{t.line2}</span>
+			</h1>
+			<p class="confirm-desc">{t.desc}</p>
+			<a href={t.home} class="btn-primary">{t.cta}</a>
+		</div>
+	</section>
+</Layout>
+
+<style>
+.confirm-page {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-2xl) var(--space-md);
+  text-align: center;
+}
+
+.confirm-card {
+  max-width: 28rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.confirm-badge {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-accent);
+  letter-spacing: 0.08em;
+}
+
+.confirm-title {
+  font-size: var(--text-display);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 0.92;
+}
+
+.confirm-accent {
+  color: var(--color-accent);
+  font-style: normal;
+}
+
+.confirm-desc {
+  font-size: var(--text-base);
+  color: var(--color-muted);
+  line-height: 1.6;
+  max-width: 24rem;
+  font-family: var(--font-body);
+}
+</style>

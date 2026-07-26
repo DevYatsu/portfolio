@@ -3,7 +3,7 @@ export type Language = "en" | "fr";
 export interface Project {
 	id: string;
 	name: string;
-	category: string;
+	category: { en: string; fr: string };
 	description: { en: string; fr: string };
 	tags: { name: string; url: string }[];
 	link: { url: string; label: string };

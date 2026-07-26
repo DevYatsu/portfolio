@@ -1,5 +1,39 @@
 [
   {
+    "date": "2026-07-26",
+    "macrostructure": "Marquee Hero (home) + Long Document (projects)",
+    "theme": "custom",
+    "theme_axes": "light / geometric-sans / cool",
+    "enrichment": "none (typography only)",
+    "brief": "Redesign within locked system: featured-card asymmetric project grid (fixes nested-anchor bug via stretched links), hero meta line, display-sized contact email, sticky meta rail + pull quotes + h2 rules on project pages (implements design.md Long Document spec), footer gains GitHub/LinkedIn",
+    "scope": "app",
+    "nav": "N1b",
+    "footer": "Ft5"
+  },
+  {
+    "date": "2026-07-26",
+    "macrostructure": "Marquee Hero",
+    "theme": "custom",
+    "theme_axes": "light / geometric-sans / cool",
+    "enrichment": "none (typography only)",
+    "brief": "Flagged-items pass: i18n restructured to /fr/ routes (single-DOM pages, hreflang, lang-aware Layout/Header), fonts fully self-hosted (fontsource Geist + JetBrains Mono), on-system OG PNG replaces off-system SVG, project shell CSS deduplicated into globals",
+    "scope": "app",
+    "nav": "N1b",
+    "footer": "Ft5"
+  },
+  {
+    "date": "2026-07-26",
+    "macrostructure": "Marquee Hero",
+    "theme": "custom",
+    "theme_axes": "light / geometric-sans / cool",
+    "vibe": "Hyperlane-inspired, technical, cool blue",
+    "enrichment": "none (typography only)",
+    "brief": "Full-site audit + fix pass: contrast (muted token), Inter @font-face, mobile nav bug, hero CTAs, a11y (skip link, aria-pressed, Escape), conditional mermaid, scroll-fade trimmed to hero, FR variants for 404/thanks/footer",
+    "scope": "app",
+    "nav": "N1b",
+    "footer": "Ft5"
+  },
+  {
     "date": "2026-07-15",
     "macrostructure": "Marquee Hero",
     "theme": "custom",

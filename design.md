@@ -12,11 +12,14 @@ pill CTAs, monochrome with a single restrained blue accent.
 ## Macrostructure family
 
 - **Marketing / landing pages**: Marquee Hero — project-cards as the primary
-  structural unit, lean hero, skill tags, contact as a footer-ish strip. Varies
-  on hero archetype (salutation·role·tagline vs. statement·proof·CTA) and
-  enrichment tier.
-- **Content / project detail pages**: Long Document — content-forward with
-  sidebar tech stack, pull quotes for notable challenges, footnotes.
+  structural unit (asymmetric: one full-width featured card + a pair), lean
+  left-biased hero with CTA row + factual meta line, skill tags, contact closes
+  with a display-sized email. Varies on hero archetype and enrichment tier.
+  Hero enrichment in use: none — typography only.
+- **Content / project detail pages**: Long Document — content-forward with a
+  sticky sidebar meta rail (links + tech stack, hairline left rule) at ≥1024px,
+  one pull quote per page lifted from the page's own copy (display voice
+  between hairlines), hairline top-rules on section headings.
 - **Utility / error pages**: Minimal single-column card.
 
 ## Theme — custom (Hyperlane-inspired)
@@ -31,8 +34,8 @@ pill CTAs, monochrome with a single restrained blue accent.
                         oklch(68% 0.010 260)
 - `--color-rule`       oklch(86% 0.006 270)   — hairline (light)
                         oklch(24% 0.012 260)
-- `--color-muted`      oklch(54% 0.008 260)   — de-emphasised text
-                        oklch(52% 0.010 260)
+- `--color-muted`      oklch(48% 0.010 260)   — de-emphasised text (≥4.5:1 on paper & paper-2)
+                        oklch(65% 0.012 260)
 - `--color-accent`     oklch(55% 0.18 255)    — technical blue (light)
                         oklch(65% 0.18 255)   — lighter blue (dark)
 - `--color-focus`      oklch(50% 0.20 255)    — focus ring
@@ -40,7 +43,7 @@ pill CTAs, monochrome with a single restrained blue accent.
 
 ## Typography
 
-- Display: Geist, weight 600, style normal
+- Display: Geist, weight 600, style normal (self-hosted via @fontsource-variable/geist — no third-party font requests)
 - Body: Inter Variable, weight 400
 - Wordmark: Geist, weight 700 (same family, weight does the differentiation)
 - Mono: JetBrains Mono, weight 400 (code contexts only)
@@ -96,14 +99,14 @@ pill CTAs, monochrome with a single restrained blue accent.
   --color-ink-2:      oklch(38% 0.010 260);
   --color-rule:       oklch(86% 0.006 270);
   --color-rule-2:     oklch(91% 0.005 270);
-  --color-muted:      oklch(54% 0.008 260);
+  --color-muted:      oklch(48% 0.010 260);
   --color-accent:     oklch(55% 0.18 255);
   --color-accent-ink: oklch(97% 0.005 270);
   --color-focus:      oklch(50% 0.20 255);
 
-  --font-display: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Geist Variable", "Geist", ui-sans-serif, system-ui, sans-serif;
   --font-body:    "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-mono:    "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+  --font-mono:    "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, "SF Mono", monospace;
 
   --space-3xs: 0.25rem;  --space-2xs: 0.5rem;  --space-xs: 0.75rem;
   --space-sm:  1rem;     --space-md:  1.5rem;  --space-lg: 2rem;
@@ -137,7 +140,7 @@ pill CTAs, monochrome with a single restrained blue accent.
   --color-ink-2:      oklch(68% 0.010 260);
   --color-rule:       oklch(24% 0.012 260);
   --color-rule-2:     oklch(26% 0.012 260);
-  --color-muted:      oklch(52% 0.010 260);
+  --color-muted:      oklch(65% 0.012 260);
   --color-accent:     oklch(65% 0.18 255);
   --color-accent-ink: oklch(14% 0.012 260);
   --color-focus:      oklch(60% 0.20 255);

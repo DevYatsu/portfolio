@@ -1,0 +1,124 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import type { Language } from "../../types";
+
+interface Props {
+	lang: Language;
+}
+
+const { lang } = Astro.props;
+const en = lang === "en";
+const base = en ? "" : "/fr";
+
+const t = en
+	? {
+			title: "YatsuScript // Yanis Amani",
+			description: "A bytecode interpreter written in Rust from scratch. No dependencies, no shortcuts.",
+			tagline: "A bytecode interpreter built from absolute scratch. No dependencies, no existing code — just me and the Rust compiler.",
+			github: "View on GitHub",
+			tryIt: "Try it →",
+			techLabel: "Tech Stack",
+			interpreter: "Interpreter",
+			prev: "← Previous project",
+			all: "All projects →",
+		}
+	: {
+			title: "YatsuScript // Yanis Amani",
+			description: "Un interpréteur de bytecode écrit en Rust à partir de rien. Aucune dépendance, aucun raccourci.",
+			tagline: "Un interpréteur de bytecode écrit à partir de rien. Aucune dépendance, aucun code existant — juste moi et le compilateur Rust.",
+			github: "Voir sur GitHub",
+			tryIt: "Essayer →",
+			techLabel: "Stack Technique",
+			interpreter: "Interpréteur",
+			prev: "← Projet précédent",
+			all: "Tous les projets →",
+		};
+---
+
+<Layout title={t.title} description={t.description} lang={lang}>
+	<article class="project-page" data-animate>
+		<div class="container">
+			<header class="project-head">
+				<h1 class="project-title">YatsuScript</h1>
+				<p class="project-tagline">{t.tagline}</p>
+			</header>
+
+			<div class="project-layout">
+				<aside class="project-meta">
+					<div class="project-links">
+						<a href="https://devyatsu.github.io/ysc/playground.html" target="_blank" rel="noopener noreferrer" class="btn-primary">{t.tryIt}</a>
+						<a href="https://github.com/DevYatsu/YatsuScript" target="_blank" rel="noopener noreferrer" class="btn-ghost">{t.github}</a>
+					</div>
+					<div class="project-meta__block">
+						<span class="tech-label">{t.techLabel}</span>
+						<div class="tech-list">
+							<a href="https://rust-lang.org" target="_blank" rel="noopener noreferrer" class="tech-tag">Rust</a>
+							<a href="https://github.com/DevYatsu/YatsuScript" target="_blank" rel="noopener noreferrer" class="tech-tag">{t.interpreter}</a>
+							<a href="https://en.wikipedia.org/wiki/Bytecode" target="_blank" rel="noopener noreferrer" class="tech-tag">Bytecode</a>
+						</div>
+					</div>
+				</aside>
+
+				<div class="project-content">
+				{en ? (
+					<Fragment>
+						<h2>What it is</h2>
+						<p>YatsuScript is a bytecode interpreter I wrote from absolute zero. No dependencies. No reading an existing interpreter's source. Just the Rust compiler, a text editor, and a lot of terminal print debugging.</p>
+
+						<p class="pull-quote">It started as “I wonder how these work” and ended as the hardest thing I’ve built.</p>
+
+						<h2>Architecture</h2>
+						<p>The project is structured as a single Rust crate with three clear phases:</p>
+						<ul>
+							<li><strong>Lexer</strong> — Tokenizes source code into a flat token stream. Handles keywords, identifiers, literals, and operators.</li>
+							<li><strong>Compiler</strong> — Walks the token stream and emits bytecode instructions. Register-based, with a fixed instruction set.</li>
+							<li><strong>VM</strong> — Executes bytecode. Register allocation, memory mapping, instruction dispatch.</li>
+						</ul>
+
+						<p>The instruction set is small by design — about 20 opcodes covering load/store, arithmetic, control flow, and I/O. Enough to be interesting, not so many that I'd never finish.</p>
+
+						<h2>The hard parts</h2>
+						<p><strong>Register allocation.</strong> Deciding which values live in registers vs. memory is a genuinely hard problem. My first pass was naive — spill everything — and the interpreter was unusably slow. The second pass used a linear scan allocator. It's still not production-grade, but it works, and I understand exactly where every cycle goes.</p>
+						<p><strong>Self-hosting the debugger.</strong> When a bytecode program crashes, you get a register dump and a memory map. Building a disassembler that could map bytecode offsets back to source lines was a week of work by itself. Worth every hour — trying to debug raw bytecode without it is like reading assembly without a symbol table.</p>
+
+						<h2>What's next</h2>
+						<p>A garbage collector. The interpreter currently leaks memory — values are allocated but never freed. I've been reading the GC literature (Baker's algorithm, generational collection, the Cheney copy collector) and prototyping a simple mark-sweep in a branch. After that: maybe a JIT, but let's be realistic about scope.</p>
+
+						<h2>What I learned</h2>
+						<p>More than any other project: that you don't need to understand everything before you start. I began with zero knowledge of register allocation, zero knowledge of VM design. The Rust compiler catches enough mistakes that you can learn by doing — each compiler error teaches you something real about how computers work at the low level.</p>
+						<p>If you like compilers, we should talk.</p>
+					</Fragment>
+				) : (
+					<Fragment>
+						<h2>Ce que c'est</h2>
+						<p>YatsuScript est un interpréteur de bytecode écrit à partir de zéro absolu. Aucune dépendance. Aucune lecture du code source d'un interpréteur existant. Juste le compilateur Rust, un éditeur de texte, et beaucoup de débogage par terminal.</p>
+
+						<p class="pull-quote">Ça a commencé par « je me demande comment ça marche » et c'est devenu le truc le plus dur que j'ai construit.</p>
+
+						<h2>Architecture</h2>
+						<p>Le projet est structuré en un seul crate Rust avec trois phases distinctes :</p>
+						<ul>
+							<li><strong>Lexer</strong> — Tokenize le code source en un flux plat de tokens. Gère les mots-clés, identifiants, littéraux et opérateurs.</li>
+							<li><strong>Compilateur</strong> — Parcourt le flux de tokens et émet des instructions bytecode. Basé sur des registres, avec un jeu d'instructions fixe.</li>
+							<li><strong>VM</strong> — Exécute le bytecode. Allocation de registres, mapping mémoire, dispatch d'instructions.</li>
+						</ul>
+
+						<p>Le jeu d'instructions est volontairement petit — environ 20 opcodes couvrant load/store, arithmétique, contrôle de flux et I/O. Assez pour être intéressant, pas trop pour ne jamais finir.</p>
+
+						<h2>Ce que j'ai appris</h2>
+						<p>Plus que dans n'importe quel autre projet : que tu n'as pas besoin de tout comprendre avant de commencer. J'ai commencé avec zéro connaissance en allocation de registres, zéro connaissance en conception de VM. Le compilateur Rust attrape assez d'erreurs pour que tu puisses apprendre en faisant — chaque erreur du compilateur t'apprend quelque chose de réel sur le fonctionnement des ordinateurs à bas niveau.</p>
+						<p>Si t'aimes les compilateurs, on devrait parler.</p>
+					</Fragment>
+				)}
+				</div>
+			</div>
+		</div>
+	</article>
+
+	<nav class="project-nav">
+		<div class="container project-nav-inner">
+			<a href={`${base}/projects/axto`} class="btn-ghost">{t.prev}</a>
+			<a href={`${base}/#projects`} class="btn-ghost">{t.all}</a>
+		</div>
+	</nav>
+</Layout>
