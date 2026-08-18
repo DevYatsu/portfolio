@@ -1,26 +1,7 @@
 /* ═══════════════════════════════════════════
    Hallmark · genre: modern-minimal · design-system: design.md · designed-as-app
-   Stamp — durable record for future Hallmark runs
+   Stamp · durable record for future Hallmark runs
    ═══════════════════════════════════════════ */
-
-/* ── Fonts (self-hosted Inter Variable) ───── */
-@font-face {
-	font-family: "Inter Variable";
-	font-style: normal;
-	font-weight: 100 900;
-	font-display: swap;
-	src: url("../assets/fonts/inter-latin-wght-normal.woff2") format("woff2-variations");
-	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-	font-family: "Inter Variable";
-	font-style: normal;
-	font-weight: 100 900;
-	font-display: swap;
-	src: url("../assets/fonts/inter-latin-ext-wght-normal.woff2") format("woff2-variations");
-	unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
 
 /* ── Reset & Base ─────────────────────────── */
 *,
@@ -245,7 +226,7 @@ code {
 }
 
 /* ── Skill Chips ──────────────────────────── */
-/* Non-interactive — no hover affordance (chips are labels, not links) */
+/* Non-interactive: no hover affordance (chips are labels, not links) */
 .skill-chip {
 	display: inline-flex;
 	align-items: center;
@@ -298,7 +279,7 @@ code {
 	}
 }
 
-/* ── Language Toggle (404 only — every other page
+/* ── Language Toggle (404 only; every other page
       is statically rendered per locale under /fr) ── */
 
 [data-lang]:not(html) { display: none; }
@@ -306,7 +287,7 @@ code {
 html[data-lang="fr"] [data-lang="en"] { display: none; }
 html[data-lang="fr"] [data-lang="fr"] { display: block; }
 
-/* ── Project Pages (shared shell — Long Document) ── */
+/* ── Project Pages (shared shell · Long Document) ── */
 
 .project-page {
 	padding-top: 7rem;
@@ -426,7 +407,7 @@ html[data-lang="fr"] [data-lang="fr"] { display: block; }
 	max-width: 48rem;
 }
 
-/* Pull quote — display voice between hairlines (design.md · Long Document) */
+/* Pull quote: display voice between hairlines (design.md · Long Document) */
 .pull-quote {
 	font-family: var(--font-display);
 	font-size: var(--text-lg);
@@ -540,7 +521,7 @@ html[data-lang="fr"] [data-lang="fr"] { display: block; }
 	display: none;
 }
 
-/* Container gutter widens to --space-xl at 768px — keep the bleed aligned */
+/* Container gutter widens to --space-xl at 768px: keep the bleed aligned */
 @media (min-width: 768px) {
 	.screenshot-grid {
 		margin-inline: calc(-1 * var(--space-xl));
@@ -571,7 +552,7 @@ html[data-lang="fr"] [data-lang="fr"] { display: block; }
 	}
 }
 
-/* Portrait phone screenshots — narrower rail */
+/* Portrait phone screenshots: narrower rail */
 .screenshot-grid--phone .screenshot {
 	flex: 0 0 180px;
 }
@@ -588,7 +569,6 @@ html[data-lang="fr"] [data-lang="fr"] { display: block; }
 	border-radius: var(--radius-lg);
 	border: 1px solid var(--color-rule);
 	background: var(--color-paper);
-	box-shadow: 0 4px 16px color-mix(in srgb, var(--color-ink) 8%, transparent);
 }
 
 .screenshot figcaption {

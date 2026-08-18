@@ -1,5 +1,4 @@
 ---
-import "@fontsource-variable/geist";
 import "@fontsource-variable/jetbrains-mono";
 import "../styles/tokens.css";
 import "../styles/globals.css";
@@ -13,15 +12,15 @@ interface Props {
 	description?: string;
 	noindex?: boolean;
 	lang?: Language;
-	/** Emit hreflang alternate links (default true — off for 404). */
+	/** Emit hreflang alternate links (default true: off for 404). */
 	alternates?: boolean;
-	/** Override canonical URL path. E.g. "/legal" — uses siteUrl as base. */
+	/** Override canonical URL path. Uses siteUrl as base. */
 	canonical?: string;
 }
 
 const defaultDescriptions: Record<Language, string> = {
-	en: "Yanis Amani — CS student who builds software that doesn't break. Rust, TypeScript, systems programming.",
-	fr: "Yanis Amani — étudiant en informatique qui construit des logiciels fiables. Rust, TypeScript, programmation système.",
+	en: "Yanis Amani. CS student who builds software that doesn't break. Rust, TypeScript, systems programming.",
+	fr: "Yanis Amani. Étudiant en informatique qui construit des logiciels fiables. Rust, TypeScript, programmation système.",
 };
 
 const {
@@ -35,20 +34,20 @@ const {
 
 const siteUrl = "https://yanis.adysen.fr";
 
-// Per-page canonical URL — strip trailing slash to match internal link format
+// Per-page canonical URL: strip trailing slash to match internal link format
 const rawPath = Astro.url.pathname.replace(/\/$/, '');
 const canonicalPath = canonical !== undefined ? canonical : (rawPath || '/');
 const pageUrl = new URL(canonicalPath, siteUrl);
 
-// hreflang pair — the FR tree mirrors the EN tree under /fr
+// hreflang pair: the FR tree mirrors the EN tree under /fr
 const enPath = lang === "fr" ? (canonicalPath.replace(/^\/fr(?=\/|$)/, "") || "/") : canonicalPath;
 const frPath = enPath === "/" ? "/fr/" : `/fr${enPath}`;
 const enUrl = new URL(enPath, siteUrl);
 const frUrl = new URL(frPath, siteUrl);
 
 const footer = {
-	en: { line: "Build software that doesn't break.", legal: "Legal", legalHref: "/legal", skip: "Skip to content" },
-	fr: { line: "Construire des logiciels qui ne cassent pas.", legal: "Mentions légales", legalHref: "/fr/legal", skip: "Aller au contenu" },
+	en: { line: "Build software that doesn't break.", skip: "Skip to content" },
+	fr: { line: "Construire des logiciels qui ne cassent pas.", skip: "Aller au contenu" },
 }[lang];
 
 // JSON-LD structured data
@@ -89,8 +88,8 @@ const websiteSchema = {
 		<title>{title}</title>
 		<meta name="description" content={description} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="theme-color" content="#eceef2" media="(prefers-color-scheme: light)" />
-		<meta name="theme-color" content="#0b0e14" media="(prefers-color-scheme: dark)" />
+		<meta name="theme-color" content="#f0f5ff" media="(prefers-color-scheme: light)" />
+		<meta name="theme-color" content="#0a0d13" media="(prefers-color-scheme: dark)" />
 
 		<link rel="canonical" href={pageUrl} />
 
@@ -113,7 +112,7 @@ const websiteSchema = {
 		<meta property="og:image:type" content="image/png" />
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
-		<meta property="og:image:alt" content="Yanis Amani — I build reliable software" />
+		<meta property="og:image:alt" content="Yanis Amani. I build reliable software" />
 		<meta property="og:locale" content={lang === "fr" ? "fr_FR" : "en_GB"} />
 
 		<meta name="twitter:card" content="summary_large_image" />
@@ -123,7 +122,7 @@ const websiteSchema = {
 		<meta name="twitter:image" content={new URL('/og-image.png', siteUrl)} />
 
 		<script is:inline>
-			// Language preference — on the two home pages only, honour a stored
+			// Language preference: on the two home pages only, honour a stored
 			// choice (or first-visit browser language) before paint. Deep links
 			// are never redirected.
 			(function() {
@@ -145,7 +144,7 @@ const websiteSchema = {
 		<script type="application/ld+json" set:html={JSON.stringify(personSchema)}></script>
 		<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)}></script>
 
-		<!-- Reveal animations depend on JS — never hide content without it -->
+		<!-- Reveal animations depend on JS; never hide content without it -->
 		<noscript>
 			<style>
 				[data-animate] { opacity: 1 !important; transform: none !important; }
@@ -168,14 +167,13 @@ const websiteSchema = {
 					<div class="foot-stmt__links">
 						<a href="https://github.com/DevYatsu" target="_blank" rel="noopener noreferrer" class="foot-stmt__link">GitHub</a>
 						<a href="https://linkedin.com/in/yanis-amani" target="_blank" rel="noopener noreferrer" class="foot-stmt__link">LinkedIn</a>
-						<a href={footer.legalHref} class="foot-stmt__link">{footer.legal}</a>
 					</div>
 				</div>
 			</footer>
 		</div>
 
 		<script is:inline data-astro-rerun>
-			// Theme — match stored/browser preference before paint
+			// Theme: match stored/browser preference before paint
 			(function() {
 				var stored = localStorage.getItem('theme');
 				var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -238,7 +236,7 @@ const websiteSchema = {
 			});
 		</script>
 
-		<!-- Mermaid — loaded on demand, only on pages that contain a diagram -->
+		<!-- Mermaid: loaded on demand, only on pages that contain a diagram -->
 		<script is:inline>
 			(function() {
 				var MERMAID_SRC = 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js';
@@ -259,12 +257,12 @@ const websiteSchema = {
 
 				function initMermaid() {
 					const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-					const paper = isDark ? '#0f121c' : '#f2f4f7';
-					const paper2 = isDark ? '#1a1e2a' : '#eef0f4';
-					const ink2 = isDark ? '#aeb1bf' : '#656a80';
-					const rule = isDark ? '#1f2332' : '#d5d8e2';
-					const accent = isDark ? '#6391e8' : '#3b7add';
-					const muted = isDark ? '#8084a0' : '#878ca0';
+					const paper = isDark ? '#0a0d13' : '#f0f5ff';
+					const paper2 = isDark ? '#13161d' : '#e6ebf6';
+					const ink2 = isDark ? '#95989f' : '#3f4348';
+					const rule = isDark ? '#21242b' : '#ccd1da';
+					const accent = isDark ? '#348ff9' : '#026fd7';
+					const muted = isDark ? '#8b8f97' : '#5a5e63';
 
 					mermaid.initialize({
 						startOnLoad: false,
@@ -276,7 +274,7 @@ const websiteSchema = {
 							lineColor: muted,
 							secondaryColor: paper2,
 							tertiaryColor: paper,
-							fontFamily: '"Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif',
+							fontFamily: 'ui-sans-serif, system-ui, sans-serif',
 							fontSize: '14px',
 							background: paper,
 							mainBkg: paper2,
@@ -301,7 +299,7 @@ const websiteSchema = {
 
 				function renderIfPresent() {
 					if (!document.querySelector('.mermaid')) return;
-					// Wait for webfonts — Mermaid sizes node boxes from measured
+					// Wait for webfonts: Mermaid sizes node boxes from measured
 					// text, so rendering with fallback metrics clips the labels.
 					var fonts = document.fonts ? document.fonts.ready : Promise.resolve();
 					Promise.all([loadMermaid(), fonts]).then(initMermaid).catch(function() {});

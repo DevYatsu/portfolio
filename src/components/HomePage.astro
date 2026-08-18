@@ -18,7 +18,7 @@ const t = {
 	en: {
 		title: "Yanis Amani // CS Student",
 		badge: "CS Student · Systems · Web · Reliability",
-		heroDesc: "I build reliable software. Rust, TypeScript, systems programming — the kind that doesn't fall over in production.",
+		heroDesc: "I build reliable software. Rust, TypeScript, systems programming. The kind that doesn't fall over in production.",
 		ctaProjects: "View projects",
 		ctaContact: "Get in touch",
 		heroMeta: "HE-Arc · Neuchâtel, Switzerland",
@@ -26,7 +26,7 @@ const t = {
 		projects: "Projects",
 		projectsSub: "Side projects, open-source tools, and things I built because they were interesting problems.",
 		staticSites: "Static Sites",
-		staticSub: "Client projects — clean, professional web presence.",
+		staticSub: "Client projects: clean, professional web presence.",
 		skills: "Skills",
 		skillsSub: "Languages and frameworks I reach for daily.",
 		about: "About",
@@ -39,7 +39,7 @@ const t = {
 	fr: {
 		title: "Yanis Amani // Étudiant en Informatique",
 		badge: "Étudiant en Informatique · Systèmes · Web · Fiabilité",
-		heroDesc: "Je construis des logiciels fiables. Rust, TypeScript, programmation système — le genre qui tient la route en production.",
+		heroDesc: "Je construis des logiciels fiables. Rust, TypeScript, programmation système. Le genre qui tient la route en production.",
 		ctaProjects: "Voir les projets",
 		ctaContact: "Me contacter",
 		heroMeta: "HE-Arc · Neuchâtel, Suisse",
@@ -47,7 +47,7 @@ const t = {
 		projects: "Projets",
 		projectsSub: "Projets perso, outils open-source, des trucs construits parce que le problème était intéressant.",
 		staticSites: "Sites statiques",
-		staticSub: "Projets clients — présence web propre et professionnelle.",
+		staticSub: "Projets clients : présence web propre et professionnelle.",
 		skills: "Compétences",
 		skillsSub: "Langages et frameworks que j'utilise quotidiennement.",
 		about: "À propos",
@@ -61,7 +61,7 @@ const t = {
 
 const projectBase = lang === "fr" ? "/fr/projects" : "/projects";
 
-// YatsuScript leads — "the hardest thing I've built" earns the wide card
+// YatsuScript leads: "the hardest thing I've built" earns the wide card
 const featured = projects.find((p) => p.id === "yatsuscript");
 const others = projects.filter((p) => p.id !== "yatsuscript");
 const orderedProjects = featured ? [featured, ...others] : projects;
@@ -329,16 +329,14 @@ for (const cat of Object.keys(skillsByCat)) {
   border-radius: var(--radius-lg);
   background: var(--color-paper-2);
   color: inherit;
-  transition: border-color var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out);
+  transition: border-color var(--dur-short) var(--ease-out);
 }
 
 .project-card:hover {
   border-color: var(--color-accent);
-  box-shadow: 0 2px 20px color-mix(in srgb, var(--color-accent) 8%, transparent);
-  transform: translateY(-2px);
 }
 
-/* The featured project spans the full row — YatsuScript earns the space */
+/* The featured project spans the full row: YatsuScript earns the space */
 @media (min-width: 768px) {
   .project-card--featured {
     grid-column: 1 / -1;
@@ -356,7 +354,7 @@ for (const cat of Object.keys(skillsByCat)) {
   }
 }
 
-/* Stretched link — the whole card is clickable without nesting anchors */
+/* Stretched link: the whole card is clickable without nesting anchors */
 .project-card__link {
   color: inherit;
   text-decoration: none;
@@ -449,10 +447,12 @@ for (const cat of Object.keys(skillsByCat)) {
 
 @media (min-width: 640px) {
   .static-grid { grid-template-columns: repeat(2, 1fr); }
-}
 
-@media (min-width: 1024px) {
-  .static-grid { grid-template-columns: repeat(3, 1fr); }
+  /* Odd count: the leftover card spans both columns so no empty cell
+     shows the rule-colored grid background through the 1px gap */
+  .static-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
 }
 
 .static-card {
@@ -476,7 +476,7 @@ for (const cat of Object.keys(skillsByCat)) {
   margin-bottom: var(--space-2xs);
 }
 
-/* External-link marker — these open the client's live site */
+/* External-link marker: these open the client's live site */
 .static-card__name::after {
   content: " ↗";
   color: var(--color-muted);
@@ -593,7 +593,7 @@ for (const cat of Object.keys(skillsByCat)) {
   align-items: flex-start;
 }
 
-/* The email is the page's closing object — display-sized, unmissable */
+/* The email is the page's closing object: display-sized, unmissable */
 .contact-card__email {
   font-family: var(--font-display);
   font-size: clamp(1.375rem, 3.5vw, 2.25rem);

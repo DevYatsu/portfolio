@@ -14,7 +14,7 @@ const t = {
 
 const home = lang === "fr" ? "/fr/" : "/";
 
-// Counterpart URL for the language toggle — same page, other locale
+// Counterpart URL for the language toggle: same page, other locale
 const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 const altPath =
 	lang === "fr"
@@ -38,9 +38,18 @@ const altLabel = lang === "fr" ? "EN" : "FR";
 		</nav>
 
 		<div class="nav__right">
-			<button class="nav__theme" id="theme-toggle" aria-label={t.theme}>
-				<span class="theme-icon-light">☀</span>
-				<span class="theme-icon-dark">☾</span>
+			<button class="nav__theme" id="theme-toggle" aria-label={t.theme} aria-pressed="false">
+				<span class="theme-icon-light" aria-hidden="true">
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+						<circle cx="12" cy="12" r="4"/>
+						<path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+					</svg>
+				</span>
+				<span class="theme-icon-dark" aria-hidden="true">
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+					</svg>
+				</span>
 			</button>
 			<a
 				class="nav__lang"
@@ -76,7 +85,7 @@ const altLabel = lang === "fr" ? "EN" : "FR";
 	const scrollBehavior = () =>
 		window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
 
-	// window-level listeners register once at module scope —
+	// window-level listeners register once at module scope;
 	// astro:page-load fires on every ClientRouter navigation and would
 	// otherwise stack a new copy of each listener per navigation.
 	let ticking = false;
@@ -160,14 +169,11 @@ const altLabel = lang === "fr" ? "EN" : "FR";
 		height: 64px;
 		background: transparent;
 		transition: background var(--dur-short) var(--ease-out),
-		            backdrop-filter var(--dur-short) var(--ease-out),
 		            border-color var(--dur-short) var(--ease-out);
 	}
 
 	.nav.is-scrolled {
-		background: color-mix(in srgb, var(--color-paper) 72%, transparent);
-		backdrop-filter: blur(18px);
-		-webkit-backdrop-filter: blur(18px);
+		background: var(--color-paper-2);
 		border-bottom: 1px solid var(--color-rule);
 	}
 
@@ -319,11 +325,8 @@ const altLabel = lang === "fr" ? "EN" : "FR";
 		left: 0;
 		right: 0;
 		z-index: 500;
-		background: color-mix(in srgb, var(--color-paper) 96%, transparent);
-		backdrop-filter: blur(24px);
-		-webkit-backdrop-filter: blur(24px);
+		background: var(--color-paper-2);
 		border-bottom: 1px solid var(--color-rule);
-		box-shadow: 0 8px 32px rgba(0,0,0,0.08);
 	}
 
 	@media (max-width: 767px) {

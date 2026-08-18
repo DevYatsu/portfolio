@@ -31,8 +31,8 @@ export const projects: Project[] = [
 		name: "MangaReader",
 		category: { en: "Web Application", fr: "Application Web" },
 		description: {
-			en: "A Rust-powered manga reader that scrapes chapters from third-party sites, merges them into series, and serves them through a web interface. Three workspace crates — core domain, scraper adapter, Axum web server — with a background sync loop and SQLite persistence.",
-			fr: "Un lecteur de manga en Rust qui récupère des chapitres depuis des sites tiers, les fusionne en séries, et les sert dans une interface web. Trois crates d'espace de travail — domaine principal, adaptateur de scraper, serveur web Axum — avec une boucle de synchronisation en arrière-plan et une persistance SQLite.",
+			en: "A Rust-powered manga reader that scrapes chapters from third-party sites, merges them into series, and serves them through a web interface. Three workspace crates (core domain, scraper adapter, Axum web server) with a background sync loop and SQLite persistence.",
+			fr: "Un lecteur de manga en Rust qui récupère des chapitres depuis des sites tiers, les fusionne en séries, et les sert dans une interface web. Trois crates d'espace de travail (domaine principal, adaptateur de scraper, serveur web Axum) avec une boucle de synchronisation en arrière-plan et une persistance SQLite.",
 		},
 		tags: [
 			{ name: "Rust", url: "https://rust-lang.org" },
@@ -63,8 +63,8 @@ export const projects: Project[] = [
 		name: "YatsuScript",
 		category: { en: "Compilers & Runtimes", fr: "Compilateurs & Runtimes" },
 		description: {
-			en: "A bytecode interpreter written entirely from scratch — no dependencies, no existing code, just Rust and the compiler. Register allocation, memory mapping, instruction set design. The hardest and most rewarding thing I've built.",
-			fr: "Un interpréteur de bytecode écrit intégralement à partir de rien — aucune dépendance, aucun code existant, juste Rust et le compilateur. Allocation de registres, mapping mémoire, conception de jeu d'instructions. Le projet le plus difficile et le plus gratifiant que j'ai réalisé.",
+			en: "A bytecode interpreter written entirely from scratch. No dependencies, no existing code. Just Rust and the compiler. Register allocation, memory mapping, instruction set design. The hardest and most rewarding thing I've built.",
+			fr: "Un interpréteur de bytecode écrit intégralement à partir de rien. Aucune dépendance, aucun code existant. Juste Rust et le compilateur. Allocation de registres, mapping mémoire, conception de jeu d'instructions. Le projet le plus difficile et le plus gratifiant que j'ai réalisé.",
 		},
 		tags: [
 			{ name: "Rust", url: "https://rust-lang.org" },

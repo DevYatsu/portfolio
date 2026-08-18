@@ -24,16 +24,16 @@ pill CTAs, monochrome with a single restrained blue accent.
 
 ## Theme — custom (Hyperlane-inspired)
 
-- `--color-paper`      oklch(97% 0.005 270)   — cool near-white (light)
-                        oklch(14% 0.012 260)   — deep navy (dark)
-- `--color-paper-2`    oklch(94% 0.006 270)   — elevation +1
-                        oklch(18% 0.012 260)
+- `--color-paper`      oklch(97% 0.014 265)   — cool blue-tinted near-white (light)
+                        oklch(16% 0.014 265)   — navy (dark, never near-black)
+- `--color-paper-2`    oklch(94% 0.015 265)   — elevation +1
+                        oklch(20% 0.015 265)
 - `--color-ink`        oklch(18% 0.012 260)   — navy-ink (light)
                         oklch(93% 0.008 270)   — near-white (dark)
 - `--color-ink-2`      oklch(38% 0.010 260)   — secondary text
                         oklch(68% 0.010 260)
-- `--color-rule`       oklch(86% 0.006 270)   — hairline (light)
-                        oklch(24% 0.012 260)
+- `--color-rule`       oklch(86% 0.014 265)   — hairline (light)
+                        oklch(26% 0.014 265)
 - `--color-muted`      oklch(48% 0.010 260)   — de-emphasised text (≥4.5:1 on paper & paper-2)
                         oklch(65% 0.012 260)
 - `--color-accent`     oklch(55% 0.18 255)    — technical blue (light)
@@ -41,12 +41,17 @@ pill CTAs, monochrome with a single restrained blue accent.
 - `--color-focus`      oklch(50% 0.20 255)    — focus ring
                         oklch(60% 0.20 255)
 
+Hue note (de-slop 2026-08): every surface sits at hue 255–265, blue to navy.
+The previous 260/270 pair with a 14%-lightness dark paper read as purple-on-black;
+the paper hues were unified at 265 and the dark paper raised to 16% so the theme
+is unambiguously blue-on-navy. Accent hue stays 255.
+
 ## Typography
 
-- Display: Geist, weight 600, style normal (self-hosted via @fontsource-variable/geist — no third-party font requests)
-- Body: Inter Variable, weight 400
-- Wordmark: Geist, weight 700 (same family, weight does the differentiation)
-- Mono: JetBrains Mono, weight 400 (code contexts only)
+- Display: system-ui stack, weight 600, style normal (no webfonts — deliberately on-system, rule D1)
+- Body: system-ui stack, weight 400
+- Wordmark: system-ui stack, weight 700 (same family, weight does the differentiation)
+- Mono: JetBrains Mono, weight 400 (code contexts only; self-hosted via @fontsource-variable/jetbrains-mono)
 - Display tracking: -0.025em
 - Type scale anchor: --text-display = clamp(2.75rem, 5vw + 1rem, 5.25rem)
 - Ratio: 1.25 (major third)
@@ -61,6 +66,19 @@ pill CTAs, monochrome with a single restrained blue accent.
 - Reveal pattern: fade + slide (16px → 0, 600ms)
 - Reduced-motion fallback: opacity-only, ≤ 150 ms
 - Microinteractions: silent success, hover delay 800ms / focus delay 0ms
+
+## De-slop constraints (locked 2026-08)
+
+Hard rules. A page violates the system if it contains any of these:
+
+- **D1 Typography.** No webfonts for display/body. Inter, Geist, and Space Grotesk are banned. System stack only; JetBrains Mono may be self-hosted for code/mono contexts.
+- **D2 Surfaces.** No drop shadows, no backdrop-filter / glass translucency, no gradients (linear or radial), no radial orbs, no dot grids, no sparkle/star decorations. Elevation comes from paper-2 fills and rule hairlines.
+- **D3 Radii.** Card/surface radius ≤ 8px (`--radius-lg`). Only pills, chips, and CTAs use `--radius-pill`.
+- **D4 Grids.** No three-up feature-card rows. The static-sites grid caps at 2 columns; with an odd item count the trailing card spans both columns so no empty grid cell shows through.
+- **D5 Hover.** Hovers change color, border, or background only. No translate/scale/rotate, no shadow-on-hover.
+- **D6 Copy.** No em dashes in user-visible copy (EN or FR); use colons, commas, parentheses, or sentence breaks. No emoji glyphs in UI; inline SVG icons only. No testimonial, pricing-tier, terminal-window, or legal boilerplate sections or pages.
+- **D7 Colour.** Monochrome navy/ink with the single blue accent. No rainbow, neon, or pastel additions.
+- **D8 Motion.** Scroll reveal (`[data-animate]`) stays fade+slide 600ms with the reduced-motion opacity-only fallback.
 
 ## CTA voice
 
@@ -93,19 +111,19 @@ pill CTAs, monochrome with a single restrained blue accent.
 
 ```css
 :root {
-  --color-paper:      oklch(97% 0.005 270);
-  --color-paper-2:    oklch(94% 0.006 270);
+  --color-paper:      oklch(97% 0.014 265);
+  --color-paper-2:    oklch(94% 0.015 265);
   --color-ink:        oklch(18% 0.012 260);
   --color-ink-2:      oklch(38% 0.010 260);
-  --color-rule:       oklch(86% 0.006 270);
-  --color-rule-2:     oklch(91% 0.005 270);
+  --color-rule:       oklch(86% 0.014 265);
+  --color-rule-2:     oklch(91% 0.012 265);
   --color-muted:      oklch(48% 0.010 260);
   --color-accent:     oklch(55% 0.18 255);
   --color-accent-ink: oklch(97% 0.005 270);
   --color-focus:      oklch(50% 0.20 255);
 
-  --font-display: "Geist Variable", "Geist", ui-sans-serif, system-ui, sans-serif;
-  --font-body:    "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-body:    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-mono:    "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, "SF Mono", monospace;
 
   --space-3xs: 0.25rem;  --space-2xs: 0.5rem;  --space-xs: 0.75rem;
@@ -125,7 +143,7 @@ pill CTAs, monochrome with a single restrained blue accent.
 
   --radius-sm: 4px;
   --radius-md: 6px;
-  --radius-lg: 12px;
+  --radius-lg: 8px;
   --radius-pill: 999px;
 }
 ```
@@ -134,12 +152,12 @@ pill CTAs, monochrome with a single restrained blue accent.
 
 ```css
 [data-theme="dark"] {
-  --color-paper:      oklch(14% 0.012 260);
-  --color-paper-2:    oklch(18% 0.012 260);
+  --color-paper:      oklch(16% 0.014 265);
+  --color-paper-2:    oklch(20% 0.015 265);
   --color-ink:        oklch(93% 0.008 270);
   --color-ink-2:      oklch(68% 0.010 260);
-  --color-rule:       oklch(24% 0.012 260);
-  --color-rule-2:     oklch(26% 0.012 260);
+  --color-rule:       oklch(26% 0.014 265);
+  --color-rule-2:     oklch(28% 0.013 265);
   --color-muted:      oklch(65% 0.012 260);
   --color-accent:     oklch(65% 0.18 255);
   --color-accent-ink: oklch(14% 0.012 260);

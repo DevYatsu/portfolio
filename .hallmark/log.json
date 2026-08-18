@@ -50,5 +50,16 @@
       "404.astro, merci.astro, thanks.astro (minimal card)",
       "impressum.astro, mentions-legales.astro (legal cards)"
     ]
+  },
+  {
+    "date": "2026-08-18",
+    "macrostructure": "Marquee Hero (home) + Long Document (projects)",
+    "theme": "custom",
+    "theme_axes": "light / system-sans / cool",
+    "enrichment": "none (typography only)",
+    "brief": "De-slop pass (owner-requested). Removed: Geist + Inter webfonts (system stack), drop shadows, glass backdrop-filter nav/menu, emoji glyphs (inline SVG icons), 3-col static grid (capped at 2), 12px radius (now 8px), card hover lift, em dashes across EN/FR copy, Axto 'skill not a constraint' pull quote, legal/TOS/privacy pages + footer link. Tokens: light paper tinted (97% 0.014 265, no longer reads white), dark paper lifted to 16% and hues unified at 265 (navy, no longer purple-on-black). design.md gains De-slop constraints D1-D8.",
+    "scope": "app",
+    "nav": "N1b",
+    "footer": "Ft5"
   }
 ]

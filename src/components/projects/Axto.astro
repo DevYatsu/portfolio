@@ -15,7 +15,7 @@ const t = en
 			title: "Axto // Yanis Amani",
 			description: "A marketplace for auto parts with a React Native mobile app and Astro admin portal.",
 			tagline: "A marketplace platform for auto parts. Mobile app for buyers, web dashboard for sellers, all backed by Supabase.",
-			source: "Private source — code available on request",
+			source: "Private source. Code available on request.",
 			techLabel: "Tech Stack",
 			prev: "← Previous project",
 			next: "Next project →",
@@ -24,7 +24,7 @@ const t = en
 			title: "Axto // Yanis Amani",
 			description: "Une marketplace de pièces auto avec app mobile React Native et portail admin Astro.",
 			tagline: "Une marketplace pour pièces auto. App mobile React Native pour les acheteurs, portail web Astro pour les vendeurs.",
-			source: "Source privée — code disponible sur demande",
+			source: "Source privée. Code disponible sur demande.",
 			techLabel: "Stack Technique",
 			prev: "← Projet précédent",
 			next: "Projet suivant →",
@@ -63,16 +63,16 @@ const t = en
 						<h2>Architecture</h2>
 						<p>Two frontends, one backend:</p>
 						<ul>
-							<li><strong>Mobile app</strong> — React Native (Expo). Browse by vehicle, search by part, save favourites, direct messaging with sellers. Push notifications for price drops and saved searches.</li>
-							<li><strong>Admin dashboard</strong> — Astro with React islands. Inventory management, order fulfilment, sales analytics. Responsive — works on desktop and tablet.</li>
-							<li><strong>Backend</strong> — Supabase handles auth, Postgres with Row Level Security, storage for part images, and real-time subscriptions for messaging.</li>
+							<li><strong>Mobile app</strong>: React Native (Expo). Browse by vehicle, search by part, save favourites, direct messaging with sellers. Push notifications for price drops and saved searches.</li>
+							<li><strong>Admin dashboard</strong>: Astro with React islands. Inventory management, order fulfilment, sales analytics. Responsive. Works on desktop and tablet.</li>
+							<li><strong>Backend</strong>: Supabase handles auth, Postgres with Row Level Security, storage for part images, and real-time subscriptions for messaging.</li>
 						</ul>
 
 						<h2>Key decisions</h2>
-						<p><strong>Vehicle compatibility as a graph problem.</strong> Instead of tagging every part with make/model/year (which is thousands of combinations), we modelled it as a compatibility matrix — each part has a set of "fits" rules, and the query engine walks the graph. More work upfront, but adding a new vehicle doesn't require retagging every part.</p>
-						<p><strong>Supabase RLS for multi-tenant data.</strong> Every row in the database has a <code>seller_id</code>, and Row Level Security policies enforce that sellers only see their own orders and inventory. Buyers see only public listing data. This means the mobile app queries Postgres directly — no custom API layer needed for reads.</p>
+						<p><strong>Vehicle compatibility as a graph problem.</strong> Instead of tagging every part with make/model/year (which is thousands of combinations), we modelled it as a compatibility matrix. Each part has a set of "fits" rules, and the query engine walks the graph. More work upfront, but adding a new vehicle doesn't require retagging every part.</p>
+						<p><strong>Supabase RLS for multi-tenant data.</strong> Every row in the database has a <code>seller_id</code>, and Row Level Security policies enforce that sellers only see their own orders and inventory. Buyers see only public listing data. This means the mobile app queries Postgres directly: no custom API layer needed for reads.</p>
 
-						<p class="pull-quote">Scope management is a skill, not a constraint.</p>
+						<p class="pull-quote">Saying no to features was harder than building them.</p>
 
 						<h2>The hard parts</h2>
 						<p><strong>Search.</strong> Postgres full-text search is fine for text, but auto parts have VIN-specific queries, OEM numbers, and fuzzy brand matching. We ended up with a hybrid: Postgres tsvector for full-text + a custom matching layer for compatibility queries.</p>
@@ -82,44 +82,44 @@ const t = en
 						<div class="screenshot-grid screenshot-grid--phone">
 							<figure class="screenshot">
 								<img src="/axto-images/home.png" alt="Axto home screen" loading="lazy" width="200" height="433" />
-								<figcaption>Home — Browse listings by vehicle</figcaption>
+								<figcaption>Browse listings by vehicle</figcaption>
 							</figure>
 							<figure class="screenshot">
 								<img src="/axto-images/search.png" alt="Axto search screen" loading="lazy" width="200" height="433" />
-								<figcaption>Search — Find parts by name or OEM number</figcaption>
+								<figcaption>Find parts by name or OEM number</figcaption>
 							</figure>
 							<figure class="screenshot">
 								<img src="/axto-images/product-details.png" alt="Axto product details" loading="lazy" width="200" height="433" />
-								<figcaption>Product details — Compatibility info, price, seller</figcaption>
+								<figcaption>Compatibility info, price, seller</figcaption>
 							</figure>
 							<figure class="screenshot">
 								<img src="/axto-images/cart-empty.png" alt="Empty cart" loading="lazy" width="200" height="433" />
-								<figcaption>Cart — Empty state</figcaption>
+								<figcaption>Empty state</figcaption>
 							</figure>
 							<figure class="screenshot">
 								<img src="/axto-images/cart-with-products.png" alt="Cart with products" loading="lazy" width="200" height="433" />
-								<figcaption>Cart — Items ready for checkout</figcaption>
+								<figcaption>Items ready for checkout</figcaption>
 							</figure>
 							<figure class="screenshot">
 								<img src="/axto-images/checkout-address.png" alt="Checkout address form" loading="lazy" width="200" height="433" />
-								<figcaption>Checkout — Shipping address</figcaption>
+								<figcaption>Shipping address</figcaption>
 							</figure>
 							<figure class="screenshot">
 								<img src="/axto-images/checkout-credit-card.png" alt="Checkout payment" loading="lazy" width="200" height="433" />
-								<figcaption>Checkout — Payment via Stripe</figcaption>
+								<figcaption>Payment via Stripe</figcaption>
 							</figure>
 							<figure class="screenshot">
 								<img src="/axto-images/notifications.png" alt="Notifications" loading="lazy" width="200" height="433" />
-								<figcaption>Notifications — Price drops and messages</figcaption>
+								<figcaption>Price drops and messages</figcaption>
 							</figure>
 							<figure class="screenshot">
 								<img src="/axto-images/profile.png" alt="Profile screen" loading="lazy" width="200" height="433" />
-								<figcaption>Profile — Account and saved searches</figcaption>
+								<figcaption>Account and saved searches</figcaption>
 							</figure>
 						</div>
 
 						<h2>What I learned</h2>
-						<p>This was my first full-stack marketplace and the project where I learned that <em>scope management is a skill, not a constraint</em>. The feature list kept growing — reviews, messaging, notifications, analytics — and each one taught me something about state management across platforms, real-time data sync, and why you don't skip writing integration tests for your Stripe webhook handler.</p>
+						<p>This was my first full-stack marketplace and the project where I learned to say no. The feature list kept growing: reviews, messaging, notifications, analytics. Each one taught me something about state management across platforms, real-time data sync, and why you don't skip writing integration tests for your Stripe webhook handler.</p>
 						<p>Also: React Native's FlatList performance with 10,000+ parts listings is genuinely impressive. Astro's partial hydration meant the dashboard felt instant despite having React components embedded in static pages.</p>
 					</Fragment>
 				) : (
@@ -130,55 +130,55 @@ const t = en
 						<h2>Architecture</h2>
 						<p>Deux frontends, un backend :</p>
 						<ul>
-							<li><strong>App mobile</strong> — React Native (Expo). Parcourir par véhicule, rechercher par pièce, favoris, messagerie directe. Notifications push pour les baisses de prix.</li>
-							<li><strong>Dashboard admin</strong> — Astro avec îles React. Gestion d'inventaire, traitement des commandes, analytics des ventes. Responsive.</li>
-							<li><strong>Backend</strong> — Supabase gère l'auth, Postgres avec Row Level Security, stockage d'images, souscriptions temps réel pour la messagerie.</li>
+							<li><strong>App mobile</strong>: React Native (Expo). Parcourir par véhicule, rechercher par pièce, favoris, messagerie directe. Notifications push pour les baisses de prix.</li>
+							<li><strong>Dashboard admin</strong>: Astro avec îles React. Gestion d'inventaire, traitement des commandes, analytics des ventes. Responsive.</li>
+							<li><strong>Backend</strong>: Supabase gère l'auth, Postgres avec Row Level Security, stockage d'images, souscriptions temps réel pour la messagerie.</li>
 						</ul>
 
-						<p class="pull-quote">La gestion du périmètre est une compétence, pas une contrainte.</p>
+						<p class="pull-quote">Dire non à des fonctionnalités a été plus dur que de les construire.</p>
 
 						<h2>Captures d'écran</h2>
 						<div class="screenshot-grid screenshot-grid--phone">
 							<figure class="screenshot">
 								<img src="/axto-images/home.png" alt="Écran d'accueil Axto" loading="lazy" width="200" height="433" />
-								<figcaption>Accueil — Parcourir les annonces par véhicule</figcaption>
+								<figcaption>Parcourir les annonces par véhicule</figcaption>
 							</figure>
 							<figure class="screenshot">
 								<img src="/axto-images/search.png" alt="Recherche Axto" loading="lazy" width="200" height="433" />
-								<figcaption>Recherche — Trouver des pièces par nom ou numéro OEM</figcaption>
+								<figcaption>Trouver des pièces par nom ou numéro OEM</figcaption>
 							</figure>
 							<figure class="screenshot">
 								<img src="/axto-images/product-details.png" alt="Détails du produit" loading="lazy" width="200" height="433" />
-								<figcaption>Détails — Infos de compatibilité, prix, vendeur</figcaption>
+								<figcaption>Infos de compatibilité, prix, vendeur</figcaption>
 							</figure>
 							<figure class="screenshot">
 								<img src="/axto-images/cart-empty.png" alt="Panier vide" loading="lazy" width="200" height="433" />
-								<figcaption>Panier — État vide</figcaption>
+								<figcaption>État vide</figcaption>
 							</figure>
 							<figure class="screenshot">
 								<img src="/axto-images/cart-with-products.png" alt="Panier avec articles" loading="lazy" width="200" height="433" />
-								<figcaption>Panier — Articles prêts pour le paiement</figcaption>
+								<figcaption>Articles prêts pour le paiement</figcaption>
 							</figure>
 							<figure class="screenshot">
 								<img src="/axto-images/checkout-address.png" alt="Adresse de livraison" loading="lazy" width="200" height="433" />
-								<figcaption>Paiement — Adresse de livraison</figcaption>
+								<figcaption>Adresse de livraison</figcaption>
 							</figure>
 							<figure class="screenshot">
 								<img src="/axto-images/checkout-credit-card.png" alt="Paiement par carte" loading="lazy" width="200" height="433" />
-								<figcaption>Paiement — Carte bancaire via Stripe</figcaption>
+								<figcaption>Carte bancaire via Stripe</figcaption>
 							</figure>
 							<figure class="screenshot">
 								<img src="/axto-images/notifications.png" alt="Notifications" loading="lazy" width="200" height="433" />
-								<figcaption>Notifications — Baisses de prix et messages</figcaption>
+								<figcaption>Baisses de prix et messages</figcaption>
 							</figure>
 							<figure class="screenshot">
 								<img src="/axto-images/profile.png" alt="Profil" loading="lazy" width="200" height="433" />
-								<figcaption>Profil — Compte et recherches sauvegardées</figcaption>
+								<figcaption>Compte et recherches sauvegardées</figcaption>
 							</figure>
 						</div>
 
 						<h2>Ce que j'ai appris</h2>
-						<p>Mon premier marketplace full-stack et le projet où j'ai compris que <em>la gestion du périmètre est une compétence, pas une contrainte</em>. La liste de fonctionnalités n'arrêtait pas de s'allonger — avis, messagerie, notifications, analytics — et chacune m'a appris quelque chose sur la gestion d'état multiplateforme, la synchronisation temps réel, et pourquoi on ne saute pas les tests d'intégration de son webhook Stripe.</p>
+						<p>Mon premier marketplace full-stack et le projet où j'ai appris à dire non. La liste de fonctionnalités n'arrêtait pas de s'allonger : avis, messagerie, notifications, analytics. Chacune m'a appris quelque chose sur la gestion d'état multiplateforme, la synchronisation temps réel, et pourquoi on ne saute pas les tests d'intégration de son webhook Stripe.</p>
 					</Fragment>
 				)}
 				</div>

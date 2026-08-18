@@ -5,7 +5,7 @@ Personal portfolio at [yanis.adysen.fr](https://yanis.adysen.fr).
 ## Stack
 
 - **Astro 7** — static site generation
-- **Vanilla CSS** — no frameworks, self-hosted Inter font
+- **Vanilla CSS** — no frameworks, system font stack (JetBrains Mono self-hosted for code)
 - **Infomaniak** — Node.js hosting via `server.js`
 
 ## Features
