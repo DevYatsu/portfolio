@@ -16,8 +16,9 @@ const categoryLabels: Record<Language, Record<string, string>> = {
 
 const t = {
 	en: {
-		title: "Yanis Amani // CS Student",
-		badge: "CS Student · Systems · Web · Reliability",
+		title: "Yanis Amani — Software Engineering Student & Portfolio",
+		description: "Official portfolio of Yanis Amani, Software Engineering student. Building reliable software in Rust, TypeScript, and systems programming.",
+		badge: "Software Engineering Student · Systems · Web · Reliability",
 		heroDesc: "I build reliable software. Rust, TypeScript, systems programming. The kind that doesn't fall over in production.",
 		ctaProjects: "View projects",
 		ctaContact: "Get in touch",
@@ -37,8 +38,9 @@ const t = {
 		contactSub: "Got a project, an idea, or just want to chat? I'm around.",
 	},
 	fr: {
-		title: "Yanis Amani // Étudiant en Informatique",
-		badge: "Étudiant en Informatique · Systèmes · Web · Fiabilité",
+		title: "Yanis Amani — Étudiant Ingénieur Logiciel & Portfolio",
+		description: "Portfolio officiel de Yanis Amani, étudiant ingénieur logiciel. Conception de logiciels fiables en Rust, TypeScript et programmation système.",
+		badge: "Étudiant Ingénieur Logiciel · Systèmes · Web · Fiabilité",
 		heroDesc: "Je construis des logiciels fiables. Rust, TypeScript, programmation système. Le genre qui tient la route en production.",
 		ctaProjects: "Voir les projets",
 		ctaContact: "Me contacter",
@@ -61,10 +63,10 @@ const t = {
 
 const projectBase = lang === "fr" ? "/fr/projects" : "/projects";
 
-// YatsuScript leads: "the hardest thing I've built" earns the wide card
-const featured = projects.find((p) => p.id === "yatsuscript");
-const others = projects.filter((p) => p.id !== "yatsuscript");
-const orderedProjects = featured ? [featured, ...others] : projects;
+// WIE leads: 64-bit Windows emulation earns the featured wide card
+const featured = projects.find((p) => p.id === "wie") || projects[0];
+const others = projects.filter((p) => p.id !== featured.id);
+const orderedProjects = [featured, ...others];
 
 // Strongest skills first within each group
 const levelRank: Record<string, number> = { Advanced: 0, Proficient: 1, Intermediate: 2 };
@@ -78,7 +80,7 @@ for (const cat of Object.keys(skillsByCat)) {
 }
 ---
 
-<Layout title={t.title} lang={lang}>
+<Layout title={t.title} description={t.description} lang={lang}>
 	<!-- MARQUEE HERO -->
 	<section class="marquee-hero">
 		<div class="container marquee-hero__inner" data-animate>

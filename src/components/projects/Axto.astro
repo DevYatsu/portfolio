@@ -29,9 +29,14 @@ const t = en
 			prev: "← Projet précédent",
 			next: "Projet suivant →",
 		};
+const breadcrumbs = [
+	{ name: en ? "Home" : "Accueil", path: en ? "/" : "/fr" },
+	{ name: en ? "Projects" : "Projets", path: `${base}/#projects` },
+	{ name: "Axto", path: `${base}/projects/axto` },
+];
 ---
 
-<Layout title={t.title} description={t.description} lang={lang}>
+<Layout title={t.title} description={t.description} lang={lang} breadcrumbs={breadcrumbs}>
 	<article class="project-page" data-animate>
 		<div class="container">
 			<header class="project-head">
@@ -189,7 +194,7 @@ const t = en
 	<nav class="project-nav">
 		<div class="container project-nav-inner">
 			<a href={`${base}/projects/mangaread`} class="btn-ghost">{t.prev}</a>
-			<a href={`${base}/projects/yatsuscript`} class="btn-ghost">{t.next}</a>
+			<a href={`${base}/projects/wie`} class="btn-ghost">{t.next}</a>
 		</div>
 	</nav>
 </Layout>

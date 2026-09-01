@@ -27,6 +27,53 @@ export interface Skill {
 
 export const projects: Project[] = [
 	{
+		id: "wie",
+		name: "WIE",
+		category: { en: "Emulation & Systems", fr: "Émulation & Systèmes" },
+		description: {
+			en: "A user-mode x86-64 emulator that runs Windows binaries on Apple Silicon macOS without Wine or VMs. Cranelift block JIT, Win32 API translation in Rust, native Cocoa UI, and a Direct3D 9 software renderer.",
+			fr: "Un émulateur x86-64 en mode utilisateur qui exécute des binaires Windows sur Apple Silicon sans Wine ni VM. JIT Cranelift par blocs, traduction d'API Win32 en Rust, fenêtres Cocoa natives et rendu Direct3D 9.",
+		},
+		tags: [
+			{ name: "Rust", url: "https://rust-lang.org" },
+			{ name: "Cranelift", url: "https://cranelift.dev" },
+			{ name: "Metal / wgpu", url: "https://developer.apple.com/metal/" },
+			{ name: "x86-64 / PE64", url: "https://en.wikipedia.org/wiki/Portable_Executable" },
+		],
+		link: { url: "https://github.com/wie-project/wie", label: "GitHub →" },
+	},
+	{
+		id: "v12",
+		name: "v12",
+		category: { en: "Compilers & Runtimes", fr: "Compilateurs & Runtimes" },
+		description: {
+			en: "An embeddable JavaScript engine written in pure Rust from scratch. Register-based bytecode, NaN-boxed 64-bit values, hidden classes with inline caches, mark-sweep GC, and a Cranelift JIT.",
+			fr: "Un moteur JavaScript intégrable écrit de zéro en Rust pur. Bytecode à registres, NaN-boxing sur 64 bits, classes cachées avec inline caches, GC mark-sweep et JIT Cranelift.",
+		},
+		tags: [
+			{ name: "Rust", url: "https://rust-lang.org" },
+			{ name: "JavaScript Engine", url: "https://github.com/DevYatsu/v12" },
+			{ name: "Cranelift", url: "https://cranelift.dev" },
+			{ name: "Bytecode / JIT", url: "https://en.wikipedia.org/wiki/Just-in-time_compilation" },
+		],
+		link: { url: "https://github.com/DevYatsu/v12", label: "GitHub →" },
+	},
+	{
+		id: "yatsuscript",
+		name: "YatsuScript",
+		category: { en: "Compilers & Runtimes", fr: "Compilateurs & Runtimes" },
+		description: {
+			en: "A bytecode interpreter written entirely from scratch. No dependencies, no existing code. Just Rust and the compiler. Register allocation, memory mapping, instruction set design. The hardest and most rewarding thing I've built.",
+			fr: "Un interpréteur de bytecode écrit intégralement à partir de rien. Aucune dépendance, aucun code existant. Juste Rust et le compilateur. Allocation de registres, mapping mémoire, conception de jeu d'instructions. Le projet le plus difficile et le plus gratifiant que j'ai réalisé.",
+		},
+		tags: [
+			{ name: "Rust", url: "https://rust-lang.org" },
+			{ name: "Interpreter", url: "https://github.com/DevYatsu/YatsuScript" },
+			{ name: "Bytecode", url: "https://en.wikipedia.org/wiki/Bytecode" },
+		],
+		link: { url: "https://github.com/DevYatsu/YatsuScript", label: "GitHub →" },
+	},
+	{
 		id: "mangaread",
 		name: "MangaReader",
 		category: { en: "Web Application", fr: "Application Web" },
@@ -57,21 +104,6 @@ export const projects: Project[] = [
 			{ name: "Postgres", url: "https://postgresql.org" },
 		],
 		link: { url: "", label: "Private source" },
-	},
-	{
-		id: "yatsuscript",
-		name: "YatsuScript",
-		category: { en: "Compilers & Runtimes", fr: "Compilateurs & Runtimes" },
-		description: {
-			en: "A bytecode interpreter written entirely from scratch. No dependencies, no existing code. Just Rust and the compiler. Register allocation, memory mapping, instruction set design. The hardest and most rewarding thing I've built.",
-			fr: "Un interpréteur de bytecode écrit intégralement à partir de rien. Aucune dépendance, aucun code existant. Juste Rust et le compilateur. Allocation de registres, mapping mémoire, conception de jeu d'instructions. Le projet le plus difficile et le plus gratifiant que j'ai réalisé.",
-		},
-		tags: [
-			{ name: "Rust", url: "https://rust-lang.org" },
-			{ name: "Interpreter", url: "https://github.com/DevYatsu/YatsuScript" },
-			{ name: "Bytecode", url: "https://en.wikipedia.org/wiki/Bytecode" },
-		],
-		link: { url: "https://github.com/DevYatsu/YatsuScript", label: "GitHub →" },
 	},
 ];
 

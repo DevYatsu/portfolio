@@ -20,7 +20,7 @@ const t = en
 			techLabel: "Tech Stack",
 			interpreter: "Interpreter",
 			prev: "← Previous project",
-			all: "All projects →",
+			next: "Next project →",
 		}
 	: {
 			title: "YatsuScript // Yanis Amani",
@@ -31,11 +31,16 @@ const t = en
 			techLabel: "Stack Technique",
 			interpreter: "Interpréteur",
 			prev: "← Projet précédent",
-			all: "Tous les projets →",
+			next: "Projet suivant →",
 		};
+const breadcrumbs = [
+	{ name: en ? "Home" : "Accueil", path: en ? "/" : "/fr" },
+	{ name: en ? "Projects" : "Projets", path: `${base}/#projects` },
+	{ name: "YatsuScript", path: `${base}/projects/yatsuscript` },
+];
 ---
 
-<Layout title={t.title} description={t.description} lang={lang}>
+<Layout title={t.title} description={t.description} lang={lang} breadcrumbs={breadcrumbs}>
 	<article class="project-page" data-animate>
 		<div class="container">
 			<header class="project-head">
@@ -117,8 +122,8 @@ const t = en
 
 	<nav class="project-nav">
 		<div class="container project-nav-inner">
-			<a href={`${base}/projects/axto`} class="btn-ghost">{t.prev}</a>
-			<a href={`${base}/#projects`} class="btn-ghost">{t.all}</a>
+			<a href={`${base}/projects/v12`} class="btn-ghost">{t.prev}</a>
+			<a href={`${base}/projects/mangaread`} class="btn-ghost">{t.next}</a>
 		</div>
 	</nav>
 </Layout>

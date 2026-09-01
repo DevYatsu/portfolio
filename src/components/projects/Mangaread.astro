@@ -17,7 +17,7 @@ const t = en
 			tagline: "A manga reader that scrapes chapters from third-party sites, merges them into series, and serves them through a web interface.",
 			github: "View on GitHub",
 			techLabel: "Tech Stack",
-			all: "← All projects",
+			prev: "← Previous project",
 			next: "Next project →",
 		}
 	: {
@@ -26,7 +26,7 @@ const t = en
 			tagline: "Un lecteur de manga qui scrape des chapitres depuis des sites tiers, les fusionne en séries, et les sert via une interface web.",
 			github: "Voir sur GitHub",
 			techLabel: "Stack Technique",
-			all: "← Tous les projets",
+			prev: "← Projet précédent",
 			next: "Projet suivant →",
 		};
 
@@ -35,9 +35,15 @@ const mermaidSource = `flowchart TB
     WEB[Axum Server] --> DB
     WEB <--> BROWSER[Browser]
     BROWSER --> JS[app.js + localStorage]`;
+
+const breadcrumbs = [
+	{ name: en ? "Home" : "Accueil", path: en ? "/" : "/fr" },
+	{ name: en ? "Projects" : "Projets", path: `${base}/#projects` },
+	{ name: "MangaReader", path: `${base}/projects/mangaread` },
+];
 ---
 
-<Layout title={t.title} description={t.description} lang={lang}>
+<Layout title={t.title} description={t.description} lang={lang} breadcrumbs={breadcrumbs}>
 	<article class="project-page" data-animate>
 		<div class="container">
 			<header class="project-head">
@@ -169,7 +175,7 @@ const mermaidSource = `flowchart TB
 
 	<nav class="project-nav">
 		<div class="container project-nav-inner">
-			<a href={`${base}/#projects`} class="btn-ghost">{t.all}</a>
+			<a href={`${base}/projects/yatsuscript`} class="btn-ghost">{t.prev}</a>
 			<a href={`${base}/projects/axto`} class="btn-ghost">{t.next}</a>
 		</div>
 	</nav>

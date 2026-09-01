@@ -16,11 +16,13 @@ interface Props {
 	alternates?: boolean;
 	/** Override canonical URL path. Uses siteUrl as base. */
 	canonical?: string;
+	/** Breadcrumbs for BreadcrumbList structured data */
+	breadcrumbs?: { name: string; path: string }[];
 }
 
 const defaultDescriptions: Record<Language, string> = {
-	en: "Yanis Amani. CS student who builds software that doesn't break. Rust, TypeScript, systems programming.",
-	fr: "Yanis Amani. Étudiant en informatique qui construit des logiciels fiables. Rust, TypeScript, programmation système.",
+	en: "Official portfolio of Yanis Amani, Software Engineering student. Systems programming, Rust, TypeScript, and reliable software.",
+	fr: "Portfolio officiel de Yanis Amani, étudiant ingénieur logiciel. Programmation système, Rust, TypeScript et logiciels fiables.",
 };
 
 const {
@@ -30,6 +32,7 @@ const {
 	noindex = false,
 	alternates = true,
 	canonical,
+	breadcrumbs,
 } = Astro.props;
 
 const siteUrl = "https://yanis.adysen.fr";
@@ -41,7 +44,7 @@ const pageUrl = new URL(canonicalPath, siteUrl);
 
 // hreflang pair: the FR tree mirrors the EN tree under /fr
 const enPath = lang === "fr" ? (canonicalPath.replace(/^\/fr(?=\/|$)/, "") || "/") : canonicalPath;
-const frPath = enPath === "/" ? "/fr/" : `/fr${enPath}`;
+const frPath = enPath === "/" ? "/fr" : `/fr${enPath}`;
 const enUrl = new URL(enPath, siteUrl);
 const frUrl = new URL(frPath, siteUrl);
 
@@ -54,10 +57,11 @@ const footer = {
 const personSchema = {
 	"@context": "https://schema.org",
 	"@type": "Person",
+	"@id": `${siteUrl}/#person`,
 	name: "Yanis Amani",
 	givenName: "Yanis",
 	familyName: "Amani",
-	jobTitle: "Computer Science Student",
+	jobTitle: "Software Engineering Student",
 	alumniOf: "HE-Arc",
 	url: siteUrl,
 	email: "yanis.amani@icloud.com",
@@ -70,12 +74,24 @@ const personSchema = {
 const websiteSchema = {
 	"@context": "https://schema.org",
 	"@type": "WebSite",
-	name: "Yanis Amani",
+	"@id": `${siteUrl}/#website`,
+	name: "Yanis Amani Portfolio",
 	url: siteUrl,
-	description: "Portfolio of Yanis Amani, Computer Science student focused on building reliable software.",
+	description: "Portfolio of Yanis Amani, Software Engineering student focused on building reliable software.",
 	inLanguage: lang,
 	author: { "@id": `${siteUrl}/#person` },
 };
+
+const breadcrumbSchema = breadcrumbs && breadcrumbs.length > 0 ? {
+	"@context": "https://schema.org",
+	"@type": "BreadcrumbList",
+	itemListElement: breadcrumbs.map((crumb, index) => ({
+		"@type": "ListItem",
+		position: index + 1,
+		name: crumb.name,
+		item: new URL(crumb.path, siteUrl).toString(),
+	})),
+} : null;
 ---
 
 <!doctype html>
@@ -121,28 +137,12 @@ const websiteSchema = {
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={new URL('/og-image.png', siteUrl)} />
 
-		<script is:inline>
-			// Language preference: on the two home pages only, honour a stored
-			// choice (or first-visit browser language) before paint. Deep links
-			// are never redirected.
-			(function() {
-				var p = location.pathname;
-				var enHome = p === '/';
-				var frHome = p === '/fr' || p === '/fr/';
-				if (!enHome && !frHome) return;
-				var stored = localStorage.getItem('lang');
-				if (enHome) {
-					var pref = stored || (((navigator.language || '').substring(0, 2) === 'fr') ? 'fr' : 'en');
-					if (pref === 'fr') location.replace('/fr/');
-				} else if (stored === 'en') {
-					location.replace('/');
-				}
-			})();
-		</script>
-
 		<!-- Structured Data -->
 		<script type="application/ld+json" set:html={JSON.stringify(personSchema)}></script>
 		<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)}></script>
+		{breadcrumbSchema && (
+			<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
+		)}
 
 		<!-- Reveal animations depend on JS; never hide content without it -->
 		<noscript>

@@ -12,7 +12,7 @@ const t = {
 	fr: { projects: "Projets", stack: "Outils", about: "À propos", contact: "Contact", switchLang: "View in English", theme: "Changer de thème" },
 }[lang];
 
-const home = lang === "fr" ? "/fr/" : "/";
+const home = lang === "fr" ? "/fr" : "/";
 
 // Counterpart URL for the language toggle: same page, other locale
 const path = Astro.url.pathname.replace(/\/$/, "") || "/";
@@ -20,7 +20,7 @@ const altPath =
 	lang === "fr"
 		? path.replace(/^\/fr(?=\/|$)/, "") || "/"
 		: path === "/"
-			? "/fr/"
+			? "/fr"
 			: `/fr${path}`;
 const altLang = lang === "fr" ? "en" : "fr";
 const altLabel = lang === "fr" ? "EN" : "FR";
@@ -28,7 +28,7 @@ const altLabel = lang === "fr" ? "EN" : "FR";
 
 <header class="nav">
 	<div class="nav__inner">
-		<a href={home} class="nav__brand">YA</a>
+		<a href={home} class="nav__brand" aria-label={lang === "fr" ? "Yanis Amani — Portfolio Accueil" : "Yanis Amani — Portfolio Home"}>YA</a>
 
 		<nav class="nav__center">
 			<a href={`${home}#projects`} class="nav__link">{t.projects}</a>
