@@ -1,0 +1,154 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import type { Language } from "../../types";
+
+interface Props {
+	lang: Language;
+}
+
+const { lang } = Astro.props;
+const en = lang === "en";
+const base = en ? "" : "/fr";
+
+const t = en
+	? {
+			title: "v12 // Yanis Amani",
+			description: "An experimental, embeddable JavaScript engine for Rust apps featuring NaN-boxing, hidden classes, and Cranelift JIT compilation.",
+			tagline: "An embeddable JavaScript engine written in pure Rust from scratch — no V8, no QuickJS, no compromise on speed.",
+			github: "View on GitHub",
+			techLabel: "Tech Stack",
+			all: "← All projects",
+			prev: "← Previous project",
+			next: "Next project →",
+		}
+	: {
+			title: "v12 // Yanis Amani",
+			description: "Un moteur JavaScript expérimental et intégrable pour applications Rust avec NaN-boxing, classes cachées et compilation JIT Cranelift.",
+			tagline: "Un moteur JavaScript intégrable écrit en Rust pur de zéro — sans V8, sans QuickJS, sans compromis de vitesse.",
+			github: "Voir sur GitHub",
+			techLabel: "Stack Technique",
+			all: "← Tous les projets",
+			prev: "← Projet précédent",
+			next: "Projet suivant →",
+		};
+
+const mermaidSource = `flowchart LR
+    JS["JavaScript Source"] --> PARSER["oxc Parser & AST"]
+    PARSER --> COMPILER["v12-bccompiler"]
+    COMPILER --> BC["v12-bytecode (Register ISA)"]
+    BC --> INTERP["Tier-0 Interpreter"]
+    BC --> JIT["Tier-1 Cranelift Template JIT"]
+    INTERP <--> HEAP["Handle-based Heap & Mark-Sweep GC"]
+    JIT <--> HEAP
+    HEAP --> SHAPES["Hidden Classes & Inline Caches"]`;
+
+const breadcrumbs = [
+	{ name: en ? "Home" : "Accueil", path: en ? "/" : "/fr" },
+	{ name: en ? "Projects" : "Projets", path: `${base}/#projects` },
+	{ name: "v12", path: `${base}/projects/v12` },
+];
+---
+
+<Layout title={t.title} description={t.description} lang={lang} breadcrumbs={breadcrumbs}>
+	<article class="project-page" data-animate>
+		<div class="container">
+			<header class="project-head">
+				<h1 class="project-title">v12</h1>
+				<p class="project-tagline">{t.tagline}</p>
+			</header>
+
+			<div class="project-layout">
+				<aside class="project-meta">
+					<div class="project-links">
+						<a href="https://github.com/DevYatsu/v12" target="_blank" rel="noopener noreferrer" class="btn-primary">{t.github}</a>
+					</div>
+					<div class="project-meta__block">
+						<span class="tech-label">{t.techLabel}</span>
+						<div class="tech-list">
+							<a href="https://rust-lang.org" target="_blank" rel="noopener noreferrer" class="tech-tag">Rust</a>
+							<a href="https://cranelift.dev" target="_blank" rel="noopener noreferrer" class="tech-tag">Cranelift JIT</a>
+							<a href="https://oxc.rs" target="_blank" rel="noopener noreferrer" class="tech-tag">oxc AST</a>
+							<a href="https://en.wikipedia.org/wiki/Just-in-time_compilation" target="_blank" rel="noopener noreferrer" class="tech-tag">JIT & Bytecode</a>
+							<a href="https://tc39.es" target="_blank" rel="noopener noreferrer" class="tech-tag">ECMAScript</a>
+						</div>
+					</div>
+				</aside>
+
+				<div class="project-content">
+				{en ? (
+					<Fragment>
+						<h2>What it is</h2>
+						<p>Most options for running JavaScript in Rust are bindings to massive C++ codebases like V8 or slow AST interpreters. I wanted to build a native-Rust engine that cares about execution speed from day one: register-based bytecode, NaN-boxed values, hidden classes, and a JIT compiler.</p>
+						<p>The goal is an embeddable engine that starts instantly, uses little memory, and runs real programs correctly without pulling in hundreds of megabytes of C++ toolchains.</p>
+
+						<h2>Architecture & pipeline</h2>
+						<p>The workspace separates parsing, bytecode execution, memory, and JIT compilation into clean crates:</p>
+						<ul>
+							<li><strong><code>v12-bytecode</code> & <code>v12-bccompiler</code></strong>: Compiles the <a href="https://oxc.rs" target="_blank" rel="noopener noreferrer">oxc</a> AST into a 32-bit register-based instruction set with constant pools and exception tables.</li>
+							<li><strong><code>v12-heap</code></strong>: NaN-boxed <code>JsValue</code> in 64-bit words, hidden classes with transition trees, and a handle-based arena allocator.</li>
+							<li><strong><code>v12-interp</code></strong>: Tier-0 iterative bytecode interpreter with generator suspension and tier-up profiling.</li>
+							<li><strong><code>v12-jit-baseline</code> & <code>v12-codegen</code></strong>: Tier-1 template JIT using Cranelift to compile hot bytecode into machine code.</li>
+							<li><strong><code>v12-api</code></strong>: Embedder facade with a single-threaded <code>Context</code> to run scripts, bind Rust closures, and call JS functions.</li>
+						</ul>
+
+						<pre class="mermaid">{mermaidSource}</pre>
+
+						<p class="pull-quote">Hidden classes and inline caches sound like black magic until you write the transition tree yourself.</p>
+
+						<h2>Key decisions</h2>
+						<p><strong>NaN-boxed values.</strong> Every JS value (numbers, booleans, null, undefined, object handles) fits into a single 64-bit word. Primitives never hit the heap.</p>
+						<p><strong>Hidden classes & inline caches.</strong> Tracking object shapes dynamically lets the interpreter cache property offsets, turning hash map lookups into single pointer additions.</p>
+						<p><strong>Handle-based heap with mark-sweep GC.</strong> Objects live in arenas addressed by 32-bit handles. This avoids scanning the native Rust stack and prevents pointers from invalidating under running code.</p>
+
+						<h2>The hard parts</h2>
+						<p><strong>Async/await and generators without stack unwinding.</strong> When JS awaits a Promise or yields, you have to freeze the entire register frame, save the scope chain, and resume later without blocking the thread.</p>
+						<p><strong>The Test262 suite.</strong> JavaScript has endless corner cases. Getting 7,500+ official Test262 conformance tests to pass meant debugging type coercions, temporal dead zones, and prototype chain edge cases until 2am.</p>
+
+						<h2>What I learned</h2>
+						<p>Writing a JS engine connects compiler design, memory management, and spec debugging. Passing Test262 tests taught me that conformance and raw speed constantly fight each other in dynamic language runtimes.</p>
+					</Fragment>
+				) : (
+					<Fragment>
+						<h2>Ce que c'est</h2>
+						<p>Les options pour exécuter du JavaScript en Rust sont souvent des bindings C++ lourds vers V8 ou des interpréteurs AST lents. Je voulais concevoir un moteur natif en Rust pensé pour la vitesse dès le départ : bytecode à registres, NaN-boxing, classes cachées et compilateur JIT.</p>
+						<p>L'objectif : un moteur intégrable qui démarre instantanément, consomme peu de mémoire et exécute du vrai code sans embarquer des centaines de mégaoctets de C++.</p>
+
+						<h2>Architecture & pipeline</h2>
+						<p>Le projet sépare l'analyse, l'exécution bytecode, la mémoire et la compilation JIT en crates ciblées :</p>
+						<ul>
+							<li><strong><code>v12-bytecode</code> & <code>v12-bccompiler</code></strong> : Compile l'AST <a href="https://oxc.rs" target="_blank" rel="noopener noreferrer">oxc</a> en instructions 32 bits à registres avec tables de constantes et d'exceptions.</li>
+							<li><strong><code>v12-heap</code></strong> : Représentation NaN-boxée sur 64 bits, classes cachées avec arbres de transition et allocateur par arènes.</li>
+							<li><strong><code>v12-interp</code></strong> : Interpréteur Tier-0 avec suspension des générateurs et profilage JIT.</li>
+							<li><strong><code>v12-jit-baseline</code> & <code>v12-codegen</code></strong> : Compilateur JIT Tier-1 basé sur Cranelift pour compiler les fonctions chaudes en code machine.</li>
+							<li><strong><code>v12-api</code></strong> : Façade d'intégration exposant un <code>Context</code> simple pour exécuter des scripts et lier des fonctions Rust.</li>
+						</ul>
+
+						<pre class="mermaid">{mermaidSource}</pre>
+
+						<p class="pull-quote">Les classes cachées et les inline caches ressemblent à de la magie noire jusqu'à ce qu'on écrive soi-même l'arbre de transition.</p>
+
+						<h2>Décisions clés</h2>
+						<p><strong>NaN-boxing.</strong> Toutes les valeurs JS (nombres, booléens, null, undefined, handles d'objets) tiennent dans un mot de 64 bits. Les types primitifs ne touchent jamais la mémoire heap.</p>
+						<p><strong>Classes cachées & inline caches.</strong> Suivre la structure des objets dynamiquement permet de cacher les offsets de propriétés, transformant des lookups de hash map en simples additions de pointeurs.</p>
+						<p><strong>Heap à handles & GC mark-sweep.</strong> Les objets vivent dans des arènes indexées par des indices de 32 bits. Cela évite de scanner la pile native Rust et garantit la stabilité des références.</p>
+
+						<h2>Les parties difficiles</h2>
+						<p><strong>Async/await et générateurs sans dérouler la pile.</strong> Quand le code attend une promesse ou fait un yield, il faut geler la fenêtre de registres, sauvegarder la portée et reprendre plus tard sans bloquer le thread.</p>
+						<p><strong>La suite Test262.</strong> JavaScript regorge de cas limites obscurs. Valider plus de 7 500 tests Test262 a signifié déboguer des coercitions de types, des zones mortes temporelles et des chaînes de prototypes tard dans la nuit.</p>
+
+						<h2>Ce que j'ai appris</h2>
+						<p>Concevoir un moteur JS mélange compilateurs, gestion fine de la mémoire et respect des spécifications. Passer les tests Test262 m'a appris à quel point la conformité et la performance tirent constamment dans des directions opposées.</p>
+					</Fragment>
+				)}
+				</div>
+			</div>
+		</div>
+	</article>
+
+	<nav class="project-nav">
+		<div class="container project-nav-inner">
+			<a href={`${base}/projects/wie`} class="btn-ghost">{t.prev}</a>
+			<a href={`${base}/projects/yatsuscript`} class="btn-ghost">{t.next}</a>
+		</div>
+	</nav>
+</Layout>

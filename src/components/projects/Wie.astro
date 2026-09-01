@@ -1,0 +1,170 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import type { Language } from "../../types";
+
+interface Props {
+	lang: Language;
+}
+
+const { lang } = Astro.props;
+const en = lang === "en";
+const base = en ? "" : "/fr";
+
+const t = en
+	? {
+			title: "WIE // Yanis Amani",
+			description: "A user-mode PE64 emulator running 64-bit Windows applications on Apple Silicon macOS without Windows, Wine, or VMs.",
+			tagline: "Run 64-bit Windows binaries on Apple Silicon macOS — no Windows, no Wine, no virtual machine.",
+			github: "View on GitHub",
+			techLabel: "Tech Stack",
+			all: "← All projects",
+			prev: "← Previous project",
+			next: "Next project →",
+		}
+	: {
+			title: "WIE // Yanis Amani",
+			description: "Un émulateur PE64 en user-mode exécutant des applications Windows 64-bit sur Apple Silicon sans Windows, Wine ni machine virtuelle.",
+			tagline: "Exécutez des binaires Windows 64-bit sur macOS Apple Silicon — sans Windows, sans Wine, sans machine virtuelle.",
+			github: "Voir sur GitHub",
+			techLabel: "Stack Technique",
+			all: "← Tous les projets",
+			prev: "← Projet précédent",
+			next: "Projet suivant →",
+		};
+
+const mermaidSource = `flowchart TD
+    subgraph Host["Host macOS (ARM64)"]
+        CLI["wie CLI / Runner"]
+        API["Win32 Host Handlers (Kernel32, User32, GDI32)"]
+        UI["Native Cocoa Windows & Dialogs"]
+        D3D["Direct3D 9 Software Renderer"]
+        GPU["wgpu (Metal Backend)"]
+    end
+    subgraph Guest["Guest x86-64 PE64"]
+        PE["PE64 Binary Loader"]
+        JIT["Cranelift Block JIT (x86-64 to ARM64)"]
+        MEM["Guest Memory / Bottle Filesystem"]
+    end
+    PE --> JIT
+    JIT <--> MEM
+    JIT -->|WinAPI Import Thunks| API
+    API --> UI
+    API --> D3D
+    D3D --> GPU`;
+
+const breadcrumbs = [
+	{ name: en ? "Home" : "Accueil", path: en ? "/" : "/fr" },
+	{ name: en ? "Projects" : "Projets", path: `${base}/#projects` },
+	{ name: "WIE", path: `${base}/projects/wie` },
+];
+---
+
+<Layout title={t.title} description={t.description} lang={lang} breadcrumbs={breadcrumbs}>
+	<article class="project-page" data-animate>
+		<div class="container">
+			<header class="project-head">
+				<h1 class="project-title">WIE</h1>
+				<p class="project-tagline">{t.tagline}</p>
+			</header>
+
+			<div class="project-layout">
+				<aside class="project-meta">
+					<div class="project-links">
+						<a href="https://github.com/wie-project/wie" target="_blank" rel="noopener noreferrer" class="btn-primary">{t.github}</a>
+					</div>
+					<div class="project-meta__block">
+						<span class="tech-label">{t.techLabel}</span>
+						<div class="tech-list">
+							<a href="https://rust-lang.org" target="_blank" rel="noopener noreferrer" class="tech-tag">Rust</a>
+							<a href="https://cranelift.dev" target="_blank" rel="noopener noreferrer" class="tech-tag">Cranelift JIT</a>
+							<a href="https://developer.apple.com/metal/" target="_blank" rel="noopener noreferrer" class="tech-tag">Metal / wgpu</a>
+							<a href="https://en.wikipedia.org/wiki/Portable_Executable" target="_blank" rel="noopener noreferrer" class="tech-tag">x86-64 / PE64</a>
+							<a href="https://developer.apple.com/documentation/appkit" target="_blank" rel="noopener noreferrer" class="tech-tag">AppKit / Cocoa</a>
+						</div>
+					</div>
+				</aside>
+
+				<div class="project-content">
+				{en ? (
+					<Fragment>
+						<h2>What it is</h2>
+						<p>I wanted to see if I could run 64-bit Windows executables on Apple Silicon without launching a heavy virtual machine or setting up Wine prefixes. WIE (<em>Wie Is Emulator</em>) is a user-mode emulator written in Rust. It compiles guest x86-64 code to ARM64 on the fly with Cranelift, intercepts Windows API calls, and handles them directly on macOS.</p>
+						<p>GUI apps open real macOS windows with native Cocoa menus, system fonts, and file dialogs. Guest file operations map to a clean app bottle or straight to host files picked in native Open/Save dialogs.</p>
+
+						<h2>Architecture</h2>
+						<p>The workspace is split into focused Rust crates:</p>
+						<ul>
+							<li><strong>PE64 loader & memory</strong>: Parses PE headers, maps sections, resolves imports/exports, and manages guest virtual address space with structured exception handling (SEH).</li>
+							<li><strong>Cranelift block JIT</strong>: Translates basic blocks of x86-64 instructions into native ARM64 machine code at runtime.</li>
+							<li><strong>Win32 host runtime</strong>: Re-implements Kernel32, User32, and GDI32 calls in Rust, routing them to macOS system APIs.</li>
+							<li><strong>Direct3D 9 renderer</strong>: Software rasterizer with vertex and pixel shaders (VS 2.0 / PS 2.0 with flow control), mipmapped textures, and Metal presentation via <code>wgpu</code>.</li>
+						</ul>
+
+						<pre class="mermaid">{mermaidSource}</pre>
+
+						<p class="pull-quote">Seeing a real Windows binary open a native Cocoa window without Wine felt like magic the first time it worked.</p>
+
+						<h2>What runs today</h2>
+						<p>The engine already runs several real-world binaries:</p>
+						<ul>
+							<li><strong>Windows Notepad</strong>: Full UI with menus, Find & Replace, Go To, font picker, and printing via macOS print panels.</li>
+							<li><strong>7-Zip Console</strong>: Creating, listing, and extracting <code>.7z</code> archives.</li>
+							<li><strong>Threads & sync</strong>: 1:1 guest threads, critical sections, Windows events, semaphores, and Thread Local Storage (TLS).</li>
+							<li><strong>Terminal games</strong>: Snake and 2048 compiled with mingw-w64.</li>
+						</ul>
+
+						<h2>The hard parts</h2>
+						<p><strong>Calling conventions and ABI bridging.</strong> Windows x64 uses RCX, RDX, R8, R9 with a 32-byte shadow space on the stack; macOS ARM64 uses AAPCS64. Preserving non-volatile registers, aligning stack frames, and keeping register state coherent during JIT-to-host transitions took weeks in lldb.</p>
+						<p><strong>Direct3D 9 shader rasterizer.</strong> Building a software renderer with full mip chains, depth testing, and programmable pixel shaders with branching in pure Rust was a massive math workout.</p>
+
+						<h2>What I learned</h2>
+						<p>Emulation is 10% clean architecture and 90% edge cases. Real Windows binaries rely on undocumented Win32 behaviors, unaligned memory accesses, and weird CPUID flags. You can't just follow a specification; you have to run real software and fix what breaks.</p>
+					</Fragment>
+				) : (
+					<Fragment>
+						<h2>Ce que c'est</h2>
+						<p>Je voulais exécuter des programmes Windows 64-bit sur macOS Apple Silicon sans lancer de machine virtuelle lourde ni configurer des préfixes Wine. WIE (<em>Wie Is Emulator</em>) est un émulateur en mode utilisateur écrit en Rust. Il compile le code x86-64 en ARM64 à la volée avec Cranelift, intercepte les appels Win32 et les exécute directement sur macOS.</p>
+						<p>Les applications graphiques ouvrent de vraies fenêtres macOS avec menus Cocoa natifs, polices système et sélecteurs de fichiers intégrés. L'accès disque passe par une bouteille applicative dédiée ou directement par les fichiers choisis dans les fenêtres d'ouverture natives.</p>
+
+						<h2>Architecture</h2>
+						<p>Le projet est découpé en crates Rust ciblées :</p>
+						<ul>
+							<li><strong>Chargeur PE64 & mémoire</strong> : Analyse des en-têtes PE, mapping mémoire, résolution des tables d'imports/exports et gestion des exceptions structurées (SEH).</li>
+							<li><strong>JIT Cranelift par blocs</strong> : Compilation à la volée des blocs d'instructions x86-64 vers du code machine natif ARM64.</li>
+							<li><strong>Runtime hôte Win32</strong> : Réimplémentation de Kernel32, User32 et GDI32 en Rust, redirigés vers les API système de macOS.</li>
+							<li><strong>Moteur de rendu Direct3D 9</strong> : Rasteriseur logiciel avec shaders VS 2.0 / PS 2.0 (contrôle de flux), textures mipmappées et rendu Metal via <code>wgpu</code>.</li>
+						</ul>
+
+						<pre class="mermaid">{mermaidSource}</pre>
+
+						<p class="pull-quote">Voir un vrai binaire Windows ouvrir une fenêtre Cocoa native sans Wine, c'était assez magique la première fois.</p>
+
+						<h2>Ce qui tourne aujourd'hui</h2>
+						<p>L'émulateur fait déjà tourner des exécutables réels :</p>
+						<ul>
+							<li><strong>Bloc-notes Windows (Notepad)</strong> : Interface complète avec menus, Rechercher/Remplacer, polices système et impression native via macOS.</li>
+							<li><strong>7-Zip Console</strong> : Création, inspection et extraction d'archives <code>.7z</code>.</li>
+							<li><strong>Threads & synchronisation</strong> : Threads 1:1, sections critiques, événements Windows, sémaphores et TLS.</li>
+							<li><strong>Jeux en terminal</strong> : Snake et 2048 compilés avec mingw-w64.</li>
+						</ul>
+
+						<h2>Les parties difficiles</h2>
+						<p><strong>Traduction d'ABI et conventions d'appel.</strong> Windows x64 utilise RCX/RDX/R8/R9 avec 32 octets de shadow space sur la pile ; macOS ARM64 utilise AAPCS64. Aligner la pile, préserver les registres non-volatils et synchroniser l'état JIT-hôte m'a valu des heures de débogage dans lldb.</p>
+						<p><strong>Rasteriseur Direct3D 9.</strong> Coder un moteur de rendu logiciel complet avec mipmapping, test de profondeur et shaders programmables de zéro en Rust pur a demandé pas mal de sueur mathématique.</p>
+
+						<h2>Ce que j'ai appris</h2>
+						<p>L'émulation, c'est 10% d'architecture propre et 90% de cas particuliers. Les vrais binaires exploitent des comportements non documentés de Win32, des accès mémoire non alignés et des flags CPUID bizarres. On ne peut pas juste suivre une doc : il faut lancer Notepad et réparer ce qui plante.</p>
+					</Fragment>
+				)}
+				</div>
+			</div>
+		</div>
+	</article>
+
+	<nav class="project-nav">
+		<div class="container project-nav-inner">
+			<a href={`${base}/projects/axto`} class="btn-ghost">{t.prev}</a>
+			<a href={`${base}/projects/v12`} class="btn-ghost">{t.next}</a>
+		</div>
+	</nav>
+</Layout>
