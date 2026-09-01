@@ -1,6 +1,6 @@
 # Portfolio SEO Strategy
 
-## Technical SEO — Already Implemented
+## Technical SEO: Already Implemented
 
 | Feature | Status | Detail |
 |---------|--------|--------|
@@ -23,12 +23,12 @@ The portfolio is the single strongest asset for ranking your own name. Here's th
 ### 1. Backlinks (most important factor)
 Google needs signals that your portfolio is authoritative. Get links from:
 
-- **HE-Arc website** — ask your school to link to your portfolio from their student/alumni directory
-- **LinkedIn profile** — add `yanis.adysen.fr` to your LinkedIn profile URL field
-- **GitHub profile** — pin your portfolio repo and add the link in your GitHub bio
-- **Open source projects** — add your portfolio link to your README files (express_rs, YatsuScript, mangaread, axto)
-- **Stack Overflow / dev.to** — add the link in your profile
-- **Classmates / peers** — ask fellow students to link to you from their sites
+- **HE-Arc website**: ask your school to link to your portfolio from their student/alumni directory
+- **LinkedIn profile**: add `yanis.adysen.fr` to your LinkedIn profile URL field
+- **GitHub profile**: pin your portfolio repo and add the link in your GitHub bio
+- **Open source projects**: add your portfolio link to your README files (express_rs, YatsuScript, mangaread, axto)
+- **Stack Overflow / dev.to**: add the link in your profile
+- **Classmates / peers**: ask fellow students to link to you from their sites
 
 ### 2. Content that ranks for your brand
 - Your name is already in every page title (`// Yanis Amani`)
@@ -42,7 +42,7 @@ Once deployed on Infomaniak:
 3. Submit the sitemap: `https://yanis.adysen.fr/sitemap-index.xml`
 4. Check for any coverage issues after indexing
 
-## Beyond Brand Search — Finding You for Skills
+## Beyond Brand Search: Finding You for Skills
 
 To rank for queries like "Rust developer Switzerland" or "CS student Neuchâtel":
 

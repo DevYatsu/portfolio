@@ -1,44 +1,44 @@
-# Design — Yanis Amani portfolio
+# Design: Yanis Amani portfolio
 
 A locked design system for this portfolio. Every page redesign reads this file before
-emitting code. Do not regenerate per page — extend or amend this file when the
+emitting code. Do not regenerate per page: extend or amend this file when the
 system needs to grow.
 
 ## Genre
-modern-minimal — developer-portfolio register. Polished, technical, restrained.
+modern-minimal: developer-portfolio register. Polished, technical, restrained.
 The canonical Stripe / Linear school: confident sans displays, generous whitespace,
 pill CTAs, monochrome with a single restrained blue accent.
 
 ## Macrostructure family
 
-- **Marketing / landing pages**: Marquee Hero — project-cards as the primary
+- **Marketing / landing pages**: Marquee Hero: project-cards as the primary
   structural unit (asymmetric: one full-width featured card + a pair), lean
   left-biased hero with CTA row + factual meta line, skill tags, contact closes
   with a display-sized email. Varies on hero archetype and enrichment tier.
-  Hero enrichment in use: none — typography only.
-- **Content / project detail pages**: Long Document — content-forward with a
+  Hero enrichment in use: none: typography only.
+- **Content / project detail pages**: Long Document: content-forward with a
   sticky sidebar meta rail (links + tech stack, hairline left rule) at ≥1024px,
   one pull quote per page lifted from the page's own copy (display voice
   between hairlines), hairline top-rules on section headings.
 - **Utility / error pages**: Minimal single-column card.
 
-## Theme — custom (Hyperlane-inspired)
+## Theme: custom (Hyperlane-inspired)
 
-- `--color-paper`      oklch(97% 0.014 265)   — cool blue-tinted near-white (light)
-                        oklch(16% 0.014 265)   — navy (dark, never near-black)
-- `--color-paper-2`    oklch(94% 0.015 265)   — elevation +1
+- `--color-paper`      oklch(97% 0.014 265)   : cool blue-tinted near-white (light)
+                        oklch(16% 0.014 265)   : navy (dark, never near-black)
+- `--color-paper-2`    oklch(94% 0.015 265)   : elevation +1
                         oklch(20% 0.015 265)
-- `--color-ink`        oklch(18% 0.012 260)   — navy-ink (light)
-                        oklch(93% 0.008 270)   — near-white (dark)
-- `--color-ink-2`      oklch(38% 0.010 260)   — secondary text
+- `--color-ink`        oklch(18% 0.012 260)   : navy-ink (light)
+                        oklch(93% 0.008 270)   : near-white (dark)
+- `--color-ink-2`      oklch(38% 0.010 260)   : secondary text
                         oklch(68% 0.010 260)
-- `--color-rule`       oklch(86% 0.014 265)   — hairline (light)
+- `--color-rule`       oklch(86% 0.014 265)   : hairline (light)
                         oklch(26% 0.014 265)
-- `--color-muted`      oklch(48% 0.010 260)   — de-emphasised text (≥4.5:1 on paper & paper-2)
+- `--color-muted`      oklch(48% 0.010 260)   : de-emphasised text (≥4.5:1 on paper & paper-2)
                         oklch(65% 0.012 260)
-- `--color-accent`     oklch(55% 0.18 255)    — technical blue (light)
-                        oklch(65% 0.18 255)   — lighter blue (dark)
-- `--color-focus`      oklch(50% 0.20 255)    — focus ring
+- `--color-accent`     oklch(55% 0.18 255)    : technical blue (light)
+                        oklch(65% 0.18 255)   : lighter blue (dark)
+- `--color-focus`      oklch(50% 0.20 255)    : focus ring
                         oklch(60% 0.20 255)
 
 Hue note (de-slop 2026-08): every surface sits at hue 255–265, blue to navy.
@@ -48,7 +48,7 @@ is unambiguously blue-on-navy. Accent hue stays 255.
 
 ## Typography
 
-- Display: system-ui stack, weight 600, style normal (no webfonts — deliberately on-system, rule D1)
+- Display: system-ui stack, weight 600, style normal (no webfonts: deliberately on-system, rule D1)
 - Body: system-ui stack, weight 400
 - Wordmark: system-ui stack, weight 700 (same family, weight does the differentiation)
 - Mono: JetBrains Mono, weight 400 (code contexts only; self-hosted via @fontsource-variable/jetbrains-mono)
@@ -88,7 +88,7 @@ Hard rules. A page violates the system if it contains any of these:
 ## Per-page allowances
 
 - Main portfolio page MAY use enrichment (Tier-A CSS art for hero).
-- Project pages MUST NOT use enrichment — content carries the page.
+- Project pages MUST NOT use enrichment: content carries the page.
 - Utility pages: typography only.
 
 ## What pages MUST share
@@ -102,7 +102,7 @@ Hard rules. A page violates the system if it contains any of these:
 
 - Macrostructure within the page-type family (main page = Marquee Hero, project = Long Document).
 - Hero archetype (within the family's allowance).
-- Enrichment — only on marketing pages, only Tier-A or Tier-B.
+- Enrichment: only on marketing pages, only Tier-A or Tier-B.
 - Nav archetype (N1b, N5) and footer archetype (Ft5, Ft2)
 
 ## Exports

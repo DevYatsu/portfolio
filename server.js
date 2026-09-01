@@ -22,24 +22,24 @@ const MIME = {
 };
 
 function cacheControl(url) {
-	// Fingerprinted assets (content hash in filename) — cache forever
+	// Fingerprinted assets (content hash in filename): cache forever
 	if (url.includes("/_astro/")) {
 		return "public, max-age=31536000, immutable";
 	}
 	const ext = extname(url);
-	// Fonts — also immutable
+	// Fonts: also immutable
 	if (ext === ".woff2" || ext === ".woff") {
 		return "public, max-age=31536000, immutable";
 	}
-	// Images — cache for a week
+	// Images: cache for a week
 	if ([".png", ".jpg", ".jpeg", ".webp", ".svg", ".ico"].includes(ext)) {
 		return "public, max-age=604800";
 	}
-	// HTML — always revalidate
+	// HTML: always revalidate
 	if (ext === ".html" || !ext) {
 		return "no-cache";
 	}
-	// Everything else — 1 day
+	// Everything else: 1 day
 	return "public, max-age=86400";
 }
 
