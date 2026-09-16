@@ -15,16 +15,13 @@ export default defineConfig({
 	},
 	integrations: [
 		sitemap({
+			// Only the two homepages are meant to rank: / (EN) and /fr (FR).
+			// Project case studies and utility pages stay crawlable but unlisted,
+			// and they carry `noindex` in Layout.astro.
 			filter: (page) => {
 				const url = new URL(page);
 				const path = url.pathname.replace(/\/$/, "") || "/";
-				// Only include pages intended for search indexing (EN + FR trees)
-				return (
-					path === "/" ||
-					path === "/fr" ||
-					path.startsWith("/projects") ||
-					path.startsWith("/fr/projects")
-				);
+				return path === "/" || path === "/fr";
 			},
 		}),
 	],

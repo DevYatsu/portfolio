@@ -10,8 +10,9 @@
 | JSON-LD WebSite | ✅ | Site metadata with author reference |
 | Open Graph | ✅ | 1200×630 image, proper locale, site name |
 | Twitter Cards | ✅ | summary_large_image |
-| Sitemap | ✅ | i18n-aware with hreflang alternates |
+| Sitemap | ✅ | Homepages only (`/` and `/fr`), with hreflang alternates |
 | robots.txt | ✅ | Allows all, sitemap declared |
+| Index policy | ✅ | `index, follow` on `/` and `/fr` only; `noindex, follow` elsewhere (default-deny in `Layout.astro`) |
 | Core Web Vitals | ✅ | Vanilla CSS, optimized fonts, no JS bloat |
 | Mobile-friendly | ✅ | Responsive design |
 | compressHTML | ✅ | On |
@@ -65,5 +66,6 @@ To rank for queries like "Rust developer Switzerland" or "CS student Neuchâtel"
 ## Monitoring
 
 - Check Google Search Console weekly for first month
-- Search `site:yanis.adysen.fr` on Google to verify all pages are indexed
+- Search `site:yanis.adysen.fr` on Google to confirm only `/` and `/fr` are indexed
+- If a project or utility page was indexed before this policy, request removal via the URL Removal tool; `noindex, follow` de-indexes it on the next crawl
 - Search `"Yanis Amani"` on Google to track your brand ranking

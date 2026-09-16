@@ -10,7 +10,10 @@ import type { Language } from "../types";
 interface Props {
 	title: string;
 	description?: string;
+	/** Opt out of indexing on an otherwise indexable route. */
 	noindex?: boolean;
+	/** Opt in to indexing on an otherwise excluded route. */
+	index?: boolean;
 	lang?: Language;
 	/** Emit hreflang alternate links (default true: off for 404). */
 	alternates?: boolean;
@@ -30,12 +33,24 @@ const {
 	lang = "en",
 	description = defaultDescriptions[lang],
 	noindex = false,
+	index = false,
 	alternates = true,
 	canonical,
 	breadcrumbs,
 } = Astro.props;
 
 const siteUrl = "https://yanis.adysen.fr";
+
+// Default-deny indexing: exactly one index root is indexable.
+// This matches / and /fr plus trailing-slash aliases, and excludes every
+// nested route (/projects/*, /thanks) — including renamed locale prefixes
+// (e.g. /de) and future pages, which stay noindex unless they opt in.
+const indexRoot = "/" + (Astro.url.pathname.replace(/^\/+|\/+$/g, "") || "");
+const indexableRoot = indexRoot === "/" || indexRoot === "/fr";
+
+// An explicit noindex always wins; otherwise the index root or a page-level
+// `index` opt-in is required.
+const robots = !noindex && (indexableRoot || index) ? "index, follow" : "noindex, follow";
 
 // Per-page canonical URL: strip trailing slash to match internal link format
 const rawPath = Astro.url.pathname.replace(/\/$/, '');
@@ -117,7 +132,8 @@ const breadcrumbSchema = breadcrumbs && breadcrumbs.length > 0 ? {
 			</>
 		)}
 
-		{noindex && <meta name="robots" content="noindex" />}
+		{/* Only the two homepages index; every other route opts out by default. */}
+		<meta name="robots" content={robots} />
 
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content={pageUrl} />
