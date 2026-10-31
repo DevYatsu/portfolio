@@ -5,6 +5,7 @@ import "../styles/globals.css";
 
 import Header from "../components/Header.astro";
 import { ClientRouter } from "astro:transitions";
+import { routePath } from "../lib/route";
 import type { Language } from "../types";
 
 interface Props {
@@ -39,13 +40,16 @@ const {
 	breadcrumbs,
 } = Astro.props;
 
-const siteUrl = "https://yanis.adysen.fr";
+// Single source of truth: `site` in astro.config.mjs
+const siteUrl = Astro.site!.origin;
+
+const currentPath = routePath(Astro.url.pathname);
 
 // Default-deny indexing: exactly one index root is indexable.
 // This matches / and /fr plus trailing-slash aliases, and excludes every
 // nested route (/projects/*, /thanks) — including renamed locale prefixes
 // (e.g. /de) and future pages, which stay noindex unless they opt in.
-const indexRoot = "/" + (Astro.url.pathname.replace(/^\/+|\/+$/g, "") || "");
+const indexRoot = currentPath;
 const indexableRoot = indexRoot === "/" || indexRoot === "/fr";
 
 // An explicit noindex always wins; otherwise the index root or a page-level
@@ -53,8 +57,7 @@ const indexableRoot = indexRoot === "/" || indexRoot === "/fr";
 const robots = !noindex && (indexableRoot || index) ? "index, follow" : "noindex, follow";
 
 // Per-page canonical URL: strip trailing slash to match internal link format
-const rawPath = Astro.url.pathname.replace(/\/$/, '');
-const canonicalPath = canonical !== undefined ? canonical : (rawPath || '/');
+const canonicalPath = canonical !== undefined ? canonical : currentPath;
 const pageUrl = new URL(canonicalPath, siteUrl);
 
 // hreflang pair: the FR tree mirrors the EN tree under /fr
@@ -69,22 +72,43 @@ const footer = {
 }[lang];
 
 // JSON-LD structured data
-const personSchema = {
-	"@context": "https://schema.org",
+const person = {
 	"@type": "Person",
 	"@id": `${siteUrl}/#person`,
 	name: "Yanis Amani",
 	givenName: "Yanis",
 	familyName: "Amani",
 	jobTitle: "Software Engineering Student",
-	alumniOf: "HE-Arc",
+	// alumniOf would claim a finished degree; affiliation fits a current student.
+	affiliation: {
+		"@type": "CollegeOrUniversity",
+		name: "HE-Arc",
+		url: "https://www.he-arc.ch",
+	},
+	address: {
+		"@type": "PostalAddress",
+		addressLocality: "Neuchâtel",
+		addressCountry: "CH",
+	},
+	knowsAbout: ["Rust", "TypeScript", "Systems programming", "Software engineering"],
 	url: siteUrl,
 	email: "yanis.amani@icloud.com",
 	sameAs: [
-		"https://linkedin.com/in/yanis-amani",
+		"https://www.linkedin.com/in/yanis-amani",
 		"https://github.com/DevYatsu",
 	],
 };
+
+// Homepages are the profile pages Google should attach to the person entity.
+const identitySchema = indexableRoot
+	? {
+		"@context": "https://schema.org",
+		"@type": "ProfilePage",
+		url: pageUrl,
+		inLanguage: lang,
+		mainEntity: person,
+	}
+	: { "@context": "https://schema.org", ...person };
 
 const websiteSchema = {
 	"@context": "https://schema.org",
@@ -92,7 +116,7 @@ const websiteSchema = {
 	"@id": `${siteUrl}/#website`,
 	name: "Yanis Amani Portfolio",
 	url: siteUrl,
-	description: "Portfolio of Yanis Amani, Software Engineering student focused on building reliable software.",
+	description: defaultDescriptions[lang],
 	inLanguage: lang,
 	author: { "@id": `${siteUrl}/#person` },
 };
@@ -145,7 +169,8 @@ const breadcrumbSchema = breadcrumbs && breadcrumbs.length > 0 ? {
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
 		<meta property="og:image:alt" content="Yanis Amani. I build reliable software" />
-		<meta property="og:locale" content={lang === "fr" ? "fr_FR" : "en_GB"} />
+		<meta property="og:locale" content={lang === "fr" ? "fr_CH" : "en_GB"} />
+		<meta property="og:locale:alternate" content={lang === "fr" ? "en_GB" : "fr_CH"} />
 
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:url" content={pageUrl} />
@@ -154,7 +179,7 @@ const breadcrumbSchema = breadcrumbs && breadcrumbs.length > 0 ? {
 		<meta name="twitter:image" content={new URL('/og-image.png', siteUrl)} />
 
 		<!-- Structured Data -->
-		<script type="application/ld+json" set:html={JSON.stringify(personSchema)}></script>
+		<script type="application/ld+json" set:html={JSON.stringify(identitySchema)}></script>
 		<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)}></script>
 		{breadcrumbSchema && (
 			<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>

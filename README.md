@@ -1,12 +1,12 @@
 # Portfolio // Yanis Amani
 
-Personal portfolio at [yanis.adysen.fr](https://yanis.adysen.fr).
+Personal portfolio at [yanis-amani.ch](https://yanis-amani.ch).
 
 ## Stack
 
 - **Astro 7**: static site generation
 - **Vanilla CSS**: no frameworks, system font stack (JetBrains Mono self-hosted for code)
-- **Infomaniak**: Node.js hosting via `server.js`
+- **Cloudflare Pages**: static hosting of `./dist/`, configured in `wrangler.jsonc`
 
 ## Features
 
@@ -28,4 +28,10 @@ Personal portfolio at [yanis.adysen.fr](https://yanis.adysen.fr).
 
 ## Deploy
 
-The `server.js` file serves `./dist/` statically. Push to main to deploy.
+Cloudflare Pages builds from the Git repository on every push to `main`: build command `npm run build`, output directory `dist`.
+
+`npm run deploy` publishes from a local machine instead, after `npx wrangler login`.
+
+`build.format: "file"` in `astro.config.mjs` is required: it makes Pages serve `/fr` rather than redirect to `/fr/`, which keeps URLs equal to the canonicals.
+
+`server.js` only applies to the previous Infomaniak Node.js deployment and does not run on Cloudflare Pages.

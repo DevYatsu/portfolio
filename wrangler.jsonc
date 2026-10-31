@@ -1,0 +1,7 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "yanis-amani-portfolio",
+	"compatibility_date": "2026-10-30",
+	// Cloudflare Pages project: serves the Astro build with no Worker script.
+	"pages_build_output_dir": "./dist",
+}
