@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import { layerLabel } from "../../data/portfolio";
 import type { Language } from "../../types";
 
 interface Props {
@@ -12,7 +13,7 @@ const base = en ? "" : "/fr";
 
 const t = en
 	? {
-			title: "WIE // Yanis Amani",
+			title: "WIE: Run Windows Apps on Apple Silicon | Yanis Amani",
 			description: "A user-mode PE64 emulator running 64-bit Windows applications on Apple Silicon macOS without Windows, Wine, or VMs.",
 			tagline: "Run 64-bit Windows binaries on Apple Silicon macOS without Windows, Wine, or virtual machines.",
 			github: "View on GitHub",
@@ -20,9 +21,11 @@ const t = en
 			all: "← All projects",
 			prev: "← Previous project",
 			next: "Next project →",
+			roleLabel: "Role",
+			role: "Co-developer, WIE Project",
 		}
 	: {
-			title: "WIE // Yanis Amani",
+			title: "WIE : Windows sur Apple Silicon | Yanis Amani",
 			description: "Un émulateur PE64 en user-mode exécutant des applications Windows 64-bit sur Apple Silicon sans Windows, Wine ni machine virtuelle.",
 			tagline: "Exécutez des binaires Windows 64-bit sur macOS Apple Silicon sans Windows, sans Wine, ni machine virtuelle.",
 			github: "Voir sur GitHub",
@@ -30,6 +33,8 @@ const t = en
 			all: "← Tous les projets",
 			prev: "← Projet précédent",
 			next: "Projet suivant →",
+			roleLabel: "Rôle",
+			role: "Co-développeur, WIE Project",
 		};
 
 const mermaidSource = `flowchart TD
@@ -59,10 +64,11 @@ const breadcrumbs = [
 ];
 ---
 
-<Layout title={t.title} description={t.description} lang={lang} breadcrumbs={breadcrumbs}>
+<Layout title={t.title} description={t.description} lang={lang} breadcrumbs={breadcrumbs} index>
 	<article class="project-page" data-animate>
 		<div class="container">
 			<header class="project-head">
+				<p class="project-layer">{layerLabel("machine", lang)}</p>
 				<h1 class="project-title">WIE</h1>
 				<p class="project-tagline">{t.tagline}</p>
 			</header>
@@ -71,6 +77,10 @@ const breadcrumbs = [
 				<aside class="project-meta">
 					<div class="project-links">
 						<a href="https://github.com/wie-project/wie" target="_blank" rel="noopener noreferrer" class="btn-primary">{t.github}</a>
+					</div>
+					<div class="project-meta__block">
+						<span class="tech-label">{t.roleLabel}</span>
+						<p class="source-note">{t.role}</p>
 					</div>
 					<div class="project-meta__block">
 						<span class="tech-label">{t.techLabel}</span>
@@ -163,7 +173,7 @@ const breadcrumbs = [
 
 	<nav class="project-nav">
 		<div class="container project-nav-inner">
-			<a href={`${base}/projects/axto`} class="btn-ghost">{t.prev}</a>
+			<a href={`${base}/projects/ghaiari`} class="btn-ghost">{t.prev}</a>
 			<a href={`${base}/projects/v12`} class="btn-ghost">{t.next}</a>
 		</div>
 	</nav>

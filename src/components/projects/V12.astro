@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import { layerLabel } from "../../data/portfolio";
 import type { Language } from "../../types";
 
 interface Props {
@@ -12,9 +13,9 @@ const base = en ? "" : "/fr";
 
 const t = en
 	? {
-			title: "v12 // Yanis Amani",
+			title: "v12: JavaScript Engine in Rust | Yanis Amani",
 			description: "An experimental, embeddable JavaScript engine for Rust apps featuring NaN-boxing, hidden classes, and Cranelift JIT compilation.",
-			tagline: "An embeddable JavaScript engine written in pure Rust from scratch. No V8, no QuickJS, no compromise on speed.",
+			tagline: "An embeddable JavaScript engine for Rust apps. No V8, no QuickJS: my own runtime, with oxc for parsing.",
 			github: "View on GitHub",
 			techLabel: "Tech Stack",
 			all: "← All projects",
@@ -22,9 +23,9 @@ const t = en
 			next: "Next project →",
 		}
 	: {
-			title: "v12 // Yanis Amani",
+			title: "v12 : moteur JavaScript en Rust | Yanis Amani",
 			description: "Un moteur JavaScript expérimental et intégrable pour applications Rust avec NaN-boxing, classes cachées et compilation JIT Cranelift.",
-			tagline: "Un moteur JavaScript intégrable écrit en Rust pur de zéro : sans V8, sans QuickJS, sans compromis de vitesse.",
+			tagline: "Un moteur JavaScript intégrable pour applications Rust. Sans V8 ni QuickJS : mon propre runtime, avec oxc pour le parsing.",
 			github: "Voir sur GitHub",
 			techLabel: "Stack Technique",
 			all: "← Tous les projets",
@@ -49,10 +50,11 @@ const breadcrumbs = [
 ];
 ---
 
-<Layout title={t.title} description={t.description} lang={lang} breadcrumbs={breadcrumbs}>
+<Layout title={t.title} description={t.description} lang={lang} breadcrumbs={breadcrumbs} index>
 	<article class="project-page" data-animate>
 		<div class="container">
 			<header class="project-head">
+				<p class="project-layer">{layerLabel("runtime", lang)}</p>
 				<h1 class="project-title">v12</h1>
 				<p class="project-tagline">{t.tagline}</p>
 			</header>
@@ -102,7 +104,7 @@ const breadcrumbs = [
 
 						<h2>The hard parts</h2>
 						<p><strong>Async/await and generators without stack unwinding.</strong> When JS awaits a Promise or yields, you have to freeze the entire register frame, save the scope chain, and resume later without blocking the thread.</p>
-						<p><strong>The Test262 suite.</strong> JavaScript has endless corner cases. Getting 7,500+ official Test262 conformance tests to pass meant debugging type coercions, temporal dead zones, and prototype chain edge cases until 2am.</p>
+						<p><strong>The Test262 suite.</strong> JavaScript has endless corner cases. Getting to 19,080 passing tests in the Test262 language suite (77.6%, measured 6 Oct 2026) meant debugging type coercions, temporal dead zones, and prototype chain edge cases until 2am.</p>
 
 						<h2>What I learned</h2>
 						<p>Writing a JS engine connects compiler design, memory management, and spec debugging. Passing Test262 tests taught me that conformance and raw speed constantly fight each other in dynamic language runtimes.</p>
@@ -134,7 +136,7 @@ const breadcrumbs = [
 
 						<h2>Les parties difficiles</h2>
 						<p><strong>Async/await et générateurs sans dérouler la pile.</strong> Quand le code attend une promesse ou fait un yield, il faut geler la fenêtre de registres, sauvegarder la portée et reprendre plus tard sans bloquer le thread.</p>
-						<p><strong>La suite Test262.</strong> JavaScript regorge de cas limites obscurs. Valider plus de 7 500 tests Test262 a signifié déboguer des coercitions de types, des zones mortes temporelles et des chaînes de prototypes tard dans la nuit.</p>
+						<p><strong>La suite Test262.</strong> JavaScript regorge de cas limites obscurs. Atteindre 19 080 tests réussis dans la suite Test262 language (77,6 %, mesuré le 6 oct. 2026) a signifié déboguer des coercitions de types, des zones mortes temporelles et des chaînes de prototypes tard dans la nuit.</p>
 
 						<h2>Ce que j'ai appris</h2>
 						<p>Concevoir un moteur JS mélange compilateurs, gestion fine de la mémoire et respect des spécifications. Passer les tests Test262 m'a appris à quel point la conformité et la performance tirent constamment dans des directions opposées.</p>

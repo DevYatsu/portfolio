@@ -1,0 +1,208 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { layerLabel } from "../../data/portfolio";
+import type { Language } from "../../types";
+
+interface Props {
+	lang: Language;
+}
+
+const { lang } = Astro.props;
+const en = lang === "en";
+const base = en ? "" : "/fr";
+
+const t = en
+	? {
+			title: "Ghaiari: Car-Parts Marketplace for Libya | Yanis Amani",
+			description: "Ghaiari is a car-parts marketplace for Libya, with a React Native buyer app, an Astro seller portal and a Supabase backend.",
+			tagline: "A car-parts marketplace for Libya. Mobile app for buyers, web dashboard for sellers, all backed by Supabase.",
+			source: "Private source. Code available on request.",
+			visit: "Visit ghaiari.com",
+			earlier: "Screenshots show an earlier build, from when the project was called Axto.",
+			techLabel: "Tech Stack",
+			prev: "← Previous project",
+			next: "Next project →",
+		}
+	: {
+			title: "Ghaiari : marketplace de pièces auto en Libye | Yanis Amani",
+			description: "Ghaiari est une marketplace de pièces auto pour la Libye, avec app acheteurs React Native, portail vendeurs Astro et backend Supabase.",
+			tagline: "Une marketplace de pièces auto pour la Libye. App mobile React Native pour les acheteurs, portail web Astro pour les vendeurs.",
+			source: "Source privée. Code disponible sur demande.",
+			visit: "Visiter ghaiari.com",
+			earlier: "Les captures montrent une version antérieure, quand le projet s'appelait Axto.",
+			techLabel: "Stack Technique",
+			prev: "← Projet précédent",
+			next: "Projet suivant →",
+		};
+const breadcrumbs = [
+	{ name: en ? "Home" : "Accueil", path: en ? "/" : "/fr" },
+	{ name: en ? "Projects" : "Projets", path: `${base}/#projects` },
+	{ name: "Ghaiari", path: `${base}/projects/ghaiari` },
+];
+---
+
+<Layout title={t.title} description={t.description} lang={lang} breadcrumbs={breadcrumbs} index>
+	<article class="project-page" data-animate>
+		<div class="container">
+			<header class="project-head">
+				<p class="project-layer">{layerLabel("product", lang)}</p>
+				<h1 class="project-title">Ghaiari</h1>
+				<p class="project-tagline">{t.tagline}</p>
+			</header>
+
+			<div class="project-layout">
+				<aside class="project-meta">
+					<div class="project-links">
+						<a href="https://ghaiari.com/" target="_blank" rel="noopener noreferrer" class="btn-primary">{t.visit}</a>
+					</div>
+					<p class="source-note">{t.source}</p>
+					<div class="project-meta__block">
+						<span class="tech-label">{t.techLabel}</span>
+						<div class="tech-list">
+							<a href="https://reactnative.dev" target="_blank" rel="noopener noreferrer" class="tech-tag">React Native</a>
+							<a href="https://astro.build" target="_blank" rel="noopener noreferrer" class="tech-tag">Astro</a>
+							<a href="https://supabase.com" target="_blank" rel="noopener noreferrer" class="tech-tag">Supabase</a>
+							<a href="https://postgresql.org" target="_blank" rel="noopener noreferrer" class="tech-tag">Postgres</a>
+						</div>
+					</div>
+				</aside>
+
+				<div class="project-content">
+				{en ? (
+					<Fragment>
+						<h2>What it does</h2>
+						<p>Ghaiari connects auto parts buyers and sellers. Buyers find parts through a React Native app and pay from an in-app wallet; sellers manage listings and orders through an Astro web portal. Vehicle compatibility data shows whether a part fits the buyer's car.</p>
+
+						<h2>Architecture</h2>
+						<p>Two frontends, one backend:</p>
+						<ul>
+							<li><strong>Mobile app</strong>: React Native (Expo). Browse by vehicle, search parts, order, and receive push notifications.</li>
+							<li><strong>Seller and admin web</strong>: server-rendered Astro for listings, orders and moderation.</li>
+							<li><strong>Backend</strong>: Supabase handles auth, Postgres with Row Level Security, storage, cron jobs and push dispatch.</li>
+						</ul>
+
+						<h2>Key decisions</h2>
+						<p><strong>Vehicle compatibility in the database.</strong> A dedicated table links parts to vehicle models, and a Postgres function answers whether a part fits a given model.</p>
+						<p><strong>Supabase RLS for multi-tenant data.</strong> Every row in the database has a <code>seller_id</code>, and Row Level Security policies enforce that sellers only see their own orders and inventory. Buyers see only public listing data. This means the mobile app queries Postgres directly: no custom API layer needed for reads.</p>
+
+						<p class="pull-quote">Saying no to features was harder than building them.</p>
+
+						<h2>The hard parts</h2>
+						<p><strong>Search.</strong> Catalog search runs ILIKE queries across Arabic, English and French titles, backed by trigram indexes so the wildcard matches stay usable.</p>
+
+						<h2>Screenshots</h2>
+						<p>{t.earlier}</p>
+						<div class="screenshot-grid screenshot-grid--phone">
+							<figure class="screenshot">
+								<img src="/ghaiari-images/home.png" alt="Ghaiari home screen" loading="lazy" width="200" height="433" />
+								<figcaption>Browse listings by vehicle</figcaption>
+							</figure>
+							<figure class="screenshot">
+								<img src="/ghaiari-images/search.png" alt="Ghaiari search screen" loading="lazy" width="200" height="433" />
+								<figcaption>Find parts by name or OEM number</figcaption>
+							</figure>
+							<figure class="screenshot">
+								<img src="/ghaiari-images/product-details.png" alt="Ghaiari product details" loading="lazy" width="200" height="433" />
+								<figcaption>Compatibility info, price, seller</figcaption>
+							</figure>
+							<figure class="screenshot">
+								<img src="/ghaiari-images/cart-empty.png" alt="Empty cart" loading="lazy" width="200" height="433" />
+								<figcaption>Empty state</figcaption>
+							</figure>
+							<figure class="screenshot">
+								<img src="/ghaiari-images/cart-with-products.png" alt="Cart with products" loading="lazy" width="200" height="433" />
+								<figcaption>Items ready for checkout</figcaption>
+							</figure>
+							<figure class="screenshot">
+								<img src="/ghaiari-images/checkout-address.png" alt="Checkout address form" loading="lazy" width="200" height="433" />
+								<figcaption>Shipping address</figcaption>
+							</figure>
+							<figure class="screenshot">
+								<img src="/ghaiari-images/checkout-credit-card.png" alt="Checkout payment" loading="lazy" width="200" height="433" />
+								<figcaption>Payment step</figcaption>
+							</figure>
+							<figure class="screenshot">
+								<img src="/ghaiari-images/notifications.png" alt="Notifications" loading="lazy" width="200" height="433" />
+								<figcaption>Notifications</figcaption>
+							</figure>
+							<figure class="screenshot">
+								<img src="/ghaiari-images/profile.png" alt="Profile screen" loading="lazy" width="200" height="433" />
+								<figcaption>Account and saved searches</figcaption>
+							</figure>
+						</div>
+
+						<h2>What I learned</h2>
+						<p>This was my first full-stack marketplace and the project where I learned to say no. The feature list kept growing, and every addition had to work across the app, the web portal and the database rules.</p>
+					</Fragment>
+				) : (
+					<Fragment>
+						<h2>Ce que ça fait</h2>
+						<p>Ghaiari connecte acheteurs et vendeurs de pièces auto. Les acheteurs trouvent leurs pièces via une app React Native et paient depuis un portefeuille intégré ; les vendeurs gèrent annonces et commandes via un portail web Astro. Les données de compatibilité indiquent si une pièce correspond à la voiture de l'acheteur.</p>
+
+						<h2>Architecture</h2>
+						<p>Deux frontends, un backend :</p>
+						<ul>
+							<li><strong>App mobile</strong>: React Native (Expo). Parcourir par véhicule, rechercher des pièces, commander et recevoir des notifications push.</li>
+							<li><strong>Web vendeurs et admins</strong>: Astro rendu côté serveur pour les annonces, les commandes et la modération.</li>
+							<li><strong>Backend</strong>: Supabase handles auth, Postgres with Row Level Security, storage, cron jobs and push dispatch.</li>
+						</ul>
+
+						<p class="pull-quote">Dire non à des fonctionnalités a été plus dur que de les construire.</p>
+
+						<h2>Captures d'écran</h2>
+						<p>{t.earlier}</p>
+						<div class="screenshot-grid screenshot-grid--phone">
+							<figure class="screenshot">
+								<img src="/ghaiari-images/home.png" alt="Écran d'accueil Ghaiari" loading="lazy" width="200" height="433" />
+								<figcaption>Parcourir les annonces par véhicule</figcaption>
+							</figure>
+							<figure class="screenshot">
+								<img src="/ghaiari-images/search.png" alt="Recherche Ghaiari" loading="lazy" width="200" height="433" />
+								<figcaption>Trouver des pièces par nom ou numéro OEM</figcaption>
+							</figure>
+							<figure class="screenshot">
+								<img src="/ghaiari-images/product-details.png" alt="Détails du produit" loading="lazy" width="200" height="433" />
+								<figcaption>Infos de compatibilité, prix, vendeur</figcaption>
+							</figure>
+							<figure class="screenshot">
+								<img src="/ghaiari-images/cart-empty.png" alt="Panier vide" loading="lazy" width="200" height="433" />
+								<figcaption>État vide</figcaption>
+							</figure>
+							<figure class="screenshot">
+								<img src="/ghaiari-images/cart-with-products.png" alt="Panier avec articles" loading="lazy" width="200" height="433" />
+								<figcaption>Articles prêts pour le paiement</figcaption>
+							</figure>
+							<figure class="screenshot">
+								<img src="/ghaiari-images/checkout-address.png" alt="Adresse de livraison" loading="lazy" width="200" height="433" />
+								<figcaption>Adresse de livraison</figcaption>
+							</figure>
+							<figure class="screenshot">
+								<img src="/ghaiari-images/checkout-credit-card.png" alt="Paiement par carte" loading="lazy" width="200" height="433" />
+								<figcaption>Étape de paiement</figcaption>
+							</figure>
+							<figure class="screenshot">
+								<img src="/ghaiari-images/notifications.png" alt="Notifications" loading="lazy" width="200" height="433" />
+								<figcaption>Notifications</figcaption>
+							</figure>
+							<figure class="screenshot">
+								<img src="/ghaiari-images/profile.png" alt="Profil" loading="lazy" width="200" height="433" />
+								<figcaption>Compte et recherches sauvegardées</figcaption>
+							</figure>
+						</div>
+
+						<h2>Ce que j'ai appris</h2>
+						<p>Mon premier marketplace full-stack et le projet où j'ai appris à dire non. La liste de fonctionnalités n'arrêtait pas de s'allonger, et chaque ajout devait fonctionner dans l'app, le portail web et les règles de la base de données.</p>
+					</Fragment>
+				)}
+				</div>
+			</div>
+		</div>
+	</article>
+
+	<nav class="project-nav">
+		<div class="container project-nav-inner">
+			<a href={`${base}/projects/mangaread`} class="btn-ghost">{t.prev}</a>
+			<a href={`${base}/projects/wie`} class="btn-ghost">{t.next}</a>
+		</div>
+	</nav>
+</Layout>

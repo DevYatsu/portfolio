@@ -8,13 +8,15 @@
 | Hreflang | ✅ | en + fr + x-default |
 | JSON-LD ProfilePage | ✅ | Homepages wrap Person: name, job title, school, location, skills, social links |
 | JSON-LD WebSite | ✅ | Site metadata with author reference |
+| JSON-LD ItemList | ✅ | Homepages list public repositories as SoftwareSourceCode, linked to the Person entity |
+| rel="me" | ✅ | GitHub and LinkedIn links identify the same person |
 | Open Graph | ✅ | 1200×630 image, proper locale, site name |
 | Twitter Cards | ✅ | summary_large_image |
-| Sitemap | ✅ | Homepages only (`/` and `/fr`), with hreflang alternates |
+| Sitemap | ✅ | Homepages and case studies, with hreflang alternates |
 | Domain redirect | ⚠️ | Infomaniak only: `server.js` 301s `yanis.adysen.fr` and `www.yanis-amani.ch` to `https://yanis-amani.ch`. Recreate this on Cloudflare (see below) |
 | robots.txt | ✅ | Allows all, sitemap declared |
-| Index policy | ✅ | `index, follow` on `/` and `/fr` only; `noindex, follow` elsewhere (default-deny in `Layout.astro`) |
-| Core Web Vitals | ✅ | Vanilla CSS, optimized fonts, no JS bloat |
+| Index policy | ✅ | `index, follow` on the homepages and case studies; `noindex, follow` elsewhere (default-deny in `Layout.astro`, pages opt in with `index`) |
+| Core Web Vitals | ⚠️ | Not measured: check PageSpeed Insights after launch |
 | Mobile-friendly | ✅ | Responsive design |
 | compressHTML | ✅ | On |
 
@@ -33,22 +35,22 @@
 9. Update the links you control: LinkedIn, GitHub, READMEs.
 10. Keep the old domain and its redirect for at least one year.
 
-## To Rank #1 for "Yanis Amani"
+## Ranking for "Yanis Amani"
 
-The portfolio is the single strongest asset for ranking your own name. Here's the strategy:
+These steps improve the odds. None of them guarantees a position.
 
-### 1. Backlinks (most important factor)
-Google needs signals that your portfolio is authoritative. Get links from:
+### 1. Backlinks
+Links from pages about you help Google connect them to this site. Get links from:
 
-- **HE-Arc website**: ask your school to link to your portfolio from their student/alumni directory
+- **HE-Arc website**: ask whether the school has a student directory that can link to your portfolio
 - **LinkedIn profile**: add `yanis-amani.ch` to your LinkedIn profile URL field
 - **GitHub profile**: pin your portfolio repo and add the link in your GitHub bio
-- **Open source projects**: add your portfolio link to your README files (express_rs, YatsuScript, mangaread, axto)
+- **Open source projects**: add your portfolio link to your README files (express_rs, ysc, mangareader, v12)
 - **Stack Overflow / dev.to**: add the link in your profile
 - **Classmates / peers**: ask fellow students to link to you from their sites
 
 ### 2. Content that ranks for your brand
-- Your name is already in every page title (`// Yanis Amani`)
+- Your name is in every page title
 - Your name appears naturally in the hero, about, and footer
 - The JSON-LD structured data explicitly tells Google who you are
 
@@ -63,25 +65,24 @@ Once deployed on Cloudflare Pages:
 
 To rank for queries like "Rust developer Switzerland" or "CS student Neuchâtel":
 
-| Tactic | Difficulty | Impact |
-|--------|-----------|--------|
-| Add "Neuchâtel, Switzerland" naturally in content | Easy | Medium |
-| Write blog posts about your projects | Medium | High |
-| Get listed on HE-Arc student directory | Easy | High |
-| Get linked from GitHub project pages | Easy | Medium |
-| Create a LinkedIn article mentioning your portfolio | Medium | Medium |
+Tactics to try, with no measured impact yet:
+
+- Mention Neuchâtel, Switzerland naturally in content (done on the homepages)
+- Write posts about your projects
+- Get listed in an HE-Arc directory, if one exists
+- Link the site from your GitHub project pages
+- Publish a LinkedIn article that mentions the portfolio
 
 ## Quick Wins (Do This Week)
 
-1. **Add portfolio link to all your README files** (express_rs, YatsuScript, mangaread, axto)
+1. **Add portfolio link to all your README files** (express_rs, ysc, mangareader, v12)
 2. **Update LinkedIn profile URL** → Add yanis-amani.ch
 3. **Update GitHub profile bio** → Add the link
 4. **Submit to Google Search Console** after deploy
-5. **Ask HE-Arc** if they have a student portfolio directory
+5. **Ask HE-Arc** whether a student portfolio directory exists
 
 ## Monitoring
 
 - Check Google Search Console weekly for first month
-- Search `site:yanis-amani.ch` on Google to confirm only `/` and `/fr` are indexed
-- If a project or utility page was indexed before this policy, request removal via the URL Removal tool; `noindex, follow` de-indexes it on the next crawl
+- Search `site:yanis-amani.ch` on Google to confirm the homepages and case studies are indexed
 - Search `"Yanis Amani"` on Google to track your brand ranking

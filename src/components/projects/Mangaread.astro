@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import { layerLabel } from "../../data/portfolio";
 import type { Language } from "../../types";
 
 interface Props {
@@ -12,8 +13,8 @@ const base = en ? "" : "/fr";
 
 const t = en
 	? {
-			title: "MangaReader // Yanis Amani",
-			description: "A Rust-powered manga reading platform with automatic scraping, merging, and a web interface.",
+			title: "MangaReader: Self-Hosted Manga Library | Yanis Amani",
+			description: "A self-hosted manga library in Rust: multi-source sync, series merging, accounts and a fast web reader.",
 			tagline: "A manga reader that scrapes chapters from third-party sites, merges them into series, and serves them through a web interface.",
 			github: "View on GitHub",
 			techLabel: "Tech Stack",
@@ -21,8 +22,8 @@ const t = en
 			next: "Next project →",
 		}
 	: {
-			title: "MangaReader // Yanis Amani",
-			description: "Une plateforme de lecture de manga en Rust avec scraping automatique, fusion de séries et interface web.",
+			title: "MangaReader : bibliothèque de manga | Yanis Amani",
+			description: "Une bibliothèque de manga auto-hébergée en Rust : sync multi-sources, fusion de séries, comptes et lecteur web rapide.",
 			tagline: "Un lecteur de manga qui scrape des chapitres depuis des sites tiers, les fusionne en séries, et les sert via une interface web.",
 			github: "Voir sur GitHub",
 			techLabel: "Stack Technique",
@@ -33,8 +34,7 @@ const t = en
 const mermaidSource = `flowchart TB
     CLI[ScraperEngine] --> DB[(SQLite)]
     WEB[Axum Server] --> DB
-    WEB <--> BROWSER[Browser]
-    BROWSER --> JS[app.js + localStorage]`;
+    WEB <--> BROWSER[Browser]`;
 
 const breadcrumbs = [
 	{ name: en ? "Home" : "Accueil", path: en ? "/" : "/fr" },
@@ -43,10 +43,11 @@ const breadcrumbs = [
 ];
 ---
 
-<Layout title={t.title} description={t.description} lang={lang} breadcrumbs={breadcrumbs}>
+<Layout title={t.title} description={t.description} lang={lang} breadcrumbs={breadcrumbs} index>
 	<article class="project-page" data-animate>
 		<div class="container">
 			<header class="project-head">
+				<p class="project-layer">{layerLabel("product", lang)}</p>
 				<h1 class="project-title">MangaReader</h1>
 				<p class="project-tagline">{t.tagline}</p>
 			</header>
@@ -54,7 +55,7 @@ const breadcrumbs = [
 			<div class="project-layout">
 				<aside class="project-meta">
 					<div class="project-links">
-						<a href="https://github.com/DevYatsu/mangaread" target="_blank" rel="noopener noreferrer" class="btn-primary">{t.github}</a>
+						<a href="https://github.com/DevYatsu/mangareader" target="_blank" rel="noopener noreferrer" class="btn-primary">{t.github}</a>
 					</div>
 					<div class="project-meta__block">
 						<span class="tech-label">{t.techLabel}</span>
@@ -72,21 +73,21 @@ const breadcrumbs = [
 				{en ? (
 					<Fragment>
 						<h2>What it does</h2>
-						<p>MangaReader scrapes manga chapters from third-party scanlation sites, merges them into series, and serves them through a local web interface. You can bookmark series, track your reading, and the server auto-syncs new chapters in the background.</p>
+						<p>MangaReader is a self-hosted manga library. It fetches chapters from third-party sites, merges the same title into one series, and serves a reader with accounts, bookmarks and synced progress. New chapters sync in the background.</p>
 
 						<h2>Architecture</h2>
 						<p>Three Rust crates in one workspace:</p>
 						<ul>
 							<li><strong>mangaread-core</strong>: domain types, SQLite repository, series merging logic</li>
 							<li><strong>scraper</strong>: SiteAdapter trait with per-site implementations (Demonicscans, Manhuaplus), CLI binary + library</li>
-							<li><strong>website</strong>: Axum web server with 10 route modules, <a href="https://maud.lambda.xyz/" target="_blank" rel="noopener noreferrer">Maud</a> templates, static assets</li>
+							<li><strong>website</strong>: Axum web server with <a href="https://maud.lambda.xyz/" target="_blank" rel="noopener noreferrer">Maud</a> templates, accounts, an admin area and static assets</li>
 						</ul>
-						<p>The database uses <a href="https://sqlite.org" target="_blank" rel="noopener noreferrer">SQLite</a> in WAL mode: four tables (series, manga, chapters, pages), all inserts use <code>ON CONFLICT ... DO UPDATE</code>, so it's safe to re-run.</p>
-						<p>Chapters from different sources get merged by normalized title. If two sources have the same chapter, the one with the most pages wins.</p>
+						<p>The database uses <a href="https://sqlite.org" target="_blank" rel="noopener noreferrer">SQLite</a> in WAL mode, in a single file.</p>
+						<p>Series from different sources are merged by normalized title.</p>
 
 						<pre class="mermaid">{mermaidSource}</pre>
 
-						<p><strong>Client-side state without accounts.</strong> No auth, no database sessions. Bookmarks and reading progress live entirely in localStorage. The JS reads from there and builds the DOM with a tiny h() helper. It's surprisingly clean, but debugging state without a database to query is harder.</p>
+						<p><strong>Accounts are optional.</strong> Visitors can read without signing in, and their progress stays in the browser. Signed-in readers get progress, bookmarks and notes synced across devices.</p>
 
 						<h2>Screenshots</h2>
 						<div class="screenshot-grid">
@@ -115,27 +116,27 @@ const breadcrumbs = [
 						<p class="pull-quote">Fighting the borrow checker for the 50th time at 2am is a rite of passage.</p>
 
 						<h2>What I learned</h2>
-						<p>This was my first <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a> project with multiple workspace crates, and it taught me more than any tutorial. Rust's type system is genuinely great for domain modeling (no invalid states possible), but fighting the borrow checker for the 50th time at 2am is a rite of passage.</p>
+						<p>Splitting this <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a> project into workspace crates taught me more than any tutorial. Rust's type system is genuinely great for domain modeling (no invalid states possible), but fighting the borrow checker for the 50th time at 2am is a rite of passage.</p>
 						<p>The scraper adapter pattern (trait + per-site implementations) paid off immediately when adding a second source. And the sync loop (background thread, 6-hour interval, parallel scraping) taught me about <a href="https://tokio.rs" target="_blank" rel="noopener noreferrer">Tokio</a> channels and graceful shutdown the hard way.</p>
 						<p>Also: always pin your chromedriver version. Always.</p>
 					</Fragment>
 				) : (
 					<Fragment>
 						<h2>Ce que ça fait</h2>
-						<p>MangaReader scrape des chapitres de manga depuis des sites de scanlation, les fusionne en séries, et les sert via une interface web locale. Tu peux marquer tes séries, suivre ta progression, et le serveur synchronise les nouveaux chapitres en arrière-plan.</p>
+						<p>MangaReader est une bibliothèque de manga auto-hébergée. Elle récupère des chapitres sur des sites tiers, fusionne un même titre en une série, et sert un lecteur avec comptes, marque-pages et progression synchronisée. Les nouveaux chapitres se synchronisent en arrière-plan.</p>
 
 						<h2>Architecture</h2>
 						<p>Trois crates Rust dans un workspace :</p>
 						<ul>
 							<li><strong>mangaread-core</strong>: types du domaine, repository SQLite, logique de fusion des séries</li>
 							<li><strong>scraper</strong>: trait SiteAdapter avec implémentations par site (Demonicscans, Manhuaplus), binaire CLI + bibliothèque</li>
-							<li><strong>website</strong>: serveur web Axum avec 10 modules de routes, templates <a href="https://maud.lambda.xyz/" target="_blank" rel="noopener noreferrer">Maud</a>, assets statiques</li>
+							<li><strong>website</strong>: serveur web Axum avec templates <a href="https://maud.lambda.xyz/" target="_blank" rel="noopener noreferrer">Maud</a>, comptes, espace admin et assets statiques</li>
 						</ul>
-						<p>La base de données utilise <a href="https://sqlite.org" target="_blank" rel="noopener noreferrer">SQLite</a> en mode WAL : quatre tables (series, manga, chapters, pages), tous les inserts utilisent <code>ON CONFLICT ... DO UPDATE</code>, donc tout est sûr à relancer.</p>
+						<p>La base de données utilise <a href="https://sqlite.org" target="_blank" rel="noopener noreferrer">SQLite</a> en mode WAL, dans un seul fichier.</p>
 
 						<pre class="mermaid">{mermaidSource}</pre>
 
-						<p><strong>État côté client sans comptes.</strong> Pas d'auth, pas de sessions. Les marque-pages et la progression vivent dans localStorage. Le JS lit localStorage et construit le DOM avec une petite fonction h(). C'est étonnamment propre, mais debugguer l'état sans base de données, c'est plus dur.</p>
+						<p><strong>Comptes optionnels.</strong> Les visiteurs lisent sans se connecter et leur progression reste dans le navigateur. Les lecteurs connectés retrouvent progression, marque-pages et notes sur tous leurs appareils.</p>
 
 						<h2>Captures d'écran</h2>
 						<div class="screenshot-grid">
@@ -164,7 +165,7 @@ const breadcrumbs = [
 						<p class="pull-quote">Se battre avec le borrow checker pour la 50ème fois à 2h du matin, c'est un rite de passage.</p>
 
 						<h2>Ce que j'ai appris</h2>
-						<p>C'était mon premier projet <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a> avec plusieurs crates dans un workspace, et ça m'a plus appris que n'importe quel tutoriel. Le système de types de Rust est génial pour la modélisation du domaine (pas d'états invalides possibles), mais se battre avec le borrow checker pour la 50ème fois à 2h du matin, c'est un rite de passage.</p>
+						<p>Découper ce projet <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a> en crates de workspace m'a plus appris que n'importe quel tutoriel. Le système de types de Rust est génial pour la modélisation du domaine (pas d'états invalides possibles), mais se battre avec le borrow checker pour la 50ème fois à 2h du matin, c'est un rite de passage.</p>
 						<p>Le pattern d'adaptateur (trait + implémentations par site) a payé immédiatement en ajoutant une deuxième source. Et la boucle de sync (thread background, intervalle de 6h, scraping parallèle) m'a appris les channels <a href="https://tokio.rs" target="_blank" rel="noopener noreferrer">Tokio</a> et l'arrêt gracieux à la dure.</p>
 					</Fragment>
 				)}
@@ -176,7 +177,7 @@ const breadcrumbs = [
 	<nav class="project-nav">
 		<div class="container project-nav-inner">
 			<a href={`${base}/projects/yatsuscript`} class="btn-ghost">{t.prev}</a>
-			<a href={`${base}/projects/axto`} class="btn-ghost">{t.next}</a>
+			<a href={`${base}/projects/ghaiari`} class="btn-ghost">{t.next}</a>
 		</div>
 	</nav>
 </Layout>

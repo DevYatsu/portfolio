@@ -11,11 +11,10 @@ Personal portfolio at [yanis-amani.ch](https://yanis-amani.ch).
 ## Features
 
 - Light/dark/system theme toggle with `localStorage` persistence
-- English / French i18n with auto-detect on first visit
-- SEO: canonical URLs, hreflang, JSON-LD (Person + WebSite), sitemap, OG image, robots.txt
+- English and French versions, with hreflang links between them
+- SEO: canonical URLs, hreflang, JSON-LD (ProfilePage, Person, WebSite, ItemList), sitemap, OG image, robots.txt
 - Project detail pages with architecture breakdowns
-- Interactive skill filter
-- No JavaScript runtime: fully static
+- Static output, with small client scripts for the theme, navigation and depth gauge
 
 ## Commands
 

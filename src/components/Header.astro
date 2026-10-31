@@ -29,7 +29,14 @@ const altLabel = lang === "fr" ? "EN" : "FR";
 
 <header class="nav">
 	<div class="nav__inner">
-		<a href={home} class="nav__brand" aria-label={lang === "fr" ? "Yanis Amani // Portfolio Accueil" : "Yanis Amani // Portfolio Home"}>YA</a>
+		<a href={home} class="nav__brand" aria-label={lang === "fr" ? "Yanis Amani, accueil" : "Yanis Amani, home"}>
+				<svg class="nav__mark" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+					<rect x="1" y="2" width="11" height="4" fill="currentColor"/>
+					<rect x="5" y="8" width="11" height="4" fill="currentColor"/>
+					<rect x="9" y="14" width="10" height="4" fill="var(--color-accent)"/>
+				</svg>
+				<span>Yanis Amani</span>
+			</a>
 
 		<nav class="nav__center">
 			<a href={`${home}#projects`} class="nav__link">{t.projects}</a>

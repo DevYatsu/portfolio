@@ -16,6 +16,13 @@
   --color-accent-ink: oklch(97% 0.005 270);
   --color-focus:      oklch(50% 0.20 255);
 
+  /* ── Descent: one surface per layer, stepped, never a gradient ── */
+  --layer-5: oklch(97% 0.014 265);
+  --layer-4: oklch(94% 0.015 265);
+  --layer-3: oklch(91% 0.016 265);
+  --layer-2: oklch(26% 0.030 262);
+  --layer-1: oklch(19% 0.026 262);
+
   /* ── Typography ──────────────────────── */
   --font-display: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-body:    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -68,6 +75,11 @@
   --color-accent:     oklch(65% 0.18 255);
   --color-accent-ink: oklch(14% 0.012 260);
   --color-focus:      oklch(60% 0.20 255);
+  --layer-5: oklch(25% 0.016 265);
+  --layer-4: oklch(22% 0.016 265);
+  --layer-3: oklch(19% 0.016 265);
+  --layer-2: oklch(16% 0.018 262);
+  --layer-1: oklch(14% 0.020 262);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -82,5 +94,24 @@
     --color-accent:     oklch(65% 0.18 255);
     --color-accent-ink: oklch(14% 0.012 260);
     --color-focus:      oklch(60% 0.20 255);
+    --layer-5: oklch(25% 0.016 265);
+    --layer-4: oklch(22% 0.016 265);
+    --layer-3: oklch(19% 0.016 265);
+    --layer-2: oklch(16% 0.018 262);
+    --layer-1: oklch(14% 0.020 262);
   }
+}
+
+/* The two deepest layers stay dark in both themes: the page visibly reaches the bottom */
+.surface-deep {
+  --color-paper:      oklch(19% 0.026 262);
+  --color-paper-2:    oklch(24% 0.028 262);
+  --color-ink:        oklch(95% 0.008 270);
+  --color-ink-2:      oklch(80% 0.012 262);
+  --color-rule:       oklch(34% 0.026 262);
+  --color-muted:      oklch(72% 0.014 262);
+  --color-accent:     oklch(72% 0.15 255);
+  --color-accent-ink: oklch(14% 0.012 260);
+  --color-focus:      oklch(72% 0.17 255);
+  color: var(--color-ink);
 }

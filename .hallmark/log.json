@@ -61,5 +61,16 @@
     "scope": "app",
     "nav": "N1b",
     "footer": "Ft5"
+  },
+  {
+    "date": "2026-11-01",
+    "macrostructure": "Descent (home) + Long Document (projects)",
+    "theme": "custom",
+    "theme_axes": "light / system-sans / cool",
+    "enrichment": "Tier-A CSS art (hero Stair)",
+    "brief": "Owner-requested identity pass within D1-D8. Home rebuilt around 'from the pixel to the register': five stepped layers, hero Stair, Depth Gauge, language lineage, contact at depth 00. New stair logo and favicon, OG regenerated. Claims corrected against the repositories: WIE co-developer credit, v12 uses oxc, YatsuScript has dependencies and a GC.",
+    "scope": "app",
+    "nav": "N1b",
+    "footer": "Ft5"
   }
 ]

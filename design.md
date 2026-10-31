@@ -11,11 +11,16 @@ pill CTAs, monochrome with a single restrained blue accent.
 
 ## Macrostructure family
 
-- **Marketing / landing pages**: Marquee Hero: project-cards as the primary
-  structural unit (asymmetric: one full-width featured card + a pair), lean
-  left-biased hero with CTA row + factual meta line, skill tags, contact closes
-  with a display-sized email. Varies on hero archetype and enrichment tier.
-  Hero enrichment in use: none: typography only.
+- **Marketing / landing pages**: Descent: the home page is one stack read top to
+  bottom, "from the pixel to the register". Hero pairs the name with the Stair
+  (Tier-A CSS art and navigation: one row per layer, shifted right as it goes
+  down). Then About and Stack, then the five layers in fixed order: 05 Surface,
+  04 Product, 03 Language, 02 Runtime, 01 Machine. Each layer has its own stepped
+  surface (`--layer-5` to `--layer-1`). The two deepest invert via `.surface-deep`
+  in both themes. A fixed Depth Gauge under the nav tracks the current layer.
+  Contact closes at depth 00 with a display-sized email.
+  Proof rule: a stat, count or claim appears only if it traces to a repository,
+  with its measurement date when it can go stale. Credit collaborators.
 - **Content / project detail pages**: Long Document: content-forward with a
   sticky sidebar meta rail (links + tech stack, hairline left rule) at ≥1024px,
   one pull quote per page lifted from the page's own copy (display voice
@@ -64,8 +69,8 @@ is unambiguously blue-on-navy. Accent hue stays 255.
 
 - Easings: --ease-out = cubic-bezier(0.16, 1, 0.3, 1)
 - Reveal pattern: fade + slide (16px → 0, 600ms)
+- Depth Gauge: state change only (colour + underline), no scroll-driven animation
 - Reduced-motion fallback: opacity-only, ≤ 150 ms
-- Microinteractions: silent success, hover delay 800ms / focus delay 0ms
 
 ## De-slop constraints (locked 2026-08)
 
@@ -82,7 +87,7 @@ Hard rules. A page violates the system if it contains any of these:
 
 ## CTA voice
 
-- Primary CTA: filled pill, accent background, "ink" text, 6px radius
+- Primary CTA: filled pill, accent background, accent-ink text
 - Secondary CTA: ghost (transparent, rule border, muted text → accent on hover)
 
 ## Per-page allowances
@@ -95,7 +100,7 @@ Hard rules. A page violates the system if it contains any of these:
 
 - The accent colour and its placement (≤ 5 % per viewport).
 - The display + body fonts.
-- The CTA voice (pill shape, 6px radius, same padding rhythm).
+- The CTA voice (pill shape, same padding rhythm).
 - Section heading rhythm (display head + sub text).
 
 ## What pages MAY differ on
@@ -145,6 +150,12 @@ Hard rules. A page violates the system if it contains any of these:
   --radius-md: 6px;
   --radius-lg: 8px;
   --radius-pill: 999px;
+
+  --layer-5: oklch(97% 0.014 265);
+  --layer-4: oklch(94% 0.015 265);
+  --layer-3: oklch(91% 0.016 265);
+  --layer-2: oklch(26% 0.030 262);
+  --layer-1: oklch(19% 0.026 262);
 }
 ```
 
@@ -162,5 +173,11 @@ Hard rules. A page violates the system if it contains any of these:
   --color-accent:     oklch(65% 0.18 255);
   --color-accent-ink: oklch(14% 0.012 260);
   --color-focus:      oklch(60% 0.20 255);
+
+  --layer-5: oklch(25% 0.016 265);
+  --layer-4: oklch(22% 0.016 265);
+  --layer-3: oklch(19% 0.016 265);
+  --layer-2: oklch(16% 0.018 262);
+  --layer-1: oklch(14% 0.020 262);
 }
 ```

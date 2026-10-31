@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { projects, staticSites, skills } from "../data/portfolio";
+import { projects, staticSites, skills, layers, lineage } from "../data/portfolio";
 import type { Language } from "../types";
 
 interface Props {
@@ -16,57 +16,81 @@ const categoryLabels: Record<Language, Record<string, string>> = {
 
 const t = {
 	en: {
-		title: "Yanis Amani // Software Engineering Student & Portfolio",
-		description: "Portfolio of Yanis Amani, Software Engineering student in Neuchâtel, Switzerland. Building reliable software in Rust, TypeScript and systems programming.",
-		badge: "Software Engineering Student · Systems · Web · Reliability",
-		heroDesc: "I build reliable software. Rust, TypeScript, systems programming. The kind that doesn't fall over in production.",
-		ctaProjects: "View projects",
+		title: "Yanis Amani: Computer Science Student, Neuchâtel",
+		description: "BSc Computer Science student at HE-Arc in Neuchâtel, Switzerland. I build in Rust and TypeScript, from websites to a JavaScript engine and a Windows emulator.",
+		eyebrow: "BSc Computer Science student, HE-Arc",
+		statement: "From the pixel to the register.",
+		heroDesc: "I build every layer of the stack: websites, full products, programming languages, a JavaScript engine, and a Windows emulator for Apple Silicon.",
+		ctaProjects: "Start the descent",
 		ctaContact: "Get in touch",
-		heroMeta: "HE-Arc · Neuchâtel, Switzerland",
-		caseStudy: "Case study →",
-		projects: "Projects",
-		projectsSub: "Side projects, open-source tools, and things I built because they were interesting problems.",
-		staticSites: "Static Sites",
-		staticSub: "Client projects: clean, professional web presence.",
-		skills: "Skills",
-		skillsSub: "Languages and frameworks I reach for daily.",
+		stairLabel: "The five layers of this portfolio",
+		gaugeLabel: "Depth",
 		about: "About",
-		aboutSub: "How I think about building software.",
+		aboutLead: "My name is Yanis Amani. I'm pursuing a BSc in Computer Science with a major in Software Engineering at HE-Arc in Neuchâtel, Switzerland.",
+		aboutStory: "In 2023 I wrote JadeFlow, my first programming language, because I just wanted to understand how languages work. Understanding one layer exposed the next one down, so I kept digging: compilers, virtual machines, a JavaScript engine, then the instructions themselves.",
 		aboutText: `I care about the boring stuff. Good error handling, clean interfaces, code that's still readable six months later. I've broken enough things in production to know that "it works on my machine" is not a testing strategy. These days I'd rather go slow and get it right.`,
-		values: ["Reliability", "Performance", "Security"],
-		contact: "Get in Touch",
-		contactSub: "Got a project, an idea, or just want to chat? I'm around.",
+		factsLabel: "At a glance",
+		facts: [
+			["Based in", "Neuchâtel, Switzerland"],
+			["Studying", "BSc Computer Science, Software Engineering major, HE-Arc"],
+			["Main tools", "Rust, TypeScript"],
+			["Cares about", "Reliability, performance, security"],
+		],
+		skills: "Stack",
+		skillsSub: "Languages and tools I reach for, strongest first.",
+		caseStudy: "Case study →",
+		lineage: "Five languages since 2023",
+		bottom: "Bottom of the stack",
+		contact: "End of the descent. Say hello.",
+		contactSub: "Got a project, an idea, or a low-level problem you want to talk through? I'm around.",
 	},
 	fr: {
-		title: "Yanis Amani // Étudiant Ingénieur Logiciel & Portfolio",
-		description: "Portfolio de Yanis Amani, étudiant ingénieur logiciel à Neuchâtel, Suisse. Conception de logiciels fiables en Rust, TypeScript et programmation système.",
-		badge: "Étudiant Ingénieur Logiciel · Systèmes · Web · Fiabilité",
-		heroDesc: "Je construis des logiciels fiables. Rust, TypeScript, programmation système. Le genre qui tient la route en production.",
-		ctaProjects: "Voir les projets",
+		title: "Yanis Amani : étudiant en informatique, Neuchâtel",
+		description: "Bachelor en informatique à la HE-Arc, Neuchâtel (Suisse). Je développe en Rust et TypeScript, du site web au moteur JavaScript et à l'émulateur Windows.",
+		eyebrow: "Bachelor en informatique, HE-Arc",
+		statement: "Du pixel au registre.",
+		heroDesc: "Je construis chaque couche de la pile : sites web, produits complets, langages de programmation, un moteur JavaScript et un émulateur Windows pour Apple Silicon.",
+		ctaProjects: "Commencer la descente",
 		ctaContact: "Me contacter",
-		heroMeta: "HE-Arc · Neuchâtel, Suisse",
-		caseStudy: "Étude de cas →",
-		projects: "Projets",
-		projectsSub: "Projets perso, outils open-source, des trucs construits parce que le problème était intéressant.",
-		staticSites: "Sites statiques",
-		staticSub: "Projets clients : présence web propre et professionnelle.",
-		skills: "Compétences",
-		skillsSub: "Langages et frameworks que j'utilise quotidiennement.",
+		stairLabel: "Les cinq couches de ce portfolio",
+		gaugeLabel: "Profondeur",
 		about: "À propos",
-		aboutSub: "Comment je pense le développement logiciel.",
+		aboutLead: "Je m'appelle Yanis Amani. Je prépare un Bachelor en informatique, spécialisation génie logiciel, à la HE-Arc à Neuchâtel, en Suisse.",
+		aboutStory: "En 2023, j'ai écrit JadeFlow, mon premier langage de programmation, simplement pour comprendre comment marchent les langages. Comprendre une couche révélait la suivante, alors j'ai continué à creuser : compilateurs, machines virtuelles, un moteur JavaScript, puis les instructions elles-mêmes.",
 		aboutText: "Je me soucie des trucs ennuyeux. La gestion d'erreurs propre, des interfaces claires, du code qui se relit encore six mois après. J'ai assez cassé de choses en production pour savoir que « ça marche sur ma machine » n'est pas une stratégie de test. Maintenant je préfère aller lentement mais bien faire les choses.",
-		values: ["Fiabilité", "Performance", "Sécurité"],
-		contact: "Me contacter",
-		contactSub: "Un projet, une idée, ou juste envie de parler ? Je suis là.",
+		factsLabel: "En bref",
+		facts: [
+			["Basé à", "Neuchâtel, Suisse"],
+			["Études", "Bachelor en informatique, spécialisation génie logiciel, HE-Arc"],
+			["Outils principaux", "Rust, TypeScript"],
+			["Priorités", "Fiabilité, performance, sécurité"],
+		],
+		skills: "Stack",
+		skillsSub: "Les langages et outils que j'utilise, les plus solides d'abord.",
+		caseStudy: "Étude de cas →",
+		lineage: "Cinq langages depuis 2023",
+		bottom: "Le fond de la pile",
+		contact: "Fin de la descente. Dites bonjour.",
+		contactSub: "Un projet, une idée, ou un problème bas niveau à discuter ? Je suis là.",
 	},
 }[lang];
 
 const projectBase = lang === "fr" ? "/fr/projects" : "/projects";
 
-// WIE leads: 64-bit Windows emulation earns the featured wide card
-const featured = projects.find((p) => p.id === "wie") || projects[0];
-const others = projects.filter((p) => p.id !== featured.id);
-const orderedProjects = [featured, ...others];
+const projectsIn = (layer: string) => projects.filter((p) => p.layer === layer);
+
+// Each stair row names its proof, so the hero alone explains the whole page
+const stairProof: Record<string, string> = {
+	surface: staticSites.map((s) => s.name).join(", "),
+	product: projectsIn("product").map((p) => p.name).join(", "),
+	language: projectsIn("language").map((p) => p.name).join(", "),
+	runtime: projectsIn("runtime").map((p) => p.name).join(", "),
+	machine: projectsIn("machine").map((p) => p.name).join(", "),
+};
+
+// The last two layers invert: the page visibly gets deeper
+const isDeep = (id: string) => id === "runtime" || id === "machine";
+const layerSurface = (depth: string) => `background: var(--layer-${Number(depth)})`;
 
 // Strongest skills first within each group
 const levelRank: Record<string, number> = { Advanced: 0, Proficient: 1, Intermediate: 2 };
@@ -81,342 +105,627 @@ for (const cat of Object.keys(skillsByCat)) {
 ---
 
 <Layout title={t.title} description={t.description} lang={lang}>
-	<!-- MARQUEE HERO -->
-	<section class="marquee-hero">
-		<div class="container marquee-hero__inner" data-animate>
-			<span class="marquee-hero__badge">{t.badge}</span>
-			<h1 class="marquee-hero__title">Yanis <span class="marquee-hero__accent">Amani</span></h1>
-			<p class="marquee-hero__desc">{t.heroDesc}</p>
-			<div class="marquee-hero__cta">
-				<a href="#projects" class="btn-primary">{t.ctaProjects}</a>
-				<a href="#contact" class="btn-ghost">{t.ctaContact}</a>
+	<!-- HERO -->
+	<section class="hero">
+		<div class="container hero__inner" data-animate>
+			<div class="hero__copy">
+				<p class="hero__eyebrow">{t.eyebrow}</p>
+				<h1 class="hero__title">Yanis <span>Amani</span></h1>
+				<p class="hero__statement">{t.statement}</p>
+				<p class="hero__desc">{t.heroDesc}</p>
+				<div class="hero__cta">
+					<a href="#projects" class="btn-primary">{t.ctaProjects}</a>
+					<a href="#contact" class="btn-ghost">{t.ctaContact}</a>
+				</div>
 			</div>
-			<p class="marquee-hero__meta">{t.heroMeta}</p>
-		</div>
-	</section>
 
-	<hr class="section-divider" />
-
-	<!-- PROJECTS -->
-	<section id="projects" class="section marquee-section">
-		<div class="container">
-			<div class="section__head">
-				<h2 class="section__title">{t.projects}</h2>
-				<p class="section__sub">{t.projectsSub}</p>
-			</div>
-			<div class="project-grid">
-				{orderedProjects.map((p, i) => (
-					<article class={`project-card${i === 0 ? " project-card--featured" : ""}`}>
-						<span class="project-card__cat">{p.category[lang]}</span>
-						<h3 class="project-card__name">
-							<a href={`${projectBase}/${p.id}`} class="project-card__link">{p.name}</a>
-						</h3>
-						<p class="project-card__desc">{p.description[lang]}</p>
-						<div class="project-card__foot">
-							<div class="project-card__tags">
-								{p.tags.map((tag) => (
-									<a href={tag.url} target="_blank" rel="noopener noreferrer" class="tech-tag">{tag.name}</a>
-								))}
-							</div>
-							<span class="project-card__more" aria-hidden="true">{t.caseStudy}</span>
-						</div>
-					</article>
-				))}
-			</div>
-		</div>
-	</section>
-
-	<!-- STATIC SITES -->
-	<section class="section marquee-section">
-		<div class="container">
-			<div class="section__head">
-				<h2 class="section__title">{t.staticSites}</h2>
-				<p class="section__sub">{t.staticSub}</p>
-			</div>
-			<div class="static-grid">
-				{staticSites.map((site) => (
-					<a href={site.url} target="_blank" rel="noopener noreferrer" class="static-card">
-						<h3 class="static-card__name">{site.name}</h3>
-						<p class="static-card__desc">{site.description[lang]}</p>
-						<div class="static-card__tags">
-							{site.tags.map((tag) => (
-								<span class="mini-tag">{tag}</span>
-							))}
-						</div>
-					</a>
-				))}
-			</div>
-		</div>
-	</section>
-
-	<hr class="section-divider" />
-
-	<!-- SKILLS -->
-	<section id="skills" class="section marquee-section">
-		<div class="container container--narrow">
-			<div class="section__head">
-				<h2 class="section__title">{t.skills}</h2>
-				<p class="section__sub">{t.skillsSub}</p>
-			</div>
-			<div class="skill-groups">
-				{Object.entries(skillsByCat).map(([cat, catSkills]) => (
-					<div class="skill-group">
-						<span class="skill-group__label">{categoryLabels[lang][cat] || cat}</span>
-						<div class="skill-group__chips">
-							{catSkills.map((s) => (
-								<span class="skill-chip" data-category={s.category}>{s.name}</span>
-							))}
-						</div>
-					</div>
-				))}
-			</div>
+			<nav class="stair" aria-label={t.stairLabel}>
+				<ol>
+					{layers.map((layer, i) => (
+						<li style={`--step: ${i}`}>
+							<a href={`#layer-${layer.id}`} class:list={["stair__row", { "surface-deep": isDeep(layer.id) }]} style={layerSurface(layer.depth)}>
+								<span class="stair__depth">{layer.depth}</span>
+								<span class="stair__name">{layer.name[lang]}</span>
+								<span class="stair__proof">{stairProof[layer.id]}</span>
+							</a>
+						</li>
+					))}
+				</ol>
+			</nav>
 		</div>
 	</section>
 
 	<!-- ABOUT -->
-	<section id="about" class="section marquee-section">
-		<div class="container container--narrow">
-			<div class="section__head">
-				<h2 class="section__title">{t.about}</h2>
-				<p class="section__sub">{t.aboutSub}</p>
+	<section id="about" class="section intro">
+		<div class="container intro__grid">
+			<div class="intro__story">
+				<h2 class="section-title">{t.about}</h2>
+				<p class="intro__lead">{t.aboutLead}</p>
+				<p class="intro__text">{t.aboutStory}</p>
+				<p class="intro__text">{t.aboutText}</p>
 			</div>
-			<div class="about-body">
-				<p class="about-text">{t.aboutText}</p>
-				<div class="values-row">
-					{t.values.map((v) => (
-						<span class="value-chip">{v}</span>
+			<div class="intro__side">
+				<h3 class="side-label">{t.factsLabel}</h3>
+				<dl class="fact-list">
+					{t.facts.map(([label, value]) => (
+						<div><dt>{label}</dt><dd>{value}</dd></div>
 					))}
+				</dl>
+				<div id="skills">
+					<h3 class="side-label">{t.skills}</h3>
+					<p class="side-sub">{t.skillsSub}</p>
+					<dl class="fact-list">
+						{Object.entries(skillsByCat).map(([cat, catSkills]) => (
+							<div><dt>{categoryLabels[lang][cat] || cat}</dt><dd>{catSkills.map((s) => s.name).join(", ")}</dd></div>
+						))}
+					</dl>
 				</div>
 			</div>
 		</div>
 	</section>
 
-	<hr class="section-divider" />
+	<!-- DEPTH GAUGE -->
+	<nav class="gauge" id="gauge" aria-label={t.gaugeLabel}>
+		<div class="container gauge__inner">
+			{layers.map((layer) => (
+				<a href={`#layer-${layer.id}`} class="gauge__step" data-gauge={layer.id}>
+					<span class="gauge__depth">{layer.depth}</span>
+					<span class="gauge__name">{layer.name[lang]}</span>
+				</a>
+			))}
+		</div>
+	</nav>
 
-	<!-- CONTACT -->
-	<section id="contact" class="section marquee-section">
-		<div class="container container--narrow">
-			<div class="contact-card">
-				<h2 class="contact-card__title">{t.contact}</h2>
-				<p class="contact-card__sub">{t.contactSub}</p>
-				<div class="contact-card__body">
-					<a href="mailto:yanis.amani@icloud.com" class="contact-card__email">yanis.amani@icloud.com</a>
-					<div class="contact-card__socials">
-						<a href="https://linkedin.com/in/yanis-amani" target="_blank" rel="noopener noreferrer" class="contact-card__social">LinkedIn</a>
-						<a href="https://github.com/DevYatsu" target="_blank" rel="noopener noreferrer" class="contact-card__social">GitHub</a>
+	<!-- THE DESCENT -->
+	<div id="projects">
+		{layers.map((layer) => (
+			<section id={`layer-${layer.id}`} data-layer={layer.id} class:list={["layer", `layer--${layer.id}`, { "surface-deep": isDeep(layer.id) }]} style={layerSurface(layer.depth)}>
+				<div class="container">
+					<header class="layer__head">
+						<span class="layer__depth" aria-hidden="true">{layer.depth}</span>
+						<div>
+							<h2 class="section-title">{layer.name[lang]}</h2>
+							<p class="layer__claim">{layer.claim[lang]}</p>
+						</div>
+					</header>
+
+					{layer.id === "surface" && (
+						<div class="static-grid">
+							{staticSites.map((site) => (
+								<a href={site.url} target="_blank" rel="noopener noreferrer" class="static-card">
+									<h3 class="static-card__name">{site.name}</h3>
+									<p class="static-card__desc">{site.description[lang]}</p>
+									<div class="static-card__tags">
+										{site.tags.map((tag) => (
+											<span class="mini-tag">{tag}</span>
+										))}
+									</div>
+								</a>
+							))}
+						</div>
+					)}
+
+					<div class="exhibits">
+						{projectsIn(layer.id).map((p) => (
+							<article class="exhibit">
+								<div class="exhibit__body">
+									<span class="exhibit__cat">{p.category[lang]}{p.role && ` · ${p.role[lang]}`}</span>
+									<h3 class="exhibit__name">
+										<a href={`${projectBase}/${p.id}`} class="exhibit__link">{p.name}</a>
+									</h3>
+									<p class="exhibit__desc">{p.description[lang]}</p>
+								</div>
+								{p.facts.length > 0 && (
+									<dl class="proof">
+										{p.facts.map((fact) => (
+											<div><dt>{fact.value}</dt><dd>{fact.label[lang]}</dd></div>
+										))}
+									</dl>
+								)}
+								<div class="exhibit__foot">
+									<div class="exhibit__tags">
+										{p.tags.map((tag) => (
+											<a href={tag.url} target="_blank" rel="noopener noreferrer" class="tech-tag">{tag.name}</a>
+										))}
+									</div>
+									<span class="exhibit__more" aria-hidden="true">{t.caseStudy}</span>
+								</div>
+							</article>
+						))}
 					</div>
+
+					{layer.id === "language" && (
+						<div class="lineage">
+							<h3 class="side-label">{t.lineage}</h3>
+							<ol class="lineage__list">
+								{lineage.map((entry) => (
+									<li>
+										<span class="lineage__year">{entry.year}</span>
+										<a href={entry.url} target="_blank" rel="noopener noreferrer" class="lineage__name">{entry.name}</a>
+										<span class="lineage__note">{entry.note[lang]}</span>
+									</li>
+								))}
+							</ol>
+						</div>
+					)}
 				</div>
+			</section>
+		))}
+	</div>
+
+	<!-- CONTACT: the bottom of the stack -->
+	<section id="contact" class="contact surface-deep" style="background: var(--layer-1)">
+		<div class="container">
+			<p class="contact__eyebrow"><span>00</span> {t.bottom}</p>
+			<h2 class="contact__title">{t.contact}</h2>
+			<p class="contact__sub">{t.contactSub}</p>
+			<a href="mailto:yanis.amani@icloud.com" class="contact__email">yanis.amani@icloud.com</a>
+			<div class="contact__socials">
+				<a href="https://linkedin.com/in/yanis-amani" target="_blank" rel="me noopener noreferrer">LinkedIn</a>
+				<a href="https://github.com/DevYatsu" target="_blank" rel="me noopener noreferrer">GitHub</a>
 			</div>
 		</div>
 	</section>
 </Layout>
 
+<script>
+	// The gauge reads the layer crossing mid-viewport; one observer per page visit
+	document.addEventListener('astro:page-load', () => {
+		const gauge = document.getElementById('gauge');
+		if (!gauge) return;
+		const steps = gauge.querySelectorAll<HTMLElement>('[data-gauge]');
+
+		const observer = new IntersectionObserver((entries) => {
+			for (const entry of entries) {
+				const id = (entry.target as HTMLElement).dataset.layer;
+				const step = gauge.querySelector(`[data-gauge="${id}"]`);
+				if (entry.isIntersecting) {
+					steps.forEach((s) => s.removeAttribute('aria-current'));
+					step?.setAttribute('aria-current', 'location');
+					gauge.classList.add('is-active');
+				} else if (step?.hasAttribute('aria-current')) {
+					step.removeAttribute('aria-current');
+					gauge.classList.remove('is-active');
+				}
+			}
+		}, { rootMargin: '-50% 0px -50% 0px' });
+
+		document.querySelectorAll('[data-layer]').forEach((el) => observer.observe(el));
+		document.addEventListener('astro:before-swap', () => observer.disconnect(), { once: true });
+	});
+</script>
+
 <style>
 /* ═══════════════════════════════════════════
-   Hallmark · genre: modern-minimal · macrostructure: Marquee Hero
+   Hallmark · genre: modern-minimal · macrostructure: Descent
    design-system: design.md · designed-as-app
-   hero knobs: left-bias · typography only · featured-card grid
-   pre-emit critique: P5 H5 E5 S5 R4 V5 · contrast: pass (40–41)
-   nav: N1b · footer: Ft5 · slop: pass (42–45) · honest: pass (46)
+   hero: type + stair (Tier-A CSS art) · surfaces step down, never blend
+   nav: N1b · footer: Ft5
    ═══════════════════════════════════════════ */
 
-/* ── Marquee Hero ── */
-.marquee-hero {
-  min-height: 85vh;
+/* ── Hero ── */
+.hero {
+  min-height: 92vh;
   display: flex;
   align-items: center;
-  position: relative;
+  padding-block: calc(64px + var(--space-xl)) var(--space-xl);
 }
 
-.marquee-hero__inner {
-  position: relative;
-  z-index: 1;
+.hero__inner {
   width: 100%;
+  display: grid;
+  gap: var(--space-xl);
 }
 
-.marquee-hero__badge {
-  display: inline-block;
+@media (min-width: 1024px) {
+  .hero__inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    align-items: end;
+    gap: var(--space-2xl);
+  }
+}
+
+.hero__eyebrow {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: var(--color-accent);
-  margin-bottom: var(--space-md);
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-}
-
-.marquee-hero__title {
-  font-family: var(--font-display);
-  font-size: clamp(3.25rem, 8vw + 0.5rem, 6.5rem);
-  font-weight: 700;
-  letter-spacing: -0.035em;
-  line-height: 0.9;
-  margin-bottom: var(--space-md);
-  max-width: 8ch;
-  overflow-wrap: anywhere;
-  min-width: 0;
-}
-
-.marquee-hero__accent {
-  color: var(--color-accent);
-  font-style: normal;
-}
-
-.marquee-hero__desc {
-  font-size: var(--text-md);
   color: var(--color-muted);
-  line-height: 1.65;
-  max-width: 34rem;
-  font-family: var(--font-body);
-  margin-bottom: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-md);
 }
 
-.marquee-hero__cta {
+.hero__title {
+  font-size: clamp(3.5rem, 11vw, 7rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 0.88;
+  margin-bottom: var(--space-md);
+}
+
+.hero__title span {
+  display: block;
+}
+
+.hero__statement {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--color-accent);
+  margin-bottom: var(--space-sm);
+}
+
+.hero__desc {
+  font-size: var(--text-md);
+  color: var(--color-ink-2);
+  line-height: 1.6;
+  max-width: 34rem;
+}
+
+.hero__cta {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-sm);
   margin-top: var(--space-lg);
 }
 
-.marquee-hero__meta {
+/* ── Stair: each row is a layer, shifted right as the stack goes down ── */
+.stair ol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.stair li {
+  margin-left: calc(var(--step) * var(--stair-shift, 0.75rem));
+}
+
+@media (min-width: 640px) {
+  .stair { --stair-shift: 1.75rem; }
+}
+
+.stair__row {
+  display: grid;
+  grid-template-columns: 2rem auto;
+  column-gap: var(--space-2xs);
+  align-items: baseline;
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-sm);
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: border-color var(--dur-short) var(--ease-out);
+}
+
+.stair__row:hover {
+  border-color: var(--color-accent);
+}
+
+.stair__row:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.stair__depth {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--color-muted);
-  letter-spacing: 0.02em;
-  margin-top: var(--space-xl);
+}
+
+.stair__name {
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.stair__proof {
+  grid-column: 2;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-ink-2);
+}
+
+/* ── Shared headings ── */
+.section-title {
+  font-size: var(--text-2xl);
+  font-weight: 600;
+}
+
+.side-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: var(--space-xs);
+}
+
+.side-sub {
+  font-size: var(--text-sm);
+  color: var(--color-ink-2);
+  margin-bottom: var(--space-xs);
+}
+
+/* ── About ── */
+.intro {
+  padding-block: var(--space-2xl);
+  border-top: 1px solid var(--color-rule);
+}
+
+.intro__grid {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+@media (min-width: 1024px) {
+  .intro__grid {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: var(--space-2xl);
+  }
+}
+
+.intro__lead {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  margin-block: var(--space-md);
+}
+
+.intro__text {
+  color: var(--color-ink-2);
+  line-height: 1.7;
+  margin-bottom: var(--space-sm);
+  max-width: 40rem;
+}
+
+.intro__side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.fact-list > div {
+  display: grid;
+  grid-template-columns: 8.5rem minmax(0, 1fr);
+  gap: var(--space-sm);
+  padding-block: var(--space-2xs);
+  border-top: 1px solid var(--color-rule);
+  font-size: var(--text-sm);
+}
+
+.fact-list dt {
+  color: var(--color-muted);
+}
+
+.fact-list dd {
+  margin: 0;
+  color: var(--color-ink);
+}
+
+/* ── Depth gauge: fixed under the nav so it works at every width ── */
+.gauge {
+  position: fixed;
+  inset: 64px 0 auto;
+  z-index: 499;
+  background: var(--color-paper-2);
+  border-bottom: 1px solid var(--color-rule);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--dur-short) var(--ease-out), visibility var(--dur-short);
+}
+
+.gauge.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (max-width: 767px) {
+  .gauge { top: 56px; }
+}
+
+.gauge__inner {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2xs);
+}
+
+.gauge__step {
+  display: inline-flex;
+  gap: 0.5em;
+  padding-block: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.gauge__step:hover,
+.gauge__step[aria-current] {
+  color: var(--color-accent);
+}
+
+.gauge__step[aria-current] {
+  border-bottom-color: var(--color-accent);
+}
+
+.gauge__step:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: -2px;
+}
+
+/* Five labels don't fit a phone: only the current layer keeps its name */
+@media (max-width: 639px) {
+  .gauge__name { display: none; }
+  .gauge__step[aria-current] .gauge__name { display: inline; }
+}
+
+/* ── Layers ── */
+.layer {
+  padding-block: var(--space-2xl);
+  scroll-margin-top: 64px;
 }
 
 @media (min-width: 768px) {
-  .marquee-hero__desc { font-size: var(--text-lg); }
-  .marquee-hero__title { font-size: clamp(4rem, 8vw + 0.5rem, 7rem); }
+  .layer { padding-block: var(--space-3xl); }
 }
 
-/* ── Section Headers ── */
-.section__head {
-  margin-bottom: var(--space-lg);
+.layer__head {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
 }
 
-.section__title {
-  font-size: var(--text-2xl);
-  font-weight: 600;
-  margin-bottom: var(--space-2xs);
+.layer__depth {
+  font-family: var(--font-mono);
+  font-size: clamp(3rem, 9vw, 5.25rem);
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+  color: var(--color-accent);
 }
 
-.section__sub {
-  font-size: var(--text-base);
-  color: var(--color-muted);
-  max-width: 32rem;
-  line-height: 1.6;
-  font-family: var(--font-body);
+.layer__claim {
+  font-size: var(--text-md);
+  color: var(--color-ink-2);
+  line-height: 1.5;
+  max-width: 36rem;
+  margin-top: var(--space-2xs);
 }
 
-/* ── Project Cards ── */
-.project-grid {
+/* ── Exhibits ── */
+.exhibits {
   display: grid;
-  grid-template-columns: 1fr;
   gap: var(--space-md);
 }
 
+.exhibits:empty {
+  display: none;
+}
+
 @media (min-width: 768px) {
-  .project-grid {
+  .layer--product .exhibits {
     grid-template-columns: 1fr 1fr;
   }
 }
 
-.project-card {
+.exhibit {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  padding: var(--space-lg);
+  display: grid;
+  gap: var(--space-md);
+  padding: var(--space-md);
   border: 1px solid var(--color-rule);
   border-radius: var(--radius-lg);
   background: var(--color-paper-2);
-  color: inherit;
   transition: border-color var(--dur-short) var(--ease-out);
 }
 
-.project-card:hover {
+@media (min-width: 768px) {
+  .exhibit { padding: var(--space-lg); }
+}
+
+.exhibit:hover {
   border-color: var(--color-accent);
 }
 
-/* The featured project spans the full row: YatsuScript earns the space */
-@media (min-width: 768px) {
-  .project-card--featured {
-    grid-column: 1 / -1;
-    padding: var(--space-xl);
-  }
-
-  .project-card--featured .project-card__name {
-    font-size: var(--text-display-s);
-    letter-spacing: -0.03em;
-  }
-
-  .project-card--featured .project-card__desc {
-    font-size: var(--text-base);
-    max-width: 44rem;
-  }
+/* Light product/language layers are already tinted: the card lifts back to paper */
+.layer--product .exhibit,
+.layer--language .exhibit {
+  background: var(--color-paper);
 }
 
-/* Stretched link: the whole card is clickable without nesting anchors */
-.project-card__link {
+.exhibit__cat {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: var(--space-2xs);
+}
+
+.exhibit__name {
+  font-size: var(--text-2xl);
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-xs);
+}
+
+.exhibit__link {
   color: inherit;
   text-decoration: none;
 }
 
-.project-card__link::after {
+/* Stretched link: the whole card is clickable without nesting anchors */
+.exhibit__link::after {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: var(--radius-lg);
 }
 
-.project-card__link:focus-visible {
+.exhibit__link:focus-visible {
   outline: none;
 }
 
-.project-card__link:focus-visible::after {
+.exhibit__link:focus-visible::after {
   outline: 2px solid var(--color-focus);
   outline-offset: 2px;
 }
 
-.project-card__cat {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--color-muted);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: var(--space-2xs);
+.exhibit__desc {
+  color: var(--color-ink-2);
+  line-height: 1.6;
+  max-width: 44rem;
 }
 
-.project-card__name {
+.proof {
+  display: grid;
+  gap: var(--space-sm);
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .layer--runtime .proof { grid-template-columns: repeat(2, minmax(0, 18rem)); }
+  .layer--machine .proof { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.proof > div {
+  padding-top: var(--space-xs);
+  border-top: 1px solid var(--color-rule);
+}
+
+.proof dt {
   font-family: var(--font-display);
   font-size: var(--text-xl);
   font-weight: 600;
-  margin-bottom: var(--space-2xs);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
+  color: var(--color-ink);
 }
 
-@media (min-width: 768px) {
-  .project-card__name { font-size: var(--text-2xl); }
-}
-
-.project-card__desc {
+.proof dd {
+  margin: var(--space-3xs) 0 0;
   font-size: var(--text-sm);
-  color: var(--color-muted);
-  line-height: 1.6;
-  margin-bottom: var(--space-sm);
-  font-family: var(--font-body);
+  color: var(--color-ink-2);
+  line-height: 1.45;
 }
 
-.project-card__foot {
+.exhibit__foot {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-end;
   justify-content: space-between;
   gap: var(--space-sm);
   margin-top: auto;
 }
 
-.project-card__tags {
+.exhibit__tags {
   position: relative;
   z-index: 1;
   display: flex;
@@ -424,7 +733,7 @@ for (const cat of Object.keys(skillsByCat)) {
   gap: var(--space-2xs);
 }
 
-.project-card__more {
+.exhibit__more {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--color-muted);
@@ -432,8 +741,60 @@ for (const cat of Object.keys(skillsByCat)) {
   transition: color var(--dur-short) var(--ease-out);
 }
 
-.project-card:hover .project-card__more {
+.exhibit:hover .exhibit__more {
   color: var(--color-accent);
+}
+
+/* ── Lineage: the visible proof behind the identity ── */
+.lineage {
+  margin-top: var(--space-xl);
+}
+
+.lineage__list li {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr);
+  column-gap: var(--space-sm);
+  padding-block: var(--space-xs);
+  border-top: 1px solid var(--color-rule);
+}
+
+@media (min-width: 768px) {
+  .lineage__list li {
+    grid-template-columns: 3.5rem 10rem minmax(0, 1fr);
+    align-items: baseline;
+  }
+}
+
+.lineage__year {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+}
+
+.lineage__name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.lineage__name:hover {
+  color: var(--color-accent);
+}
+
+.lineage__name:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.lineage__note {
+  grid-column: 2;
+  font-size: var(--text-sm);
+  color: var(--color-ink-2);
+}
+
+@media (min-width: 768px) {
+  .lineage__note { grid-column: 3; }
 }
 
 /* ── Static Sites Grid ── */
@@ -478,7 +839,7 @@ for (const cat of Object.keys(skillsByCat)) {
   margin-bottom: var(--space-2xs);
 }
 
-/* External-link marker: these open the client's live site */
+/* External-link marker: these open the live site */
 .static-card__name::after {
   content: " ↗";
   color: var(--color-muted);
@@ -505,100 +866,44 @@ for (const cat of Object.keys(skillsByCat)) {
   margin-top: auto;
 }
 
-/* ── Skill Groups ── */
-.skill-groups {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg);
+/* ── Contact ── */
+.contact {
+  padding-block: var(--space-2xl) var(--space-3xl);
+  border-top: 1px solid var(--color-rule);
 }
 
-.skill-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2xs);
-}
-
-.skill-group__label {
+.contact__eyebrow {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: var(--color-muted);
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-weight: 500;
-}
-
-.skill-group__chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2xs);
-}
-
-/* ── About ── */
-.about-body {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg);
-}
-
-.about-text {
-  font-size: var(--text-md);
-  color: var(--color-ink-2);
-  line-height: 1.7;
-  font-family: var(--font-body);
-  max-width: 48rem;
-}
-
-@media (min-width: 768px) {
-  .about-text { font-size: var(--text-lg); }
-}
-
-.values-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-sm);
-}
-
-.value-chip {
-  display: inline-flex;
-  align-items: center;
-  font-family: var(--font-display);
-  font-size: var(--text-base);
-  font-weight: 600;
-  padding: var(--space-2xs) var(--space-sm);
-  border: 1px solid var(--color-rule);
-  border-radius: var(--radius-pill);
-  color: var(--color-ink);
-  background: var(--color-paper-2);
-}
-
-/* ── Contact ── */
-.contact-card {
-  padding: var(--space-xl) 0;
-}
-
-.contact-card__title {
-  font-size: var(--text-2xl);
-  margin-bottom: var(--space-2xs);
-}
-
-.contact-card__sub {
-  font-size: var(--text-base);
   color: var(--color-muted);
-  margin-bottom: var(--space-lg);
-  font-family: var(--font-body);
+  margin-bottom: var(--space-md);
 }
 
-.contact-card__body {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-  align-items: flex-start;
+.contact__eyebrow span {
+  color: var(--color-accent);
+}
+
+.contact__title {
+  font-size: var(--text-display-s);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  max-width: 18ch;
+  margin-bottom: var(--space-sm);
+}
+
+.contact__sub {
+  color: var(--color-ink-2);
+  max-width: 34rem;
+  margin-bottom: var(--space-lg);
 }
 
 /* The email is the page's closing object: display-sized, unmissable */
-.contact-card__email {
+.contact__email {
+  display: inline-block;
   font-family: var(--font-display);
-  font-size: clamp(1.375rem, 3.5vw, 2.25rem);
+  font-size: clamp(1.375rem, 4vw, 2.5rem);
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--color-accent);
@@ -608,21 +913,23 @@ for (const cat of Object.keys(skillsByCat)) {
   transition: opacity var(--dur-short) var(--ease-out);
 }
 
-.contact-card__email:hover {
+.contact__email:hover {
   opacity: 0.75;
 }
 
-.contact-card__email:focus-visible {
+.contact__email:focus-visible,
+.contact__socials a:focus-visible {
   outline: 2px solid var(--color-focus);
   outline-offset: 2px;
 }
 
-.contact-card__socials {
+.contact__socials {
   display: flex;
   gap: var(--space-md);
+  margin-top: var(--space-md);
 }
 
-.contact-card__social {
+.contact__socials a {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   color: var(--color-ink-2);
@@ -630,14 +937,7 @@ for (const cat of Object.keys(skillsByCat)) {
   transition: color var(--dur-short) var(--ease-out);
 }
 
-.contact-card__social:hover {
+.contact__socials a:hover {
   color: var(--color-accent);
-}
-
-/* ── Responsive tweaks ── */
-@media (max-width: 767px) {
-  .marquee-hero__title {
-    font-size: clamp(2.5rem, 10vw, 3.75rem);
-  }
 }
 </style>

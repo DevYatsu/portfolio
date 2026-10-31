@@ -26,13 +26,11 @@ export default defineConfig({
 				defaultLocale: "en",
 				locales: { en: "en", fr: "fr" },
 			},
-			// Only the two homepages are meant to rank: / (EN) and /fr (FR).
-			// Project case studies and utility pages stay crawlable but unlisted,
-			// and they carry `noindex` in Layout.astro.
+			// Must match the routes Layout.astro marks indexable: homepages and case studies.
 			filter: (page) => {
 				const url = new URL(page);
 				const path = url.pathname.replace(/\/$/, "") || "/";
-				return path === "/" || path === "/fr";
+				return path === "/" || path === "/fr" || /^(\/fr)?\/projects\//.test(path);
 			},
 		}),
 	],
